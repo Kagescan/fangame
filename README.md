@@ -1,2 +1,3 @@
-# kagepro2
-The Kagerou Project Fangame V2
+# Branch : novelEngine
+
+this branch is the light novel engine of the game.
