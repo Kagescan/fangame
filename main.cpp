@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "button.h"
 #include "game.h"
+#include "novel.h"
 
 
 int main()
@@ -37,7 +38,7 @@ int main()
             sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
 
-    intro(scr,scrw,scrh,animeace);
+    //intro(scr,scrw,scrh,animeace);
     inadaze.play();inadaze.setLoop(true);
     //LOOP
     while (scr.isOpen())
@@ -50,7 +51,13 @@ int main()
                     break;
                 case sf::Event::MouseButtonReleased :{
                     if (event.mouseButton.button == sf::Mouse::Left) {
-                        if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {play.select();} else {}
+                        if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
+                          std::string theScriptFile("I.txt");
+                          novel engine(theScriptFile);
+                          std::vector<std::vector<std::vector<std::vector<std::string> > > > script=engine.getParsed();
+                          engine.showParsed();
+                          std::cout<< "clicked";
+                        } else {}
                     }break;}
                 case sf::Event::MouseMoved :{
                         if (play.clicked(event.mouseMove.x,event.mouseMove.y)) {play.select(true);} else {play.select(false);}
@@ -69,4 +76,3 @@ int main()
 
     return 0;
 }
-

@@ -8,7 +8,6 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include "novel.h"
 #include <SFML/Graphics.hpp>
 
 class novel{

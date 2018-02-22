@@ -70,6 +70,7 @@ void novel::showParsed() {
       for (unsigned int k=0;k<parsed[i][j].size();k++) {
         for (unsigned int l=0;l<parsed[i][j][k].size();l++)
           std::cout <<"\n"<<i<<"."<<j<<"."<<k<<"."<<l<<" = "<<parsed[i][j][k][l];
+          std::cout.flush();
       }
     }
   }
