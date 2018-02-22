@@ -1,0 +1,23 @@
+#ceci est un script de test;
+#partie1;
+
+`0`Titre`Contenu
+sur plusieurs
+lignes;
+`1`Titre`Tests;
+
+#partie2;
+
+  `0`Titre2`Contenu
+  sur plusieurs
+  lignes;`1`Titre2`Tests;`0`Titre2`Contenu sur une ligne;`1`Titre2`Tests;
+
+
+
+
+#partie3;
+    `0`Titre2`Contenu
+    sur plusieurs    lignes;`1`
+    Titre2`
+    Tests;`0`Titre2`Contenu sur une ligne;
+    `1`Titre2`Tests;
