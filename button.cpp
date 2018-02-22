@@ -1,6 +1,6 @@
 #include "button.h"
 
-button::button(sf::Font &font,std::string texte,unsigned int characterSize,sf::Color color,int x,int y,sf::Color selected)
+button::button(sf::Font &font,std::string texte,unsigned int characterSize,sf::Color color,int x,int y,sf::Color selec)
 {
     text.setFont(font);
     text.setString(texte);
@@ -9,7 +9,8 @@ button::button(sf::Font &font,std::string texte,unsigned int characterSize,sf::C
     text.setPosition(x,y);
     surface = text.getGlobalBounds();
     posx = surface.left,posy = surface.top;
-    color = color;sColor=selected;
+    color = color;sColor=selec;
+    selected=false; //default value for private var.
 }
 
 void button::render(sf::RenderWindow &scr) {scr.draw(text);}

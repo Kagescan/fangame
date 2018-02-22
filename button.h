@@ -19,7 +19,7 @@ class button
         sf::Text text;
         sf::FloatRect surface;
         int posx,posy;
-        bool selected=false;
+        bool selected;
         sf::Color color,sColor;
 };
 
