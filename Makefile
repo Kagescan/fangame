@@ -6,8 +6,8 @@ objOut=obj/
 buildOut=./
 
 
-fangame : button.o game.o main.o novel.o
-		$(CXX) -o $(buildOut)fangame $(objOut)button.o $(objOut)game.o $(objOut)novel.o $(objOut)main.o $(LDFLAGS)
+fangame : button.o game.o main.o novel.o easing.o
+		$(CXX) -o $(buildOut)fangame $(objOut)button.o $(objOut)game.o $(objOut)novel.o $(objOut)easing.o $(objOut)main.o $(LDFLAGS)
 
 button.o : button.cpp
 		mkdir -p $(objOut)
@@ -20,6 +20,9 @@ game.o : game.cpp
 novel.o : novel.cpp
 		$(CXX) $(CFLAGS) -c novel.cpp -o $(objOut)novel.o
 		
+easing.o : easing.cpp
+		$(CXX) $(CFLAGS) -c easing.cpp -o $(objOut)easing.o
+
 main.o : main.cpp button.cpp game.cpp
 		$(CXX) $(CFLAGS) -c main.cpp -o $(objOut)main.o
 

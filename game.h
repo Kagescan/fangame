@@ -7,6 +7,7 @@
 #include <SFML/Network.hpp>
 #include <iostream>
 #include "button.h"
+#include "easing.h"
 
 
 int error(std::string type);

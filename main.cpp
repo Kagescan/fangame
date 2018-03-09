@@ -38,7 +38,7 @@ int main()
             sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
 
-    //intro(scr,scrw,scrh,animeace);
+    intro(scr,scrw,scrh,animeace);
     inadaze.play();inadaze.setLoop(true);
     //LOOP
     while (scr.isOpen())
@@ -52,10 +52,10 @@ int main()
                 case sf::Event::MouseButtonReleased :{
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
-                          std::string theScriptFile("I.txt");
+                          std::string theScriptFile("resources/scripts/I.txt");
                           novel engine(theScriptFile);
                           std::vector<std::vector<std::vector<std::vector<std::string> > > > script=engine.getParsed();
-                          engine.showParsed();
+                          engine.showParsed(scr);
                           std::cout<< "clicked";
                         } else {}
                     }break;}

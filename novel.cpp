@@ -1,4 +1,6 @@
 #include "novel.h"
+#include "button.h"
+#include "game.h"
 
 novel::novel(std::string loadfile){
   /*The Kage Script is parsed like this:
@@ -63,17 +65,70 @@ void novel::play(std::string partName) {
 
 }
 
-void novel::showParsed() {
+int novel::showParsed(sf::RenderWindow &scr) {
   //display the generated file
-  for (unsigned int i=0;i<parsed.size();i++) {
-    for (unsigned int j=0;j<parsed[i].size();j++) {
-      for (unsigned int k=0;k<parsed[i][j].size();k++) {
-        for (unsigned int l=0;l<parsed[i][j][k].size();l++)
-          std::cout <<"\n"<<i<<"."<<j<<"."<<k<<"."<<l<<" = "<<parsed[i][j][k][l];
-          std::cout.flush();
+  //std::vector<string> display;
+  bool active(true);
+  int mode=0;
+  sf::Font animeace;
+  if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) /*return error("error loading animeacefr.ttf")*/;
+  sf::RectangleShape dialog;
+      dialog.setPosition(0,0);
+      dialog.setSize(sf::Vector2f(1280,720));
+      dialog.setFillColor(sf::Color(255,0,0));
+
+  while (active) {
+    scr.clear();
+
+    switch (mode) {
+      case 0: {
+        scr.draw(dialog);
+        int size=parsed.size()+1;
+        button *display[parsed.size()+1]; //make titles
+        for (unsigned int i=0;i<parsed.size();i++) {
+          display[i] = new button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,30*i);
+          scr.draw(display[i]->gettxt());
+        }
+        display[parsed.size()+1] = new button(animeace,"Retour",20,sf::Color::White,10,30*parsed.size());
+        break;
       }
+
+      case 1: {
+        /*for (unsigned int j=0;j<parsed[i].size();j++) {
+          for (unsigned int k=0;k<parsed[i][j].size();k++) {
+            for (unsigned int l=0;l<parsed[i][j][k].size();l++)
+              std::cout <<"\n"<<i<<"."<<j<<"."<<k<<"."<<l<<" = "<<parsed[i][j][k][l];
+          }
+        }*/
+        break;
+      }
+
+      default: return error("This is a code bug. REF : swich<showParsed<novel");break;
     }
+    scr.display();
+    sf::Event event;
+
+    while (scr.pollEvent(event)) {switch (event.type){
+        case sf::Event::Closed:       scr.close();std::cout<<"fin";return 0;break;
+        case sf::Event::KeyReleased : if (event.key.code == sf::Keyboard::Escape) scr.close();return 0;break;
+        case sf::Event::MouseButtonReleased :{
+          switch (mode) {
+            case 0: {
+              for (unsigned int i=0;i<parsed.size();i++) {
+                /*if ( display[i]->clicked(event.mouseButton.x,event.mouseButton.y) ) {
+
+                };*/
+              }
+              break;
+            }
+            case 1: break;
+            default: return error("This is a code bug. REF : swich<event<showParsed<novel");break;
+          }
+          break;}
+        default:break;
+    }}
   }
+  return 0;
 }
 
 std::string novel::remove(std::string str,std::string search) {

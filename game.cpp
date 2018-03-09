@@ -1,4 +1,6 @@
+
 #include "game.h"
+
 /*Basic game functions*/
 
 
@@ -6,10 +8,15 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
     //definition des variables (attention pique les yeux X_X)
 
         sf::Music prologue; if (!prologue.openFromFile("resources/sounds/prologue.ogg")) return error("unable to load prologue.ogg");
-        sf::Time time; int secs=0;
+        sf::Clock clock;
+        sf::Time time,timer2;
+        int secs=0;
+        sf::Vector2u temp=scr.getSize();
+        //int scrh=temp.y;
         bool cityfaded=false,credit1faded=false,credit2faded=false;
         sf::Texture tcredit1,tcredit2,tcity,tcityglitch;
         sf::Sprite credit1,credit2,city,cityglitch;
+        Easing ease;
         if (!tcredit1.loadFromFile("resources/img/background/credit1.jpg"))         {return error("error loading credit1.jpg");}    else {credit1.setTexture(tcredit1);}
         if (!tcredit2.loadFromFile("resources/img/background/credit2.jpg"))         {return error("error loading credit2.jpg");}    else {credit2.setTexture(tcredit2);}
         if (!tcity.loadFromFile("resources/img/background/city.jpg"))               {return error("error loading city.jpg");}       else {city.setTexture(tcity);city.setPosition(sf::Vector2f(0, 100));}
@@ -23,10 +30,20 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
     do {
         scr.clear();
         sf::Time time=prologue.getPlayingOffset();
+        timer2 = clock.getElapsedTime();
         secs = (int)time.asSeconds();
         //background
-            if (secs>=0 and secs<=5)        {if (credit1faded) {scr.draw(credit1);} else {credit1faded = fadein(scr,credit1,10);}}
-            else if (secs>5 and secs<=10)  {if (credit2faded) {scr.draw(credit2);} else {credit2faded = fadein(scr,credit2,10);}}
+            if (secs>=0 and secs<=5)        {if (credit1faded) {scr.draw(credit1);clock.restart();} else {credit1faded = fadein(scr,credit1,10);}}
+            else if (secs>5 and secs<=10)  {
+              int test=temp.y; // can't make a wrong value
+              int getms=timer2.asMilliseconds();
+              if (getms<1500) {
+                scr.draw(credit1);
+                credit2.setPosition(sf::Vector2f( 0, ease.easeOutExpo(getms>1000?1000:getms,temp.y,-test,1000) ));
+              }
+
+              scr.draw(credit2);
+            }
             if (secs>=12 and secs<=22) {if (cityfaded) {scr.draw(city);} else {cityfaded = fadein(scr,city,1);}} else if (secs>=24){scr.draw(cityglitch);}
         //subtitles
             if (secs>12 and secs<15)            {scr.draw(script[0]->gettxt());}

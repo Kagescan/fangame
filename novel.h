@@ -16,7 +16,7 @@ class novel{
         std::string remove(std::string str,std::string search);
         std::vector<std::vector<std::vector<std::vector<std::string> > > > getParsed();
         void play(std::string partName);
-        void showParsed();
+        int showParsed(sf::RenderWindow &scr);
     private:
         std::vector<std::vector<std::vector<std::vector<std::string> > > > parsed;
 };

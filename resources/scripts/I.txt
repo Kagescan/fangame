@@ -37,7 +37,7 @@ part declaration? I don't know what I will do...;
 `0`Shintaro`Je sais que j'ai besoin de mon porte feuille mais j'ai si peur... Ok,je peux fuir mais j'en ai réelement besoin..._Qu'est-ce que je dois faire?;
 `option`aller prendre le porte feuille`Quitter;
 
-#porte3
+#porte3;
 `5`resources/img/backgrounds/classroom.night.jpg;
 `2`sound`play`resources/sounds/OldDays02.ogg`;
 `3`0`resources/img/sprite/Ayano5.png;
