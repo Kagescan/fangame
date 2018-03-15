@@ -79,25 +79,26 @@ int novel::showParsed(sf::RenderWindow &scr) {
 
   while (active) {
     scr.clear();
+    std::vector<button> display;
 
     switch (mode) {
       case 0: {
         scr.draw(dialog);
-        int size=parsed.size()+1;
-        button *display[parsed.size()+1]; //make titles
         for (unsigned int i=0;i<parsed.size();i++) {
-          display[i] = new button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,30*i);
-          scr.draw(display[i]->gettxt());
+          display.push_back( button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,30*i) );
+          scr.draw(display[i].gettxt());
         }
-        display[parsed.size()+1] = new button(animeace,"Retour",20,sf::Color::White,10,30*parsed.size());
-        break;
+        display.push_back( button(animeace,"Retour",20,sf::Color::White,10,30*parsed.size()) );
+        scr.draw( display[parsed.size()].gettxt() );
       }
 
       case 1: {
-        /*for (unsigned int j=0;j<parsed[i].size();j++) {
-          for (unsigned int k=0;k<parsed[i][j].size();k++) {
-            for (unsigned int l=0;l<parsed[i][j][k].size();l++)
-              std::cout <<"\n"<<i<<"."<<j<<"."<<k<<"."<<l<<" = "<<parsed[i][j][k][l];
+        /*for (unsigned int j=0;j<parsed[j].size();j++) {
+          for (unsigned int k=0;k<parsed[j][k].size();k++) {
+            for (unsigned int l=0;l<parsed[j][k][l].size();l++) {
+              for (unsigned int m=0;l<parsed[j][k][l][m].size();l++)
+                std::cout <<"\n"<<j<<"."<<k<<"."<<l<<"."<<m<<" = "<<parsed[j][k][l][m];
+            }
           }
         }*/
         break;
@@ -105,6 +106,8 @@ int novel::showParsed(sf::RenderWindow &scr) {
 
       default: return error("This is a code bug. REF : swich<showParsed<novel");break;
     }
+
+
     scr.display();
     sf::Event event;
 
@@ -114,15 +117,17 @@ int novel::showParsed(sf::RenderWindow &scr) {
         case sf::Event::MouseButtonReleased :{
           switch (mode) {
             case 0: {
-              for (unsigned int i=0;i<parsed.size();i++) {
-                /*if ( display[i]->clicked(event.mouseButton.x,event.mouseButton.y) ) {
-
-                };*/
+              for (unsigned int i=0;i<=parsed.size();i++) {
+                if ( display[i].clicked(event.mouseButton.x,event.mouseButton.y) ) {
+                  if (i<parsed.size()) {
+                    std::cout<<"\nvous avez cliqué "<<parsed[i][0][0][0]<<std::flush;
+                  } else {return 0;}
+                };
               }
               break;
             }
             case 1: break;
-            default: return error("This is a code bug. REF : swich<event<showParsed<novel");break;
+            default: return error("This is a code bug. REF : switch<event<showParsed<novel");break;
           }
           break;}
         default:break;

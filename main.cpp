@@ -13,7 +13,7 @@ int main()
                 "\n (c) The KageTeam Fr community - Under the MIT/X11 license,please read COPYRIGHT file\n\n";
     int scrw = 1280, scrh = 720;
     sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Kagerou Project Fangame V2");//,sf::Style::Fullscreen
-
+    scr.setFramerateLimit(60);
     //LOADING GRAPHICS
         sf::Font bloody,animeace;
             if(!bloody.loadFromFile("resources/fonts/bloody.ttf")) return error("error loading bloody.ttf");
