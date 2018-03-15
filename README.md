@@ -14,6 +14,7 @@ Be careful with current directory, open the executable using file explorer if yo
 Sooo just edit the makefile as you need and use `make` to compile the code !!
 
 ### status
+Actually making the visual novel engine, if you want to try then check the "novelEngine" branch.
 21.02.18 intro works,added makefile
 
 ### project main page
