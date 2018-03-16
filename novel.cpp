@@ -68,8 +68,9 @@ void novel::play(std::string partName) {
 int novel::showParsed(sf::RenderWindow &scr) {
   //display the generated file
   //std::vector<string> display;
-  bool active(true);
-  int mode=0;
+  bool active(true),mode(true);
+  int selected(0),position(20);
+  std::string lines;
   sf::Font animeace;
   if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) /*return error("error loading animeacefr.ttf")*/;
   sf::RectangleShape dialog;
@@ -80,33 +81,38 @@ int novel::showParsed(sf::RenderWindow &scr) {
   while (active) {
     scr.clear();
     std::vector<button> display;
+    scr.draw(dialog);
 
-    switch (mode) {
-      case 0: {
-        scr.draw(dialog);
+    if (mode) {
         for (unsigned int i=0;i<parsed.size();i++) {
-          display.push_back( button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,30*i) );
+          display.push_back( button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,position+30*i) );
           scr.draw(display[i].gettxt());
         }
-        display.push_back( button(animeace,"Retour",20,sf::Color::White,10,30*parsed.size()) );
-        scr.draw( display[parsed.size()].gettxt() );
-      }
-
-      case 1: {
-        /*for (unsigned int j=0;j<parsed[j].size();j++) {
-          for (unsigned int k=0;k<parsed[j][k].size();k++) {
-            for (unsigned int l=0;l<parsed[j][k][l].size();l++) {
-              for (unsigned int m=0;l<parsed[j][k][l][m].size();l++)
-                std::cout <<"\n"<<j<<"."<<k<<"."<<l<<"."<<m<<" = "<<parsed[j][k][l][m];
-            }
+    } else {
+      int icommands(0);
+        for (unsigned int i=0;i<parsed[selected].size()-1;i++){
+          for (unsigned int j=0;j<parsed[selected][i].size();j++) {
+              std::string lineTmp;
+              if (parsed[selected][i][j][0]=="1" or parsed[selected][i][j][0]=="0") {
+                lineTmp = "Afficher une boite avec comme titre "+parsed[selected][i][j][1]+" et comme contenu :";
+                for (unsigned int k=2;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
+              } else {
+                lineTmp = "commande :"+parsed[selected][i][j][0]+" arguments :";
+                for (unsigned int k=1;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
+              }
+            display.push_back( button(animeace,lineTmp,10,sf::Color::White,12,position+15*icommands) );
+            scr.draw(display[icommands].gettxt());
+          icommands++;
           }
-        }*/
-        break;
-      }
-
-      default: return error("This is a code bug. REF : swich<showParsed<novel");break;
+        }
+        //scr.draw(display[0].gettxt());
     }
 
+
+    display.push_back( button(animeace,"Kagerou Project Fangame - Novel engine debug. Click for go back.",20,sf::Color::Black,10,0) );
+    int temp(display.size()-1);
+    display[temp].centerx(1280,0,true);
+    scr.draw( display[temp].gettxt() );
 
     scr.display();
     sf::Event event;
@@ -115,21 +121,20 @@ int novel::showParsed(sf::RenderWindow &scr) {
         case sf::Event::Closed:       scr.close();std::cout<<"fin";return 0;break;
         case sf::Event::KeyReleased : if (event.key.code == sf::Keyboard::Escape) scr.close();return 0;break;
         case sf::Event::MouseButtonReleased :{
-          switch (mode) {
-            case 0: {
+          if (mode) {
               for (unsigned int i=0;i<=parsed.size();i++) {
                 if ( display[i].clicked(event.mouseButton.x,event.mouseButton.y) ) {
                   if (i<parsed.size()) {
-                    std::cout<<"\nvous avez cliqué "<<parsed[i][0][0][0]<<std::flush;
+                    mode=false;
+                    selected=i;
+                    position=0;
                   } else {return 0;}
                 };
               }
-              break;
-            }
-            case 1: break;
-            default: return error("This is a code bug. REF : switch<event<showParsed<novel");break;
-          }
+          } else if (display[temp].clicked(event.mouseButton.x,event.mouseButton.y)) {mode=true;position=0;}
           break;}
+        case sf::Event::MouseWheelScrolled: if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) position+=event.mouseWheelScroll.delta*10;break;
+
         default:break;
     }}
   }

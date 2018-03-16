@@ -9,8 +9,8 @@ class button
         button(sf::Font &font,std::string texte="bouton",unsigned int characterSize=50,sf::Color color=sf::Color::Black,int x=0,int y=0,sf::Color selected=sf::Color::Red);
         void render(sf::RenderWindow &scr);
         void updatepos();
-        void centerx(int w,int margin=0,bool update=false);
-        void centery(int h,int margin=0,bool update=false);
+        void centerx(int w=1080,int margin=0,bool update=false);
+        void centery(int h=720,int margin=0,bool update=false);
         sf::Text gettxt();
         bool clicked(int x,int y);
         bool select();

@@ -18,7 +18,9 @@ part declaration? I don't know what I will do...;
 `0`Shintaro`Ah...-Ah..._C'était quoi, ça ?Les robinets ?_Ne te surprend pas comme ça,putain!;
 
 #flock;
-`0`Shintaro`Pff...Pourquoi je suis obligé de venir à l'école la nuit,comme ça?_..._Mais sinon...;
+`5`resources/img/backgrounds/classroom.night.jpg;
+
+`1`Shintaro`Pff...Pourquoi je suis obligé de venir à l'école la nuit,comme ça?_..._Mais sinon...;
 `0`Shintaro`Les gars de ma nouvelle classe...Ils avaient tous l'air de crétins finis_En plus,la moyenne de la nouvelle interro était incroyablement basse_Si ce n'est que ça,ça irait.Mais qu'ils peuvent être bruyants,à frapper dans les_bureaux...;
 `0`Shintaro`C'est pas croyable.Qu'est-ce que je pourrait gagner avec des types pareils?_C'est bien mieux de passer mon temps à feuilleter mes manuels scolaires_chez moi.;
 `0`Shintaro`Et c'est la même chose pour les gens avec qui j'ai été jusqu'à aujourd'hui._Ils osent se dire amis,mais ne font-ils pas semblant pour profiter de moi?;
