@@ -1,6 +1,6 @@
 #include "button.h"
 
-button::button(sf::Font &font,std::string texte,unsigned int characterSize,sf::Color color,int x,int y,sf::Color selec)
+button::button(sf::Font &font,sf::String texte,unsigned int characterSize,sf::Color color,int x,int y,sf::Color selec)
 {
     text.setFont(font);
     text.setString(texte);

@@ -85,14 +85,14 @@ int novel::showParsed(sf::RenderWindow &scr) {
 
     if (mode) {
         for (unsigned int i=0;i<parsed.size();i++) {
-          display.push_back( button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,position+30*i) );
+          display.push_back( button(animeace,toSfString(parsed[i][0][0][0]),20,sf::Color::White,10,position+30*i) );
           scr.draw(display[i].gettxt());
         }
     } else {
       int icommands(0);
         for (unsigned int i=0;i<parsed[selected].size()-1;i++){
           for (unsigned int j=0;j<parsed[selected][i].size();j++) {
-              std::string lineTmp;
+            std::string lineTmp;
               if (parsed[selected][i][j][0]=="1" or parsed[selected][i][j][0]=="0") {
                 lineTmp = "Afficher une boite avec comme titre "+parsed[selected][i][j][1]+" et comme contenu :";
                 for (unsigned int k=2;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
@@ -100,7 +100,7 @@ int novel::showParsed(sf::RenderWindow &scr) {
                 lineTmp = "commande :"+parsed[selected][i][j][0]+" arguments :";
                 for (unsigned int k=1;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
               }
-            display.push_back( button(animeace,lineTmp,10,sf::Color::White,12,position+15*icommands) );
+            display.push_back( button(animeace,toSfString(lineTmp),10,sf::Color::White,12,position+15*icommands) );
             scr.draw(display[icommands].gettxt());
           icommands++;
           }
@@ -150,3 +150,9 @@ std::string novel::remove(std::string str,std::string search) {
 }
 
 std::vector<std::vector<std::vector<std::vector<std::string> > > > novel::getParsed() {return parsed;}
+
+sf::String novel::toSfString(std::string theStdString) {
+  std::basic_string<sf::Uint32> utf32line;
+  sf::Utf8::toUtf32(theStdString.begin(), theStdString.end(), back_inserter(utf32line));
+  return sf::String(utf32line);
+}
