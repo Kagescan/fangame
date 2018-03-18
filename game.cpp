@@ -13,7 +13,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
         int secs=0;
         sf::Vector2u temp=scr.getSize();
         //int scrh=temp.y;
-        bool cityfaded=false,credit1faded=false,credit2faded=false;
+        bool cityfaded=false,credit1faded=false;
         sf::Texture tcredit1,tcredit2,tcity,tcityglitch;
         sf::Sprite credit1,credit2,city,cityglitch;
         Easing ease;
@@ -69,6 +69,12 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
 int error(std::string type) {
     std::cout <<"\n AN ERROR OCCURED !! \n REASON : "<< type;
     return EXIT_FAILURE;
+}
+
+sf::String toSfString(std::string theStdString) {
+  std::basic_string<sf::Uint32> utf32line;
+  sf::Utf8::toUtf32(theStdString.begin(), theStdString.end(), back_inserter(utf32line));
+  return sf::String(utf32line);
 }
 
 

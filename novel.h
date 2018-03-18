@@ -9,6 +9,7 @@
 #include <sstream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "game.h"
 
 class novel{
     public:
@@ -17,6 +18,7 @@ class novel{
         std::vector<std::vector<std::vector<std::vector<std::string> > > > getParsed();
         void play(std::string partName);
         int showParsed(sf::RenderWindow &scr);
+        sf::String toSfString(std::string theStdString);
     private:
         std::vector<std::vector<std::vector<std::vector<std::string> > > > parsed;
 };

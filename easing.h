@@ -31,7 +31,7 @@ class Easing{
     float easeInOutBounce(float t,float b , float c, float d);
 
   private:
-    const double PI  =3.141592653589793238463;
+    double PI=3.141592653589793238463;
 
 };
 #endif // EASING_INCLUDED

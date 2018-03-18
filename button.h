@@ -2,6 +2,7 @@
 #define BUTTON_H
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "game.h"
 
 class button
 {

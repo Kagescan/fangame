@@ -1,6 +1,6 @@
 CXX=g++
-CFLAGS=-Wall -g -I/usr/local/include/SFML/ -I/usr/include/AL
-LDFLAGS=-L/usr/local/lib/ -lopenal /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-audio.so /usr/local/lib/libsfml-network.so
+CFLAGS=-Wall -g -I/usr/local/include/SFML/ -I/usr/include/AL -std=c++11
+LDFLAGS=-L/usr/local/lib/ -lopenal /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-audio.so /usr/local/lib/libsfml-network.so -std=c++11
 EXEC=fangame
 objOut=obj/
 buildOut=./
