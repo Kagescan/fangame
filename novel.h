@@ -16,9 +16,9 @@
 
 class novel{
     public:
-      novel(std::string loadfile);
+      novel(std::string loadfile,sf::RenderWindow &scr);
       std::string remove(std::string str,std::string search);
-      bool play(std::string readline, bool init=false);
+      bool play(std::string readline, sf::RenderWindow &scr,int numLine=-1,bool init=false);
       int debug(sf::RenderWindow &scr);
       std::vector<std::string> split(std::string str, char token);
     private:
@@ -28,8 +28,8 @@ class novel{
       std::vector<std::string> charaList;
       std::map<std::string, std::string> internalSave;
       std::map<std::string, std::string> externalSave;
-      void newchara(std::string line);
-      void say(std::string line);
-
+      void newchara(std::string line,int numLine=-1);
+      void say(std::string line,int numLine=-1);
+      bool read(sf::RenderWindow &scr,bool init=false,int from=0, int to=0);
 };
 #endif

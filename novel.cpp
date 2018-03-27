@@ -2,15 +2,40 @@
 #include "button.h"
 #include "game.h"
 
-novel::novel(std::string file){
+novel::novel(std::string file,sf::RenderWindow &scr){
   //VARS
     //some vars...
-    //char* filename;
-    loadfile=file;
 
+    loadfile=file;
+    read(scr,true);
 };
 
-bool novel::play(std::string readline,bool init) {
+bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
+  int i(0);
+  bool limitation=false;
+  std::string part;
+
+  if (to==0 || from>to) {std::cout<<"reading the entire novel script ["+loadfile+"]...";}
+  else {
+    std::cout<<"reading the file from line "+std::to_string(from)+" to line "+std::to_string(to);
+    limitation=true;
+  }
+
+  std::ifstream file(loadfile.c_str());
+  if (file) {
+    //Parse parts :
+    while (std::getline(file,part)) {
+      if (limitation){
+        if (i>=from && i<=to) play(part,scr,i,init);
+      } else {
+        play(part,scr,i,init);
+      }
+      i++;
+    }
+  } else {std::cout<<"Error : the file specified is not available !";};
+}
+
+bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool init) {
   readline=removeindent(readline); //remove indents
   sf::String line=toSfString(readline); //converting to sfString add built-in functions and unicode support !
   std::size_t lenght=line.getSize();
@@ -30,22 +55,24 @@ bool novel::play(std::string readline,bool init) {
 
 
   std::string command=parsed[0];
-  if (command=="character") newchara(readline); //Switch in std::string not exists.
-  else if (command=="varfile") ;
-  else if (command=="mapfile") ;
-  else if (command=="label") ;
-  else if (command=="sound") ;
-  else if (command=="image") ;
-  else if (command=="label") ;
-  //-------------------------//
-  else if (command!="scene");
-  else if (command!="show");
-  else if (command!="play");
-  else if (command!="choice");
-  else if (command!="goto");
-  else if (command!="end");
-  else say(readline); //this is a character or a unknow command
-
+  if (init) {
+    if (command=="character") newchara(readline,numLine); //Switch in std::string not exists.
+    else if (command=="varfile") ;
+    else if (command=="mapfile") ;
+    else if (command=="label") ;
+    else if (command=="sound") ;
+    else if (command=="image") ;
+    else if (command=="label") ;
+  } else {
+    //-------------------------//
+    if (command!="scene");
+    else if (command!="show");
+    else if (command!="play");
+    else if (command!="choice");
+    else if (command!="goto");
+    else if (command!="end");
+    else say(readline,numLine); //this is a character or a unknow command
+  }
   return true;
 }
 
@@ -63,9 +90,9 @@ int novel::debug(sf::RenderWindow &scr) {
 
   std::ifstream file(loadfile.c_str()); //convert string to char*
     if (file) {
-      //Parse parts :
+      //I don't use read because I want to use a if statement with bool play()
       while (std::getline(file,part)) {
-        if (play(part)) display.push_back( button(animeace,part,10,sf::Color::White,10,position+15*i) );
+        if (play(part,scr,i)) display.push_back( button(animeace,part,10,sf::Color::White,10,position+15*i) );
         i++;
       }
     }
@@ -129,7 +156,7 @@ std::string novel::removeindent(std::string text) {
 
 
 
-void novel::newchara(std::string line){
+void novel::newchara(std::string line,int numLine){
   std::vector<std::string> arguments=split(line,' '); //splitting arguments
   std::string character=arguments[1]; //1st argument is the name of the characters
   charaList.push_back(character);
@@ -143,29 +170,29 @@ void novel::newchara(std::string line){
       if (parsed.size()==2){
         if (parsed[0]=="color"){
           internalSave.insert(std::make_pair(character+".color", parsed[1]));
-        } else {std::cout<<"\nWarning : undefined option ["+parsed[0]+"] in ["+arguments[i]+"]. Skipping.";}
+        } else {std::cout<<"\nWarning : undefined option ["+parsed[0]+"] in ["+arguments[i]+"] on line "+std::to_string(numLine)+" . Skipping.";}
 
       } else {
-        std::cout<< "\nWarning : ["+arguments[i]+"] is not a valid form of option argument in this command. Skipping.";
+        std::cout<< "\nWarning : ["+arguments[i]+"] is not a valid form of option argument in this command on line "+std::to_string(numLine)+" . Skipping.";
       }
     } else {
-      std::cout << "\nWarning : ["+arguments[i]+"] is not a valid option argument for this command. Skipping.";
+      std::cout << "\nWarning : ["+arguments[i]+"] is not a valid option argument for this command on line "+std::to_string(numLine)+" . Skipping.";
     }
   }
 }
 
-void novel::say(std::string line){
+void novel::say(std::string line,int numLine){
   std::vector<std::string> arguments=split(line,' '); //splitting arguments
   std::string character=arguments[0]; //1st argument is the name of the characters
   bool unknowChara=true;
   if (arguments.size()>1) {
     for (unsigned int i=0;i<charaList.size();i++) {if (charaList[i]==character) unknowChara=false;}
     if (unknowChara) {
-      std::cout<<"\nError : Unknown command ["+character+"] on line ["+line+"]. Skipping.";
+      std::cout<<"\nError : Unknown command ["+character+"] on line "+std::to_string(numLine)+". Skipping.";
     } else {
       std::cout<<"\ncharacter ["+character+"] is ok.";
     }
   } else {
-    std::cout<<"\nWarning : the line ["+line+"] has no arguments !! skipping.";
+    std::cout<<"\nWarning : the line "+std::to_string(numLine)+" ["+line+"] has no arguments !! skipping.";
   }
 }

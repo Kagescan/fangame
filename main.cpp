@@ -52,7 +52,7 @@ int main()
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
                           std::string theScriptFile("resources/scripts/script.txt");
-                          novel engine(theScriptFile);
+                          novel engine(theScriptFile,scr);
                           engine.debug(scr);
                           std::cout<< "clicked";
                         } else {}
