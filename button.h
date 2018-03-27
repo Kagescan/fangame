@@ -12,6 +12,10 @@ class button
         void updatepos();
         void centerx(int w=1080,int margin=0,bool update=false);
         void centery(int h=720,int margin=0,bool update=false);
+        void setPosX(int x=0,bool update=false);
+        void setPosY(int y=0,bool update=false);
+        void moveX(int x,bool update=false);
+        void moveY(int y,bool update=false);
         sf::Text gettxt();
         bool clicked(int x,int y);
         bool select();

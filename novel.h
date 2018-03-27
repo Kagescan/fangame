@@ -10,16 +10,26 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "game.h"
+#include <string.h>
+#include <map>
+//#include <iterator>
 
 class novel{
     public:
-        novel(std::string loadfile);
-        std::string remove(std::string str,std::string search);
-        std::vector<std::vector<std::vector<std::vector<std::string> > > > getParsed();
-        void play(std::string partName);
-        int showParsed(sf::RenderWindow &scr);
-        sf::String toSfString(std::string theStdString);
+      novel(std::string loadfile);
+      std::string remove(std::string str,std::string search);
+      bool play(std::string readline, bool init=false);
+      int debug(sf::RenderWindow &scr);
+      std::vector<std::string> split(std::string str, char token);
     private:
-        std::vector<std::vector<std::vector<std::vector<std::string> > > > parsed;
+      std::string removeindent(std::string text);
+      std::string loadfile;
+      bool comment;
+      std::vector<std::string> charaList;
+      std::map<std::string, std::string> internalSave;
+      std::map<std::string, std::string> externalSave;
+      void newchara(std::string line);
+      void say(std::string line);
+
 };
 #endif

@@ -2,116 +2,85 @@
 #include "button.h"
 #include "game.h"
 
-novel::novel(std::string loadfile){
-  /*The Kage Script is parsed like this:
-    parts are delimited with "#""
-      commands are delimited with ";"
-        arguments are delimited with "`"
-  */
-
+novel::novel(std::string file){
   //VARS
     //some vars...
-      std::ifstream file(loadfile.c_str()); //convert string to char*
-      int icommmand(0),iargs(0);
-      std::string part,command,args;
-    //Vector that load the file
-      std::vector<std::vector<std::vector<std::vector<std::string> > > > vfile;
-    //Temp vectors (it is not possible to make a std::vector<std::string> in one time...)
-      std::vector<std::vector<std::vector<std::string> > > vparts;
-      std::vector<std::vector<std::string> > vcommands;
-      std::vector<std::string> vargs;
+    //char* filename;
+    loadfile=file;
 
-  //Start reading the file
-    if (file) {
-      //Parse parts :
-      while (std::getline(file,part,'#')) {
-        std::istringstream spart(part); //convert the string into a stream to parse it using readline
-        icommmand = 0; //reset the var
-
-        //Parse commands:
-        while(std::getline(spart,command,';')) {
-          if (icommmand==0) {vargs.push_back(command); } //the first command is the part's title...
-          else if (command != "\n") {                    //... so ignore it and ignore empty lines too
-            std::istringstream scommand(command);
-            iargs=0;
-
-            //parse arguments
-            while(std::getline(scommand,args,'`')) {
-              args = remove(args,"\t"); //remove indent
-              args = remove(args,"  ");
-              if (args[0]=='\n') args[0]='\0'; //remove the \n if it is the first char...
-              if (iargs!=0) vargs.push_back(args); //ignore the first argument (it is \n)
-              iargs++;
-            }
-            vcommands.push_back(vargs);
-            vargs.clear();
-          }
-          icommmand++;
-          if (icommmand!=1){
-            vparts.push_back(vcommands);
-            vcommands.clear();
-          }
-        }
-        if (icommmand!=1){
-          vfile.push_back(vparts);
-          vparts.clear();
-        }
-      }
-    }
-    parsed=vfile;
 };
 
-void novel::play(std::string partName) {
+bool novel::play(std::string readline,bool init) {
+  readline=removeindent(readline); //remove indents
+  sf::String line=toSfString(readline); //converting to sfString add built-in functions and unicode support !
+  std::size_t lenght=line.getSize();
 
+  if (line.isEmpty() || line.find("//")<lenght) return false; //skip if the line is empty or a comment
+  if (line.find("/*")<lenght) { //if the multiple comment character found then skip until the end of the command
+    comment=true;
+    return false;
+  }
+  if (comment) {
+    if (line.find("*/")<lenght) comment=false;
+    return false;
+  }
+  //-------------Assume that the line is a command and there is not indent or errors in synthax.
+
+  std::vector<std::string> parsed=split(readline,' ');
+
+
+  std::string command=parsed[0];
+  if (command=="character") newchara(readline); //Switch in std::string not exists.
+  else if (command=="varfile") ;
+  else if (command=="mapfile") ;
+  else if (command=="label") ;
+  else if (command=="sound") ;
+  else if (command=="image") ;
+  else if (command=="label") ;
+  //-------------------------//
+  else if (command!="scene");
+  else if (command!="show");
+  else if (command!="play");
+  else if (command!="choice");
+  else if (command!="goto");
+  else if (command!="end");
+  else say(readline); //this is a character or a unknow command
+
+  return true;
 }
 
-int novel::showParsed(sf::RenderWindow &scr) {
-  //display the generated file
-  //std::vector<string> display;
-  bool active(true),mode(true);
-  int selected(0),position(20);
+int novel::debug(sf::RenderWindow &scr) {
+  std::string part;
+  std::vector<button> display;
+  bool active(true);
+  int position(20),i(0);
   sf::Font animeace;
-  if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) /*return error("error loading animeacefr.ttf")*/;
+  if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) std::cout<<"error loading animeacefr.ttf";
   sf::RectangleShape dialog;
       dialog.setPosition(0,0);
       dialog.setSize(sf::Vector2f(1280,720));
       dialog.setFillColor(sf::Color(255,0,0));
 
-  while (active) {
-    scr.clear();
-    std::vector<button> display;
-    scr.draw(dialog);
-
-    if (mode) {
-        for (unsigned int i=0;i<parsed.size();i++) {
-          display.push_back( button(animeace,parsed[i][0][0][0],20,sf::Color::White,10,position+30*i) );
-          scr.draw(display[i].gettxt());
-        }
-    } else {
-      int icommands(0);
-        for (unsigned int i=0;i<parsed[selected].size()-1;i++){
-          for (unsigned int j=0;j<parsed[selected][i].size();j++) {
-            std::string lineTmp;
-              if (parsed[selected][i][j][0]=="1" or parsed[selected][i][j][0]=="0") {
-                lineTmp = "Afficher une boite avec comme titre "+parsed[selected][i][j][1]+" et comme contenu :";
-                for (unsigned int k=2;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
-              } else {
-                lineTmp = "commande :"+parsed[selected][i][j][0]+" arguments :";
-                for (unsigned int k=1;k<parsed[selected][i][j].size();k++) lineTmp+= " "+parsed[selected][i][j][k];
-              }
-            display.push_back( button(animeace,lineTmp,10,sf::Color::White,12,position+15*icommands) );
-            scr.draw(display[icommands].gettxt());
-          icommands++;
-          }
-        }
-        //scr.draw(display[0].gettxt());
+  std::ifstream file(loadfile.c_str()); //convert string to char*
+    if (file) {
+      //Parse parts :
+      while (std::getline(file,part)) {
+        if (play(part)) display.push_back( button(animeace,part,10,sf::Color::White,10,position+15*i) );
+        i++;
+      }
     }
-
-
-    display.push_back( button(animeace,"Kagerou Project Fangame - Novel engine debug. Click for go back.",20,sf::Color::Black,10,0) );
+    display.push_back( button(animeace,"Kagerou Project Fangame - Novel engine debug. Click for go back. this is the content of the script, check the console",10,sf::Color::Black,10,0) );
     int temp(display.size()-1);
     display[temp].centerx(1280,0,true);
-    scr.draw( display[temp].gettxt() );
+
+  while (active) {
+    scr.clear();
+    scr.draw(dialog);
+
+    for (unsigned int i=0; i<display.size();i++) {
+      if (i<display.size()-1) display[i].setPosY(position+15*i,true);
+      scr.draw(display[i].gettxt());
+    }
 
     scr.display();
     sf::Event event;
@@ -119,19 +88,7 @@ int novel::showParsed(sf::RenderWindow &scr) {
     while (scr.pollEvent(event)) {switch (event.type){
         case sf::Event::Closed:       scr.close();std::cout<<"fin";return 0;break;
         case sf::Event::KeyReleased : if (event.key.code == sf::Keyboard::Escape) scr.close();return 0;break;
-        case sf::Event::MouseButtonReleased :{
-          if (mode) {
-              for (unsigned int i=0;i<=parsed.size();i++) {
-                if ( display[i].clicked(event.mouseButton.x,event.mouseButton.y) ) {
-                  if (i<parsed.size()) {
-                    mode=false;
-                    selected=i;
-                    position=0;
-                  } else {return 0;}
-                };
-              }
-          } else if (display[temp].clicked(event.mouseButton.x,event.mouseButton.y)) {mode=true;position=0;}
-          break;}
+        case sf::Event::MouseButtonReleased :if ( display[display.size()-1].clicked(event.mouseButton.x,event.mouseButton.y) ) return 0;break;
         case sf::Event::MouseWheelScrolled: if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) position+=event.mouseWheelScroll.delta*10;break;
 
         default:break;
@@ -148,4 +105,67 @@ std::string novel::remove(std::string str,std::string search) {
   return str;
 }
 
-std::vector<std::vector<std::vector<std::vector<std::string> > > > novel::getParsed() {return parsed;}
+std::vector<std::string> novel::split(std::string string, char search) {
+  std::vector<std::string> parsed;
+  std::string command;
+  std::istringstream spart(string);
+  while(std::getline(spart,command,search)) {
+    parsed.push_back(command);
+  }
+  return parsed;
+}
+
+std::string novel::removeindent(std::string text) {
+  char charTxt[text.length()+1];
+  strcpy(charTxt, text.c_str()); //convert char* to char[]
+  int i=0;
+
+  while (std::isspace(charTxt[i])) {
+    text.erase(text.begin());//Supposing delete always the first character...
+    i++;
+  }
+  return text;
+}
+
+
+
+void novel::newchara(std::string line){
+  std::vector<std::string> arguments=split(line,' '); //splitting arguments
+  std::string character=arguments[1]; //1st argument is the name of the characters
+  charaList.push_back(character);
+  internalSave.insert(std::make_pair(character, line));
+
+  for (unsigned int i=2; i<arguments.size();i++){ //other arguments are options
+    sf::String sfArg=toSfString(arguments[i]);
+
+    if (sfArg.find("=")<sfArg.getSize()) {
+      std::vector<std::string> parsed=split(arguments[i],'=');
+      if (parsed.size()==2){
+        if (parsed[0]=="color"){
+          internalSave.insert(std::make_pair(character+".color", parsed[1]));
+        } else {std::cout<<"\nWarning : undefined option ["+parsed[0]+"] in ["+arguments[i]+"]. Skipping.";}
+
+      } else {
+        std::cout<< "\nWarning : ["+arguments[i]+"] is not a valid form of option argument in this command. Skipping.";
+      }
+    } else {
+      std::cout << "\nWarning : ["+arguments[i]+"] is not a valid option argument for this command. Skipping.";
+    }
+  }
+}
+
+void novel::say(std::string line){
+  std::vector<std::string> arguments=split(line,' '); //splitting arguments
+  std::string character=arguments[0]; //1st argument is the name of the characters
+  bool unknowChara=true;
+  if (arguments.size()>1) {
+    for (unsigned int i=0;i<charaList.size();i++) {if (charaList[i]==character) unknowChara=false;}
+    if (unknowChara) {
+      std::cout<<"\nError : Unknown command ["+character+"] on line ["+line+"]. Skipping.";
+    } else {
+      std::cout<<"\ncharacter ["+character+"] is ok.";
+    }
+  } else {
+    std::cout<<"\nWarning : the line ["+line+"] has no arguments !! skipping.";
+  }
+}

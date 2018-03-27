@@ -17,6 +17,10 @@ void button::render(sf::RenderWindow &scr) {scr.draw(text);}
 void button::updatepos() {text.setPosition(posx,posy);surface = text.getGlobalBounds();}
 void button::centerx(int w,int margin,bool update) {posx = margin + w/2 - surface.width/2;if (update) updatepos();}
 void button::centery(int h,int margin,bool update) {posy = margin + h/2 - surface.height/2;if (update) updatepos();}
+void button::setPosX(int x,bool update) {posx=x;if (update) updatepos();}
+void button::setPosY(int y,bool update) {posy=y;if (update) updatepos();}
+void button::moveX(int x,bool update) {posx+=x;if (update) updatepos();}
+void button::moveY(int y,bool update) {posy+=y;if (update) updatepos();}
 sf::Text button::gettxt() {return text;}
 
 bool button::clicked(int x,int y) {return surface.contains(x,y);}

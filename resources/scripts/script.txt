@@ -1,23 +1,44 @@
-#ceci est un script de test;
-#partie1;
+/*
+This is a test for the new synthax of the kagerou project fangame novel engine.
+The kagescan game is a bit different than other novel engines, because there is a map and label whill be executed only if the player interacts with the map.
+Like pokemon ! but in a event, it is a visual novel.
+The new synthax is based of the ren'py scripts.
+I will implement soon condictions (if else statements and vars but not lopp !)
+*/
 
-`0`Titre`Contenu
-sur plusieurs
-lignes;
-`1`Titre`Tests;
+varfile "resources/saves/main.save"
+mapfile "resources/map/couloir.map"
 
-#partie2;
+//var declarations
+character shintaro color=255,0,0
 
-  `0`Titre2`Contenu
-  sur plusieurs
-  lignes;`1`Titre2`Tests;`0`Titre2`Contenu sur une ligne;`1`Titre2`Tests;
+music ost03="resources/music/OST03.ogg"
+sound chairs="resources/noises/oldDays-chairs.ogg"
+
+image shintaro.default="resources/imgs/characters/shintaro/default.png"
+image shintaro.scream="resources/imgs/characters/shintaro/scream.png"
+image shintaro.scary="resources/imgs/characters/shintaro/scary.png"
+image background.classroom="resources/imgs/backgrounds/classroom.night.jpg"
+
+/*a comment
+in multiple
+lines*/
+
+label part1
+  scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
+  show shintaro at=right transition=slide ease=none image=shintaro.default
+  play ost03
+  shintaro "hey i'm shintaro and it is a test for the kagerou project fangame._This is the second line_and the final line !"
+  choice "this will work"=hope "bullshit"=noHope
 
 
+label noHope
+show shintaro at=right transition=none image=shintaro.scary
+shintaro "huh... you're not cool !"
+goto end
 
+label hope
+shintaro "you are cool !!"
 
-#partie3;
-    `0`Titre2`Contenu
-    sur plusieurs    lignes;`1`
-    Titre2`
-    Tests;`0`Titre2`Contenu sur une ligne;
-    `1`Titre2`Tests;
+label end
+end
