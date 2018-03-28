@@ -5,17 +5,20 @@
 novel::novel(std::string file,sf::RenderWindow &scr){
   //VARS
     //some vars...
-
     loadfile=file;
+    actualPart="";
+    lastPartLine=0;
+
+  //first read the script for save variables and check basic synthax
     read(scr,true);
 };
 
 bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
-  int i(0);
+  int i(1);
   bool limitation=false;
   std::string part;
 
-  if (to==0 || from>to) {std::cout<<"reading the entire novel script ["+loadfile+"]...";}
+  if (to==1 || from>to) {std::cout<<"reading the entire novel script ["+loadfile+"]...";}
   else {
     std::cout<<"reading the file from line "+std::to_string(from)+" to line "+std::to_string(to);
     limitation=true;
@@ -32,7 +35,8 @@ bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
       }
       i++;
     }
-  } else {std::cout<<"Error : the file specified is not available !";};
+    return true;
+  } else {std::cout<<"Error : the file specified is not available !";return false;};
 }
 
 bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool init) {
@@ -49,33 +53,181 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
     if (line.find("*/")<lenght) comment=false;
     return false;
   }
-  //-------------Assume that the line is a command and there is not indent or errors in synthax.
 
   std::vector<std::string> parsed=split(readline,' ');
 
 
   std::string command=parsed[0];
   if (init) {
-    if (command=="character") newchara(readline,numLine); //Switch in std::string not exists.
-    else if (command=="varfile") ;
-    else if (command=="mapfile") ;
-    else if (command=="label") ;
-    else if (command=="sound") ;
-    else if (command=="image") ;
-    else if (command=="label") ;
+    if (command=="character") newchara(readline,numLine); //Switch of std::string not exists :(
+    else if (command=="varfile") ;//will be implemented soon
+    else if (command=="mapfile") ;//this too
+    else if (command=="label") newLabel(readline,numLine);
+    else if (command=="sound") loadSound(readline,numLine); //waiting for a answer of an issue
+    else if (command=="music") loadMusic(readline,numLine); //this too
+    else if (command=="image") loadImage(readline,numLine);
+    else if (command=="end") endLabel(readline,numLine);
   } else {
     //-------------------------//
-    if (command!="scene");
-    else if (command!="show");
-    else if (command!="play");
-    else if (command!="choice");
-    else if (command!="goto");
-    else if (command!="end");
+    if (command=="scene");
+    else if (command=="show") show(readline,numLine+1);
+    else if (command=="play"); //waiting for the issue fixing of loadSound and loadfile
+    else if (command=="choice");
+    else if (command=="goto");
+    else if (command=="end");
+    else if (command=="music"||command=="character"||command=="varfile"||command=="mapfile"||command=="label"||command=="sound"||command=="image"||command=="label") ; //do nothing.
     else say(readline,numLine); //this is a character or a unknow command
   }
   return true;
 }
 
+void novel::newchara(std::string line,int numLine){
+  std::vector<std::string> arguments=split(line,' '); //splitting arguments
+  std::string character=arguments[1]; //1st argument is the name of the characters
+  charaList.push_back(character);
+  internalSave.insert(std::make_pair(character, line));
+
+  for (unsigned int i=2; i<arguments.size();i++){ //other arguments are options
+    sf::String sfArg=toSfString(arguments[i]);
+
+    if (sfArg.find("=")<sfArg.getSize()) {
+      std::vector<std::string> parsed=split(arguments[i],'=');
+      if (parsed.size()==2){
+        if (parsed[0]=="color"){
+          internalSave.insert(std::make_pair(character+".color", parsed[1]));
+        } else {std::cout<<"\nWarning : undefined option ["<<parsed[0]<<"] in ["<<arguments[i]<<"] on line "<<numLine<<" . Skipping.";}
+
+      } else {
+        std::cout<< "\nWarning : ["<<arguments[i]<<"] is not a valid form of option argument in this command on line "<<numLine<<" . Skipping.";
+      }
+    } else {
+      std::cout << "\nWarning : ["<<arguments[i]<<"] is not a valid option argument for this command on line "<<numLine<<" . Skipping.";
+    }
+  }
+}
+
+void novel::say(std::string line,int numLine){
+  std::vector<std::string> arguments=split(line,' '); //splitting arguments
+  std::string character=arguments[0]; //1st argument is the name of the characters
+  bool unknowChara=true;
+  if (arguments.size()>1) {
+    for (auto i:charaList) {if (i==character) unknowChara=false;}
+    if (unknowChara) {
+      std::cout<<"\nError : Unknown command ["<<character<<"] on line "<<numLine<<". Skipping.";
+    } else {
+      //----------------------------------------------
+      std::vector<sf::String> lines=splitQuotes(line,numLine);
+      std::cout<<"\n"<<character<<" :";
+      for (auto i:lines) std::cout<<"\n\t"<<i.toAnsiString();
+    }
+  } else {
+    std::cout<<"\nWarning : the line "<<numLine<<" ["<<line<<"] has no arguments !! skipping.";
+  }
+}
+
+void novel::newLabel(std::string line, int numLine){
+  if (!actualPart.empty()) allLabels.insert(std::make_pair(actualPart, std::to_string(lastPartLine)+";"+std::to_string(numLine-1)));
+  std::vector<std::string> temp=split(line,' ');
+  actualPart=temp[1];
+  lastPartLine=numLine;
+}
+
+void novel::endLabel(std::string line, int numLine){
+  allLabels.insert(std::make_pair(actualPart, std::to_string(lastPartLine)+";"+std::to_string(numLine)));
+  for (auto& map : allLabels) std::cout << "\n le label " << map.first << " se trouve aux lignes " << map.second;
+}
+
+void novel::loadMusic(std::string line, int numLine) {
+  //I am unable to copy sf::music in a std::map so i'm waiting for an answer
+  /*sf::Music music;
+  std::vector<sf::String> temp=splitQuotes(line,numLine);
+  std::string fileLocation=temp[0].toAnsiString();
+  std::vector<std::string> temp2=split(line,' ');
+  std::vector<std::string> temp3=split(temp2[1],'=');
+
+  if (!music.openFromFile(fileLocation)) {std::cout<<"\nError : unable to locate the file ["+fileLocation+"] on line "+std::to_string(numLine)+". Skipping loading music !";}
+  else {allMusics.insert( std::make_pair(temp3[0],music) );
+  std::cout<<"\n temp3 : "<<temp3[0]<<"="<<fileLocation;}*/
+}
+
+void novel::loadSound(std::string line, int numLine) {
+  //Same issue of novel::loadMusic
+  /*sf::SoundBuffer soundBuff;
+  sf::Sound sound;
+  std::vector<sf::String> temp=splitQuotes(line,numLine);
+  std::vector<std::string> temp2=split(line,' ');
+  std::vector<std::string> temp3=split(temp2[1],'=');
+  std::string fileLocation=temp[0].toAnsiString();
+  std::string name=temp3[0];
+
+  if (!soundBuff.loadFromFile(fileLocation)) {std::cout<<"\nError : unable to locate the file ["<<fileLocation<<"] on line "<<numLine<<". Skipping loading sound !";}
+  else {
+    buffer.insert( std::make_pair(name,soundBuff) );
+    sound.setBuffer( buffer[name] );
+    allSounds.insert(std::make_pair(name,sound));
+    std::cout<<"\n temp3 : "<<name<<"="<<fileLocation;
+  }*/
+}
+
+void novel::loadImage(std::string line, int numLine) {
+  sf::Texture texture;
+
+  std::vector<sf::String> temp=splitQuotes(line,numLine);
+  std::vector<std::string> temp2=split(line,' ');
+  std::vector<std::string> temp3=split(temp2[1],'=');
+  std::string fileLocation=temp[0].toAnsiString();
+  std::string name=temp3[0];
+
+  if ( !texture.loadFromFile(fileLocation) ) {std::cout<<"Info: Error loading an image on line "<<numLine<<" (read the error below). Skipping loading the image !"<<std::flush;}
+  else {
+    allTextures.insert( std::make_pair(name,texture) );
+    sf::Sprite sprite(allTextures[name]);
+    allImages.insert( std::make_pair(name,sprite) );
+    std::cout<<"\n l'image "<<fileLocation<<" a été entrée dans la variable d'images "<<name<<std::flush;
+  }
+}
+
+void novel::show(std::string line, int numLine){
+  std::vector<std::string> allArgs=split(line,' ');
+  std::string at="right"; //default value
+  //bool imageLoaded=false;
+  if (allArgs.size()<2){std::cout<<"\nError : on line "<<numLine<<" too few arguments excepted";}
+  else {
+    for (unsigned int i=2; i<allArgs.size();i++){ //reaching all options
+      std::vector<std::string> parsed=split(allArgs[i],'=');
+      if (parsed.size()<2){std::cout<<"\n To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...";}
+      else {
+        std::string option=parsed[0];
+        std::string argument=parsed[1];
+        if (option=="image"){
+          if (allImages.find(argument) == allImages.end()) {std::cout<<"\nWarning : On line "<<numLine<<" the image ["<<argument<<"] was not declared in this scope.";}
+          else {
+            if (at=="right")      {atRight=allImages[argument];}
+            else if (at=="left")  {atLeft=allImages[argument];}
+            else if (at=="center"){center=allImages[argument];}
+            else {std::cout<<"\nInternal error : Interpreting the line "<<numLine<<", an incorrect value happened.(at="<<at<<")";}
+            std::cout<<"\n\tDisplay image : "<<argument;
+          }
+        }
+        else if (option=="at"){
+          if (at=="right")      {}//do nothing because the default value is right...
+          else if (at=="left")  {at="left";}
+          else if (at=="center"){at="center";}
+          else {std::cout<<"\nWarning : On line "<<numLine<<", value ["<<at<<"] is incorrect (only atRight,atLeft,center is excepted ! Be careful : it is case sentitive)";}
+          std::cout<<"\n\tposition of the character : "<<argument;
+        }
+        else if (option=="transition") {
+          //checkTransition(argument);
+        }
+        else if (option=="ease") {
+          //checkEase(argument);
+        }
+        else {std::cout<<"\nError : unknow option ["<<option<<"].Skipping...";}
+      }
+    }
+  }
+}
+//--------------------------------------------------------------Useful functions
 int novel::debug(sf::RenderWindow &scr) {
   std::string part;
   std::vector<button> display;
@@ -90,7 +242,7 @@ int novel::debug(sf::RenderWindow &scr) {
 
   std::ifstream file(loadfile.c_str()); //convert string to char*
     if (file) {
-      //I don't use read because I want to use a if statement with bool play()
+      //I don't use read() because I want to use a if statement with bool play()
       while (std::getline(file,part)) {
         if (play(part,scr,i)) display.push_back( button(animeace,part,10,sf::Color::White,10,position+15*i) );
         i++;
@@ -136,9 +288,7 @@ std::vector<std::string> novel::split(std::string string, char search) {
   std::vector<std::string> parsed;
   std::string command;
   std::istringstream spart(string);
-  while(std::getline(spart,command,search)) {
-    parsed.push_back(command);
-  }
+  while(std::getline(spart,command,search)) parsed.push_back(command);
   return parsed;
 }
 
@@ -147,52 +297,39 @@ std::string novel::removeindent(std::string text) {
   strcpy(charTxt, text.c_str()); //convert char* to char[]
   int i=0;
 
-  while (std::isspace(charTxt[i])) {
-    text.erase(text.begin());//Supposing delete always the first character...
+  while (std::isspace(charTxt[i])) {//while the first character is a space or an indent
+    text.erase(text.begin());//remove it.
     i++;
   }
   return text;
 }
 
+std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
+  bool endStr=false;
+  sf::String sfStrLine=toSfString(line);
+  std::size_t start(0),from(0);
 
+  std::vector<std::string> positions;
+  std::vector<sf::String> parsed;
 
-void novel::newchara(std::string line,int numLine){
-  std::vector<std::string> arguments=split(line,' '); //splitting arguments
-  std::string character=arguments[1]; //1st argument is the name of the characters
-  charaList.push_back(character);
-  internalSave.insert(std::make_pair(character, line));
+  while ( sfStrLine.find('"',start+1)<sfStrLine.getSize() ){
+    start = sfStrLine.find('"',start+1);
+    endStr = !endStr;
+    if (endStr){from=start+1;}
+    else {positions.push_back(std::to_string(from)+";"+std::to_string(start));}
+  }
 
-  for (unsigned int i=2; i<arguments.size();i++){ //other arguments are options
-    sf::String sfArg=toSfString(arguments[i]);
-
-    if (sfArg.find("=")<sfArg.getSize()) {
-      std::vector<std::string> parsed=split(arguments[i],'=');
-      if (parsed.size()==2){
-        if (parsed[0]=="color"){
-          internalSave.insert(std::make_pair(character+".color", parsed[1]));
-        } else {std::cout<<"\nWarning : undefined option ["+parsed[0]+"] in ["+arguments[i]+"] on line "+std::to_string(numLine)+" . Skipping.";}
-
-      } else {
-        std::cout<< "\nWarning : ["+arguments[i]+"] is not a valid form of option argument in this command on line "+std::to_string(numLine)+" . Skipping.";
+  if (start==0) {std::cout<<"\nWarning : there is not any string in the line "+std::to_string(numLine)+" . Skipping.";}
+  else {
+    if (endStr){std::cout<<"\nError : Unterminated string on line "+std::to_string(numLine);}
+    else {
+      for (auto i:positions){
+        std::vector<std::string> temp=split(i,';');
+        parsed.push_back( sfStrLine.substring(  std::stoi(temp[0]),
+                                                std::stoi(temp[1])-std::stoi(temp[0])
+                                              ) );
       }
-    } else {
-      std::cout << "\nWarning : ["+arguments[i]+"] is not a valid option argument for this command on line "+std::to_string(numLine)+" . Skipping.";
     }
   }
-}
-
-void novel::say(std::string line,int numLine){
-  std::vector<std::string> arguments=split(line,' '); //splitting arguments
-  std::string character=arguments[0]; //1st argument is the name of the characters
-  bool unknowChara=true;
-  if (arguments.size()>1) {
-    for (unsigned int i=0;i<charaList.size();i++) {if (charaList[i]==character) unknowChara=false;}
-    if (unknowChara) {
-      std::cout<<"\nError : Unknown command ["+character+"] on line "+std::to_string(numLine)+". Skipping.";
-    } else {
-      std::cout<<"\ncharacter ["+character+"] is ok.";
-    }
-  } else {
-    std::cout<<"\nWarning : the line "+std::to_string(numLine)+" ["+line+"] has no arguments !! skipping.";
-  }
+  return parsed;
 }

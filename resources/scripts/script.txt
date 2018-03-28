@@ -12,13 +12,13 @@ mapfile "resources/map/couloir.map"
 //var declarations
 character shintaro color=255,0,0
 
-music ost03="resources/music/OST03.ogg"
+music ost03="resources/sounds/OST03.ogg"
 sound chairs="resources/noises/oldDays-chairs.ogg"
 
-image shintaro.default="resources/imgs/characters/shintaro/default.png"
-image shintaro.scream="resources/imgs/characters/shintaro/scream.png"
-image shintaro.scary="resources/imgs/characters/shintaro/scary.png"
-image background.classroom="resources/imgs/backgrounds/classroom.night.jpg"
+image shintaro.default="resources/img/characters/shintaro/default.png"
+image shintaro.scream="resources/img/characters/shintaro/scream.png"
+image shintaro.scary="resources/img/characters/shintaro/scary.png"
+image background.classroom="resources/img/background/classroom.night.jpg"
 
 /*a comment
 in multiple
@@ -27,9 +27,13 @@ lines*/
 label part1
   scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
   show shintaro at=right transition=slide ease=none image=shintaro.default
+  show
+  show shintaro image=shintaro.sdsjk
+  show shintaro at=dbsfd
+  //Thanks
   play ost03
-  shintaro "hey i'm shintaro and it is a test for the kagerou project fangame._This is the second line_and the final line !"
-  choice "this will work"=hope "bullshit"=noHope
+  shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
+  choice hope="this will work" noHope="bullshit"
 
 
 label noHope
