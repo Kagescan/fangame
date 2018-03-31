@@ -10,7 +10,9 @@ int main()
 {
 
     std::cout <<"\nKagerou Project Fangame Version 2.0\n"<<
-                "\n (c) The KageTeam Fr community - Under the MIT/X11 license,please read COPYRIGHT file\n\n"<<std::flush;
+                "\n (c) The KageTeam Fr community - Under the MIT/X11 license,please read COPYRIGHT file"<<
+                "\n Note : errors in the SFML lib and this programs are in different flush. They are not synced yet."<<
+                "\n\n"<<std::flush;
     int scrw = 1280, scrh = 720;
     sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Kagerou Project Fangame V2 - debug mode");//,sf::Style::Fullscreen
     scr.setFramerateLimit(60);
@@ -53,7 +55,8 @@ int main()
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
                           std::string theScriptFile("resources/scripts/script.txt");
                           novel engine(theScriptFile,scr);
-                          engine.debug(scr);
+                          //engine.debug(scr);
+                          engine.readPart("part1",scr);
                           std::cout<< "clicked";
                         } else {}
                     }break;}

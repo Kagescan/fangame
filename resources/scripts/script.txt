@@ -11,6 +11,7 @@ mapfile "resources/map/couloir.map"
 
 //var declarations
 character shintaro color=255,0,0
+character logan color=255,255,255
 
 music ost03="resources/sounds/OST03.ogg"
 sound chairs="resources/noises/oldDays-chairs.ogg"
@@ -27,22 +28,25 @@ lines*/
 label part1
   scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
   show shintaro at=right transition=slide ease=none image=shintaro.default
-  show
-  show shintaro image=shintaro.sdsjk
-  show shintaro at=dbsfd
-  //Thanks
-  play ost03
+  play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
+  stop ost03
+  play chairs
+  shintaro "HUH? what is it ??"
+  logan "My code is bad?"
   choice hope="this will work" noHope="bullshit"
-
+endLabel
 
 label noHope
 show shintaro at=right transition=none image=shintaro.scary
 shintaro "huh... you're not cool !"
 goto end
+endLabel
 
 label hope
 shintaro "you are cool !!"
+endLabel
 
 label end
 end
+endLabel
