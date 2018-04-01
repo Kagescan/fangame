@@ -35,7 +35,7 @@ novel.o : novel.cpp
 		$(CXX) $(CFLAGS) -c novel.cpp -o $(objOut)novel.o
 		
 easing.o : easing.cpp
-		$(CXX) $(CFLAGS) -c easing.cpp -o $(objOut)easing.o
+		$(CXX) $(CFLAGS) -c easing.cpp -o $(objOut)easing.o -w
 
 main.o : main.cpp button.cpp game.cpp
 		$(CXX) $(CFLAGS) -c main.cpp -o $(objOut)main.o
