@@ -32,7 +32,7 @@ class novel{
     private:
       //Vars
         std::string loadfile,actualPart;
-        bool comment,readingLabel,endReading;
+        bool comment,readingLabel,endReading,nogui;
         int lastPartLine;
         sf::Sprite atRight,atLeft,center;
         std::vector<std::string> charaList;
@@ -57,6 +57,8 @@ class novel{
         int playSound(std::string line, int numLine=-1);
         void stopSound(std::string line, int numLine=-1);
         int goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
+        void print(std::string line);
+        int choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
 
       //utility functions
         bool read(sf::RenderWindow &scr,bool init=false,int from=1, int to=0);

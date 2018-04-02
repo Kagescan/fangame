@@ -26,15 +26,18 @@ in multiple
 lines*/
 
 label part1
+  print ceci est la partie 1
   scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
   show shintaro at=right transition=slide ease=none image=shintaro.default
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
   stop ost03
   play chairs
+  goto testGt
   shintaro "HUH? what is it ??"
   logan "My code is bad?"
-  choice hope="this will work" noHope="bullshit"
+  choice "this will work"=hope/"bullshit"=noHope
+  print fin de la partie 1
 endLabel
 
 label noHope
@@ -45,6 +48,10 @@ endLabel
 
 label hope
 shintaro "you are cool !!"
+endLabel
+
+label testGt
+  print goto
 endLabel
 
 label end

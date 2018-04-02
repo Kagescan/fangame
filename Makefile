@@ -12,7 +12,7 @@ ifeq ($(OS),Windows_NT)
 	LDFLAGS=-LC:\SFML-2.4.2\bin -LC:\SFML-2.4.2\lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d -lsfml-network-d -std=c++11 -Og
 else
 	CFLAGS=-Wall -g -I/usr/local/include/SFML/ -std=c++17
-	LDFLAGS=-L/usr/local/lib/ -lopenal /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-audio.so /usr/local/lib/)libsfml-network.so -std=c++17 -Og
+	LDFLAGS=-L/usr/local/lib/ -lopenal /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-audio.so /usr/local/lib/libsfml-network.so -std=c++17 -Og
 	EXEC=fangame
 endif
 

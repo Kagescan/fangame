@@ -10,6 +10,8 @@ novel::novel(std::string file,sf::RenderWindow &scr){
     lastPartLine=0;
     readingLabel=false;
     endReading=false;
+    nogui=true; //There is no gui (debug mode)
+    //nogui=false;
 
   //first read the script for save variables and check basic synthax
     read(scr,true);
@@ -21,9 +23,10 @@ bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
   bool limitation=false;
   std::string part;
 
-  if (to==1 || from>to) {std::cout<<"\nReading the entire novel script ["+loadfile+"]..."<<std::flush;}
-  else {
-    std::cout<<"\nReading the file from line "+std::to_string(from)+" to line "<<to;
+  if (to==1 || from>to){
+    if (nogui) std::cout<<"Reading the entire novel script ["<<loadfile<<"]...\n\n"<<std::flush;
+  } else {
+    if (nogui) std::cout<<" (from line "<<from<<" to line "<<to<<")\n\n"<<std::flush;
     limitation=true;
   }
 
@@ -31,11 +34,11 @@ bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
   if (file) {
     //Parse parts :
     while (std::getline(file,part)) {
-      if (limitation){
+      if (limitation) {
         if (i>=from && i<=to) play(part,scr,i,init);
-      } else {
-        play(part,scr,i,init);
       }
+      else
+        play(part,scr,i,init);
       i++;
     }
     return true;
@@ -74,13 +77,14 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
   } else {
     //-------------------------//
     if (command=="scene");
-    else if (command=="show") show(readline,numLine+1);
-    else if (command=="play") playSound(readline, numLine);
-    else if (command=="stop") stopSound(readline, numLine);
-    else if (command=="choice");
-    else if (command=="goto") goTo(readline, scr, numLine);
+    else if (command=="print")  print(readline);
+    else if (command=="show")   show(readline,numLine+1);
+    else if (command=="play")   playSound(readline, numLine);
+    else if (command=="stop")   stopSound(readline, numLine);
+    else if (command=="choice") choice(readline, scr, numLine);
+    else if (command=="goto")   goTo(readline, scr, numLine);
     else if (command=="end") {
-      std::cout<<"\nRECEIVED THE END COMMAND, STOPPING READING\n"<<std::flush;
+      std::cout<<"\nRECEIVED THE END COMMAND, STOPPING READING\n\n"<<std::flush;
       endReading=true;
       return true;
     }
@@ -92,10 +96,19 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
 
 bool novel::readPart(std::string part,sf::RenderWindow &scr, int numLine){
   if ( allLabels.find(part) != allLabels.end() ){
-    std::cout<<"\n"<<part<<" = "<<allLabels[part];
+    std::vector<std::string> fromto=split(allLabels[part],';');
+
+    if (fromto.size()>1){
+      if (nogui) std::cout<<"\nReading the part "<<part;
+      return read(scr, false, std::stoi(fromto[0]) , std::stoi(fromto[1]) );
+    } else {
+      std::cerr<<"Internal error during loading part "<<part<<". Unable to parse the part declaration.\n";
+      return false;
+    }
+
   }
   else {
-    std::cout<<"\nError : on line "<<numLine<<", the part ["<<part<<"] was not found. Unable to load the part.";
+    std::cerr<<"Error : on line "<<numLine<<", the part ["<<part<<"] was not found. Unable to load the part.\n";
     return false;
   }
   return true;
@@ -115,13 +128,14 @@ void novel::newchara(std::string line,int numLine){
       if (parsed.size()==2){
         if (parsed[0]=="color"){
           internalSave.insert(std::make_pair(character+".color", parsed[1]));
-        } else {std::cout<<"\nWarning : undefined option ["<<parsed[0]<<"] in ["<<arguments[i]<<"] on line "<<numLine<<" . Skipping.";}
+        } else
+          std::cerr<<"Warning : undefined option ["<<parsed[0]<<"] in ["<<arguments[i]<<"] on line "<<numLine<<" . Skipping.\n\n";
 
       } else {
-        std::cout<< "\nWarning : ["<<arguments[i]<<"] is not a valid form of option argument in this command on line "<<numLine<<" . Skipping.";
+        std::cerr<< "Warning : ["<<arguments[i]<<"] is not a valid form of option argument in this command on line "<<numLine<<" . Skipping.\n\n";
       }
     } else {
-      std::cout << "\nWarning : ["<<arguments[i]<<"] is not a valid option argument for this command on line "<<numLine<<" . Skipping.";
+      std::cout << "Warning : ["<<arguments[i]<<"] is not a valid option argument for this command on line "<<numLine<<" . Skipping.\n\n";
     }
   }
 }
@@ -133,21 +147,23 @@ void novel::say(std::string line,int numLine){
   if (arguments.size()>1) {
     for (auto i:charaList) {if (i==character) unknowChara=false;}
     if (unknowChara) {
-      std::cout<<"\nError : Unknown command ["<<character<<"] on line "<<numLine<<". Skipping.";
+      std::cerr<<"Error : Unknown command ["<<character<<"] on line "<<numLine<<". Skipping.\n\n";
     } else {
       //----------------------------------------------
-      std::vector<sf::String> lines=splitQuotes(line,numLine);
-      std::cout<<"\n"<<character<<" :";
-      for (auto i:lines) std::cout<<"\n\t"<<i.toAnsiString();
+      if (nogui){
+        std::vector<sf::String> lines=splitQuotes(line,numLine);
+        std::cout<<"\n"<<character<<" :\n";
+        for (auto i:lines) std::cout<<"\t"<<i.toAnsiString()<<"\n";
+      }
     }
   } else {
-    std::cout<<"\nWarning : the line "<<numLine<<" ["<<line<<"] has no arguments !! skipping.";
+    std::cerr<<"Warning : the line "<<numLine<<" ["<<line<<"] has no arguments !! skipping.\n\n";
   }
 }
 
 void novel::newLabel(std::string line, int numLine){
   if (readingLabel)
-    std::cout<<"\nError : On line "<<numLine<<", a new part has been declared but endLabel not found for the first part !";
+    std::cerr<<"Error : On line "<<numLine<<", a new part has been declared but endLabel not found for the first part !\n\n";
   else {
     std::vector<std::string> temp = split(line,' ');
 
@@ -156,7 +172,7 @@ void novel::newLabel(std::string line, int numLine){
       lastPartLine = numLine;
       readingLabel = true;
     } else
-      std::cout<<"\nError : On line "<<numLine<<", no part name provided.";
+      std::cerr<<"Error : On line "<<numLine<<", no part name provided.\n\n";
   }
 }
 
@@ -165,7 +181,7 @@ void novel::endLabel(std::string line, int numLine){
     allLabels.insert(std::make_pair(actualPart, std::to_string(lastPartLine)+";"+std::to_string(numLine)));
     readingLabel=false;
   } else
-    std::cout<<"Error : no label to end at this state ";
+    std::cerr<<"Error : no label to end at this state\n\n";
 }
 
 void novel::loadMusic(std::string line, int numLine) {
@@ -178,10 +194,10 @@ void novel::loadMusic(std::string line, int numLine) {
       sf::Music& music = allMusics[temp3[0]]; // construit l'élément directement dans la map et le retourne
 
       if (!music.openFromFile(fileLocation))
-        std::cout<<std::flush<<"\nError : unable to locate the file ["+fileLocation+"] on line "+std::to_string(numLine)+". Music will be unable to play !";
+        std::cerr<<"Info : An error happened during loading ["+fileLocation+"] on line "+std::to_string(numLine)+" (read error below). Music will be unable to play !\n\n";
   }
   else
-    std::cout<<"\nOn line "<<numLine<<" , no arguments found (arguments must be in the form variable=\"location\"). Skipping loading sound.";
+    std::cerr<<"On line "<<numLine<<" , no arguments found (arguments must be in the form variable=\"location\"). Skipping loading sound.\n\n";
 
 }
 
@@ -197,11 +213,11 @@ void novel::loadSound(std::string line, int numLine) {
     sf::Sound& sound=allSounds[name];
 
     if (!soundBuff.loadFromFile(fileLocation))
-      std::cout<<std::flush<<"\nError : unable to locate the file ["<<fileLocation<<"] on line "<<numLine<<". Skipping loading sound !";
+      std::cerr<<"Info : an error happened during loading ["<<fileLocation<<"] on line "<<numLine<<" (read error below). Skipping loading sound !\n\n";
     else
       sound.setBuffer(buffer[name]);
   } else {
-    std::cout<<"\nOn line "<<numLine<<" , no arguments found (arguments must be in the form variable=\"location\"). Skipping loading sound.";
+    std::cerr<<"On line "<<numLine<<" , no arguments found (arguments must be in the form variable=\"location\"). Skipping loading sound.\n\n";
   }
 }
 
@@ -214,7 +230,7 @@ void novel::loadImage(std::string line, int numLine) {
   std::string fileLocation=temp[0].toAnsiString();
   std::string name=temp3[0];
 
-  if ( !texture.loadFromFile(fileLocation) ) {std::cout<<std::flush<<"\nInfo: Error loading an image on line "<<numLine<<" (read the error below). Skipping loading the image !"<<std::flush;}
+  if ( !texture.loadFromFile(fileLocation) ) {std::cerr<<"Info: an error happened during loading an image on line "<<numLine<<" (read the error below). Skipping loading the image !\n\n";}
   else {
     allTextures.insert( std::make_pair(name,texture) );
     sf::Sprite sprite(allTextures[name]);
@@ -226,30 +242,31 @@ void novel::show(std::string line, int numLine){
   std::vector<std::string> allArgs=split(line,' ');
   std::string at="right"; //default value
   //bool imageLoaded=false;
-  if (allArgs.size()<2){std::cout<<"\nError : on line "<<numLine<<" too few arguments excepted";}
+  if (allArgs.size()<2){std::cerr<<"Error : on line "<<numLine<<" too few arguments excepted\n\n";}
   else {
+    if (nogui) std::cout<<"For the character "<<allArgs[1]<<"\n";
     for (unsigned int i=2; i<allArgs.size();i++){ //reaching all options
       std::vector<std::string> parsed=split(allArgs[i],'=');
-      if (parsed.size()<2){std::cout<<"\n To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...";}
+      if (parsed.size()<2){std::cerr<<"To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...\n\n";}
       else {
         std::string option=parsed[0];
         std::string argument=parsed[1];
         if (option=="image"){
-          if (allImages.find(argument) == allImages.end()) {std::cout<<"\nWarning : On line "<<numLine<<" the image ["<<argument<<"] was not declared in this scope.";}
+          if (allImages.find(argument) == allImages.end()) {std::cerr<<"Warning : On line "<<numLine<<" the image ["<<argument<<"] was not declared in this scope.\n\n";}
           else {
             if (at=="right")      {atRight=allImages[argument];}
             else if (at=="left")  {atLeft=allImages[argument];}
             else if (at=="center"){center=allImages[argument];}
-            else {std::cout<<"\nInternal error : Interpreting the line "<<numLine<<", an incorrect value happened.(at="<<at<<")";}
-            std::cout<<"\n\tDisplay image : "<<argument;
+            else {std::cerr<<"Internal error : Interpreting the line "<<numLine<<", an incorrect value happened.(at="<<at<<")\n\n";}
+            if (nogui) std::cout<<"\tDisplay image : "<<argument<<"\n";
           }
         }
         else if (option=="at"){
-          if (at=="right")      {}//do nothing because the default value is right...
-          else if (at=="left")  {at="left";}
-          else if (at=="center"){at="center";}
-          else {std::cout<<"\nWarning : On line "<<numLine<<", value ["<<at<<"] is incorrect (only atRight,atLeft,center is excepted ! Be careful : it is case sentitive)";}
-          std::cout<<"\n\tposition of the character : "<<argument;
+          if (argument=="right")      {}//do nothing because the default value is right...
+          else if (argument=="left")  {at="left";}
+          else if (argument=="center")  {at="center";}
+          else {std::cerr<<"Warning : On line "<<numLine<<", value ["<<at<<"] is incorrect (only right,left,center is excepted !)\n\n";}
+          if (nogui) std::cout<<"\tposition of the character : "<<argument<<"\n";
         }
         else if (option=="transition") {
           //checkTransition(argument);
@@ -257,7 +274,7 @@ void novel::show(std::string line, int numLine){
         else if (option=="ease") {
           //checkEase(argument);
         }
-        else {std::cout<<"\nError : unknow option ["<<option<<"].Skipping...";}
+        else {std::cerr<<"Error : unknow option ["<<option<<"].Skipping...\n\n";}
       }
     }
   }
@@ -274,7 +291,7 @@ int novel::playSound(std::string line, int numLine) {
     else if (allSounds.find(name) != allSounds.end())
       type="Sound";
     else {
-      std::cout<<"\nError : On line "<<numLine<<" The music or the sound ["<<name<<"] was not declared in this scope.";
+      std::cerr<<"Error : On line "<<numLine<<" The music or the sound ["<<name<<"] was not declared in this scope.\n\n";
       return 0; //exit the function
     }
 
@@ -288,7 +305,7 @@ int novel::playSound(std::string line, int numLine) {
           if (splitEq[1]=="true")       loop=true;
           else if (splitEq[1]=="false") {} //do nothing because the var is already set to false
           else {
-            std::cout<<"\nWarning : On line "<<numLine<<" unknow option ["<<splitEq[1]<<"] for ["<<splitEq[0]<<"] .";
+            std::cerr<<"Warning : On line "<<numLine<<" unknow option ["<<splitEq[1]<<"] for ["<<splitEq[0]<<"] .\n\n";
             return 0;
           }
 
@@ -307,7 +324,7 @@ int novel::playSound(std::string line, int numLine) {
       allMusics[name].play();
   }
   else
-    std::cout<<"\nError : no music variables specified. Unable to play sound.";
+    std::cerr<<"Error : no music variables specified. Unable to play sound.\n\n";
   return 0;
 }
 
@@ -321,10 +338,10 @@ void novel::stopSound(std::string line, int numLine) {
     else if (allSounds.find(name) != allSounds.end())
       allSounds[name].stop();
     else
-      std::cout<<"\nError : On line "<<numLine<<" The music or the sound ["<<name<<"] was not declared in this scope.";
+      std::cerr<<"Error : On line "<<numLine<<" The music or the sound ["<<name<<"] was not declared in this scope.\n\n";
   }
   else
-    std::cout<<"\nError : no music variables specified. Unable to play sound.";
+    std::cerr<<"Error : no music variables specified. Unable to play sound.\n\n";
 }
 
 int novel::goTo(std::string line, sf::RenderWindow &scr, int numLine) {
@@ -336,9 +353,72 @@ int novel::goTo(std::string line, sf::RenderWindow &scr, int numLine) {
   return 0;
 }
 
+void novel::print(std::string line){
+  std::vector<std::string> text=split(line,' ');
+  if (nogui) std::cout<<"\n\n"; //if there is a gui then don't need to break line because there is not much text in the console
+  std::cout<<"<<";
+  for (unsigned int i=1;i<text.size();i++)
+    std::cout<<text[i]<<" ";
+  std::cout<<"\n\n"<<std::flush;
 
+}
+
+int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
+  std::vector<std::string> choices=split(line,'/');
+  std::string numberchoice;
+  if (choices.size()>1) {
+    if (nogui)
+      std::cout<<"\n Make your choice now : ";
+
+    for (unsigned int i=0;i<choices.size();i++){
+      std::vector<std::string> gotochoice=split(choices[i],'=');
+
+      if (gotochoice.size()>1){
+        std::vector<sf::String> display=splitQuotes(choices[i]);
+
+        if (display.size()>0){
+
+          if (nogui)
+              std::cout<<"\n\t["<<i<<"]"<<display[0].toAnsiString();
+        }
+        else{
+          std::cerr<<"Error on line "<<numLine<<",no text for the button entered... Have you insered text in quotes?\n\n";
+          return 0;
+        }
+      }
+      else{
+        std::cerr<<" Error on line "<<numLine<<", too few arguments. Is argument is like partName=\"Text to display in the button\" ?\n\n";
+        return 0;
+      }
+    }
+    if (nogui){
+      bool correctEntry=false;
+      while (!correctEntry){
+        std::cout<<"Enter the number of the choice : ";
+        std::getline (std::cin,numberchoice);
+        try{
+          unsigned int numchoice2=std::stoi(numberchoice);
+          if (numchoice2>=0 && numchoice2<choices.size()){
+            std::vector<std::string> gotochoice=split(choices[numchoice2],'=');
+            readPart(gotochoice[1],scr,numLine);
+            correctEntry=true;
+          } else
+            std::cerr<<"Incorrect entry. Please enter a number between 0 and "<<choices.size()-1<<"\n\n";
+        }
+        catch (std::invalid_argument) {
+          std::cerr<<"Incorrect entry. Please enter a number between 0 and "<<choices.size()-1<<"\n\n";
+        }
+      }
+
+    }
+  }
+  else
+    std::cout<<"\n Error on line "<<numLine<<" : too few arguments for choice. have you separed the choices with a slash (/) ?";
+
+  return 0;
+}
 //--------------------------------------------------------------Useful functions
-int novel::debug(sf::RenderWindow &scr) {
+int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please. It burn eyes.
   std::string part;
   std::vector<button> display;
   bool active(true);
@@ -417,7 +497,7 @@ std::string novel::removeindent(std::string text) {
 std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
   bool endStr=false;
   sf::String sfStrLine=toSfString(line);
-  std::size_t start(0),from(0);
+  std::size_t start(-1),from(0);
 
   std::vector<std::string> positions;
   std::vector<sf::String> parsed;
@@ -429,9 +509,9 @@ std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
     else {positions.push_back(std::to_string(from)+";"+std::to_string(start));}
   }
 
-  if (start==0) {std::cout<<"\nWarning : there is not any string in the line "+std::to_string(numLine)+" . Skipping.";}
+  if (start==0) {std::cerr<<"Warning : there is not any string in the line "+std::to_string(numLine)+" . Skipping.\n\n";}
   else {
-    if (endStr){std::cout<<"\nError : Unterminated string on line "+std::to_string(numLine);}
+    if (endStr){std::cerr<<"Error : Unterminated string on line "<<numLine<<"\n\n";}
     else {
       for (auto i:positions){
         std::vector<std::string> temp=split(i,';');
