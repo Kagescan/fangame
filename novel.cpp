@@ -4,14 +4,36 @@
 
 novel::novel(std::string file,sf::RenderWindow &scr){
   //VARS
-    //some vars...
+    //VARS
+    scrw=1280;
+    scrh=720;
+
+    //Class vars
     loadfile=file;
     actualPart="";
     lastPartLine=0;
     readingLabel=false;
     endReading=false;
-    nogui=true; //There is no gui (debug mode)
-    //nogui=false;
+    nogui=false; //There is no gui (debug mode)
+    barPosY=scrh-scrh/3;
+    barColor=sf::Color(255,255,255,200);
+    bgColor=sf::Color::Black;
+
+    if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
+      std::cerr<<"Info : (internal error) during loading font Deja Vu Sans. The novel engine could be unable to display any text\n";
+
+    bar.setPosition(0,barPosY);
+    bar.setSize(sf::Vector2f(scrw,barPosY));
+    bar.setFillColor(barColor);
+
+    for (int i=0; i<3; i++){ //reset values
+      animDuration[i] = 1000;
+      animStart[i] = 0;
+      animEnd[i] = 0;
+      sizeX[i] = 1;
+      playingAnimation[i] = false;
+    }
+
 
   //first read the script for save variables and check basic synthax
     read(scr,true);
@@ -47,6 +69,9 @@ bool novel::read(sf::RenderWindow &scr,bool init,int from, int to) {
 
 bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool init) {
   if (endReading) return true;
+  saying=false;
+  makeAchoice=false;
+
   readline=removeindent(readline); //remove indents
   sf::String line=toSfString(readline); //converting to sfString add built-in functions and unicode support !
   std::size_t lenght=line.getSize();
@@ -90,6 +115,7 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
     }
     else if (command=="music"||command=="character"||command=="varfile"||command=="mapfile"||command=="label"||command=="sound"||command=="image"||command=="endLabel") ; //do nothing.
     else say(readline,numLine); //this is a character or a unknow command
+    display(scr);
   }
   return true;
 }
@@ -154,6 +180,10 @@ void novel::say(std::string line,int numLine){
         std::vector<sf::String> lines=splitQuotes(line,numLine);
         std::cout<<"\n"<<character<<" :\n";
         for (auto i:lines) std::cout<<"\t"<<i.toAnsiString()<<"\n";
+      } else {
+        displaySay=splitQuotes(line,numLine);
+        actualCharacter=character;
+        saying=true;
       }
     }
   } else {
@@ -240,44 +270,82 @@ void novel::loadImage(std::string line, int numLine) {
 
 void novel::show(std::string line, int numLine){
   std::vector<std::string> allArgs=split(line,' ');
-  std::string at="right"; //default value
+  int at=0; //default value
+  bool loadImage=false,makeTransition=false;
+  std::string loadImageArgument, makeTransitionArgument;
   //bool imageLoaded=false;
   if (allArgs.size()<2){std::cerr<<"Error : on line "<<numLine<<" too few arguments excepted\n\n";}
   else {
     if (nogui) std::cout<<"For the character "<<allArgs[1]<<"\n";
-    for (unsigned int i=2; i<allArgs.size();i++){ //reaching all options
+
+    for (unsigned int i=2; i<allArgs.size();i++){ //reaching all options and save (don't interpret yet because there is an order)
       std::vector<std::string> parsed=split(allArgs[i],'=');
       if (parsed.size()<2){std::cerr<<"To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...\n\n";}
       else {
         std::string option=parsed[0];
         std::string argument=parsed[1];
+
         if (option=="image"){
-          if (allImages.find(argument) == allImages.end()) {std::cerr<<"Warning : On line "<<numLine<<" the image ["<<argument<<"] was not declared in this scope.\n\n";}
-          else {
-            if (at=="right")      {atRight=allImages[argument];}
-            else if (at=="left")  {atLeft=allImages[argument];}
-            else if (at=="center"){center=allImages[argument];}
-            else {std::cerr<<"Internal error : Interpreting the line "<<numLine<<", an incorrect value happened.(at="<<at<<")\n\n";}
-            if (nogui) std::cout<<"\tDisplay image : "<<argument<<"\n";
-          }
-        }
-        else if (option=="at"){
+          loadImage=true;
+          loadImageArgument=argument;
+        } else if (option=="at"){
           if (argument=="right")      {}//do nothing because the default value is right...
-          else if (argument=="left")  {at="left";}
-          else if (argument=="center")  {at="center";}
+          else if (argument=="left")  {at=1;}
+          else if (argument=="center"){at=2;}
           else {std::cerr<<"Warning : On line "<<numLine<<", value ["<<at<<"] is incorrect (only right,left,center is excepted !)\n\n";}
           if (nogui) std::cout<<"\tposition of the character : "<<argument<<"\n";
         }
         else if (option=="transition") {
-          //checkTransition(argument);
+          makeTransition=true;
+          makeTransitionArgument=argument;
         }
         else if (option=="ease") {
           //checkEase(argument);
         }
-        else {std::cerr<<"Error : unknow option ["<<option<<"].Skipping...\n\n";}
+        else
+          std::cerr<<"Error : unknow option ["<<option<<"].Skipping...\n\n";
       }
     }
+
+    if (loadImage){ //then interpret whith defined values
+      showLoadImage(loadImageArgument,at,numLine);
+      if (makeTransition)
+        newTransition(makeTransitionArgument,at);
+    }
   }
+
+}
+
+int novel::showLoadImage(std::string argument,int at,int numLine){
+    if (allImages.find(argument) == allImages.end()) {
+      std::cerr<<"Warning : On line "<<numLine<<" the image ["<<argument<<"] was not declared in this scope.\n\n";
+      return 1;
+    } else {
+      sf::Vector2u imageSize=allTextures[argument].getSize();
+      if (at>=0 && at<=2){
+        sizeX[at]=imageSize.x; //Used in transition functions
+        displayAt[at]=allImages[argument];
+        atPosY[at]=scrh-imageSize.y;
+      }
+      switch (at) {
+        case 0: //At left
+          atPosX[0]=scrw-imageSize.x-15; //margin left 15px
+          break;
+        case 1: //At center
+          atPosX[1]=scrw/2-imageSize.x/2; //center the image
+          break;
+        case 2: //At right
+          atPosX[2]=15;//margin right 15px
+          break;
+        default:
+          std::cerr<<"Warning or internal error on line "<<numLine<<", Variable At not defined or incorrect value.(at="<<at<<")\n\n";
+          return 1;
+          break;
+      }
+      displayAt[at].setPosition(atPosX[at],atPosY[at]); //at should be valid
+      if (nogui) std::cout<<"\tDisplay image : "<<argument<<"\n";
+      return 0;
+    }
 }
 
 int novel::playSound(std::string line, int numLine) {
@@ -377,9 +445,11 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
         std::vector<sf::String> display=splitQuotes(choices[i]);
 
         if (display.size()>0){
-
           if (nogui)
-              std::cout<<"\n\t["<<i<<"]"<<display[0].toAnsiString();
+            std::cout<<"\n\t["<<i<<"]"<<display[0].toAnsiString();
+          else {
+            makeAchoice=true;
+          }
         }
         else{
           std::cerr<<"Error on line "<<numLine<<",no text for the button entered... Have you insered text in quotes?\n\n";
@@ -417,7 +487,135 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
 
   return 0;
 }
+
+int novel::newTransition(std::string transition, int who, int numLine){
+  if (checkTransition(transition)) {
+    if (who>=0 && who<=2){
+      transitionAt[who]=transition;
+      transitionTime[who]=clock.getElapsedTime();
+      playingAnimation[who]=true;
+      if (transition=="slideR"){
+        animStart[who] = scrw;
+        animEnd[who] = atPosX[who]-scrw;
+      } else if (transition=="slideL"){
+        animStart[who] = -sizeX[who];
+        animEnd[who] = sizeX[who]+atPosX[who];
+      }
+
+    } else
+      std::cerr<<"Internal error on line "<<numLine<<", the sprite to apply effects is incorrect ("<<who<<")";
+  }
+  else {
+    std::cerr<<"Error : on line "<<numLine<<", the transition ["<<transition<<"] is incorrect.\n\n";
+  }
+
+  return 0;
+}
+
+bool novel::checkTransition(std::string transition){
+  std::vector<std::string> list;
+  list.push_back("fade");
+  list.push_back("slideL");
+  list.push_back("slideR");
+  for (auto check: list){
+    if (check==transition)
+      return true;
+  }
+  return false; //Then return false
+}
+
+int novel::updateTransition(int who){
+  if (who>=0 && who<=2) {
+    if (playingAnimation[who]){
+      int getms = clock.getElapsedTime().asMilliseconds() - transitionTime[who].asMilliseconds();
+      int posx = ease.easeOutExpo(
+                getms>animDuration[who] ? animDuration[who]:getms,//elapsed time or max value
+                animStart[who], //start value
+                animEnd[who], //end value
+                animDuration[who] //duration of the animation
+            );
+
+      displayAt[who].setPosition(posx,atPosY[who]);
+      if (getms>animDuration[who])
+        playingAnimation[who]=false;
+    }
+  }
+  else {
+    std::cerr<<"Warning : (internal error) unable to update a sprite due to an incorrect variable"<<who;
+  }
+  return 0;
+}
+
+//-----------------------------------------------------------------GUI functions
+
+int novel::display(sf::RenderWindow &scr){
+  if (nogui) return 0;//If I don't need a GUI, i don't need to draw all the visual novel...
+  if (saying || makeAchoice){ //If there is a character who is speaking
+    bool waitForEvent=true;
+
+    while (waitForEvent) {
+      sf::Event event;
+      draw(scr);
+
+      while (scr.pollEvent(event)) {
+
+        if (event.type==sf::Event::Closed){
+          endReading=true;
+          return 0;
+
+        } else if (event.type==sf::Event::KeyReleased) {
+
+          if (event.key.code == sf::Keyboard::Escape){
+            endReading=true;
+            return 0;
+
+          } else {
+            waitForEvent=false;
+          }
+
+        }
+        else if (event.type==sf::Event::MouseButtonReleased){
+          waitForEvent=false;
+        }
+      }
+    }
+  } else {
+    draw(scr);
+  }
+  return 0;
+}
+
+int novel::draw(sf::RenderWindow &scr){
+  scr.clear(bgColor);
+  scr.draw(background);
+  for (int i=0;i<3;i++){
+    updateTransition(i);
+    scr.draw(displayAt[i]);
+  }
+  scr.draw(bar);
+  sf::Text tempTxt(actualCharacter,fontDeja,20);
+    tempTxt.setPosition(5,barPosY+8);
+    tempTxt.setOutlineColor(sf::Color::Red);
+    tempTxt.setOutlineColor(sf::Color::Red);
+    tempTxt.setOutlineThickness(1);
+    tempTxt.setStyle(sf::Text::Bold);
+    scr.draw(tempTxt);
+
+  for (unsigned int i=0; i<displaySay.size();i++){
+    sf::Text tempTxt(displaySay[i],fontDeja,27);
+      tempTxt.setPosition(10,barPosY+31+29*i);
+      tempTxt.setFillColor(sf::Color::Black);
+    scr.draw(tempTxt);
+  }
+  //scr.draw()
+  scr.display();
+  //scr.draw()
+  return 0;
+}
+
 //--------------------------------------------------------------Useful functions
+
+
 int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please. It burn eyes.
   std::string part;
   std::vector<button> display;

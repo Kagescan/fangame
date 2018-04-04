@@ -28,20 +28,24 @@ lines*/
 label part1
   print ceci est la partie 1
   scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
-  show shintaro at=right transition=slide ease=none image=shintaro.default
+  show shintaro image=shintaro.default at=right transition=slideR ease=none
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
   stop ost03
   play chairs
   goto testGt
+  show shintaro image=shintaro.scream at=center transition=slideL ease=none
   shintaro "HUH? what is it ??"
+  show shintaro image=shintaro.scary at=left transition=slideL ease=none
   logan "My code is bad?"
+  print en train de faire un choix
+  show shintaro image=shintaro.scream at=left
   choice "this will work"=hope/"bullshit"=noHope
   print fin de la partie 1
 endLabel
 
 label noHope
-show shintaro at=right transition=none image=shintaro.scary
+show shintaro at=right image=shintaro.scary transition=none
 shintaro "huh... you're not cool !"
 goto end
 endLabel

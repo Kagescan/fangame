@@ -1,5 +1,6 @@
 #ifndef NOVEL_H
 #define NOVEL_H
+
 /*Novel - parser for .kage scripts,scripts used for the Kagerou Project Fangame
  *copyright (c) Logan Tann
  *Under the MIT license. See COPYING file.
@@ -8,11 +9,12 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <SFML/Graphics.hpp>
-#include "game.h"
 #include <string.h>
 #include <map>
 #include <memory>
+#include <SFML/Graphics.hpp>
+#include "game.h"
+#include "easing.h"
 //#include <iterator>
 
 class novel{
@@ -31,11 +33,25 @@ class novel{
 
     private:
       //Vars
-        std::string loadfile,actualPart;
-        bool comment,readingLabel,endReading,nogui;
-        int lastPartLine;
-        sf::Sprite atRight,atLeft,center;
+        std::string loadfile,actualPart,actualCharacter;
+        std::string transitionAt[3];
+        bool comment,readingLabel,endReading,nogui,saying,makeAchoice;
+        bool playingAnimation[3];
+        int lastPartLine,barPosY,scrw,scrh;
+        int atPosX[3],atPosY[3],animDuration[3],animStart[3],animEnd[3],sizeX[3];
+
+        Easing ease;
+
+        sf::Font fontDeja;
+        sf::Sprite atRight,atLeft,center,background;
+        sf::Sprite displayAt[3];
+        sf::Color barColor,bgColor;
+        sf::RectangleShape bar;
+        sf::Clock clock;
+        sf::Time transitionTime[3];
+
         std::vector<std::string> charaList;
+        std::vector<sf::String> displaySay;
         std::map<std::string, std::string> internalSave;
         std::map<std::string, std::string> externalSave;
         std::map<std::string, std::string> allLabels;
@@ -44,6 +60,8 @@ class novel{
         std::map<std::string, sf::Sound> allSounds;
         std::map<std::string, sf::Texture> allTextures;
         std::map<std::string, sf::Sprite> allImages;
+
+
 
       //novel functions
         void newchara(std::string line,int numLine=-1);
@@ -54,11 +72,17 @@ class novel{
         void loadMusic(std::string line, int numLine=-1);
         void loadImage(std::string line, int numLine=-1);
         void show(std::string line, int numLine=-1);
-        int playSound(std::string line, int numLine=-1);
+          int showLoadImage(std::string argument,int at,int numLine=-1);
+        int  playSound(std::string line, int numLine=-1);
         void stopSound(std::string line, int numLine=-1);
-        int goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
+        int  goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
         void print(std::string line);
-        int choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
+        int  choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
+        int  display(sf::RenderWindow &scr);
+        int  draw(sf::RenderWindow &scr);
+        int  newTransition(std::string transition, int who, int numLine=-1);
+        bool checkTransition(std::string transition);
+        int  updateTransition(int who);
 
       //utility functions
         bool read(sf::RenderWindow &scr,bool init=false,int from=1, int to=0);
