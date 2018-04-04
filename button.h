@@ -4,10 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 
-class button
+class Button
 {
     public:
-        button(sf::Font &font,std::string texte="bouton",unsigned int characterSize=50,sf::Color color=sf::Color::Black,int x=0,int y=0,sf::Color selected=sf::Color::Red);
+        Button(sf::Font &font,std::string texte="bouton",unsigned int characterSize=50,sf::Color color=sf::Color::Black,int x=0,int y=0,sf::Color selected=sf::Color::Red);
         void render(sf::RenderWindow &scr);
         void updatepos();
         void centerx(int w=1080,int margin=0,bool update=false);

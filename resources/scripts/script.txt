@@ -33,29 +33,24 @@ label part1
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
   stop ost03
   play chairs
-  goto testGt
   show shintaro image=shintaro.scream at=center transition=slideL ease=none
-  shintaro "HUH? what is it ??"
+  shintaro "look theses awersomes anilmations !"
   show shintaro image=shintaro.scary at=left transition=slideL ease=none
-  logan "My code is bad?"
+  logan "Who am I?"
   print en train de faire un choix
   show shintaro image=shintaro.scream at=left
-  choice "this will work"=hope/"bullshit"=noHope
+  choice "The best kagerou project fan"=hope/"nothing"=noHope
   print fin de la partie 1
 endLabel
 
 label noHope
 show shintaro at=right image=shintaro.scary transition=none
-shintaro "huh... you're not cool !"
+logan "huh... you're not cool !"
 goto end
 endLabel
 
 label hope
-shintaro "you are cool !!"
-endLabel
-
-label testGt
-  print goto
+logan "you are cool !!"
 endLabel
 
 label end

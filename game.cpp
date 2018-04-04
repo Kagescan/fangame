@@ -21,7 +21,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
         if (!tcredit2.loadFromFile("resources/img/background/credit2.jpg"))         {return error("error loading credit2.jpg");}    else {credit2.setTexture(tcredit2);}
         if (!tcity.loadFromFile("resources/img/background/city.jpg"))               {return error("error loading city.jpg");}       else {city.setTexture(tcity);city.setPosition(sf::Vector2f(0, 100));}
         if (!tcityglitch.loadFromFile("resources/img/background/cityglitch.jpg"))   {return error("error loading cityglitch.jpg");} else {cityglitch.setTexture(tcityglitch);cityglitch.setPosition(sf::Vector2f(0, 100));}
-        button *script[3];script[0] = new button(font,"It was an ordinary Day",50,sf::Color::White);script[1] = new button(font,"Without a single obstacle in my path",50,sf::Color::White);script[2] = new button(font,"Until such time that the sound of the annoying cricket",30,sf::Color::White);script[3] = new button(font,"disapparead",70,sf::Color::Red);
+        Button *script[3];script[0] = new Button(font,"It was an ordinary Day",50,sf::Color::White);script[1] = new Button(font,"Without a single obstacle in my path",50,sf::Color::White);script[2] = new Button(font,"Until such time that the sound of the annoying cricket",30,sf::Color::White);script[3] = new Button(font,"disapparead",70,sf::Color::Red);
         for (unsigned int i=0;i<4;i++) {script[i]->centerx(scrw,0,true);}
 
     sf::sleep(sf::seconds(0.5));

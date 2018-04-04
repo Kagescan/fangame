@@ -88,7 +88,6 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
 
   std::vector<std::string> parsed=split(readline,' ');
 
-
   std::string command=parsed[0];
   if (init) {
     if (command=="character") newchara(readline,numLine); //Switch of std::string not exists :(
@@ -434,6 +433,8 @@ void novel::print(std::string line){
 int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
   std::vector<std::string> choices=split(line,'/');
   std::string numberchoice;
+  choicesList.clear();
+  choicesListGoto.clear();
   if (choices.size()>1) {
     if (nogui)
       std::cout<<"\n Make your choice now : ";
@@ -449,6 +450,8 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
             std::cout<<"\n\t["<<i<<"]"<<display[0].toAnsiString();
           else {
             makeAchoice=true;
+            choicesList.push_back(display[0]);
+            choicesListGoto.push_back(gotochoice[1]);
           }
         }
         else{
@@ -479,8 +482,24 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
           std::cerr<<"Incorrect entry. Please enter a number between 0 and "<<choices.size()-1<<"\n\n";
         }
       }
+    } else {
+        unsigned int size=choicesList.size();
+        choiceWindow.setSize( sf::Vector2f(scrw/4,25*size+35) );
+        sf::FloatRect windowSize=choiceWindow.getLocalBounds();
+        int windowX = scrw-15 - windowSize.width;
+        int windowY = scrh-40 - windowSize.height;
+        choiceWindow.setPosition (windowX, windowY);
+        choiceWindow.setFillColor(sf::Color(255,0,0,200));
+        choiceWindow.setOutlineColor(sf::Color::Black);
+        choiceWindow.setOutlineThickness(1);
 
+        for (unsigned int i=0; i<size; i++){
+          choiceButtons.push_back( Button(fontDeja,choicesList[i],20,sf::Color::Black,windowX+6,windowY+30 + 21*i,sf::Color::White) );
+        }
+
+        choiceButtons.push_back( Button(fontDeja,"Faites le choix :",25,sf::Color::Black,windowX+2,windowY+2) );
     }
+
   }
   else
     std::cout<<"\n Error on line "<<numLine<<" : too few arguments for choice. have you separed the choices with a slash (/) ?";
@@ -575,7 +594,15 @@ int novel::display(sf::RenderWindow &scr){
 
         }
         else if (event.type==sf::Event::MouseButtonReleased){
-          waitForEvent=false;
+          if (!makeAchoice) waitForEvent=false;
+          else {
+            for (unsigned int i=0; i<choiceButtons.size()-1;i++){
+              if (choiceButtons[i].clicked(event.mouseButton.x,event.mouseButton.y)){
+                readPart(choicesListGoto[i],scr);
+                waitForEvent=false;
+              }
+            }
+          }
         }
       }
     }
@@ -607,9 +634,22 @@ int novel::draw(sf::RenderWindow &scr){
       tempTxt.setFillColor(sf::Color::Black);
     scr.draw(tempTxt);
   }
+  drawChoices(scr);
   //scr.draw()
   scr.display();
   //scr.draw()
+  return 0;
+}
+
+int novel::drawChoices(sf::RenderWindow &scr){
+  if (makeAchoice){
+    scr.draw(choiceWindow);
+    for (auto choice:choiceButtons){
+      scr.draw(choice.gettxt());
+    }
+  }
+  /*std::vector<std::string> gotochoice=split(choices[numchoice2],'=');
+  readPart(gotochoice[1],scr,numLine);*/
   return 0;
 }
 
@@ -618,7 +658,7 @@ int novel::draw(sf::RenderWindow &scr){
 
 int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please. It burn eyes.
   std::string part;
-  std::vector<button> display;
+  std::vector<Button> display;
   bool active(true);
   int position(20),i(0);
   sf::Font animeace;
@@ -632,11 +672,11 @@ int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please.
     if (file) {
       //I don't use read() because I want to use a if statement with bool play()
       while (std::getline(file,part)) {
-        if (play(part,scr,i)) display.push_back( button(animeace,part,10,sf::Color::White,10,position+15*i) );
+        if (play(part,scr,i)) display.push_back( Button(animeace,part,10,sf::Color::White,10,position+15*i) );
         i++;
       }
     }
-    display.push_back( button(animeace,"Kagerou Project Fangame - Novel engine debug. Click for go back. this is the content of the script, check the console",10,sf::Color::Black,10,0) );
+    display.push_back( Button(animeace,"Kagerou Project Fangame - Novel engine debug. Click for go back. this is the content of the script, check the console",10,sf::Color::Black,10,0) );
     int temp(display.size()-1);
     display[temp].centerx(1280,0,true);
 
@@ -665,7 +705,7 @@ int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please.
 }
 
 std::string novel::remove(std::string str,std::string search) {
-  for (unsigned int iter=0;iter<str.length()/2;iter++){  //delete most of characters searched (length/2 for more speed,we don't need to test all characters if it is indent)
+  for (unsigned int iter=0;iter<str.length();iter++){
     std::string::size_type i = str.find(search);
     if (i != std::string::npos) str.erase(i, search.length()); else break;
   }

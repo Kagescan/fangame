@@ -20,7 +20,7 @@ int main()
           if(!bloody.loadFromFile("resources/fonts/bloody.ttf")) return error("error loading bloody.ttf");
           if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) return error("error loading animeacefr.ttf");
           //loading...
-          button loading(animeace,"LOADING...",70,sf::Color::Red);
+          Button loading(animeace,"LOADING...",70,sf::Color::Red);
             loading.centerx(scrw);loading.centery(scrh,0,true);
             loading.render(scr);scr.display();
 
@@ -33,7 +33,7 @@ int main()
           dialog.setSize(sf::Vector2f(scrw,scrh/3));
           dialog.setFillColor(sf::Color(255,255,255,200));
 
-          button play(bloody,"PLAY",70,sf::Color::Black,dialogposx+100,dialogposy+100,sf::Color::Red);
+          Button play(bloody,"PLAY",70,sf::Color::Black,dialogposx+100,dialogposy+100,sf::Color::Red);
             play.centerx(scrw);play.centery(scrh-dialogposy,dialogposy,true);
           sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");

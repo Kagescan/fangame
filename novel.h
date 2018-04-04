@@ -46,12 +46,13 @@ class novel{
         sf::Sprite atRight,atLeft,center,background;
         sf::Sprite displayAt[3];
         sf::Color barColor,bgColor;
-        sf::RectangleShape bar;
+        sf::RectangleShape bar,choiceWindow;
         sf::Clock clock;
         sf::Time transitionTime[3];
 
-        std::vector<std::string> charaList;
-        std::vector<sf::String> displaySay;
+        std::vector<std::string> charaList,choicesListGoto;
+        std::vector<sf::String> displaySay,choicesList;
+        std::vector<Button> choiceButtons;
         std::map<std::string, std::string> internalSave;
         std::map<std::string, std::string> externalSave;
         std::map<std::string, std::string> allLabels;
@@ -64,25 +65,31 @@ class novel{
 
 
       //novel functions
-        void newchara(std::string line,int numLine=-1);
-        void say(std::string line,int numLine=-1);
-        void newLabel(std::string line,int numLine=-1);
-        void endLabel(std::string line,int numLine=-1);
-        void loadSound(std::string line, int numLine=-1);
-        void loadMusic(std::string line, int numLine=-1);
-        void loadImage(std::string line, int numLine=-1);
-        void show(std::string line, int numLine=-1);
-          int showLoadImage(std::string argument,int at,int numLine=-1);
-        int  playSound(std::string line, int numLine=-1);
-        void stopSound(std::string line, int numLine=-1);
-        int  goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
-        void print(std::string line);
-        int  choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
-        int  display(sf::RenderWindow &scr);
-        int  draw(sf::RenderWindow &scr);
-        int  newTransition(std::string transition, int who, int numLine=-1);
-        bool checkTransition(std::string transition);
-        int  updateTransition(int who);
+        //init functions
+          void newchara(std::string line,int numLine=-1);
+          void newLabel(std::string line,int numLine=-1);
+          void endLabel(std::string line,int numLine=-1);
+          void loadSound(std::string line, int numLine=-1);
+          void loadMusic(std::string line, int numLine=-1);
+          void loadImage(std::string line, int numLine=-1);
+        //control functions
+          void say(std::string line,int numLine=-1);
+          void show(std::string line, int numLine=-1);
+            int showLoadImage(std::string argument,int at,int numLine=-1);
+          int  choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
+          int  playSound(std::string line, int numLine=-1);
+          void stopSound(std::string line, int numLine=-1);
+        //transitions
+          int  newTransition(std::string transition, int who, int numLine=-1);
+          bool checkTransition(std::string transition);
+          int  updateTransition(int who);
+        //display functions
+          int  display(sf::RenderWindow &scr);
+          int  draw(sf::RenderWindow &scr);
+          int  drawChoices(sf::RenderWindow &scr);
+        //other functions
+          int  goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
+          void print(std::string line);
 
       //utility functions
         bool read(sf::RenderWindow &scr,bool init=false,int from=1, int to=0);
