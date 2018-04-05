@@ -33,11 +33,11 @@ class novel{
 
     private:
       //Vars
-        std::string loadfile,actualPart,actualCharacter;
+        std::string loadfile,actualPart,actualCharacter,endCoord;
         std::string transitionAt[3];
-        bool comment,readingLabel,endReading,nogui,saying,makeAchoice;
+        bool comment,readingLabel,endReading,nogui,saying,makeAchoice,endAnimation;
         bool playingAnimation[3];
-        int lastPartLine,barPosY,scrw,scrh;
+        int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove;
         int atPosX[3],atPosY[3],animDuration[3],animStart[3],animEnd[3],sizeX[3];
 
         Easing ease;
@@ -45,10 +45,10 @@ class novel{
         sf::Font fontDeja;
         sf::Sprite atRight,atLeft,center,background;
         sf::Sprite displayAt[3];
-        sf::Color barColor,bgColor;
-        sf::RectangleShape bar,choiceWindow;
+        sf::Color bgColor;
+        sf::RectangleShape bar,choiceWindow,blackWindow;
         sf::Clock clock;
-        sf::Time transitionTime[3];
+        sf::Time transitionTime[3],endStart;
 
         std::vector<std::string> charaList,choicesListGoto;
         std::vector<sf::String> displaySay,choicesList;
@@ -79,17 +79,20 @@ class novel{
           int  choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
           int  playSound(std::string line, int numLine=-1);
           void stopSound(std::string line, int numLine=-1);
+          int newScene(std::string line, int numLine=-1);
         //transitions
           int  newTransition(std::string transition, int who, int numLine=-1);
           bool checkTransition(std::string transition);
           int  updateTransition(int who);
         //display functions
           int  display(sf::RenderWindow &scr);
+          int  displayEnd(sf::RenderWindow &scr);
           int  draw(sf::RenderWindow &scr);
           int  drawChoices(sf::RenderWindow &scr);
         //other functions
           int  goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
           void print(std::string line);
+          bool end(std::string line);
 
       //utility functions
         bool read(sf::RenderWindow &scr,bool init=false,int from=1, int to=0);

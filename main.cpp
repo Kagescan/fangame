@@ -27,11 +27,13 @@ int main()
         sf::Texture imgmenubg;
           if (!imgmenubg.loadFromFile("resources/img/background/menu2.jpg")) return error("error loading menu2.jpg");
           sf::Sprite menubg;menubg.setTexture(imgmenubg);
-        sf::RectangleShape dialog;
+        sf::RectangleShape dialog,blackTransition( sf::Vector2f(scrw,scrh) );
           int dialogposx=0,dialogposy=scrh-scrh/3;
           dialog.setPosition(dialogposx,dialogposy);
           dialog.setSize(sf::Vector2f(scrw,scrh/3));
           dialog.setFillColor(sf::Color(255,255,255,200));
+          blackTransition.setFillColor(sf::Color::Black);
+          bool playBlackTrans=true;
 
           Button play(bloody,"PLAY",70,sf::Color::Black,dialogposx+100,dialogposy+100,sf::Color::Red);
             play.centerx(scrw);play.centery(scrh-dialogposy,dialogposy,true);
@@ -40,6 +42,10 @@ int main()
 
     //intro(scr,scrw,scrh,animeace);
     inadaze.play();inadaze.setLoop(true);
+
+    sf::Clock clock;
+    sf::Time animStart=clock.getElapsedTime();
+    Easing ease;
     //LOOP
     while (scr.isOpen()) {
 
@@ -56,7 +62,8 @@ int main()
                           novel engine(theScriptFile,scr);
                           //engine.debug(scr);
                           engine.readPart("part1",scr);
-                          std::cout<< "clicked";
+                          playBlackTrans=true;
+                          animStart=clock.getElapsedTime();
                         } else {}
                     }break;}
                 case sf::Event::MouseMoved :{
@@ -71,6 +78,19 @@ int main()
         scr.draw(menubg);
         scr.draw(dialog);
         play.render(scr);
+        if (playBlackTrans){
+          int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();
+          int posy = ease.easeInOutCirc(
+                    getms>1000 ? 1000:getms,//elapsed time or max value
+                    0, //start value
+                    -scrh, //move x px
+                    1000 //duration of the animation
+                );
+          blackTransition.setPosition(0,posy);
+          scr.draw(blackTransition);
+          if (getms>1000)
+            playBlackTrans=false;
+        }
         scr.display();
     }
 

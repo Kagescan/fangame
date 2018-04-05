@@ -11,7 +11,7 @@ mapfile "resources/map/couloir.map"
 
 //var declarations
 character shintaro color=255,0,0
-character logan color=255,255,255
+character logan color=0,0,255
 
 music ost03="resources/sounds/OST03.ogg"
 sound chairs="resources/noises/oldDays-chairs.ogg"
@@ -27,32 +27,39 @@ lines*/
 
 label part1
   print ceci est la partie 1
-  scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,100 transition=fade ease=inExpo
+  scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255
   show shintaro image=shintaro.default at=right transition=slideR ease=none
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
   stop ost03
   play chairs
   show shintaro image=shintaro.scream at=center transition=slideL ease=none
-  shintaro "look theses awersomes anilmations !"
+  shintaro "look theses awersomes animations !"
   show shintaro image=shintaro.scary at=left transition=slideL ease=none
   logan "Who am I?"
   print en train de faire un choix
   show shintaro image=shintaro.scream at=left
   choice "The best kagerou project fan"=hope/"nothing"=noHope
   print fin de la partie 1
-endLabel
-
-label noHope
-show shintaro at=right image=shintaro.scary transition=none
-logan "huh... you're not cool !"
-goto end
+  logan "Then I continue !"
+  shintaro "Hum...It's time to stop !"
+  goto ende
+  shintaro "hum? you are alive?"
 endLabel
 
 label hope
-logan "you are cool !!"
+  logan "you are cool !!"
 endLabel
 
-label end
-end
+
+label noHope
+  show shintaro at=right image=shintaro.scary transition=none
+  logan "huh... you're not cool !"
+  end right
+endLabel
+
+label ende
+  show shintaro at=right image=shintaro.scary transition=none
+  logan "I'm exiting"
+  end up
 endLabel

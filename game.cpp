@@ -67,7 +67,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
 
 
 int error(std::string type) {
-    std::cout <<"\n AN ERROR OCCURED !! \n REASON : "<< type;
+    std::cerr <<"\n AN ERROR OCCURED !! \n REASON : "<< type;
     return EXIT_FAILURE;
 }
 

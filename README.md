@@ -12,10 +12,10 @@ new synthax exemple (This branch) : resources/scripts/script.txt
 novel engine status : 
 
 Making new functions (the program is able to read script and interpret without gui) 
-[#######___] 70%
+[########__] 85%
 
 Can display in the window the visual novel script
-[__________] 0%
+[#####_____] 50%
 
 Can read mapfiles 
 [__________] 0%
@@ -24,6 +24,6 @@ Can make conditions and read varfiles
 [__________] 0%
 
 global status for the novel engine only : 
-[##________] 17%
+[###_______] 34%
 
 ... ?

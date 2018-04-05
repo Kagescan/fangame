@@ -14,9 +14,9 @@ novel::novel(std::string file,sf::RenderWindow &scr){
     lastPartLine=0;
     readingLabel=false;
     endReading=false;
+    endAnimation=false;
     nogui=false; //There is no gui (debug mode)
     barPosY=scrh-scrh/3;
-    barColor=sf::Color(255,255,255,200);
     bgColor=sf::Color::Black;
 
     if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
@@ -24,7 +24,10 @@ novel::novel(std::string file,sf::RenderWindow &scr){
 
     bar.setPosition(0,barPosY);
     bar.setSize(sf::Vector2f(scrw,barPosY));
-    bar.setFillColor(barColor);
+    bar.setFillColor(sf::Color(255,255,255,200));
+
+    blackWindow.setSize(sf::Vector2f(scrw,scrh));
+    blackWindow.setFillColor(sf::Color::Black);
 
     for (int i=0; i<3; i++){ //reset values
       animDuration[i] = 1000;
@@ -100,18 +103,14 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
     else if (command=="endLabel") endLabel(readline,numLine);
   } else {
     //-------------------------//
-    if (command=="scene");
+    if (command=="scene")       newScene(readline,numLine);
     else if (command=="print")  print(readline);
     else if (command=="show")   show(readline,numLine+1);
     else if (command=="play")   playSound(readline, numLine);
     else if (command=="stop")   stopSound(readline, numLine);
     else if (command=="choice") choice(readline, scr, numLine);
     else if (command=="goto")   goTo(readline, scr, numLine);
-    else if (command=="end") {
-      std::cout<<"\nRECEIVED THE END COMMAND, STOPPING READING\n\n"<<std::flush;
-      endReading=true;
-      return true;
-    }
+    else if (command=="end")    end(readline);
     else if (command=="music"||command=="character"||command=="varfile"||command=="mapfile"||command=="label"||command=="sound"||command=="image"||command=="endLabel") ; //do nothing.
     else say(readline,numLine); //this is a character or a unknow command
     display(scr);
@@ -151,8 +150,23 @@ void novel::newchara(std::string line,int numLine){
     if (sfArg.find("=")<sfArg.getSize()) {
       std::vector<std::string> parsed=split(arguments[i],'=');
       if (parsed.size()==2){
-        if (parsed[0]=="color"){
-          internalSave.insert(std::make_pair(character+".color", parsed[1]));
+        //Color
+          if (parsed[0]=="color"){
+            std::vector<std::string> colors=split(parsed[1],',');
+            if (colors.size()==3){
+              try {
+                bool validColor=true;
+                for (unsigned int i=0; i<3;i++){
+                  if (std::stoi(colors[i])<0 || std::stoi(colors[i])>255)
+                    validColor=false;
+                }
+                if (validColor)
+                  internalSave.insert(std::make_pair(character+".color", parsed[1])); //all for this ._.
+              } catch (std::invalid_argument) {
+                std::cerr<<"An error happened during applying the color for the character "<<actualCharacter<<". Please enter R,G,B values between 0 ans 255\n\n";
+              }
+            }
+
         } else
           std::cerr<<"Warning : undefined option ["<<parsed[0]<<"] in ["<<arguments[i]<<"] on line "<<numLine<<" . Skipping.\n\n";
 
@@ -265,6 +279,68 @@ void novel::loadImage(std::string line, int numLine) {
     sf::Sprite sprite(allTextures[name]);
     allImages.insert( std::make_pair(name,sprite) );
   }
+}
+
+int novel::newScene(std::string line, int numLine){
+  std::vector<std::string> arguments=split(line,' ');
+  for (unsigned int i=1; i<arguments.size();i++){ //reach all arguments
+    std::vector<std::string> parsed=split(arguments[i],'=');
+    if (parsed.size()==2){
+      std::string option=parsed[0], argument=parsed[1];
+      //Change the bar color
+      if (option=="bar-color"){ //parse colors
+        std::vector<std::string> colors=split(parsed[1],',');
+        if (colors.size()>=3 && colors.size()<=4){
+          try {
+            bool validColor=true;
+            for (unsigned int i=0; i<colors.size();i++){
+              if (std::stoi(colors[i])<0 || std::stoi(colors[i])>255)
+                validColor=false;
+            }
+            if (validColor) {
+              if (colors.size()==3)
+                bar.setFillColor( sf::Color( std::stoi(colors[0]) , std::stoi(colors[1]) , std::stoi(colors[2]) ) );
+              else
+                bar.setFillColor( sf::Color( std::stoi(colors[0]) , std::stoi(colors[1]) , std::stoi(colors[2]) , std::stoi(colors[3]) ) );
+            }
+          } catch (std::invalid_argument){
+            std::cerr<<"An error happened during applying the color for the bar. Please enter R,G,B(,A) values between 0 ans 255\n\n";
+          }
+        } else
+          std::cerr<<"An error happened during applying the color for the bar. Please enter R,G,B(,A) values between 0 ans 255\n\n";
+      }
+      //Change the background color
+      else if (option=="bg-color"){
+        std::vector<std::string> colors=split(parsed[1],',');
+        if (colors.size()==3){
+          try {
+            bool validColor=true;
+            for (unsigned int i=0; i<3;i++){
+              if (std::stoi(colors[i])<0 || std::stoi(colors[i])>255)
+                validColor=false;
+            }
+            if (validColor)
+                bgColor=sf::Color( std::stoi(colors[0]) , std::stoi(colors[1]) , std::stoi(colors[2]) );
+
+          } catch (std::invalid_argument){
+            std::cerr<<"An error happened during applying the color for the bar. Please enter R,G,B(,A) values between 0 ans 255\n\n";
+          }
+        } else
+          std::cerr<<"An error happened during applying the color for the bar. Please enter R,G,B(,A) values between 0 ans 255\n\n";
+      }
+      //Change the background
+      else if (option=="bg"){
+        if (allImages.find(argument) == allImages.end())
+          std::cerr<<"Error : On line "<<numLine<<" the image for the background wasn't defined at this scope\n\n";
+        else
+          background = allImages[argument];
+      }
+
+    } else
+      std::cerr<<"Error on line "<<numLine<<", invalid argument format (excepted option=argument ). \n\n";
+  }
+
+  return 0;
 }
 
 void novel::show(std::string line, int numLine){
@@ -420,6 +496,56 @@ int novel::goTo(std::string line, sf::RenderWindow &scr, int numLine) {
   return 0;
 }
 
+bool novel::end(std::string line){
+  std::vector<std::string> parsed=split(line,' ');
+  endReading=false;
+  if (parsed.size()>1){
+    if (parsed[1]=="right"){
+      endCoord="x";
+      endAnimStart=scrw;
+      endAnimMove=-scrw;
+    }
+    else if (parsed[1]=="up"){
+      endCoord="y";
+      endAnimStart=scrh;
+      endAnimMove=-scrh;
+    }
+    else{
+      endReading=true;
+      return true;
+    }
+    endStart = clock.getElapsedTime();
+    endAnimation=true;
+  }
+  else
+    endReading=true;
+
+  return endReading;
+}
+
+int novel::displayEnd(sf::RenderWindow &scr){
+  if (endAnimation){
+    int getms = clock.getElapsedTime().asMilliseconds() - endStart.asMilliseconds();
+    int pos = ease.easeInOutCirc(
+              getms>1000 ? 1000:getms,//elapsed time or max value
+              endAnimStart, //start value
+              endAnimMove, //move x px
+              1000 //duration of the animation
+          );
+    if (endCoord=="y")
+      blackWindow.setPosition(0,pos);
+    else
+      blackWindow.setPosition(pos,0);
+
+    if (getms>1000) {
+      endReading=true;
+      endAnimation=true;
+    }
+    scr.draw(blackWindow);
+  }
+  return 0;
+}
+
 void novel::print(std::string line){
   std::vector<std::string> text=split(line,' ');
   if (nogui) std::cout<<"\n\n"; //if there is a gui then don't need to break line because there is not much text in the console
@@ -565,14 +691,15 @@ int novel::updateTransition(int who){
   return 0;
 }
 
+
 //-----------------------------------------------------------------GUI functions
 
 int novel::display(sf::RenderWindow &scr){
-  if (nogui) return 0;//If I don't need a GUI, i don't need to draw all the visual novel...
+  if (nogui || endReading) return 0;//If I don't need a GUI, i don't need to draw all the visual novel...
   if (saying || makeAchoice){ //If there is a character who is speaking
     bool waitForEvent=true;
 
-    while (waitForEvent) {
+    while (waitForEvent && !endReading) {
       sf::Event event;
       draw(scr);
 
@@ -587,9 +714,8 @@ int novel::display(sf::RenderWindow &scr){
           if (event.key.code == sf::Keyboard::Escape){
             endReading=true;
             return 0;
-
           } else {
-            waitForEvent=false;
+            if (!makeAchoice) waitForEvent=false;
           }
 
         }
@@ -620,21 +746,35 @@ int novel::draw(sf::RenderWindow &scr){
     scr.draw(displayAt[i]);
   }
   scr.draw(bar);
-  sf::Text tempTxt(actualCharacter,fontDeja,20);
+  if (!endAnimation){ //Display name of the character
+    sf::Text tempTxt(actualCharacter,fontDeja,20);
     tempTxt.setPosition(5,barPosY+8);
-    tempTxt.setOutlineColor(sf::Color::Red);
-    tempTxt.setOutlineColor(sf::Color::Red);
-    tempTxt.setOutlineThickness(1);
+    //Apply the color of the character
+      if(internalSave.find(actualCharacter+".color") != internalSave.end()){
+        std::vector<std::string> colors = split(internalSave[actualCharacter+".color"], ',');
+        if (colors.size()==3){
+          try {
+              tempTxt.setOutlineColor(sf::Color( std::stoi(colors[0]), std::stoi(colors[1]), std::stoi(colors[2]) ));
+              tempTxt.setOutlineThickness(1);
+          }
+          catch (std::invalid_argument) {} //don't display any error because it should be displayed before.
+          catch (const std::out_of_range& e) {std::cerr<<"\tInternal error during displaying a color (out of range arg.)\n\n";}
+        }
+      }
     tempTxt.setStyle(sf::Text::Bold);
     scr.draw(tempTxt);
+  //Display text...
+    for (unsigned int i=0; i<displaySay.size();i++){
+      sf::Text tempTxt(displaySay[i],fontDeja,27);
+        tempTxt.setPosition(10,barPosY+31+29*i);
+        tempTxt.setFillColor(sf::Color::Black);
+      scr.draw(tempTxt);
+    }
+    drawChoices(scr); //Draw if there is a choice to do...
 
-  for (unsigned int i=0; i<displaySay.size();i++){
-    sf::Text tempTxt(displaySay[i],fontDeja,27);
-      tempTxt.setPosition(10,barPosY+31+29*i);
-      tempTxt.setFillColor(sf::Color::Black);
-    scr.draw(tempTxt);
-  }
-  drawChoices(scr);
+  } else //display an animation if the novel ends
+    displayEnd(scr);
+
   //scr.draw()
   scr.display();
   //scr.draw()
