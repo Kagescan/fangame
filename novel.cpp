@@ -195,8 +195,12 @@ void novel::say(std::string line,int numLine){
         for (auto i:lines) std::cout<<"\t"<<i.toAnsiString()<<"\n";
       } else {
         displaySay=splitQuotes(line,numLine);
+        displayedTxt.clear();
+        displayedTxt.resize(displaySay.size(),false);
+        substrPos=true;
         actualCharacter=character;
         saying=true;
+        animatingTextFinished=false;
       }
     }
   } else {
@@ -715,12 +719,22 @@ int novel::display(sf::RenderWindow &scr){
             endReading=true;
             return 0;
           } else {
-            if (!makeAchoice) waitForEvent=false;
+            if (!makeAchoice){
+              if (animatingTextFinished)
+                waitForEvent=false;
+              else
+                animatingTextFinished=true;
+            }
           }
 
         }
         else if (event.type==sf::Event::MouseButtonReleased){
-          if (!makeAchoice) waitForEvent=false;
+          if (!makeAchoice) {
+            if (animatingTextFinished)
+              waitForEvent=false;
+            else
+              animatingTextFinished=true;
+          }
           else {
             for (unsigned int i=0; i<choiceButtons.size()-1;i++){
               if (choiceButtons[i].clicked(event.mouseButton.x,event.mouseButton.y)){
@@ -764,11 +778,30 @@ int novel::draw(sf::RenderWindow &scr){
     tempTxt.setStyle(sf::Text::Bold);
     scr.draw(tempTxt);
   //Display text...
+
     for (unsigned int i=0; i<displaySay.size();i++){
-      sf::Text tempTxt(displaySay[i],fontDeja,27);
+      if (!displayedTxt[i] && !animatingTextFinished){
+        sf::String text=displaySay[i];
+        sf::String substr=text.substring(0,substrPos);
+        sf::Text tempTxt(substr,fontDeja,27);
         tempTxt.setPosition(10,barPosY+31+29*i);
         tempTxt.setFillColor(sf::Color::Black);
-      scr.draw(tempTxt);
+        scr.draw(tempTxt);
+        substrPos+=2;
+        if (substrPos>=text.getSize()){
+          displayedTxt[i]=true;
+          substrPos=0;
+        }
+        break;
+      }
+      else {
+        sf::Text tempTxt(displaySay[i],fontDeja,27);
+        tempTxt.setPosition(10,barPosY+31+29*i);
+        tempTxt.setFillColor(sf::Color::Black);
+        scr.draw(tempTxt);
+        if (i+1>=displaySay.size())
+          animatingTextFinished=true;
+      }
     }
     drawChoices(scr); //Draw if there is a choice to do...
 

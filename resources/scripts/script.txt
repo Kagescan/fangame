@@ -3,7 +3,7 @@ This is a test for the new synthax of the kagerou project fangame novel engine.
 The kagescan game is a bit different than other novel engines, because there is a map and label whill be executed only if the player interacts with the map.
 Like pokemon ! but in a event, it is a visual novel.
 The new synthax is based of the ren'py scripts.
-I will implement soon condictions (if else statements and vars but not lopp !)
+I will implement soon condictions (if else statements and vars but not loop !)
 */
 
 varfile "resources/saves/main.save"
@@ -27,7 +27,7 @@ lines*/
 
 label part1
   print ceci est la partie 1
-  scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255
+  scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,200
   show shintaro image=shintaro.default at=right transition=slideR ease=none
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
@@ -44,6 +44,7 @@ label part1
   logan "Then I continue !"
   shintaro "Hum...It's time to stop !"
   goto ende
+  //alwas say somethink after a end command else the animation won't play
   shintaro "hum? you are alive?"
 endLabel
 

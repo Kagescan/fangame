@@ -35,9 +35,9 @@ class novel{
       //Vars
         std::string loadfile,actualPart,actualCharacter,endCoord;
         std::string transitionAt[3];
-        bool comment,readingLabel,endReading,nogui,saying,makeAchoice,endAnimation;
+        bool comment,readingLabel,endReading,nogui,saying,makeAchoice,endAnimation,animatingTextFinished;
         bool playingAnimation[3];
-        int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove;
+        int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove,substrPos;
         int atPosX[3],atPosY[3],animDuration[3],animStart[3],animEnd[3],sizeX[3];
 
         Easing ease;
@@ -51,6 +51,7 @@ class novel{
         sf::Time transitionTime[3],endStart;
 
         std::vector<std::string> charaList,choicesListGoto;
+        std::vector<bool> displayedTxt;
         std::vector<sf::String> displaySay,choicesList;
         std::vector<Button> choiceButtons;
         std::map<std::string, std::string> internalSave;

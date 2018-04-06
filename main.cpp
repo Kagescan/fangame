@@ -40,7 +40,7 @@ int main()
           sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
 
-    //intro(scr,scrw,scrh,animeace);
+    intro(scr,scrw,scrh,animeace);
     inadaze.play();inadaze.setLoop(true);
 
     sf::Clock clock;
