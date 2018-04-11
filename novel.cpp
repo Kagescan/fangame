@@ -350,8 +350,8 @@ int novel::newScene(std::string line, int numLine){
 void novel::show(std::string line, int numLine){
   std::vector<std::string> allArgs=split(line,' ');
   int at=0; //default value
-  bool loadImage=false,makeTransition=false;
-  std::string loadImageArgument, makeTransitionArgument;
+  bool loadImage=false,makeTransition=false,makeEase=false;
+  std::string loadImageArgument, makeTransitionArgument, makeEaseArgument;
   //bool imageLoaded=false;
   if (allArgs.size()<2){std::cerr<<"Error : on line "<<numLine<<" too few arguments excepted\n\n";}
   else {
@@ -379,7 +379,8 @@ void novel::show(std::string line, int numLine){
           makeTransitionArgument=argument;
         }
         else if (option=="ease") {
-          //checkEase(argument);
+          makeEase=ease.checkEase(argument);
+          if (makeEase) makeEaseArgument=argument;
         }
         else
           std::cerr<<"Error : unknow option ["<<option<<"].Skipping...\n\n";
@@ -389,7 +390,7 @@ void novel::show(std::string line, int numLine){
     if (loadImage){ //then interpret whith defined values
       showLoadImage(loadImageArgument,at,numLine);
       if (makeTransition)
-        newTransition(makeTransitionArgument,at);
+        newTransition(makeTransitionArgument,at,numLine, makeEase?makeEaseArgument:"none" );
     }
   }
 
@@ -638,12 +639,13 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
   return 0;
 }
 
-int novel::newTransition(std::string transition, int who, int numLine){
+int novel::newTransition(std::string transition, int who, int numLine, std::string easing){
   if (checkTransition(transition)) {
     if (who>=0 && who<=2){
-      transitionAt[who]=transition; //IDK i named it transitionAT :/
-      transitionTime[who]=clock.getElapsedTime();
-      playingAnimation[who]=true;
+      transitionAt[who] = transition; //IDK i named it transitionAT :/
+      transitionTime[who] = clock.getElapsedTime();
+      playingAnimation[who] = true;
+      easingFor[who] = easing;
       if (transition=="slideR"){
         animStart[who] = scrw;
         animEnd[who] = atPosX[who]-scrw;
@@ -655,9 +657,7 @@ int novel::newTransition(std::string transition, int who, int numLine){
         animStart[who] = 255;
         animEnd[who] = -255;
         transFadeSprite.setPosition(displayAt[who].getPosition());//transFadeSprite already defined in showLoadImage()
-        //transFadeSprite.setPosition(0,0);
       }
-
     } else
       std::cerr<<"Internal error on line "<<numLine<<", the sprite to apply effects is incorrect ("<<who<<")";
   }
@@ -685,7 +685,8 @@ int novel::updateTransition(int who){
   if (who>=0 && who<=2) {
     if (playingAnimation[who]){
       int getms = clock.getElapsedTime().asMilliseconds() - transitionTime[who].asMilliseconds();
-      int easeValue = ease.easeOutExpo(
+      int easeValue = ease.returnEase(
+                easingFor[who],//Easing function name
                 getms>animDuration[who] ? animDuration[who]:getms,//elapsed time or max value
                 animStart[who], //start value
                 animEnd[who], //count

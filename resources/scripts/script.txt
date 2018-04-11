@@ -33,16 +33,16 @@ lines*/
 label part1
   print ceci est la partie 1
   scene bg=background.classroom bg-color=0,0,0 bar-color=255,255,255,200
-  show shintaro image=shintaro.default at=right transition=slideR ease=none
+  show shintaro image=shintaro.default at=right transition=slideR ease=outExpo
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
   play chairs
-  show shintaro image=shintaro.scream at=center transition=slideL ease=none
+  show shintaro image=shintaro.scream at=center transition=slideL ease=outExpo
   shintaro "look theses awersomes animations !" "but the quality of my drawings are horrible..."
-  show shintaro image=shintaro.scary at=left transition=slideL ease=none
+  show shintaro image=shintaro.scary at=left transition=slideL ease=outExpo
   logan "Do you like kagescan?"
   print en train de faire un choix
-  show shintaro image=shintaro.scream at=left transition=fade
+  show shintaro image=shintaro.scream at=left transition=fade ease=outExpo
   choice "The best website"=hope/"Horrible"=noHope
   logan "Yay it true !!" "" "(I'm stopping the music)"
   stop ost03
@@ -58,13 +58,13 @@ endLabel
 
 
 label noHope
-  show shintaro at=right image=shintaro.scary transition=none transition=fade
+  show shintaro at=right image=shintaro.scary ease=outExpo transition=fade
   logan "huh... you're not cool !"
   end right
 endLabel
 
 label ende
-  show shintaro at=right image=shintaro.scary transition=none transition=fade
+  show shintaro at=right image=shintaro.scary ease=outExpo transition=fade
   logan "Bye"
   end up
 endLabel

@@ -34,7 +34,7 @@ class novel{
     private:
       //Vars
         std::string loadfile,actualPart,actualCharacter,endCoord;
-        std::string transitionAt[3];
+        std::string transitionAt[3],easingFor[3];
         bool comment,readingLabel,endReading,nogui,saying,makeAchoice,endAnimation,animatingTextFinished;
         bool playingAnimation[3];
         int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove,transFadeSpriteRef;
@@ -83,7 +83,7 @@ class novel{
           void stopSound(std::string line, int numLine=-1);
           int newScene(std::string line, int numLine=-1);
         //transitions
-          int  newTransition(std::string transition, int who, int numLine=-1);
+          int  newTransition(std::string transition, int who, int numLine=-1,std::string easing="none");
           bool checkTransition(std::string transition);
           int  updateTransition(int who);
         //display functions

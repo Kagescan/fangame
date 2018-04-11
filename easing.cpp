@@ -2,10 +2,7 @@
 
 
 
-float Easing::easeNoneLinear (float t,float b , float c, float d) {return c*t/d + b;}
-float Easing::easeInLinear   (float t,float b , float c, float d) {return c*t/d + b;}
-float Easing::easeOutLinear  (float t,float b , float c, float d) {	return c*t/d + b;}
-float Easing::easeInOutLinear(float t,float b , float c, float d) {return c*t/d + b;}
+float Easing::easeLinear (float t,float b , float c, float d)    {return c*t/d + b;}
 
 float Easing::easeInSine    (float t,float b , float c, float d) {return -c * cos(t/d * (PI/2)) + c + b;}
 float Easing::easeOutSine   (float t,float b , float c, float d) {return c * sin(t/d * (PI/2)) + b;}
@@ -105,3 +102,66 @@ float Easing::easeInOutElastic(float t,float b , float c, float d) {
   	if (t < d/2) return easeInBounce (t*2, 0, c, d) * .5f + b;
   	else return easeOutBounce (t*2-d, 0, c, d) * .5f + c*.5f + b;
   }
+
+// --------------------------------------------------
+
+float Easing::returnEase(std::string easingFunction, float t, float b, float c, float d){
+  if      (easingFunction=="inSine")	  return easeInSine(t,b,c,d);
+  else if (easingFunction=="outSine")	  return easeOutSine(t,b,c,d);
+  else if (easingFunction=="inOutSine")	return easeInOutSine(t,b,c,d);
+
+  else if (easingFunction=="inCubic")	  return easeInCubic(t,b,c,d);
+  else if (easingFunction=="outCubic")	return easeOutCubic(t,b,c,d);
+  else if (easingFunction=="inOutCubic")return easeInOutCubic(t,b,c,d);
+
+  else if (easingFunction=="inExpo")	  return easeInExpo(t,b,c,d);
+  else if (easingFunction=="outExpo")	  return easeOutExpo(t,b,c,d);
+  else if (easingFunction=="inOutExpo")	return easeInOutExpo(t,b,c,d);
+
+  else if (easingFunction=="inCirc")	  return easeInCirc(t,b,c,d);
+  else if (easingFunction=="outCirc")	  return easeOutCirc(t,b,c,d);
+  else if (easingFunction=="inOutCirc")	return easeInOutCirc(t,b,c,d);
+
+  else if (easingFunction=="inElastic")	return easeInElastic(t,b,c,d);
+  else if (easingFunction=="outElastic")return easeOutElastic(t,b,c,d);
+
+  else if (easingFunction=="inBack")	  return easeInBack(t,b,c,d);
+  else if (easingFunction=="outBack")	  return easeOutBack(t,b,c,d);
+  else if (easingFunction=="inOutBack")	return easeInOutBack(t,b,c,d);
+
+  else if (easingFunction=="inBounce")	return easeInBounce(t,b,c,d);
+  else if (easingFunction=="outBounce")	return easeOutBounce(t,b,c,d);
+  else if (easingFunction=="inOutBounce")return easeInOutBounce(t,b,c,d);
+
+  else if (easingFunction=="none") return easeLinear(t,b,c,d);
+  else return easeLinear(t,b,c,d);
+}
+
+bool Easing::checkEase(std::string easingFunction) {
+  if (   easingFunction=="inSine"
+      || easingFunction=="outSine"
+      || easingFunction=="inOutSine"
+      || easingFunction=="inCubic"
+      || easingFunction=="outCubic"
+      || easingFunction=="inOutCubic"
+      || easingFunction=="inExpo"
+      || easingFunction=="outExpo"
+      || easingFunction=="inOutExpo"
+      || easingFunction=="inCirc"
+      || easingFunction=="outCirc"
+      || easingFunction=="inOutCirc"
+      || easingFunction=="inElastic"
+      || easingFunction=="outElastic"
+      || easingFunction=="inBack"
+      || easingFunction=="outBack"
+      || easingFunction=="inOutBack"
+      || easingFunction=="inBounce"
+      || easingFunction=="outBounce"
+      || easingFunction=="inOutBounce"
+      || easingFunction=="none")
+    return true;
+  else {
+    std::cerr<<"Warning : unknown easing function ["<<easingFunction<<"].\n\n";
+    return false;
+  }
+}
