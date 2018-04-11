@@ -403,6 +403,7 @@ int novel::showLoadImage(std::string argument,int at,int numLine){
       sf::Vector2u imageSize=allTextures[argument].getSize();
       if (at>=0 && at<=2){
         sizeX[at]=imageSize.x; //Used in transition functions
+        transFadeSprite=displayAt[at];
         displayAt[at]=allImages[argument];
         atPosY[at]=scrh-imageSize.y;
       }
@@ -640,7 +641,7 @@ int novel::choice(std::string line, sf::RenderWindow &scr, int numLine){
 int novel::newTransition(std::string transition, int who, int numLine){
   if (checkTransition(transition)) {
     if (who>=0 && who<=2){
-      transitionAt[who]=transition;
+      transitionAt[who]=transition; //IDK i named it transitionAT :/
       transitionTime[who]=clock.getElapsedTime();
       playingAnimation[who]=true;
       if (transition=="slideR"){
@@ -649,6 +650,12 @@ int novel::newTransition(std::string transition, int who, int numLine){
       } else if (transition=="slideL"){
         animStart[who] = -sizeX[who];
         animEnd[who] = sizeX[who]+atPosX[who];
+      } else if (transition=="fade"){
+        transFadeSpriteRef=who;
+        animStart[who] = 255;
+        animEnd[who] = -255;
+        transFadeSprite.setPosition(displayAt[who].getPosition());//transFadeSprite already defined in showLoadImage()
+        //transFadeSprite.setPosition(0,0);
       }
 
     } else
@@ -674,17 +681,22 @@ bool novel::checkTransition(std::string transition){
 }
 
 int novel::updateTransition(int who){
+  int returnVal=0;
   if (who>=0 && who<=2) {
     if (playingAnimation[who]){
       int getms = clock.getElapsedTime().asMilliseconds() - transitionTime[who].asMilliseconds();
-      int posx = ease.easeOutExpo(
+      int easeValue = ease.easeOutExpo(
                 getms>animDuration[who] ? animDuration[who]:getms,//elapsed time or max value
                 animStart[who], //start value
-                animEnd[who], //end value
+                animEnd[who], //count
                 animDuration[who] //duration of the animation
             );
-
-      displayAt[who].setPosition(posx,atPosY[who]);
+      if (transitionAt[who]=="fade"){
+        displayAt[who].setColor( sf::Color(255,255,255,255-easeValue) );
+        transFadeSprite.setColor( sf::Color(255,255,255,easeValue) );
+        returnVal=1;
+      } else
+        displayAt[who].setPosition(easeValue,atPosY[who]);
       if (getms>animDuration[who])
         playingAnimation[who]=false;
     }
@@ -692,7 +704,7 @@ int novel::updateTransition(int who){
   else {
     std::cerr<<"Warning : (internal error) unable to update a sprite due to an incorrect variable"<<who;
   }
-  return 0;
+  return returnVal;
 }
 
 
@@ -756,7 +768,8 @@ int novel::draw(sf::RenderWindow &scr){
   scr.clear(bgColor);
   scr.draw(background);
   for (int i=0;i<3;i++){
-    updateTransition(i);
+    if (updateTransition(i))
+      scr.draw(transFadeSprite);
     scr.draw(displayAt[i]);
   }
   scr.draw(bar);

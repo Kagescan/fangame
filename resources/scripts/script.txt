@@ -6,6 +6,11 @@ The new synthax is based of the ren'py scripts.
 I will implement soon condictions (if else statements and vars but not loop !)
 */
 
+/*
+Note : 	comments should be in multiple line, not inline
+	inline commands should be alone in the line, not after the command !
+*/
+
 varfile "resources/saves/main.save"
 mapfile "resources/map/couloir.map"
 
@@ -31,21 +36,20 @@ label part1
   show shintaro image=shintaro.default at=right transition=slideR ease=none
   play ost03 "loop"
   shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
-  stop ost03
   play chairs
   show shintaro image=shintaro.scream at=center transition=slideL ease=none
-  shintaro "look theses awersomes animations !"
+  shintaro "look theses awersomes animations !" "but the quality of my drawings are horrible..."
   show shintaro image=shintaro.scary at=left transition=slideL ease=none
-  logan "Who am I?"
+  logan "Do you like kagescan?"
   print en train de faire un choix
-  show shintaro image=shintaro.scream at=left
-  choice "The best kagerou project fan"=hope/"nothing"=noHope
-  print fin de la partie 1
-  logan "Then I continue !"
-  shintaro "Hum...It's time to stop !"
+  show shintaro image=shintaro.scream at=left transition=fade
+  choice "The best website"=hope/"Horrible"=noHope
+  logan "Yay it true !!" "" "(I'm stopping the music)"
+  stop ost03
+  shintaro "<3"
   goto ende
   //alwas say somethink after a end command else the animation won't play
-  shintaro "hum? you are alive?"
+  shintaro ""
 endLabel
 
 label hope
@@ -54,13 +58,13 @@ endLabel
 
 
 label noHope
-  show shintaro at=right image=shintaro.scary transition=none
+  show shintaro at=right image=shintaro.scary transition=none transition=fade
   logan "huh... you're not cool !"
   end right
 endLabel
 
 label ende
-  show shintaro at=right image=shintaro.scary transition=none
-  logan "I'm exiting"
+  show shintaro at=right image=shintaro.scary transition=none transition=fade
+  logan "Bye"
   end up
 endLabel

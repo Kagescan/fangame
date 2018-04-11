@@ -1,7 +1,7 @@
 #ifndef NOVEL_H
 #define NOVEL_H
 
-/*Novel - parser for .kage scripts,scripts used for the Kagerou Project Fangame
+/*Novel - Kagerou Project Fangame visual novel engine
  *copyright (c) Logan Tann
  *Under the MIT license. See COPYING file.
  */
@@ -37,13 +37,14 @@ class novel{
         std::string transitionAt[3];
         bool comment,readingLabel,endReading,nogui,saying,makeAchoice,endAnimation,animatingTextFinished;
         bool playingAnimation[3];
-        int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove,substrPos;
+        int lastPartLine,barPosY,scrw,scrh,endAnimStart,endAnimMove,transFadeSpriteRef;
+        unsigned int substrPos;
         int atPosX[3],atPosY[3],animDuration[3],animStart[3],animEnd[3],sizeX[3];
 
         Easing ease;
 
         sf::Font fontDeja;
-        sf::Sprite atRight,atLeft,center,background;
+        sf::Sprite atRight,atLeft,center,background,transFadeSprite;
         sf::Sprite displayAt[3];
         sf::Color bgColor;
         sf::RectangleShape bar,choiceWindow,blackWindow;

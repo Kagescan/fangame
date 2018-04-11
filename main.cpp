@@ -61,7 +61,9 @@ int main()
                           std::string theScriptFile("resources/scripts/script.txt");
                           novel engine(theScriptFile,scr);
                           //engine.debug(scr);
+                          inadaze.stop();
                           engine.readPart("part1",scr);
+                          inadaze.play();
                           playBlackTrans=true;
                           animStart=clock.getElapsedTime();
                         } else {}
