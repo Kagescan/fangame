@@ -105,7 +105,7 @@ bool novel::play(std::string readline,sf::RenderWindow &scr,int numLine,bool ini
     //-------------------------//
     if (command=="scene")       newScene(readline,numLine);
     else if (command=="print")  print(readline);
-    else if (command=="show")   show(readline,numLine+1);
+    else if (command=="show")   show(readline,numLine);
     else if (command=="play")   playSound(readline, numLine);
     else if (command=="stop")   stopSound(readline, numLine);
     else if (command=="choice") choice(readline, scr, numLine);
@@ -357,9 +357,9 @@ void novel::show(std::string line, int numLine){
   else {
     if (nogui) std::cout<<"For the character "<<allArgs[1]<<"\n";
 
-    for (unsigned int i=2; i<allArgs.size();i++){ //reaching all options and save (don't interpret yet because there is an order)
+    for (unsigned int i=1; i<allArgs.size();i++){ //reaching all options and save (don't interpret yet because there is an order)
       std::vector<std::string> parsed=split(allArgs[i],'=');
-      if (parsed.size()<2){std::cerr<<"To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...\n\n";}
+      if (parsed.size()<2){std::cerr<<"To few arguments in "<<allArgs[i]<<" on line"<<numLine<<". have you used the form option=argument for this command? Skipping...\n\n"; break;}
       else {
         std::string option=parsed[0];
         std::string argument=parsed[1];
@@ -429,6 +429,37 @@ int novel::showLoadImage(std::string argument,int at,int numLine){
     }
 }
 
+int novel::wait(std::string line, sf::RenderWindow &scr, int numLine){
+  sf::Time startTime=clock.getElapsedTime();
+  std::vector<std::string> allArgs=split(line,' ');
+  if (allArgs.size()>1){
+    try {
+      int timeToWait = std::stoi(allArgs[1]);
+      while (startTime.asMilliseconds()-clock.getElapsedTime().asMilliseconds()<=timeToWait){
+        sf::Event event;
+        draw(scr);
+
+        while (scr.pollEvent(event)) {
+
+          if (event.type==sf::Event::Closed){
+            endReading=true;
+            return 0;
+
+          } else if (event.type==sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::Escape){
+              endReading=true;
+              return 0;
+            }
+          }
+        }
+      }
+    } catch (std::invalid_argument){
+      std::cerr<<"Error : Invalid argument on line "<<numLine<<", please enter a valid number (as positive Milliseconds).\n\n";
+    }
+  }
+  return 0;
+}
+
 int novel::playSound(std::string line, int numLine) {
   std::vector<std::string> allArgs=split(line,' ');
   std::string type="Music";
@@ -496,9 +527,7 @@ void novel::stopSound(std::string line, int numLine) {
 int novel::goTo(std::string line, sf::RenderWindow &scr, int numLine) {
   if (endReading) return 0;
   std::vector<std::string> allArgs=split(line,' ');
-
   if (allArgs.size()>1) readPart(allArgs[1],scr,numLine);
-
   return 0;
 }
 
@@ -765,7 +794,7 @@ int novel::display(sf::RenderWindow &scr){
   return 0;
 }
 
-int novel::draw(sf::RenderWindow &scr){
+int novel::draw(sf::RenderWindow &scr,bool drawText){
   scr.clear(bgColor);
   scr.draw(background);
   for (int i=0;i<3;i++){
@@ -774,54 +803,55 @@ int novel::draw(sf::RenderWindow &scr){
     scr.draw(displayAt[i]);
   }
   scr.draw(bar);
-  if (!endAnimation){ //Display name of the character
-    sf::Text tempTxt(actualCharacter,fontDeja,20);
-    tempTxt.setPosition(5,barPosY+8);
-    //Apply the color of the character
-      if(internalSave.find(actualCharacter+".color") != internalSave.end()){
-        std::vector<std::string> colors = split(internalSave[actualCharacter+".color"], ',');
-        if (colors.size()==3){
-          try {
-              tempTxt.setOutlineColor(sf::Color( std::stoi(colors[0]), std::stoi(colors[1]), std::stoi(colors[2]) ));
-              tempTxt.setOutlineThickness(1);
+
+  if (drawText){
+    if (!endAnimation){ //Display name of the character
+      sf::Text tempTxt(actualCharacter,fontDeja,20);
+      tempTxt.setPosition(5,barPosY+8);
+      //Apply the color of the character
+        if(internalSave.find(actualCharacter+".color") != internalSave.end()){
+          std::vector<std::string> colors = split(internalSave[actualCharacter+".color"], ',');
+          if (colors.size()==3){
+            try {
+                tempTxt.setOutlineColor(sf::Color( std::stoi(colors[0]), std::stoi(colors[1]), std::stoi(colors[2]) ));
+                tempTxt.setOutlineThickness(1);
+            }
+            catch (std::invalid_argument) {} //don't display any error because it should be displayed before.
+            catch (const std::out_of_range& e) {std::cerr<<"\tInternal error during displaying a color (out of range arg.)\n\n";}
           }
-          catch (std::invalid_argument) {} //don't display any error because it should be displayed before.
-          catch (const std::out_of_range& e) {std::cerr<<"\tInternal error during displaying a color (out of range arg.)\n\n";}
+        }
+      tempTxt.setStyle(sf::Text::Bold);
+      scr.draw(tempTxt);
+    //Display text...
+
+      for (unsigned int i=0; i<displaySay.size();i++){
+        if (!displayedTxt[i] && !animatingTextFinished){
+          sf::String text=displaySay[i];
+          sf::String substr=text.substring(0,substrPos);
+          sf::Text tempTxt(substr,fontDeja,27);
+          tempTxt.setPosition(10,barPosY+31+29*i);
+          tempTxt.setFillColor(sf::Color::Black);
+          scr.draw(tempTxt);
+          substrPos+=2;
+          if (substrPos>=text.getSize()){
+            displayedTxt[i]=true;
+            substrPos=0;
+          }
+          break;
+        }
+        else {
+          sf::Text tempTxt(displaySay[i],fontDeja,27);
+          tempTxt.setPosition(10,barPosY+31+29*i);
+          tempTxt.setFillColor(sf::Color::Black);
+          scr.draw(tempTxt);
+          if (i+1>=displaySay.size())
+            animatingTextFinished=true;
         }
       }
-    tempTxt.setStyle(sf::Text::Bold);
-    scr.draw(tempTxt);
-  //Display text...
-
-    for (unsigned int i=0; i<displaySay.size();i++){
-      if (!displayedTxt[i] && !animatingTextFinished){
-        sf::String text=displaySay[i];
-        sf::String substr=text.substring(0,substrPos);
-        sf::Text tempTxt(substr,fontDeja,27);
-        tempTxt.setPosition(10,barPosY+31+29*i);
-        tempTxt.setFillColor(sf::Color::Black);
-        scr.draw(tempTxt);
-        substrPos+=2;
-        if (substrPos>=text.getSize()){
-          displayedTxt[i]=true;
-          substrPos=0;
-        }
-        break;
-      }
-      else {
-        sf::Text tempTxt(displaySay[i],fontDeja,27);
-        tempTxt.setPosition(10,barPosY+31+29*i);
-        tempTxt.setFillColor(sf::Color::Black);
-        scr.draw(tempTxt);
-        if (i+1>=displaySay.size())
-          animatingTextFinished=true;
-      }
-    }
-    drawChoices(scr); //Draw if there is a choice to do...
-
-  } else //display an animation if the novel ends
-    displayEnd(scr);
-
+      drawChoices(scr); //Draw if there is a choice to do...
+    } else //display an animation if the novel ends
+      displayEnd(scr);
+  }
   //scr.draw()
   scr.display();
   //scr.draw()
@@ -841,7 +871,6 @@ int novel::drawChoices(sf::RenderWindow &scr){
 }
 
 //--------------------------------------------------------------Useful functions
-
 
 int novel::debug(sf::RenderWindow &scr) { //don't use event if you debug please. It burn eyes.
   std::string part;

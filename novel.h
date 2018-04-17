@@ -78,6 +78,8 @@ class novel{
           void say(std::string line,int numLine=-1);
           void show(std::string line, int numLine=-1);
             int showLoadImage(std::string argument,int at,int numLine=-1);
+            //void out(std::string line, int numLine=-1);
+          int wait(std::string line, sf::RenderWindow &scr, int numLine=-1);
           int  choice(std::string line, sf::RenderWindow &scr, int numLine=-1);
           int  playSound(std::string line, int numLine=-1);
           void stopSound(std::string line, int numLine=-1);
@@ -89,7 +91,7 @@ class novel{
         //display functions
           int  display(sf::RenderWindow &scr);
           int  displayEnd(sf::RenderWindow &scr);
-          int  draw(sf::RenderWindow &scr);
+          int  draw(sf::RenderWindow &scr,bool drawText=true);
           int  drawChoices(sf::RenderWindow &scr);
         //other functions
           int  goTo(std::string line, sf::RenderWindow &scr, int numLine=-1);
