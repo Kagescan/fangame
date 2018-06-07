@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/fangame.dir/main.cpp.o  -o fangame -rdynamic 
