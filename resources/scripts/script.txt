@@ -12,7 +12,7 @@ Note : 	comments should be in multiple line, not inline
 */
 
 varfile "resources/saves/main.save"
-mapfile "resources/map/couloir.map"
+mapfile "resources/map/couloir.txt"
 
 //var declarations
 character shintaro color=255,0,0

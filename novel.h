@@ -111,7 +111,13 @@ class novel{
       */
 };
 
-class TileMap :public sf::Drawable, public sf::Transformable { //tilemap class from sfml french tutorials
-  
-}
+class TileMap : public sf::Drawable, public sf::Transformable { //tilemap class from sfml french tutorials
+  public:
+    bool load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height);
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+  private:
+    sf::VertexArray m_vertices;
+    sf::Texture m_tileset;
+};
 #endif

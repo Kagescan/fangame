@@ -981,8 +981,7 @@ std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
 
 //----------------------------------------------------------------TileMap engine
 
-    public:
-    bool load(const std::string& tileset, sf::Vector2u tileSize, const int* tiles, unsigned int width, unsigned int height) {
+bool TileMap::load(const std::string& tileset, sf::Vector2u tileSize, unsigned int width, unsigned int height) {
         // on charge la texture du tileset
         if (!m_tileset.loadFromFile(tileset))
             return false;
@@ -990,6 +989,11 @@ std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
         // on redimensionne le tableau de vertex pour qu'il puisse contenir tout le niveau
         m_vertices.setPrimitiveType(sf::Quads);
         m_vertices.resize(width * height * 4);
+
+        const int tiles[] = {
+           2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+           2,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,
+          11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,12 };
 
         // on remplit le tableau de vertex, avec un quad par tuile
         for (unsigned int i = 0; i < width; ++i)
@@ -1015,13 +1019,9 @@ std::vector<sf::String> novel::splitQuotes(std::string line,int numLine) {
         return true;
     }
 
-private:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+
+void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const{
         states.transform *= getTransform();// on applique la transformation
         states.texture = &m_tileset; // on applique la texture du tileset
         target.draw(m_vertices, states); // et on dessine enfin le tableau de vertex
-    }
-
-    sf::VertexArray m_vertices;
-    sf::Texture m_tileset;
-};
+}

@@ -4,6 +4,7 @@
 #include "button.h"
 #include "game.h"
 #include "novel.h"
+#include "easing.h"
 
 
 int main()
@@ -40,12 +41,17 @@ int main()
           sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
 
-    intro(scr,scrw,scrh,animeace);
-    inadaze.play();inadaze.setLoop(true);
+    /*intro(scr,scrw,scrh,animeace);
+    inadaze.play();inadaze.setLoop(true);*/
 
     sf::Clock clock;
     sf::Time animStart=clock.getElapsedTime();
     Easing ease;
+    std::string theScriptFile("resources/scripts/script.txt");
+    novel engine(theScriptFile,scr);
+    TileMap map;
+    map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);
+    bool testspace(false);
     //LOOP
     while (scr.isOpen()) {
 
@@ -54,12 +60,19 @@ int main()
                 case sf::Event::Closed: scr.close();break;
                 case sf::Event::KeyReleased :
                     if (event.key.code == sf::Keyboard::Escape) scr.close();
+                    if (event.key.code == sf::Keyboard::Space) {
+                      //engine.debug(scr);
+                      /*inadaze.stop();
+                      engine.readPart("part1",scr);
+                      inadaze.play();
+                      playBlackTrans=true;
+                      animStart=clock.getElapsedTime();*/
+                      testspace = !testspace;
+                    }
                     break;
                 case sf::Event::MouseButtonReleased :{
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
-                          std::string theScriptFile("resources/scripts/script.txt");
-                          novel engine(theScriptFile,scr);
                           //engine.debug(scr);
                           inadaze.stop();
                           engine.readPart("part1",scr);
@@ -93,6 +106,7 @@ int main()
           if (getms>1000)
             playBlackTrans=false;
         }
+        if (testspace) scr.draw(map);
         scr.display();
     }
 
