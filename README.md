@@ -1,13 +1,6 @@
-# Branch : New engine
+# Branch : Tilemap
 
-I noticed that the syntax of my script is horrible so i'm working for a new synthax, like ren'py !
-
-I should remake the novel engine from zero !
-
-
-old synthax exemple (branch novelEngine) : resources/scripts/I.txt
-
-new synthax exemple (This branch) : resources/scripts/script.txt
+objective : display a tilemap.
 
 novel engine status : 
 
@@ -18,12 +11,12 @@ Can display in the window the visual novel script
 [#####_____] 50%
 
 Can read mapfiles 
-[__________] 0%
+[#_________] 10%
 
 Can make conditions and read varfiles
 [__________] 0%
 
 global status for the novel engine only : 
-[###_______] 34%
+[###_______] 35%
 
 ... ?
