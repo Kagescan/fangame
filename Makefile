@@ -1,13 +1,12 @@
 CXX=g++
 CFLAGS=-Wall -g -I/usr/local/include/SFML/ -I/usr/include/AL
-LDFLAGS=-L/usr/local/lib/ -lopenal /usr/local/lib/libsfml-graphics.so /usr/local/lib/libsfml-window.so /usr/local/lib/libsfml-system.so /usr/local/lib/libsfml-audio.so /usr/local/lib/libsfml-network.so
+LDFLAGS=-L/usr/local/lib/ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
 EXEC=fangame
 objOut=obj/
 buildOut=./
 
-
-fangame : button.o game.o main.o
-		$(CXX) -o $(buildOut)fangame $(objOut)button.o $(objOut)game.o $(objOut)main.o $(LDFLAGS)
+fangame : button.o game.o easing.o novel.o main.o
+		$(CXX) -o $(buildOut)fangame $(objOut)button.o $(objOut)game.o $(objOut)easing.o $(objOut)novel.o $(objOut)main.o $(LDFLAGS)
 
 button.o : button.cpp
 		mkdir -p $(objOut)
@@ -16,6 +15,12 @@ button.o : button.cpp
 
 game.o : game.cpp
 		$(CXX) $(CFLAGS) -c game.cpp -o $(objOut)game.o
+
+easing.o : easing.cpp
+		$(CXX) $(CFLAGS) -c easing.cpp -o $(objOut)easing.o -w
+
+novel.o : novel.cpp
+		$(CXX) $(CFLAGS) -c novel.cpp -o $(objOut)novel.o
 
 main.o : main.cpp button.cpp game.cpp
 		$(CXX) $(CFLAGS) -c main.cpp -o $(objOut)main.o

@@ -1,0 +1,228 @@
+part declaration? I don't know what I will do...;
+`This is the script of the chapter 1`used in the version 1.`;
+`declaration`test`;
+`declaration`test`;
+`declaration`test`;
+`declaration`testfin`;
+
+#debut;
+`0`Shintaro`J'imagine que c'est normal qu'il n'y ait personne à une heure pareille_Mais franchement,comment ça se fait que l'école soit si flippante la nuit?_J'espère que rien de chelou ne va apparaitre...;
+`0`Shintaro`Raah...Sérieux !!_Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre...__J'ai vraiment la poisse...;
+
+#porte1;
+`0`Shintaro`Ce n'est pas ma classe.En plus,la porte est fermée.;
+
+#porte2;
+`0`Bruit`Flock~~;
+`0`Shintaro`Whaaahhh!!!??__..._...;
+`0`Shintaro`Ah...-Ah..._C'était quoi, ça ?Les robinets ?_Ne te surprend pas comme ça,putain!;
+
+#flock;
+`5`resources/img/backgrounds/classroom.night.jpg;
+
+`1`Shintaro`Pff...Pourquoi je suis obligé de venir à l'école la nuit,comme ça?_..._Mais sinon...;
+`0`Shintaro`Les gars de ma nouvelle classe...Ils avaient tous l'air de crétins finis_En plus,la moyenne de la nouvelle interro était incroyablement basse_Si ce n'est que ça,ça irait.Mais qu'ils peuvent être bruyants,à frapper dans les_bureaux...;
+`0`Shintaro`C'est pas croyable.Qu'est-ce que je pourrait gagner avec des types pareils?_C'est bien mieux de passer mon temps à feuilleter mes manuels scolaires_chez moi.;
+`0`Shintaro`Et c'est la même chose pour les gens avec qui j'ai été jusqu'à aujourd'hui._Ils osent se dire amis,mais ne font-ils pas semblant pour profiter de moi?;
+`0`Shintaro`Dans leurs dos,ils n'arrêtent pas de dire du mal des uns et des autres_C'est plus que dégelasse.;
+`0`Shintaro`Franchement,qu'est-ce qu'ils ont,ceux là?_Je pense que ça aurait été mieux de rester seul depuis le début._Non.Sérieusement...Pourquoi est-ce que je reste dans ce genre d'endroit?;
+`0`Shintaro`C'est vrai.C'est bien plus simple de rester seul._Je pourrai passer plus de temps pour étudier.Ça ne peut m'apporter que de_bonnes choses.;
+`0`Shintaro`Et puis de toute manière,je n'ai pas un seul vrai ami._Maintenant que j'y pense,il n'y a pas une seule raison d'aller à l'éco--;
+`2`sound`play`resources/sounds/OldDays01.ogg;
+`0`bruit`~bruits de chaises~;
+`0`Shintaro`C-C'était quoi ce bruit???_Il y a quelqu'un à une heure pareille?Attends, attends, attends._c'est vraiment trop bizarre!!!Même si il y avait quelqu'un,aucune lumière_n'est allumée...;
+`0`Shintaro`E-Et puis ce bruit,à l'instant,il vient de ma classe!!_M-Me-Me dites pas que c'est un fantôme ou un truc du genre..._L-laissez moi tranquille !!!;
+`0`Shintaro`J'ai peur,mais si je ne rentre pas,je ne pourrai pas récupérer mon portefeuille_Ah~hhh ... Qu'est ce que je suis censé faire?;
+`option`chercher le porte feuille`partir;
+
+#partir;
+`0`Shintaro`Je sais que j'ai besoin de mon porte feuille mais j'ai si peur... Ok,je peux fuir mais j'en ai réelement besoin..._Qu'est-ce que je dois faire?;
+`option`aller prendre le porte feuille`Quitter;
+
+#porte3;
+`5`resources/img/backgrounds/classroom.night.jpg;
+`2`sound`play`resources/sounds/OldDays02.ogg`;
+`3`0`resources/img/sprite/Ayano5.png;
+`4`pause`500;
+`1`Shintaro / inconnue???`-Whaaaaaaah !!!_-OUAAAHAAHAHAHA!!!Hiiii!!!;
+`4`pause`2200;
+`2`sound`pause;
+`4`Epause;
+
+`1`Shintaro`Pardonnez moi !Pardonnez moi !_L-Laissez moi la vie sau~auve!!!;
+`2`sound`unpause;
+`4`pause`3150;
+`2`sound`pause;
+`4`Epause;
+
+`3`0`resources/img/sprite/Ayano6.png;
+`1`???`Hum?;
+`2`sound`unpause;
+`4`pause`900;
+`2`sound`pause;
+`4`Epause;
+
+`1`???`Shintarou...-kun?;
+`2`sound`unpause;
+`4`pause`3000;
+`2`sound`pause;
+`4`Epause;
+
+`3`0`resources/img/sprite/Ayano6.png;
+`1`???`Ah j'en suis sûre,tu est bien Shintaro Kisaragi !;
+`1`Shintaro (Flippe encore sous ses bras)`Hu~um???;
+`2`music`play`resources/sounds/OST03.ogg`-1;
+`3`0`resources/img/sprite/Ayano3.png;
+`1`???`Hé,tu ne me reconnais pas?_Je suis assise à côté de toi en classe !_Ayano Tateyama!;
+`3`0`resources/img/sprite/Ayano2.png;
+`1`Sois disant "Ayano"`Enfin,j'ai beau dire ça mais je crois bien que l'on a encore jamais parlé ensemble....;
+`1`Shintaro (Perplexe)`Aya...no Tateyama... ? AH ?;
+`1`Shintaro`M-mais c'est celle qui est toujours en dessous de la moyenne !;
+`3`0`resources/img/sprite/Ayano3.png;
+`1`Ayano`Ah !Heu..._C'est tout ce dont tu te rappelles de moi ?;
+`1`Shintaro`J'ai raison ?;
+`3`0`resources/img/sprite/Ayano4.png;
+`1`Ayano`Non,tu as raison,mais bon... Ah ah ...;
+`3`0`resources/img/sprite/Ayano3.png;
+`1`Ayano`Mais le plus important,qu'est-ce que tu fait là à une heure pareille ?_Il fait déjà noir dehors!;
+`1`Shintaro (gêné)`Ah...Eh bien...Je te retourne la question._Pourquoi est-tu dans la classe à une heure pareille?_Sans lumière en plus !;
+`1`Ayano`Euhh... Eh bien...C'est que...Tu vois..._Comme mes dernières notes étaient un peu juste,le prof m'a donné du travail supplémentaire.;
+`1`Shintaro`Et donc ?;
+`3`0`resources/img/sprite/Ayano4.png;
+`1`Ayano`Euh...En restant pour travailler,sans m'en rendre compte,je me suis endormie._Sans même avoir terminée mes devoirs...Hihi ~;
+`1`Shintaro`Ça valait le coup de rester après les cours?;
+`3`0`resources/img/sprite/Ayano2.png;
+`1`Ayano`Eh bien...C'est vrai,cela n'a aucun sens,n'est-ce pas?_Hum~...Qu'est-ce que je peux faire?_Si je ne lui rend pas demain matin,le prof va encore m’engueuler...;
+`1`Shintaro (Pensées)`Qu'est-ce qu'elle a celle-là ?Elle est trop chiante..._Elle est de toute manière en tort pour ne pas avoir fait son boulot.C'est pas mes oignons._Je dois me dépêcher de récupérer mon portefeuille.;
+`3`0`resources/img/sprite/Ayano1.png;
+`1`Ayano`Hé euh...Excuse moi !;
+`1`Shintaro`Hum?Qu'est-ce qu'il y a ?;
+`1`Ayano`Shintaro-kun, tu est super intelligent,n'est-ce pas?_T'as encore eu 100 à la dernière interro!;
+`1`Shintaro`Qui t'as permis de regarder ma note?;
+`3`0`resources/img/sprite/Ayano4.png;
+`1`Ayano`Hum?Euh...Désolée !;
+`1`Shintaro`Qu'est-ce qu'il y a?_Dis moi clairement ce que tu veux.;
+`1`Ayano`Oh...Hum...C'est que..._Est-ce que tu pourrais,Juste un peu,m'aider à étudier...;
+`1`Shintaro`Hein?;
+`3`0`resources/img/sprite/Ayano5.png;
+`1`Ayano`Juste pour aujourd'hui ! Pas très longtemps !;
+`1`Shintaro`Tu veux dire maintenant ?!;
+`1`Ayano`S'il te plaît...E-Euh...Je t'en supplie...;
+`1`Shintaro (gêné)`Me supplier ?_Urrm~ ! C'est bon,j'ai compris...__Mais c'est juste pour aujourd'hui!;
+`3`0`resources/img/sprite/Ayano1.png;
+`1`Ayano`Vraiment ?;
+`1`Shintaro`Je te dis que je voulais bien t'aider.Allez,on se dépêche de terminer pour pouvoir commencer.;
+`1`Ayano`O-Oui !;
+
+`4`fade5`Y`30;
+`5`resources/img/backgrounds/classroom.work.jpg;
+`2`music`play`resources/sounds/OST04.ogg`-1;
+`4`color`bar`255,20,20;
+`3`0`rien;
+`4`changeA`resources/img/sprite/ayanosmall1.png;
+`4`blitinA`resources/img/sprite/particle2.png`73`153;
+`1`Shintaro`Et donc là,ça deviens ça!;
+`1`Ayano`Hu~um !;
+
+`4`blitinA`resources/img/sprite/particle1.png`50`137;
+`1`Shintaro`Et comme ça est égal à ça, ça deviens ça, non ?;
+
+`4`changeA`resources/img/sprite/ayanosmall1.png;
+`4`blitinA`resources/img/sprite/particle1.png`50`137;
+`4`blitinA`resources/img/sprite/particle3.png`73`153;
+`1`Ayano`Hum~... Hum?;
+`1`Shintaro`Et si on échange ça...__Tu vois ,ça fonctionne !_Tu peux répondre à ça, non ?;
+
+`4`changeA`resources/img/sprite/ayanosmall2.png;
+`1`Ayano`Hu--_Hein ?Je vois pas du tout où tu veux en venir!;
+`1`Shintaro`Raaah !_Combien de fois je vais devoir te l'expliquer avant que tu ne comprennes ?!;
+`1`Ayano`Désolée...;
+`1`Shintaro`Fais un effort,tu veux ?_À ce rythme,on aura pas fini avant le matin!;
+`1`Ayano`Hum...C'est vrai...;
+`1`Shintaro`Sérieusement,c'est qui celle-là ?_Il y a une limite à la connerie , normalement !;
+
+`4`changeA`resources/img/sprite/ayanosmall1.png;
+`4`blitinA`resources/img/sprite/particle2.png`73`153;
+`1`Ayano`...Mais je crois avoir compris pour ici...;
+`1`Shintaro`Ha ?;
+
+`4`changeA`resources/img/sprite/ayanosmall1.png;
+`4`blitinA`resources/img/sprite/particle3.png`73`153;
+`1`Ayano`ça deviens ça...__puis ça,non?;
+`1`Shintaro`Hum ?C'est pas trop mal !_C'est ça,c'est ce qu'il faut faire !;
+
+`4`changeA`resources/img/sprite/ayanosmall1.png;
+`4`blitinA`resources/img/sprite/particle2.png`73`153;
+`1`Ayano`Et donc ça deviens ça..._Et puis comme ça ?!;
+`1`Shintaro`C'est bon,tu as bon !_Tu vois que tu peux le faire quant tu t'y mets...;
+
+`4`changeA`resources/img/sprite/ayanosmall3.png;
+`1`Ayano`Hihi !;
+`1`Shintaro`Pas la peine de rire autant...T'est vraiment glauque...;
+
+`4`changeA`resources/img/sprite/ayanosmall4.png;
+`1`Ayano`Hum ?Glauque ?;
+`1`Shintaro`Ne le prend pas sérieusement !_Ce que tu peux être chiante...__Allez,après avoir fait ça,tu as presque terminé.Dépêche-toi de finir.;
+
+`4`changeA`resources/img/sprite/ayanosmall3.png;
+`1`Ayano`Oui!;
+`4`changeA`rien;
+
+`5`resources/img/backgrounds/classroom.night.jpg;
+`2`music`play`resources/sounds/OST05.ogg`-1;
+`4`color`bar`255,255,255;
+`3`0`resources/img/sprite/ayano2.png;
+`1`Ayano`Shintaro-kun,tu est vraiment intelligent.Tu étudie chez toi tout les jours ?;
+`1`Shintaro`Pas particulièrement.Je n'ai lu les manuels qu'une seule fois.;
+`3`0`resources/img/sprite/ayano1.png;
+`1`Ayano`Et tu réussit quand même à ce point ?!_Incroyable...tu est vraiment intelligent.;
+`1`Shintaro`Hum...Plus qu'intelligent..._Je ne sais pas pourquoi mais une fois que j'ai appris quelque chose, je ne l'oublie plus.__Depuis toujours...;
+`1`Shintaro`Et comme j'ai déjà appris par cœur tout les manuels,je m'en sort aux interros.;
+`3`0`resources/img/sprite/ayano3.png;
+`1`Ayano`Je vois...Alors ça veut dire que,Shintaro-kun,ta mémoire est incroyable,c'est ça ?_La chance...J'oublie toujours très rapidement tout ce que j'apprends...;
+`1`Shintaro`C'est pas forcément une bonne chose._De toutes les choses les plus insignifiantes au plus désagréables,je retiens tout._A me soucier de choses sans importance jour après jour,c'est loin d'être facile à vivre...;
+`3`0`resources/img/sprite/ayano4.png;
+`1`Ayano`Huuum~...;
+`1`Shintaro`Qu'est-ce qu'il y a ?;
+`1`Ayano`--Hum ?C'est juste que, je me suis dit que si tu ne pouvait pas oublier les mauvais moments,_J'espérais qu'il t'arrive plein de bons moments..._Tu finiras par ne plus te préoccuper des choses désagréables, non ?;
+`1`Shintaro`Rooh~...;
+`3`0`resources/img/sprite/ayano6.png;
+`1`Ayano`Oh ?Eh bien...Ou alors ça ne marche pas comme ça ?;
+`1`Shintaro`Hein? Heu...Non...Je suppose que ça va..._De cette manière,ça a l'air plutôt simple à vivre.;
+`3`0`resources/img/sprite/ayano4.png;
+`1`Ayano`Ah !Oui !Je suis sûre qu'à partir de maintenant,plein de bonnes choses vont t'arriver !;
+`1`Shintaro`Comment peux-tu me dire ça ?;
+`3`0`resources/img/sprite/ayano2.png;
+`1`Ayano`Hihi!Par intuition...;
+`3`0`resources/img/sprite/ayano3.png;
+`1`Shintaro`Et donc,tu l'as résolu,ce problème ?Si tu ne fais que de parler,tu ne vas pas le finir.;
+`3`0`resources/img/sprite/ayano2.png;
+`1`Ayano`Hum!Ah...Hum...Je crois que j'ai rien compris...;
+`1`Shintaro`Toi alors...;
+
+`5`resources/img/backgrounds/night.jpg;
+`2`music`play`resources/sounds/OST06.ogg`-1;
+`3`0`resources/img/sprite/ayano4.png;
+`1`Ayano`Tu m'as vraiment sauvée.Si tu n'avais pas été là,je n'aurais sûrement pas pu finir.;
+`1`Shintaro`Mais même avec moi,tu as pris trop de temps.Je te jure...__Et dire que j'était juste venu récupérer mon porte feuille._J'ai vraiment la poisse...;
+`3`0`resources/img/sprite/ayano2.png;
+`1`Ayano`Ah..Je suis vraiment désolée...Mais je n'oublierai jamais la journée d'aujourd'hui !;
+`1`Shintaro`Qu'est-ce que tu as ?_Tu ne m'avais pas dit que tu oublierai toujours tout ce que tu apprenais ?;
+`1`Ayano`Aujourd'hui,je ferai de mon mieux pour ne pas oublier,alors ça devrait aller.;
+`1`Shintaro`Hum.Si tu te rappelles de ce que tu as vu aujourd'hui,_tu devrais avoir une assez bonne note à la prochaine interro.;
+`1`Ayano`Ça aussi, c'est vrai, mais...Je ne parlais pas que des études.;
+`3`0`resources/img/sprite/ayano6.png;
+`1`Shintaro`Oh ?Tu as dit quelque chose ?;
+`3`0`resources/img/sprite/ayano3.png;
+`1`Ayano`--Hum?? haha!!..._R-Rien du tout!!;
+`3`0`resources/img/sprite/ayano4.png;
+`1`Shintaro`Je vois...à plus.J'habite par là donc je tourne ici.;
+`3`0`resources/img/sprite/ayano5.png;
+`1`Ayano`Ha..Hum !!à bientôt !;
+`3`0`resources/img/sprite/ayano2.png;
+`1`Ayano`...__Hé !Shintaro-kun !;
+`1`Shintaro`Oui ?;
+`3`0`resources/img/sprite/ayano1.png;
+`1`Ayano`À demain!;
+`1`Shintaro`...__Oui...À demain !;
+`4`fadeBlack`30;
