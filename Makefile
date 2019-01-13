@@ -5,7 +5,6 @@ EXEC=fangame
 objOut=obj/
 buildOut=./
 
-
 fangame : button.o game.o easing.o novel.o main.o
 		$(CXX) -o $(buildOut)fangame $(objOut)button.o $(objOut)game.o $(objOut)easing.o $(objOut)novel.o $(objOut)main.o $(LDFLAGS)
 
@@ -25,7 +24,6 @@ novel.o : novel.cpp
 
 main.o : main.cpp button.cpp game.cpp
 		$(CXX) $(CFLAGS) -c main.cpp -o $(objOut)main.o
-
 
 clean:
 		rm -rf $(objOut)*.o
