@@ -1,0 +1,20 @@
+params disableLogCommands
+
+::init
+entity <save> savestate = "res/savestate.ini"
+entity <sound> beginCh1 = "res/sound/beginCh1.ogg"
+entity <music> ost1 = "res/musics/ost1.ogg"
+entity <image> shinsprite1 = "res/images/shintaro/1.png"
+entity <image> shinsprite2 = "res/images/shintaro/2.png"
+entity <image> = "res/images/bg/classroomDoor.jpg"
+entity <character> shintaro = %shinsprite1%
+
+::var var1, var2 = true, var3 = oui, var4= 
+set var1 = non
+
+set <color> shintaro = 255,10,10
+set <play> beginCh1 = true
+::animate <object> variable value easing=none duration=1000 start=0
+animate <opacity> bg 255 fadein 1000
+pause 1500
+say shintaro "aaah"
