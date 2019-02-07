@@ -7,7 +7,7 @@ int main() {
 	Script engine;
 	
     while (result!="0"){
-    	std::cout<<"\n> ";
+    	std::cout<<"$ ";
     	getline(std::cin,expression);
 
     	//std::string result = engine.calc(expression);
