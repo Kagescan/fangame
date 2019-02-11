@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "button.h"
 #include "game.h"
-#include "novel.h"
+#include "script.h"
 #include "easing.h"
 
 
@@ -48,9 +48,9 @@ int main()
     sf::Time animStart=clock.getElapsedTime();
     Easing ease;
     std::string theScriptFile("resources/scripts/script.txt");
-    novel engine(theScriptFile,scr);
-    TileMap map;
-    map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);
+    Script engine(theScriptFile);
+    /*TileMap map;
+    map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);*/
     bool testspace(false);
     //LOOP
     while (scr.isOpen()) {
@@ -75,7 +75,7 @@ int main()
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
                           //engine.debug(scr);
                           inadaze.stop();
-                          engine.readPart("part1",scr);
+                          engine.read(scr);
                           inadaze.play();
                           playBlackTrans=true;
                           animStart=clock.getElapsedTime();
@@ -106,7 +106,7 @@ int main()
           if (getms>1000)
             playBlackTrans=false;
         }
-        if (testspace) scr.draw(map);
+        //if (testspace) scr.draw(map);
         scr.display();
     }
 
