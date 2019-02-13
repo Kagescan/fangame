@@ -11,10 +11,10 @@ int main()
 {
 
     std::cout <<"\nKagerou Project Fangame Version 2.0\n"<<
-                "\n (c) The KageTeam Fr community - Under the MIT/X11 license,please read COPYRIGHT file"<<
+                "\n (c) The KageScan community - Under the MIT/X11 license,please read COPYRIGHT file"<<
                 "\n\n"<<std::flush;
     int scrw = 1280, scrh = 720;
-    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Kagerou Project Fangame V2 - debug mode");//,sf::Style::Fullscreen
+    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Kagerou Project Fangame V2");//,sf::Style::Fullscreen
     scr.setFramerateLimit(60);
     //LOADING GRAPHICS
         sf::Font bloody,animeace;

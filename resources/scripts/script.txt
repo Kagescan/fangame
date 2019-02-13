@@ -8,7 +8,7 @@
 varfile "resources/saves/main.save"
 mapfile "resources/map/couloir.txt"
 
-//var declarations
+::var declarations
 
 entity <character> shintaro
 set <color> shintaro = 255,0,0
@@ -64,4 +64,3 @@ goto ende
 : ende
   say logan "Bye"
   end up
-endLabel

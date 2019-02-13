@@ -34,13 +34,11 @@ class Script {
         std::string cmdSet(std::string str);
         std::string cmdEntity(std::string str);
         std::string calc(std::string input);
-        std::string removeSpaces(std::string str);
         std::string getValue(std::string varName);
-        std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
         std::string replaceVars(std::string str);
 
         //std::vector<std::string[2]> scriptInstructions;
-        std::vector<std::string> scriptInstructions;
+        std::vector< std::array<std::string,3> > scriptInstructions;
         std::map<std::string, int> labelRefs;
         std::string loadfile;
         std::string rgQuote, rgSpacestar, rgVarNames;
@@ -48,6 +46,11 @@ class Script {
         std::map<std::string, std::string> varValues;
         //std::map<std::string, std::string> varTypes;
 };
+
+//helpers who don't need object
+bool blank(std::string str);
+std::string removeSpaces(std::string str);
+std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
 
 
 #endif

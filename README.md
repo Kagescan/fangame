@@ -6,14 +6,14 @@ This is a remake of a fangame that I made with my community.The version 1 was wr
 **The game inside this branch is not finished : even if the code is inside the master branch, you can't play. You can just try some features.**  
 Because of that, there is not builds of this code.
 
-I'm working with a new syntax inside another branch.
+I'm working with a new syntax
 
 ### dependancies
-You just need the SFML library. [http://sfml-dev.org].  Open AL is also recommanded.
+You just need the SFML library. [http://sfml-dev.org].  Open AL could be a dependency.
 
 
 ### compiling - download binairies
-This project is in developement : actually, **you can't play** ! You can just test "Features"
+This project is in developement : actually, **you can't play** ! You can just try "Features"
 
 Written in linux (Xubuntu 18.04 LTS), not tested in Windows.
 Be careful with current directory, open the executable using file explorer if you don't need the terminal.
