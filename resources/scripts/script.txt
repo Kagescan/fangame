@@ -31,7 +31,7 @@ set <sprite> shintaro = %shintaroDefault%
 set <sprite> logan = %shintaroScreem%
 
 
-: part1
+:part1
   echo ceci est la partie 1
   :: animate <object> variable finalValue easing duration beforeValue
   animate <position> shintaro right outExpo 1500 right
@@ -40,27 +40,32 @@ set <sprite> logan = %shintaroScreem%
   mucis chairs play
   animate <position> logan center outExpo 1500 left
   animate <spriteChange> logan %shintaroScary% outExpo 300
-  logan "Do you like kagescan?"
+  say logan "Do you like kagescan?"
   echo en train de faire un choix
   choice "The best website"=hope/"Horrible"=noHope
+  goto hope
 
 :ok
   say logan "Yay it's true !!" "" "(I'm stopping the music)"
   music ost03 stop
+  echo OK
   say shintaro "<3"
   goto ende
   say shintaro ""
 
 
-: hope
+:hope
   say logan "you are cool !!"
+  echo HOPE
 goto ok
 
 
-: noHope
+:noHope
   say logan "huh... you're not cool !"
+  echo NoHOPE
 goto ende
 
 : ende
   say logan "Bye"
+  echo END
   end up

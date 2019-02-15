@@ -21,6 +21,10 @@ Script::Script(std::string file){
   rgVarNames = rgSpacestar+ "([_[:alnum:]]+)" +rgSpacestar;
 
   loadfile = file;
+  playing = true;
+  waiting = false;
+  iread = 0;
+
   init();
 
 }
@@ -38,10 +42,10 @@ bool Script::init() {
       str = replaceVars(str);
       if (std::regex_match(str, match, command)) { //this is a command
         std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
-        scriptInstructions.push_back(results);
+        scriptInstructions.push_back(results); //store the command
       } else if (std::regex_match(str, match, tag)) { //this is a tag
         std::string tagContent = match[1];
-        if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size();//save if not a comment
+        if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1;//save if not a comment
       } else {
         if (!blank(str)) std::cout<<"! Line "<<i<<": Syntax Error (no arguments provided or invalid command)\n";
       }
@@ -55,41 +59,72 @@ bool Script::init() {
 }
 
 bool Script::read(sf::RenderWindow &scr){
-  std::cout<<"lel\n";
+  while (iread<scriptInstructions.size() && playing){
+    //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
+
+    std::string command = str_tolower(scriptInstructions[iread][0]), arguments = scriptInstructions[iread][1];
+    unsigned int line = std::stoul(scriptInstructions[iread][2]);
+
+    if (command == "goto") cmdGoto(arguments,line);
+    else if (command == "set") cmdSet(arguments, line);
+    else if (command == "entity") cmdEntity(arguments, line);
+    else if (command == "echo") cmdEcho(arguments);
+    else {
+      std::cerr << "! Line "<<line<<" : Unknown command :"<<command<<"\n";
+    }
+
+    iread++;
+  }
   return 0;
 }
 
 //---------------Commands
-  std::string Script::cmdSet(std::string str){
+  bool Script::cmdGoto(std::string arg, unsigned int line){
+    if (labelRefs.find(arg) !=  labelRefs.end() ){
+      iread = labelRefs[arg];
+      return true;
+    } else {
+      std::cerr << "! Line "<<line<<" : Undefined label "<<arg<<"\n";
+      return false;
+    }
+  }
+
+  bool Script::cmdSet(std::string arg, unsigned int line){
     std::smatch match;
-    std::string prefix = rgSpacestar + "set" + rgSpacestar;
     std::string suffix = rgVarNames+ "=" +rgSpacestar+ "(.+)";
-    std::regex setC( prefix + "/c" + suffix);
-    std::regex setO( prefix + '<'+rgVarNames+'>' + suffix);
-    std::regex setOC( prefix + "/c" + rgSpacestar+'<'+rgVarNames+'>' + suffix);
-    std::regex set(  prefix + suffix);
-    if (std::regex_match(str, match, setOC))     assign(match[1],calc(match[3]),match[2]);  
-    else if (std::regex_match(str, match, setC)) assign(match[1],calc(match[2]));
-    else if (std::regex_match(str, match, setO)) assign(match[1],match[3],match[2]);
-    else if (std::regex_match(str, match, set))  assign(match[1],match[2]);
-    else
-      std::cerr<<"Syntax Error (Syntax expected set (/c) (<object>) variable = value).\n";
-    return str;
+    std::regex setC( rgSpacestar + "/c" + suffix);
+    std::regex setO( rgSpacestar + '<'+rgVarNames+'>' + suffix);
+    std::regex setOC( rgSpacestar + "/c" + rgSpacestar+'<'+rgVarNames+'>' + suffix);
+    std::regex set(  rgSpacestar + suffix);
+    if (std::regex_match(arg, match, setOC))     assign(match[1],calc(match[3]),match[2]);  
+    else if (std::regex_match(arg, match, setC)) assign(match[1],calc(match[2]));
+    else if (std::regex_match(arg, match, setO)) assign(match[1],match[3],match[2]);
+    else if (std::regex_match(arg, match, set))  assign(match[1],match[2]);
+    else{
+      std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : set (/c) (<object>) variable = value).\n";
+      return false;
+    }
+    return true;
   }
 
-  std::string Script::cmdEntity(std::string str){
+  bool Script::cmdEntity(std::string arg, unsigned int line){
     std::smatch match;
-    std::regex entity(  rgSpacestar + "entity" + rgSpacestar + '<' +rgVarNames + '>' + rgVarNames + rgSpacestar + "=" +rgSpacestar + rgQuote + "(.+)"+ rgQuote);
+    std::regex entity( rgSpacestar + '<' +rgVarNames + '>' + rgVarNames);
+    std::regex entityValues( rgSpacestar + '<' +rgVarNames + '>' + rgVarNames + rgSpacestar + "=" +rgSpacestar + rgQuote + "(.+)"+ rgQuote);
 
-    if (std::regex_match(str, match, entity))
+    if (std::regex_match(arg, match, entity))
+      std::cout<<"Commande entity. Déclarer "<<match[2]<<" en tant que "<<match[1]<<"\n";
+    else if (std::regex_match(arg, match, entityValues))
       std::cout<<"Commande entity. Déclarer "<<match[2]<<" en tant que "<<match[1]<<" avec valeur "<<match[3]<<"\n";
-    else
-      std::cerr<<"Syntax Error (Syntax expected: entity <type> variable = \"value\").\n";
-    return str;
+    else{
+      std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected: entity <type> variable (= \"value\") ).\n";
+      return false;
+    }
+    return true;
   }
 
-  bool Script::cmdEcho(std::string str){
-    std::cout<<">"<<str<<"\n";
+  bool Script::cmdEcho(std::string arg){
+    std::cout<<">"<<arg<<"\n";
     return true;
   }
 
@@ -226,3 +261,13 @@ bool Script::read(sf::RenderWindow &scr){
     if (pos == std::string::npos) return s;
     return s.replace(pos, toReplace.length(), replaceWith);
   }
+
+std::string str_tolower(std::string s) {
+    std::transform(s.begin(), s.end(), s.begin(), 
+                // static_cast<int(*)(int)>(std::tolower)         // wrong
+                // [](int c){ return std::tolower(c); }           // wrong
+                // [](char c){ return std::tolower(c); }          // wrong
+                   [](unsigned char c){ return std::tolower(c); } // correct
+                  );
+    return s;
+}

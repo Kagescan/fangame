@@ -29,21 +29,24 @@ class Script {
 
     private :
         bool init();
-        bool cmdEcho(std::string str);
         bool assign(std::string var, std::string value, std::string object="");
-        std::string cmdSet(std::string str);
-        std::string cmdEntity(std::string str);
+        bool cmdGoto(std::string arg, unsigned int line);
+        bool cmdEcho(std::string arg);
+        bool cmdSet(std::string arg, unsigned int line);
+        bool cmdEntity(std::string arg, unsigned int line);
         std::string calc(std::string input);
         std::string getValue(std::string varName);
         std::string replaceVars(std::string str);
 
         //std::vector<std::string[2]> scriptInstructions;
         std::vector< std::array<std::string,3> > scriptInstructions;
+        std::map<std::string, std::string> varValues;
         std::map<std::string, int> labelRefs;
         std::string loadfile;
         std::string rgQuote, rgSpacestar, rgVarNames;
         std::smatch m;
-        std::map<std::string, std::string> varValues;
+        bool playing, waiting;
+        unsigned int iread;
         //std::map<std::string, std::string> varTypes;
 };
 
@@ -51,6 +54,6 @@ class Script {
 bool blank(std::string str);
 std::string removeSpaces(std::string str);
 std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
-
+std::string str_tolower(std::string s);
 
 #endif

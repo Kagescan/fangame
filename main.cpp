@@ -67,6 +67,7 @@ int main()
                       inadaze.play();
                       playBlackTrans=true;
                       animStart=clock.getElapsedTime();*/
+                      engine.read(scr);
                       testspace = !testspace;
                     }
                     break;
