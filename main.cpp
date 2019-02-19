@@ -48,7 +48,6 @@ int main()
     sf::Time animStart=clock.getElapsedTime();
     Easing ease;
     std::string theScriptFile("resources/scripts/script.txt");
-    Script engine(theScriptFile);
     /*TileMap map;
     map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);*/
     bool testspace(false);
@@ -67,7 +66,6 @@ int main()
                       inadaze.play();
                       playBlackTrans=true;
                       animStart=clock.getElapsedTime();*/
-                      engine.read(scr);
                       testspace = !testspace;
                     }
                     break;
@@ -76,6 +74,7 @@ int main()
                         if (play.clicked(event.mouseButton.x,event.mouseButton.y)) {
                           //engine.debug(scr);
                           inadaze.stop();
+                          Script engine(theScriptFile);
                           engine.read(scr);
                           inadaze.play();
                           playBlackTrans=true;

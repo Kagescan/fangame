@@ -1,24 +1,10 @@
 #include "script.h"
 
-/*
-    issues : (solution)
-    negative numbers: ((0-1)*x)
-        in = 25*-10
-        out = 10
-    limited to a number that have more than 30 numbers (x*10^n)
-        in : 11111111111111111111111111111111111111111111111111111111111111111111
-        *** stack smashing detected ***: <unknown> terminated
-        /home/logan/programmation/cpp/parser/run.sh : ligne 8 :  2520 Abandon                 (core dumped) ./a.out
-*/
-
-// http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
-
-
 Script::Script(std::string file){
   //regex helpers
   rgQuote = "[\"|']";
   rgSpacestar = "[[:space:]]*";
-  rgVarNames = rgSpacestar+ "([_[:alnum:]]+)" +rgSpacestar;
+  rgVarNames = rgSpacestar+ "([_\\.[:alnum:]]+)" +rgSpacestar;
 
   loadfile = file;
   playing = true;
@@ -39,7 +25,6 @@ bool Script::init() {
   std::ifstream file(loadfile.c_str());
   if (file) {
     while (std::getline(file,str)) {
-      str = replaceVars(str);
       if (std::regex_match(str, match, command)) { //this is a command
         std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
         scriptInstructions.push_back(results); //store the command
@@ -60,20 +45,47 @@ bool Script::init() {
 
 bool Script::read(sf::RenderWindow &scr){
   while (iread<scriptInstructions.size() && playing){
+
     //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
 
-    std::string command = str_tolower(scriptInstructions[iread][0]), arguments = scriptInstructions[iread][1];
+    std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
     unsigned int line = std::stoul(scriptInstructions[iread][2]);
 
     if (command == "goto") cmdGoto(arguments,line);
     else if (command == "set") cmdSet(arguments, line);
     else if (command == "entity") cmdEntity(arguments, line);
     else if (command == "echo") cmdEcho(arguments);
+    else if (command == "wait") displaying = true;
     else {
       std::cerr << "! Line "<<line<<" : Unknown command :"<<command<<"\n";
     }
 
     iread++;
+
+    while (displaying) { //Main loop
+      sf::Event event;
+      while (scr.pollEvent(event)) {
+          if (event.type == sf::Event::Closed) scr.close();
+
+          if (event.type == sf::Event::KeyPressed) {
+              switch (event.key.code) {
+              // If escape is pressed, close the application
+              case  sf::Keyboard::Escape : scr.close(); break;
+              case  sf::Keyboard::Space : displaying = false; break;
+
+              /*/ Process the up, down, left and right keys to modify parameters
+              case sf::Keyboard::Up :     distortionFactor *= 2.f;    break;
+              case sf::Keyboard::Down:    distortionFactor /= 2.f;    break;
+              case sf::Keyboard::Left:    riseFactor *= 2.f;          break;
+              case sf::Keyboard::Right:   riseFactor /= 2.f;          break;*/
+              default : break;
+              }
+          }
+      }
+      scr.clear();
+      drawBackground(scr);
+      scr.display();
+    }
   }
   return 0;
 }
@@ -96,9 +108,9 @@ bool Script::read(sf::RenderWindow &scr){
     std::regex setO( rgSpacestar + '<'+rgVarNames+'>' + suffix);
     std::regex setOC( rgSpacestar + "/c" + rgSpacestar+'<'+rgVarNames+'>' + suffix);
     std::regex set(  rgSpacestar + suffix);
-    if (std::regex_match(arg, match, setOC))     assign(match[1],calc(match[3]),match[2]);  
+    if (std::regex_match(arg, match, setOC))     assign(match[2],calc(match[3]),match[1]);  
     else if (std::regex_match(arg, match, setC)) assign(match[1],calc(match[2]));
-    else if (std::regex_match(arg, match, setO)) assign(match[1],match[3],match[2]);
+    else if (std::regex_match(arg, match, setO)) assign(match[2],match[3],match[1]);
     else if (std::regex_match(arg, match, set))  assign(match[1],match[2]);
     else{
       std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : set (/c) (<object>) variable = value).\n";
@@ -112,11 +124,29 @@ bool Script::read(sf::RenderWindow &scr){
     std::regex entity( rgSpacestar + '<' +rgVarNames + '>' + rgVarNames);
     std::regex entityValues( rgSpacestar + '<' +rgVarNames + '>' + rgVarNames + rgSpacestar + "=" +rgSpacestar + rgQuote + "(.+)"+ rgQuote);
 
-    if (std::regex_match(arg, match, entity))
-      std::cout<<"Commande entity. Déclarer "<<match[2]<<" en tant que "<<match[1]<<"\n";
-    else if (std::regex_match(arg, match, entityValues))
-      std::cout<<"Commande entity. Déclarer "<<match[2]<<" en tant que "<<match[1]<<" avec valeur "<<match[3]<<"\n";
-    else{
+    if (std::regex_match(arg, match, entity)){
+      std::string entityType = str_tolower(match[1]);
+      std::array<std::string, 4> availableTypes= {"character","image","music","sound"};
+      if (in_array(entityType,availableTypes)){
+        assign(match[2], "undef");
+        assign(match[2], entityType, "type");
+      }
+      else
+        std::cerr<< "! Line "<<line<<" : Syntax Error (Unknown entity type ["<<entityType<<"]).\n";
+    } else if (std::regex_match(arg, match, entityValues)){
+      std::string entityType = str_tolower(match[1]);
+      if (entityType == "character") {
+        assign(match[2], "undef");
+        assign(match[2], "character", "type");
+        setCharacterSprite(match[2], match[3], line);
+      }
+      else if (entityType == "image")
+        newSprite(match[2], match[3], line);
+      else if (entityType == "music")
+        newMusic(match[2], match[3], line);
+      else if (entityType == "sound")
+        newSound(match[2], match[3], line);
+    } else {
       std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected: entity <type> variable (= \"value\") ).\n";
       return false;
     }
@@ -228,10 +258,9 @@ bool Script::read(sf::RenderWindow &scr){
     else return "";
   }
 
-
   std::string Script::replaceVars(std::string str){
     std::string newStr=str;
-    std::regex regexVar("%([_[:alnum:]]+)%");
+    std::regex regexVar("%([_\\.[:alnum:]]+)%");
     auto words_begin = std::sregex_iterator(str.begin(), str.end(), regexVar);
     for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
       std::smatch match = *i;
@@ -241,12 +270,72 @@ bool Script::read(sf::RenderWindow &scr){
     return newStr;
   }
 
+  bool Script::newSprite(std::string name, std::string path, unsigned int line){
+    sf::Texture texture;
+    if ( !texture.loadFromFile(path) ) {
+      std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
+    } else {
+      allTextures.insert_or_assign( name,texture );
+      sf::Sprite sprite(allTextures[name]);
+      allSprites.insert_or_assign( name,sprite );
+      assign(name, path); // assign a simple variable
+      assign(name, "image", "type");
+      return true;
+    }
+    return false;
+  }
 
+  bool Script::newMusic(std::string name, std::string path, unsigned int line){
+    sf::Music& music = allMusics[name]; // construit l'élément directement dans la map et le retourne
+    if (!music.openFromFile(path))
+      std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
+    else {
+      assign(name, path);
+      assign(name, "music", "type");
+      return true;
+    }
+    return false;
+  }
+
+  bool Script::newSound(std::string name, std::string path, unsigned int line){
+    sf::SoundBuffer& soundBuff=buffer[name]; //même technique...
+    sf::Sound& sound=allSounds[name];
+
+    if (!soundBuff.loadFromFile(path))
+      std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
+    else {
+      sound.setBuffer(buffer[name]);
+      assign(name, path);
+      assign(name, "sound", "type");
+      return true;
+    }
+    return false;
+  }
+
+  bool Script::setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line){ //it isn't an useful function... :(
+    if (getValue(spriteName+".type")=="image"){
+      assign(charaName,spriteName,"sprite");
+    } else
+      std::cerr<<"! Line "<<line<<" : Var Error (The variable ["<<charaName<<"] hasn't been defined, or isn't an image entity !)\n";
+    return false;
+  }
+
+  bool Script::drawBackground(sf::RenderWindow& scr){
+    const std::string bgRef( getValue("__scene__.image") );
+    if (allSprites.find(bgRef) !=  allSprites.end() ){ //if inside the map then it's a valid image
+      scr.draw(allSprites[bgRef]);
+      return true;
+    } else return false;
+  }
 //-------------Simple helpers
 
   bool blank(std::string str){
     for (int i(0);str[i];i++) if (!isspace(str[i])) return false;
       return true;
+  }
+
+  template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> array){
+    return std::find(array.begin(), array.end(), value) != array.end();
   }
 
   std::string removeSpaces(std::string str) { //remove all spaces from a string
@@ -262,12 +351,7 @@ bool Script::read(sf::RenderWindow &scr){
     return s.replace(pos, toReplace.length(), replaceWith);
   }
 
-std::string str_tolower(std::string s) {
-    std::transform(s.begin(), s.end(), s.begin(), 
-                // static_cast<int(*)(int)>(std::tolower)         // wrong
-                // [](int c){ return std::tolower(c); }           // wrong
-                // [](char c){ return std::tolower(c); }          // wrong
-                   [](unsigned char c){ return std::tolower(c); } // correct
-                  );
-    return s;
-}
+  std::string str_tolower(std::string s) {
+      std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
+      return s;
+  }
