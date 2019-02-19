@@ -9,6 +9,7 @@ Script::Script(std::string file){
   loadfile = file;
   playing = true;
   waiting = false;
+  displaying = false;
   iread = 0;
   //let's "tokenize" the script
   init();
@@ -60,7 +61,7 @@ bool Script::read(sf::RenderWindow &scr){
     else if (command == "echo") cmdEcho(arguments);
     else if (command == "wait") displaying = true;
     else {
-      std::cerr << "! Line "<<line<<" : Unknown command :"<<command<<"\n";
+      std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
     }
 
     iread++;
@@ -87,6 +88,7 @@ bool Script::read(sf::RenderWindow &scr){
       }
       scr.clear();
       drawBackground(scr);
+      drawCharacters(scr);
       scr.display();
     }
   }
@@ -129,8 +131,10 @@ bool Script::read(sf::RenderWindow &scr){
 
     if (std::regex_match(arg, match, entity)){
       std::string entityType = str_tolower(match[1]);
-      std::array<std::string, 4> availableTypes= {"character","image","music","sound"};
-      if (in_array(entityType,availableTypes)){
+      std::array<std::string, 3> availableTypes= {"image","music","sound"};
+      if (entityType=="character")
+        newCharacter(match[2],"",line);
+      else if (in_array(entityType,availableTypes)){ //do something for nothing
         assign(match[2], "undef");
         assign(match[2], entityType, "type");
       }
@@ -138,11 +142,9 @@ bool Script::read(sf::RenderWindow &scr){
         std::cerr<< "! Line "<<line<<" : Syntax Error (Unknown entity type ["<<entityType<<"]).\n";
     } else if (std::regex_match(arg, match, entityValues)){
       std::string entityType = str_tolower(match[1]);
-      if (entityType == "character") {
-        assign(match[2], "undef");
-        assign(match[2], "character", "type");
-        setCharacterSprite(match[2], match[3], line);
-      }
+
+      if (entityType == "character") 
+        newCharacter(match[2], match[3], line);
       else if (entityType == "image")
         newSprite(match[2], match[3], line);
       else if (entityType == "music")
@@ -265,7 +267,17 @@ bool Script::read(sf::RenderWindow &scr){
   }
 
   bool Script::assign(std::string var, std::string value, std::string object){
-    if (object != "") var += '.'+object;
+    if (object != ""){
+      if (object == "image" && (var == "__scene__" || getValue(var+".type")=="character")){
+        //if we change the image object of an entity character/background, check if the image has been declared and valid (and do nothing) else abort and display an error
+        if (allSprites.find(value) ==  allSprites.end() ){
+          std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n";
+          return false;
+        }
+      }
+      // but do the most important stuff :
+      var += '.'+object;
+    } 
     varValues[var] = value;
     return true;
   }
@@ -330,12 +342,13 @@ bool Script::read(sf::RenderWindow &scr){
     return false;
   }
 
-  bool Script::setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line){ //it isn't an useful function... :(
-    if (getValue(spriteName+".type")=="image"){
-      assign(charaName,spriteName,"sprite");
-    } else
-      std::cerr<<"! Line "<<line<<" : Var Error (The variable ["<<charaName<<"] hasn't been defined, or isn't an image entity !)\n";
-    return false;
+  bool Script::newCharacter(std::string name, std::string spriteName, unsigned int line) {
+    assign(name,"undef");
+    assign(name,"character","type");
+    allCharacters.push_back(name);
+
+    if (spriteName !="") assign(name, spriteName, "image");
+    return true;
   }
 
   bool Script::drawBackground(sf::RenderWindow& scr){
@@ -345,6 +358,32 @@ bool Script::read(sf::RenderWindow &scr){
       return true;
     } else return false;
   }
+
+  bool Script::drawCharacters(sf::RenderWindow& scr){ //it isn't really optimized yet...
+    for (auto& elem : allCharacters) {
+      const std::string spriteRef( getValue(elem+".image") );
+      if (allSprites.find(spriteRef) !=  allSprites.end() )
+        scr.draw(allSprites[spriteRef]);
+    }
+    return true;
+  }
+//-------------character class /* but not useful yet */
+
+/*
+Character(std::string charaName, sf::Color color){
+  name = charaName;
+  titleColor = color;
+}
+bool updatePos(int x, int y) {
+  posx = x; poxy = y;
+  return sprite.setPosition(x,y);
+}
+bool draw(sf::RenderWindow& scr) {return scr.draw(sprite);}
+void setSprite(sf::Sprite arg){sprite = arg;}
+void setTitleColor(sf::Color color) {titleColor = color;}
+void setName(std::string str) {name = str;}
+sf::Color getTitleColor() {return titleColor;}*/
+
 //-------------Simple helpers
 
   bool blank(std::string str){
@@ -369,8 +408,17 @@ bool Script::read(sf::RenderWindow &scr){
     if (pos == std::string::npos) return s;
     return s.replace(pos, toReplace.length(), replaceWith);
   }
-  
+
   std::string str_tolower(std::string s) {
       std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
       return s;
   }
+
+
+/* bouts de code
+
+for(ta_map::const_iterator it=ta_map.begin() ; it!=ta_map.end() ; ++it) {
+    it->first; // accede à la clé
+    if->second; // accede à la valeur
+}
+*/

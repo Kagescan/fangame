@@ -27,8 +27,8 @@ set <image> __scene__ = backgroundClassroom
 set <bgColor> __scene__ = 0,0,0
 set <barColor> __scene__ = 255,255,255,200
 
-set <sprite> shintaro = shintaroDefault
-set <sprite> logan = shintaroScreem
+set <image> shintaro = shintaroDefault
+set <image> logan = shintaroScream
 
 
 :part1

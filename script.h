@@ -20,6 +20,24 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+/*
+class Character {
+
+    public:
+      Character(std::string charaName);
+      bool draw(sf::RenderWindow& scr);
+      //bool setActive(bool activation);
+      bool updatePos(int x, int y);
+      void setSprite(sf::Sprite arg);
+      bool setTitleColor(sf::Color color);
+      bool setName(std::string str);
+      sf::Color getTitleColor();
+
+    private :
+      //std::string name;
+      sf::Sprite sprite, oldSprite;
+      //sf::Color titleColor;
+};*/
 
 class Script {
 
@@ -38,8 +56,11 @@ class Script {
         bool newSprite(std::string name, std::string path, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
+        bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
         bool drawBackground(sf::RenderWindow& scr);
+        bool drawCharacters(sf::RenderWindow& scr);
+        //bool drawCharacters(sf::RenderWindow& scr, sf::Time currentTime, sf::Time initialTime);
         std::string calc(std::string input);
         std::string getValue(std::string varName);
         std::string replaceVars(std::string str);
@@ -55,6 +76,8 @@ class Script {
         std::map<std::string, sf::Music> allMusics;
         std::map<std::string, sf::SoundBuffer> buffer;
         std::map<std::string, sf::Sound> allSounds;
+        std::vector<std::string> allCharacters;
+        //std::map<std::string, Character> allCharacters;
 
 
         std::string loadfile;
@@ -64,6 +87,7 @@ class Script {
         unsigned int iread;
         //std::map<std::string, std::string> varTypes;
 };
+
 
 //helpers who don't need object
 bool blank(std::string str);
