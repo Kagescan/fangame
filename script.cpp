@@ -10,12 +10,14 @@ Script::Script(std::string file){
   playing = true;
   waiting = false;
   iread = 0;
-
+  //let's "tokenize" the script
   init();
 
 }
 
 bool Script::init() {
+  //the syntax of the script engine is similar to batch
+    
   int i(1);
   //bool limitation=false;
   std::string str;
@@ -24,15 +26,16 @@ bool Script::init() {
 
   std::ifstream file(loadfile.c_str());
   if (file) {
-    while (std::getline(file,str)) {
+    while (std::getline(file,str)) { //read line by line
+      str = replaceVars(str); // replace variables (%var%) by its value if available.
       if (std::regex_match(str, match, command)) { //this is a command
         std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
         scriptInstructions.push_back(results); //store the command
       } else if (std::regex_match(str, match, tag)) { //this is a tag
         std::string tagContent = match[1];
-        if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1;//save if not a comment
+        if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1; //store if not a comment
       } else {
-        if (!blank(str)) std::cout<<"! Line "<<i<<": Syntax Error (no arguments provided or invalid command)\n";
+        if (!blank(str)) std::cout<<"! Line "<<i<<": Syntax Error (no arguments given or invalid command)\n";
       }
       i++;
     }
@@ -163,9 +166,23 @@ bool Script::read(sf::RenderWindow &scr){
 //---------------HELPERS
 
   std::string Script::calc(std::string input){
+    /*
+      Calc function : return the calculus entered. Support operative priorities.
+      Edited from http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
+        issues : (solution)
+        negative numbers: ((0-1)*x)
+            in = 25*-10
+            out = 10
+        limited to a number that have more than 30 numbers (x*10^n)
+            in : 11111111111111111111111111111111111111111111111111111111111111111111
+            *** stack smashing detected ***: <unknown> terminated
+            /home/logan/programmation/cpp/parser/run.sh : ligne 8 :  2520 Abandon                 (core dumped) ./a.out
+    */
+
+
     std::string inf = removeSpaces(input);
     char post[30], temp[30];
-    //temp limited to 30 numbers lenght.
+    //temp limited to 30 numbers lenght...
     float oper[30],stack[30],so;
     int top=-1,y=0,op=0;
 
@@ -238,6 +255,7 @@ bool Script::read(sf::RenderWindow &scr){
       }
     }
     std::string result = std::to_string(stack[0]); //convert to str
+    // the result is always a float number not simplified :
     int i = result.size(); //cursor 1 char before EOL
     while (result[i-1] == '0') i--; //delete all 0
     if (result[i-1] == '.') i--; //if before cursor is a dot then delete it
@@ -331,7 +349,7 @@ bool Script::read(sf::RenderWindow &scr){
 
   bool blank(std::string str){
     for (int i(0);str[i];i++) if (!isspace(str[i])) return false;
-      return true;
+    return true;
   }
 
   template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> array){
@@ -345,12 +363,13 @@ bool Script::read(sf::RenderWindow &scr){
       if (!std::isspace(str[i])) output += str[i];
     return output;
   }
+
   std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith) {
     std::size_t pos = s.find(toReplace);
     if (pos == std::string::npos) return s;
     return s.replace(pos, toReplace.length(), replaceWith);
   }
-
+  
   std::string str_tolower(std::string s) {
       std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
       return s;
