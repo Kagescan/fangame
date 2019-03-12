@@ -11,12 +11,19 @@ Script::Script(std::string file){
   waiting = false;
   displaying = false;
   iread = 0;
+  actualCharacter = "???";
+  substrPos = 0;
+  // Load it from a file
+  if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
+      std::cerr<<"INTERNAL ERROR : Can't load font [resources/fonts/DejaVuSans.ttf] !!";
+
   //let's "tokenize" the script
   init();
 
 }
 
 bool Script::init() {
+  //This will read and parse commands/arguments from the script file
   //the syntax of the script engine is similar to batch
     
   int i(1);
@@ -48,16 +55,22 @@ bool Script::init() {
 }
 
 bool Script::read(sf::RenderWindow &scr){
+
+  winSize = scr.getSize();
+  barPosY = winSize.y - 300;
+  bar.setPosition(0,barPosY);
+  bar.setSize(sf::Vector2f(winSize.x,barPosY));
+  bar.setFillColor(sf::Color(255,255,255,200));
+
   while (iread<scriptInstructions.size() && playing){
-
     //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
-
     std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
     unsigned int line = std::stoul(scriptInstructions[iread][2]);
 
     if (command == "goto") cmdGoto(arguments,line);
     else if (command == "set") cmdSet(arguments, line);
     else if (command == "entity") cmdEntity(arguments, line);
+    else if (command == "say") displaying = cmdSay(arguments, line);
     else if (command == "echo") cmdEcho(arguments);
     else if (command == "wait") displaying = true;
     else {
@@ -66,22 +79,15 @@ bool Script::read(sf::RenderWindow &scr){
 
     iread++;
 
-    while (displaying) { //Main loop
+    while (displaying && playing) { //Main loop
       sf::Event event;
       while (scr.pollEvent(event)) {
-          if (event.type == sf::Event::Closed) scr.close();
+          if (event.type == sf::Event::Closed) playing = false;
 
           if (event.type == sf::Event::KeyPressed) {
               switch (event.key.code) {
-              // If escape is pressed, close the application
-              case  sf::Keyboard::Escape : scr.close(); break;
+              case  sf::Keyboard::Escape : playing = false; break;
               case  sf::Keyboard::Space : displaying = false; break;
-
-              /*/ Process the up, down, left and right keys to modify parameters
-              case sf::Keyboard::Up :     distortionFactor *= 2.f;    break;
-              case sf::Keyboard::Down:    distortionFactor /= 2.f;    break;
-              case sf::Keyboard::Left:    riseFactor *= 2.f;          break;
-              case sf::Keyboard::Right:   riseFactor /= 2.f;          break;*/
               default : break;
               }
           }
@@ -89,6 +95,8 @@ bool Script::read(sf::RenderWindow &scr){
       scr.clear();
       drawBackground(scr);
       drawCharacters(scr);
+      scr.draw(bar);
+      drawText(scr);
       scr.display();
     }
   }
@@ -163,7 +171,24 @@ bool Script::read(sf::RenderWindow &scr){
     return true;
   }
 
-
+  bool Script::cmdSay(std::string arg, unsigned int line){
+    std::vector<sf::String> retval = splitQuotes(arg, line);
+  //std::vector<std::string> arguments=split(line,' '); //splitting arguments
+  std::string character = split(arg,' ')[0]; //1st argument is the name of the characters
+    if (! retval.empty() ){
+        actualCharacter = character;
+        displaySay = retval;
+        displayedTxt.clear();
+        displayedTxt.resize(displaySay.size(),false);
+        substrPos=true;
+        animatingTextFinished=false;
+    }
+    else {
+      std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : say variable \"line 1\" \"line2\" ... ).\n";
+      return false;
+    }
+    return true;
+  }
 
 //---------------HELPERS
 
@@ -273,6 +298,8 @@ bool Script::read(sf::RenderWindow &scr){
         if (allSprites.find(value) ==  allSprites.end() ){
           std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n";
           return false;
+        } else if (getValue(var+".type")=="character") { //assumes that allCharacters[var] is defined. Else => value is valid.
+          allCharacters[var].sprite = allSprites[value];
         }
       }
       // but do the most important stuff :
@@ -345,9 +372,9 @@ bool Script::read(sf::RenderWindow &scr){
   bool Script::newCharacter(std::string name, std::string spriteName, unsigned int line) {
     assign(name,"undef");
     assign(name,"character","type");
-    allCharacters.push_back(name);
-
-    if (spriteName !="") assign(name, spriteName, "image");
+    allCharacters[name] = Character();
+    if (spriteName != "")
+        assign(name, spriteName, "image");
     return true;
   }
 
@@ -360,29 +387,64 @@ bool Script::read(sf::RenderWindow &scr){
   }
 
   bool Script::drawCharacters(sf::RenderWindow& scr){ //it isn't really optimized yet...
-    for (auto& elem : allCharacters) {
-      const std::string spriteRef( getValue(elem+".image") );
-      if (allSprites.find(spriteRef) !=  allSprites.end() )
-        scr.draw(allSprites[spriteRef]);
+    for (auto& v: allCharacters)
+      scr.draw(v.second.sprite);
+    return true;
+  }
+//
+  bool Script::drawText(sf::RenderWindow& scr){
+    sf::Text tempTxt(actualCharacter,fontDeja,20);
+    tempTxt.setPosition(5,barPosY+8);
+    //Apply the color of the character
+      if (allCharacters.find(actualCharacter) != allCharacters.end()) {
+        tempTxt.setOutlineColor( allCharacters[actualCharacter].titleColor );
+        tempTxt.setOutlineThickness(1);
+      }
+    tempTxt.setStyle(sf::Text::Bold);
+    scr.draw(tempTxt);
+    for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
+      if (!displayedTxt[i] && !animatingTextFinished){
+        sf::String text=displaySay[i];
+        sf::String substr=text.substring(0,substrPos);
+        sf::Text tempTxt(substr,fontDeja,27);
+        tempTxt.setPosition(10,barPosY+31+29*i);
+        tempTxt.setFillColor(txtColor);
+        scr.draw(tempTxt);
+        substrPos+=1;
+        if (substrPos>=text.getSize()){
+          displayedTxt[i]=true;
+          substrPos=0;
+        }
+        break;
+      }
+      else {
+        sf::Text tempTxt(displaySay[i],fontDeja,27);
+        tempTxt.setPosition(10,barPosY+31+29*i);
+        tempTxt.setFillColor(txtColor);
+        scr.draw(tempTxt);
+        if (i+1>=displaySay.size())
+          animatingTextFinished=true;
+      }
     }
+    
     return true;
   }
 //-------------character class /* but not useful yet */
-
-/*
-Character(std::string charaName, sf::Color color){
-  name = charaName;
-  titleColor = color;
-}
-bool updatePos(int x, int y) {
-  posx = x; poxy = y;
-  return sprite.setPosition(x,y);
-}
-bool draw(sf::RenderWindow& scr) {return scr.draw(sprite);}
-void setSprite(sf::Sprite arg){sprite = arg;}
-void setTitleColor(sf::Color color) {titleColor = color;}
-void setName(std::string str) {name = str;}
-sf::Color getTitleColor() {return titleColor;}*/
+  Character::Character(){titleColor = sf::Color(0,0,0);}
+  /*
+  Character(std::string charaName, sf::Color color){
+    name = charaName;
+    titleColor = color;
+  }
+  bool updatePos(int x, int y) {
+    posx = x; poxy = y;
+    return sprite.setPosition(x,y);
+  }
+  bool draw(sf::RenderWindow& scr) {return scr.draw(sprite);}
+  void setSprite(sf::Sprite arg){sprite = arg;}
+  void setTitleColor(sf::Color color) {titleColor = color;}
+  void setName(std::string str) {name = str;}
+  sf::Color getTitleColor() {return titleColor;}*/
 
 //-------------Simple helpers
 
@@ -414,6 +476,49 @@ sf::Color getTitleColor() {return titleColor;}*/
       return s;
   }
 
+/*
+  sf::String toSfString(std::string theStdString) {
+    std::basic_string<sf::Uint32> utf32line;
+    sf::Utf8::toUtf32(theStdString.begin(), theStdString.end(), back_inserter(utf32line));
+    return sf::String(utf32line);
+  }
+*/
+  std::vector<std::string> split(std::string string, char search) {
+    std::vector<std::string> parsed;
+    std::string command;
+    std::istringstream spart(string);
+    while(std::getline(spart,command,search)) parsed.push_back(command);
+    return parsed;
+  }
+
+  std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine) {
+    bool endStr=false;
+    sf::String sfStrLine=toSfString(str);
+    std::size_t start(-1),from(0);
+    std::vector<std::string> positions;
+    std::vector<sf::String> parsed;
+    while ( sfStrLine.find('"',start+1)<sfStrLine.getSize() ){
+      start = sfStrLine.find('"',start+1);
+      endStr = !endStr;
+      if (endStr)
+        from=start+1;
+      else 
+        positions.push_back(std::to_string(from)+";"+std::to_string(start));
+    }
+
+    if (start==0) std::cerr<<"! On line "<<numLine<<" : Error - There isn't any quote in the argument !!\n";
+    else {
+      if (endStr) std::cerr<<"! On line "<<numLine<<" : Error - Unterminated string\n";
+      else {
+        for (auto i:positions){
+          std::vector<std::string> temp=split(i,';');
+          parsed.push_back( sfStrLine.substring(  std::stoi(temp[0]),
+                                                  std::stoi(temp[1])-std::stoi(temp[0])) );
+        }
+      }
+    }
+    return parsed;
+  }
 
 /* bouts de code
 

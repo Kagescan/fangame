@@ -7,10 +7,9 @@
 #include "easing.h"
 
 
-int main()
-{
+int main() {
 
-    std::cout <<"\nKagerou Project Fangame Version 2.0\n"<<
+    std::cout <<"\nYaki's recall - Version 2.1\n"<<
                 "\n (c) The KageScan community - Under the MIT/X11 license,please read COPYRIGHT file"<<
                 "\n\n"<<std::flush;
     int scrw = 1280, scrh = 720;

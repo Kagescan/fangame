@@ -36,17 +36,17 @@ set <image> logan = shintaroScream
   :: animate <object> variable finalValue easing duration beforeValue
   animate <position> shintaro right outExpo 1500 right
   music ost03 play loop
-  say shintaro "hey i'm shintaro and it is a test for the kagerou project fangame." "This is the second line" "and the final line !"
+  say shintaro "First line" "Second Line" "and the final line !"
   music chairs play
   animate <position> logan center outExpo 1500 left
   animate <spriteChange> logan shintaroScary outExpo 300
-  say logan "Do you like kagescan?"
+  say logan "Question ?"
   echo en train de faire un choix
-  choice "The best website"=hope/"Horrible"=noHope
+  choice "The best website"=hope | "Horrible"=noHope
   goto hope
 
 :ok
-  say logan "Yay it's true !!" "" "(I'm stopping the music)"
+  say logan "Great !!" "" "..."
   music ost03 stop
   echo OK
   say shintaro "<3"
@@ -55,17 +55,19 @@ set <image> logan = shintaroScream
 
 
 :hope
-  say logan "you are cool !!"
+  set <name> logan = "MEUH";
+  say logan "Great !"
   echo HOPE
 goto ok
 
 
 :noHope
-  say logan "huh... you're not cool !"
+  say logan "NOPE"
   echo NoHOPE
 goto ende
 
 : ende
+  say logan ".................................................................................................................................................." ".................................................................................................................................................." ".................................................................................................................................................." ".................................................................................................................................................." ".................................................................................................................................................."
   say logan "Bye"
   wait pause
   echo END

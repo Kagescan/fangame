@@ -1,5 +1,5 @@
 CXX=g++
-CFLAGS=-Wall -g -I/usr/local/include/SFML/ -I/usr/include/AL
+CFLAGS=-Wall -g -I/usr/local/include/SFML/ -I/usr/include/AL --std=c++17
 LDFLAGS=-L/usr/local/lib/ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network --std=c++17
 EXEC=fangame
 objOut=obj/
