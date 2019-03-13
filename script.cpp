@@ -13,9 +13,15 @@ Script::Script(std::string file){
   iread = 0;
   actualCharacter = "???";
   substrPos = 0;
-  // Load it from a file
+  arrowIter = 0;
+  textSpeed = 1;
   if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
-      std::cerr<<"INTERNAL ERROR : Can't load font [resources/fonts/DejaVuSans.ttf] !!";
+    std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
+  if (!fontURW.loadFromFile("resources/fonts/URW"))
+    std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/URW] !!";
+  if (!arrowTxt.loadFromFile("resources/img/arrow.png"))
+    std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/arrow.png] !!";
+  else arrow.setTexture(arrowTxt);
 
   //let's "tokenize" the script
   init();
@@ -23,8 +29,7 @@ Script::Script(std::string file){
 }
 
 bool Script::init() {
-  //This will read and parse commands/arguments from the script file
-  //the syntax of the script engine is similar to batch
+  //This will read and parse commands/arguments from the script file. The syntax of the script engine is similar to batch
     
   int i(1);
   //bool limitation=false;
@@ -55,7 +60,6 @@ bool Script::init() {
 }
 
 bool Script::read(sf::RenderWindow &scr){
-
   winSize = scr.getSize();
   barPosY = winSize.y - 300;
   bar.setPosition(0,barPosY);
@@ -73,24 +77,29 @@ bool Script::read(sf::RenderWindow &scr){
     else if (command == "say") displaying = cmdSay(arguments, line);
     else if (command == "echo") cmdEcho(arguments);
     else if (command == "wait") displaying = true;
-    else {
+    else 
       std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
-    }
-
     iread++;
-
     while (displaying && playing) { //Main loop
       sf::Event event;
       while (scr.pollEvent(event)) {
-          if (event.type == sf::Event::Closed) playing = false;
-
-          if (event.type == sf::Event::KeyPressed) {
-              switch (event.key.code) {
-              case  sf::Keyboard::Escape : playing = false; break;
-              case  sf::Keyboard::Space : displaying = false; break;
-              default : break;
-              }
+        if (event.type == sf::Event::Closed)
+          playing = false;
+        if (event.type == sf::Event::KeyPressed) {
+          switch (event.key.code) {
+            case sf::Keyboard::Escape :
+              playing = false;
+              break;
+            case sf::Keyboard::Space :
+              if (animatingTextFinished) {
+                displaying = false;
+                arrowIter = 0;
+              } else
+                animatingTextFinished = true;
+              break;
+            default : break;
           }
+        }
       }
       scr.clear();
       drawBackground(scr);
@@ -173,7 +182,6 @@ bool Script::read(sf::RenderWindow &scr){
 
   bool Script::cmdSay(std::string arg, unsigned int line){
     std::vector<sf::String> retval = splitQuotes(arg, line);
-  //std::vector<std::string> arguments=split(line,' '); //splitting arguments
   std::string character = split(arg,' ')[0]; //1st argument is the name of the characters
     if (! retval.empty() ){
         actualCharacter = character;
@@ -182,8 +190,7 @@ bool Script::read(sf::RenderWindow &scr){
         displayedTxt.resize(displaySay.size(),false);
         substrPos=true;
         animatingTextFinished=false;
-    }
-    else {
+    } else {
       std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : say variable \"line 1\" \"line2\" ... ).\n";
       return false;
     }
@@ -192,118 +199,23 @@ bool Script::read(sf::RenderWindow &scr){
 
 //---------------HELPERS
 
-  std::string Script::calc(std::string input){
-    /*
-      Calc function : return the calculus entered. Support operative priorities.
-      Edited from http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
-        issues : (solution)
-        negative numbers: ((0-1)*x)
-            in = 25*-10
-            out = 10
-        limited to a number that have more than 30 numbers (x*10^n)
-            in : 11111111111111111111111111111111111111111111111111111111111111111111
-            *** stack smashing detected ***: <unknown> terminated
-            /home/logan/programmation/cpp/parser/run.sh : ligne 8 :  2520 Abandon                 (core dumped) ./a.out
-    */
-
-
-    std::string inf = removeSpaces(input);
-    char post[30], temp[30];
-    //temp limited to 30 numbers lenght...
-    float oper[30],stack[30],so;
-    int top=-1,y=0,op=0;
-
-    for(size_t i(0); i < inf.size(); ++i) { //Reach all characters of the char*
-      if(std::isdigit(inf[i])) { //if number
-        post[y++]=inf[i];
-        //wrap the entire number
-          int z;
-          for(z=i;inf[z]=='.' || (inf[z]<=57&&inf[z]>=48);z++) temp[z-i]=inf[z];
-          temp[z-i]='\0'; 
-        oper[op++]=std::atof(temp); //convert to sciencist expr. (x.xxe+x) and add to a stack
-        i=z-1;
-      } else {
-        switch(inf[i]) {
-          case '+': case '-':
-            while(top>=0&&stack[top]!='(') post[y++]=stack[top--];
-            stack[++top]=inf[i];
-            break;
-          case '*': case '/':
-            while(stack[top]!='+'&&stack[top]!='-'&&top>=0&&stack[top]!='(') post[y++]=stack[top--];
-            stack[++top]=inf[i];
-            break;
-          case '^':case '(':
-            stack[++top]=inf[i];
-            break;
-          case ')':
-            while(stack[top]!='(') post[y++]=stack[top--];
-            top--;
-            break;
-          default :
-          std::cerr<<"Parsing the expression '"<<inf<< "' illegal char '"<<inf[i]<<"' !! Aborting.\n";
-          return input;
-        }
-      }
-    }
-    while(top>=0)
-      post[y++]=stack[top--];
-
-    //solve
-    op=0;
-    for(int i=0;i<y;i++) {
-      if(post[i]>=48&&post[i]<=57)
-        stack[++top]=oper[op++];
-      else {
-        switch(post[i]) {
-          case '+':
-          so=stack[top]+stack[top-1];
-          stack[--top]=so;
-          break;
-          case '-':
-          so=stack[top-1]-stack[top];
-          stack[--top]=so;
-          break;
-          case '*':
-          so=stack[top-1]*stack[top];
-          stack[--top]=so;
-          break;
-          case '/':
-          so=stack[top-1]/stack[top];
-          stack[--top]=so;
-          break;
-          case '^':
-          so=powf(stack[top-1],stack[top]);
-          stack[--top]=so;
-          break;
-          default :
-          std::cerr<<"Parsing the expression '"<<post<< "' illegal char '"<<post[i]<<"' !! Aborting.\n";
-          return input;
-        }
-      }
-    }
-    std::string result = std::to_string(stack[0]); //convert to str
-    // the result is always a float number not simplified :
-    int i = result.size(); //cursor 1 char before EOL
-    while (result[i-1] == '0') i--; //delete all 0
-    if (result[i-1] == '.') i--; //if before cursor is a dot then delete it
-    result.erase(i, result.size()); 
-
-    return result;
-  }
-
   bool Script::assign(std::string var, std::string value, std::string object){
     if (object != ""){
       if (object == "image" && (var == "__scene__" || getValue(var+".type")=="character")){
         //if we change the image object of an entity character/background, check if the image has been declared and valid (and do nothing) else abort and display an error
         if (allSprites.find(value) ==  allSprites.end() ){
-          std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n";
-          return false;
+          std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;
         } else if (getValue(var+".type")=="character") { //assumes that allCharacters[var] is defined. Else => value is valid.
           allCharacters[var].sprite = allSprites[value];
         }
+      } else if (object == "color" && getValue(var+".type")=="character"){
+        if (allCharacters.find(var) ==  allCharacters.end() ){
+          std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;
+        } else {
+          allCharacters[var].color(str_tolower(value));
+        }
       }
-      // but do the most important stuff :
-      var += '.'+object;
+      var += '.'+object; // but do the most important stuff
     } 
     varValues[var] = value;
     return true;
@@ -331,6 +243,7 @@ bool Script::read(sf::RenderWindow &scr){
     sf::Texture texture;
     if ( !texture.loadFromFile(path) ) {
       std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
+      return false;
     } else {
       allTextures.insert_or_assign( name,texture );
       sf::Sprite sprite(allTextures[name]);
@@ -339,34 +252,33 @@ bool Script::read(sf::RenderWindow &scr){
       assign(name, "image", "type");
       return true;
     }
-    return false;
   }
 
   bool Script::newMusic(std::string name, std::string path, unsigned int line){
     sf::Music& music = allMusics[name]; // construit l'élément directement dans la map et le retourne
-    if (!music.openFromFile(path))
+    if (!music.openFromFile(path)){
       std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
-    else {
+    return false;
+    } else {
       assign(name, path);
       assign(name, "music", "type");
       return true;
     }
-    return false;
   }
 
   bool Script::newSound(std::string name, std::string path, unsigned int line){
     sf::SoundBuffer& soundBuff=buffer[name]; //même technique...
     sf::Sound& sound=allSounds[name];
 
-    if (!soundBuff.loadFromFile(path))
+    if (!soundBuff.loadFromFile(path)){
       std::cerr<<"! Line "<<line<<" : File Error (unable to load file ["<<path<<"])\n";
-    else {
+      return false;
+    } else {
       sound.setBuffer(buffer[name]);
       assign(name, path);
       assign(name, "sound", "type");
       return true;
     }
-    return false;
   }
 
   bool Script::newCharacter(std::string name, std::string spriteName, unsigned int line) {
@@ -374,7 +286,7 @@ bool Script::read(sf::RenderWindow &scr){
     assign(name,"character","type");
     allCharacters[name] = Character();
     if (spriteName != "")
-        assign(name, spriteName, "image");
+      assign(name, spriteName, "image");
     return true;
   }
 
@@ -393,44 +305,71 @@ bool Script::read(sf::RenderWindow &scr){
   }
 //
   bool Script::drawText(sf::RenderWindow& scr){
-    sf::Text tempTxt(actualCharacter,fontDeja,20);
-    tempTxt.setPosition(5,barPosY+8);
-    //Apply the color of the character
-      if (allCharacters.find(actualCharacter) != allCharacters.end()) {
-        tempTxt.setOutlineColor( allCharacters[actualCharacter].titleColor );
-        tempTxt.setOutlineThickness(1);
-      }
-    tempTxt.setStyle(sf::Text::Bold);
+    sf::Text tempTxt(actualCharacter,fontURW,24);
+    tempTxt.setPosition(5,barPosY+5);
+    //tempTxt.setStyle(sf::Text::Bold);
+    if (allCharacters.find(actualCharacter) != allCharacters.end())
+      tempTxt.setFillColor( allCharacters[actualCharacter].titleColor );
     scr.draw(tempTxt);
+    //tempTxt.set
+    tempTxt.setStyle(sf::Text::Regular);
+    tempTxt.setCharacterSize(27);
+    tempTxt.setFillColor(txtColor);
+    tempTxt.setFont(fontDeja);
     for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
+      tempTxt.setPosition(10,barPosY+41+29*i);
       if (!displayedTxt[i] && !animatingTextFinished){
-        sf::String text=displaySay[i];
-        sf::String substr=text.substring(0,substrPos);
-        sf::Text tempTxt(substr,fontDeja,27);
-        tempTxt.setPosition(10,barPosY+31+29*i);
-        tempTxt.setFillColor(txtColor);
+        sf::String text=displaySay[i], substr=text.substring(0,substrPos)+" |";
+        tempTxt.setString(substr);
         scr.draw(tempTxt);
-        substrPos+=1;
+        if (txtSpeedIter>textSpeed){
+          substrPos++;
+          txtSpeedIter=0;
+        }
+        txtSpeedIter++;
         if (substrPos>=text.getSize()){
           displayedTxt[i]=true;
           substrPos=0;
         }
         break;
-      }
-      else {
-        sf::Text tempTxt(displaySay[i],fontDeja,27);
-        tempTxt.setPosition(10,barPosY+31+29*i);
-        tempTxt.setFillColor(txtColor);
+      } else {
+        tempTxt.setString(displaySay[i]);
         scr.draw(tempTxt);
         if (i+1>=displaySay.size())
           animatingTextFinished=true;
       }
     }
-    
+    if (animatingTextFinished){
+      arrowIter += 0.1;
+      if      (arrowIter==0.1) arrow.setColor(sf::Color(255,255,255,0)); //initial
+      else if (arrowIter<2.5)  arrow.setColor(sf::Color(255,255,255,arrowIter*100+5)); //before the 25 iterations
+      int change = -5*( std::sin(0.6*arrowIter) + std::cos(1.2*arrowIter) );
+      arrow.setPosition(winSize.x+change-50,winSize.y-50);
+      scr.draw(arrow);
+    }
     return true;
   }
 //-------------character class /* but not useful yet */
-  Character::Character(){titleColor = sf::Color(0,0,0);}
+  Character::Character(){
+    titleColor = sf::Color(0,0,0);
+  }
+  std::string Character::color(std::string arg){
+
+    std::smatch match;
+    std::regex color_regex("#([a-f0-9]{2}[a-f0-9]{2}[a-f0-9]{2})");
+
+    if (std::regex_match(arg, match, color_regex)){
+      std::string hex = match[1];
+      int r, g, b;
+      sscanf(hex.c_str(), "%02x%02x%02x", &r, &g, &b);
+      if (r+g+b < 3*255 && r+g+b >= 0){
+        titleColor = sf::Color(r,g,b);
+        return arg;
+      }
+    }
+    std::cerr<<"! Character color delaration : Wrong argument. This should be a valid hexadecimal code !";
+    return "";
+  }
   /*
   Character(std::string charaName, sf::Color color){
     name = charaName;
@@ -448,82 +387,6 @@ bool Script::read(sf::RenderWindow &scr){
 
 //-------------Simple helpers
 
-  bool blank(std::string str){
-    for (int i(0);str[i];i++) if (!isspace(str[i])) return false;
-    return true;
-  }
-
   template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> array){
     return std::find(array.begin(), array.end(), value) != array.end();
   }
-
-  std::string removeSpaces(std::string str) { //remove all spaces from a string
-    std::string output;
-    output.reserve(str.size()); // optional, avoids buffer reallocations in the loop
-    for(size_t i(0); i < str.size(); ++i)
-      if (!std::isspace(str[i])) output += str[i];
-    return output;
-  }
-
-  std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith) {
-    std::size_t pos = s.find(toReplace);
-    if (pos == std::string::npos) return s;
-    return s.replace(pos, toReplace.length(), replaceWith);
-  }
-
-  std::string str_tolower(std::string s) {
-      std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
-      return s;
-  }
-
-/*
-  sf::String toSfString(std::string theStdString) {
-    std::basic_string<sf::Uint32> utf32line;
-    sf::Utf8::toUtf32(theStdString.begin(), theStdString.end(), back_inserter(utf32line));
-    return sf::String(utf32line);
-  }
-*/
-  std::vector<std::string> split(std::string string, char search) {
-    std::vector<std::string> parsed;
-    std::string command;
-    std::istringstream spart(string);
-    while(std::getline(spart,command,search)) parsed.push_back(command);
-    return parsed;
-  }
-
-  std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine) {
-    bool endStr=false;
-    sf::String sfStrLine=toSfString(str);
-    std::size_t start(-1),from(0);
-    std::vector<std::string> positions;
-    std::vector<sf::String> parsed;
-    while ( sfStrLine.find('"',start+1)<sfStrLine.getSize() ){
-      start = sfStrLine.find('"',start+1);
-      endStr = !endStr;
-      if (endStr)
-        from=start+1;
-      else 
-        positions.push_back(std::to_string(from)+";"+std::to_string(start));
-    }
-
-    if (start==0) std::cerr<<"! On line "<<numLine<<" : Error - There isn't any quote in the argument !!\n";
-    else {
-      if (endStr) std::cerr<<"! On line "<<numLine<<" : Error - Unterminated string\n";
-      else {
-        for (auto i:positions){
-          std::vector<std::string> temp=split(i,';');
-          parsed.push_back( sfStrLine.substring(  std::stoi(temp[0]),
-                                                  std::stoi(temp[1])-std::stoi(temp[0])) );
-        }
-      }
-    }
-    return parsed;
-  }
-
-/* bouts de code
-
-for(ta_map::const_iterator it=ta_map.begin() ; it!=ta_map.end() ; ++it) {
-    it->first; // accede à la clé
-    if->second; // accede à la valeur
-}
-*/

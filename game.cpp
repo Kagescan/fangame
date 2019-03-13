@@ -99,3 +99,174 @@ bool fadein(sf::RenderWindow &scr,sf::Sprite &texture,int time) {
     }
     return true;
 }
+
+
+
+  bool blank(std::string str){
+    for (int i(0);str[i];i++) if (!isspace(str[i])) return false;
+    return true;
+  }
+
+
+  std::string removeSpaces(std::string str) { //remove all spaces from a string
+    std::string output;
+    output.reserve(str.size()); // optional, avoids buffer reallocations in the loop
+    for(size_t i(0); i < str.size(); ++i)
+      if (!std::isspace(str[i])) output += str[i];
+    return output;
+  }
+
+  std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith) {
+    std::size_t pos = s.find(toReplace);
+    if (pos == std::string::npos) return s;
+    return s.replace(pos, toReplace.length(), replaceWith);
+  }
+
+  std::string str_tolower(std::string s) {
+      std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });
+      return s;
+  }
+
+  std::vector<std::string> split(std::string string, char search) {
+    std::vector<std::string> parsed;
+    std::string command;
+    std::istringstream spart(string);
+    while(std::getline(spart,command,search)) parsed.push_back(command);
+    return parsed;
+  }
+
+  std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine) {
+    bool endStr=false;
+    sf::String sfStrLine=toSfString(str);
+    std::size_t start(-1),from(0);
+    std::vector<std::string> positions;
+    std::vector<sf::String> parsed;
+    while ( sfStrLine.find('"',start+1)<sfStrLine.getSize() ){
+      start = sfStrLine.find('"',start+1);
+      endStr = !endStr;
+      if (endStr)
+        from=start+1;
+      else 
+        positions.push_back(std::to_string(from)+";"+std::to_string(start));
+    }
+
+    if (start==0) std::cerr<<"! On line "<<numLine<<" : Error - There isn't any quote in the argument !!\n";
+    else {
+      if (endStr) std::cerr<<"! On line "<<numLine<<" : Error - Unterminated string\n";
+      else {
+        for (auto i:positions){
+          std::vector<std::string> temp=split(i,';');
+          parsed.push_back( sfStrLine.substring(  std::stoi(temp[0]),
+                                                  std::stoi(temp[1])-std::stoi(temp[0])) );
+        }
+      }
+    }
+    return parsed;
+  }
+
+  std::string calc(std::string input){
+    /*
+      Calc function : return the calculus entered. Support operative priorities.
+      Edited from http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
+        issues : (solution)
+        negative numbers: ((0-1)*x)
+            in = 25*-10
+            out = 10
+        limited to a number that have more than 30 numbers (x*10^n)
+            in : 11111111111111111111111111111111111111111111111111111111111111111111
+            *** stack smashing detected ***: <unknown> terminated
+            /home/logan/programmation/cpp/parser/run.sh : ligne 8 :  2520 Abandon                 (core dumped) ./a.out
+    */
+
+
+    std::string inf = removeSpaces(input);
+    char post[30], temp[30];
+    //temp limited to 30 numbers lenght...
+    float oper[30],stack[30],so;
+    int top=-1,y=0,op=0;
+
+    for(size_t i(0); i < inf.size(); ++i) { //Reach all characters of the char*
+      if(std::isdigit(inf[i])) { //if number
+        post[y++]=inf[i];
+        //wrap the entire number
+          int z;
+          for(z=i;inf[z]=='.' || (inf[z]<=57&&inf[z]>=48);z++) temp[z-i]=inf[z];
+          temp[z-i]='\0'; 
+        oper[op++]=std::atof(temp); //convert to sciencist expr. (x.xxe+x) and add to a stack
+        i=z-1;
+      } else {
+        switch(inf[i]) {
+          case '+': case '-':
+            while(top>=0&&stack[top]!='(') post[y++]=stack[top--];
+            stack[++top]=inf[i];
+            break;
+          case '*': case '/':
+            while(stack[top]!='+'&&stack[top]!='-'&&top>=0&&stack[top]!='(') post[y++]=stack[top--];
+            stack[++top]=inf[i];
+            break;
+          case '^':case '(':
+            stack[++top]=inf[i];
+            break;
+          case ')':
+            while(stack[top]!='(') post[y++]=stack[top--];
+            top--;
+            break;
+          default :
+          std::cerr<<"Parsing the expression '"<<inf<< "' illegal char '"<<inf[i]<<"' !! Aborting.\n";
+          return input;
+        }
+      }
+    }
+    while(top>=0)
+      post[y++]=stack[top--];
+
+    //solve
+    op=0;
+    for(int i=0;i<y;i++) {
+      if(post[i]>=48&&post[i]<=57)
+        stack[++top]=oper[op++];
+      else {
+        switch(post[i]) {
+          case '+':
+          so=stack[top]+stack[top-1];
+          stack[--top]=so;
+          break;
+          case '-':
+          so=stack[top-1]-stack[top];
+          stack[--top]=so;
+          break;
+          case '*':
+          so=stack[top-1]*stack[top];
+          stack[--top]=so;
+          break;
+          case '/':
+          so=stack[top-1]/stack[top];
+          stack[--top]=so;
+          break;
+          case '^':
+          so=powf(stack[top-1],stack[top]);
+          stack[--top]=so;
+          break;
+          default :
+          std::cerr<<"Parsing the expression '"<<post<< "' illegal char '"<<post[i]<<"' !! Aborting.\n";
+          return input;
+        }
+      }
+    }
+    std::string result = std::to_string(stack[0]); //convert to str
+    // the result is always a float number not simplified :
+    int i = result.size(); //cursor 1 char before EOL
+    while (result[i-1] == '0') i--; //delete all 0
+    if (result[i-1] == '.') i--; //if before cursor is a dot then delete it
+    result.erase(i, result.size()); 
+
+    return result;
+  }
+
+/* bouts de code
+
+for(ta_map::const_iterator it=ta_map.begin() ; it!=ta_map.end() ; ++it) {
+    it->first; // accede à la clé
+    if->second; // accede à la valeur
+}
+*/

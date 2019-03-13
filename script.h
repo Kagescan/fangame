@@ -12,10 +12,7 @@
 
 
 #include <iostream>
-#include <fstream>
-#include <stack>
 #include <cmath>
-#include <string>
 #include <regex>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -25,6 +22,7 @@ class Character {
 
     public:
       Character();
+      std::string color(std::string arg);
       sf::Sprite sprite;
       sf::Color titleColor;
       int x, y;
@@ -54,7 +52,7 @@ class Script {
         bool drawCharacters(sf::RenderWindow& scr);
         bool drawText(sf::RenderWindow& scr);
         //bool drawCharacters(sf::RenderWindow& scr, sf::Time currentTime, sf::Time initialTime);
-        std::string calc(std::string input);
+        
         std::string getValue(std::string varName);
         std::string replaceVars(std::string str);
 
@@ -77,25 +75,19 @@ class Script {
 
         sf::Vector2u winSize;
         sf::RectangleShape bar;//,choiceWindow,blackWindow;
-        sf::Font fontDeja;
+        sf::Font fontDeja, fontURW;
         sf::Color txtColor;
+        sf::Texture arrowTxt;
+        sf::Sprite arrow;
 
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;
         bool playing, waiting, displaying, pause, animatingTextFinished;
-        unsigned int iread, substrPos;
+        unsigned int iread, substrPos, textSpeed, txtSpeedIter;
+        float arrowIter;
         int barPosY;
         //std::map<std::string, std::string> varTypes;
 };
 
-
-//helpers who don't need objects
-  bool blank(std::string str);
-  template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> bar);
-  std::string removeSpaces(std::string str);
-  std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
-  std::string str_tolower(std::string s);
-  std::vector<std::string> split(std::string string, char search);
-  std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine);
-  //sf::String toSfString(std::string theStdString);
+template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> bar);
 #endif
