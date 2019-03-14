@@ -1,16 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
+#include <iostream>
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
-#include <iostream>
 #include "button.h"
 #include "easing.h"
 #include <fstream>
 #include <sstream>
-#include <string>
 
 
 int error(std::string type);

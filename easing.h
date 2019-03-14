@@ -1,7 +1,7 @@
 #ifndef EASING_INCLUDED
 #define EASING_INCLUDED
-#include <math.h>
 #include <iostream>
+#include <math.h>
 
 class Easing{
   public:

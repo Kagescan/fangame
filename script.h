@@ -1,28 +1,14 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-/*#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string.h>
-#include <map>
-#include <memory>
 #include "game.h"
-#include "easing.h"*/
-
-
-#include <iostream>
 #include <cmath>
 #include <regex>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include "game.h"
 
 class Character {
 
     public:
       Character();
-      std::string color(std::string arg);
       sf::Sprite sprite;
       sf::Color titleColor;
       int x, y;
@@ -41,8 +27,9 @@ class Script {
         bool cmdGoto(std::string arg, unsigned int line);
         bool cmdEcho(std::string arg);
         bool cmdEntity(std::string arg, unsigned int line);
-        bool cmdSay(std::string arg, unsigned int line);
+        bool cmdSay(std::string arg, unsigned int line, bool noWait=false);
         bool cmdSet(std::string arg, unsigned int line);
+        bool cmdMusic(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
@@ -76,7 +63,7 @@ class Script {
         sf::Vector2u winSize;
         sf::RectangleShape bar;//,choiceWindow,blackWindow;
         sf::Font fontDeja, fontURW;
-        sf::Color txtColor;
+        sf::Color txtColor, titleColor;
         sf::Texture arrowTxt;
         sf::Sprite arrow;
 
@@ -90,4 +77,5 @@ class Script {
 };
 
 template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> bar);
+sf::Color hex2color(std::string arg);
 #endif

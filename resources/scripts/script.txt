@@ -13,50 +13,54 @@ mapfile "resources/map/couloir.txt"
 entity <character> Shintaro
 set <color> Shintaro = #ff0000
 entity <character> Logan
-set <color> Logan = #0000FF
+set <color> Logan = #ff0fff
 
-entity <music> ost03="resources/sounds/OST03.ogg"
-entity <sound> chairs="resources/noises/oldDays-chairs.ogg"
+::entity <sound> chairs="resources/noises/oldDays-chairs.ogg"
 
 entity <image> shintaroDefault="resources/img/characters/shintaro/default.png"
 entity <image> shintaroScream="resources/img/characters/shintaro/scream.png"
 entity <image> shintaroScary="resources/img/characters/shintaro/scary.png"
 entity <image> backgroundClassroom="resources/img/background/classroom.night.jpg"
+entity <music> ost03="resources/sounds/OST03.ogg"
 
+set <color> __bar__ = #ffffffaa
 set <image> __scene__ = backgroundClassroom
-set <bgColor> __scene__ = #000000
-set <barColor> __scene__ = 255,255,255,200
 
 set <image> Shintaro = shintaroDefault
 set <image> Logan = shintaroScream
+set <name> Shintaro = LoganTheBest#2885
+set <name> Logan = MAMAN sama
 
+
+set scrw = 1080
+set /c right = %scrw% + 40
+set /c center = %scrw%/2 - 20
+set outsideL = -40
 
 :part1
   echo ceci est la partie 1
   :: animate <object> variable finalValue easing duration beforeValue
-  animate <position> Shintaro right outExpo 1500 right
+  animate <position> Shintaro /from %scrw% /to %right% /ease outExpo /time 1500 
   music ost03 play loop
   say Shintaro "First line" "Second Line" "and the final line !"
-  music chairs play
-  animate <position> Logan center outExpo 1500 left
-  animate <spriteChange> Logan shintaroScary outExpo 300
+  say Unknown_Character "lol"
+  :: music chairs play
+  animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 1500
+  animate <spriteChange> Logan /to shintaroScary /ease outExpo /time 300
   say Logan "Question ?"
   echo en train de faire un choix
   choice "The best website"=hope | "Horrible"=noHope
   goto hope
 
 :ok
-  say Logan "Great !!" "" "..."
   music ost03 stop
-  echo OK
-  say Shintaro "<3"
+  say Logan "Starf j'préfère Karrin"
   goto ende
-  say Shintaro ""
+  say Shintaro "GEH"
 
 
 :hope
-  set <name> Logan = "MEUH";
-  say Logan "Great !"
+  say Shintaro "Great !"
   echo HOPE
 goto ok
 
@@ -67,8 +71,8 @@ goto ok
 goto ende
 
 : ende
-  say Logan ".................................................................................................................................................."
-  say Logan "Bye"
+  say Shintaro "j'aime YAKI :P "
+  :: $ay works with wait command
+  $ay Shintaro "Bye"
   wait pause
-  echo END
   end up

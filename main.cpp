@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include "button.h"
 #include "game.h"
+#include "button.h"
 #include "script.h"
 #include "easing.h"
 
