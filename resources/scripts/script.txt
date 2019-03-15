@@ -3,10 +3,12 @@
 ::The kagescan game is a bit different than other novel engines, because there is a map and label whill be executed only if the player interacts with the map.
 ::Like pokemon ! but in a event, it is a visual novel.
 ::The new synthax is based of the ren'py scripts.
-::I will implement soon condictions (if else statements and vars but not loop !)
+::I will implement soon conditions (if else statements but not loop !)
 
-varfile "resources/saves/main.save"
-mapfile "resources/map/couloir.txt"
+:: TODO :
+::varfile "resources/saves/main.save"
+::mapfile "resources/map/couloir.txt"
+:: choices and animations
 
 ::var declarations
 
@@ -43,18 +45,23 @@ set outsideL = -40
   animate <position> Shintaro /from %scrw% /to %right% /ease outExpo /time 1500 
   music ost03 play loop
   say Shintaro "First line" "Second Line" "and the final line !"
-  say Unknown_Character "lol"
+  say Logan "Starfoullah..."
+  end up
   :: music chairs play
   animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 1500
   animate <spriteChange> Logan /to shintaroScary /ease outExpo /time 300
-  say Logan "Question ?"
+  say Logan "Quel est ton perso préféré"
   echo en train de faire un choix
-  choice "The best website"=hope | "Horrible"=noHope
+  choice "Karin"=hope | "Yaki"=noHope
   goto hope
 
 :ok
-  music ost03 stop
   say Logan "Starf j'préfère Karrin"
+  music ost03 stop
+  :: $ay works with wait command
+  $ay KARIN_LE_DIEU "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
+  wait 4000
+
   goto ende
   say Shintaro "GEH"
 
@@ -70,9 +77,8 @@ goto ok
   echo NoHOPE
 goto ende
 
-: ende
+:ende
   say Shintaro "j'aime YAKI :P "
-  :: $ay works with wait command
   $ay Shintaro "Bye"
   wait pause
   end up

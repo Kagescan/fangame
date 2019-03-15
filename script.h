@@ -30,6 +30,8 @@ class Script {
         bool cmdSay(std::string arg, unsigned int line, bool noWait=false);
         bool cmdSet(std::string arg, unsigned int line);
         bool cmdMusic(std::string arg, unsigned int line);
+        bool cmdWait(std::string arg, unsigned int line);
+        bool cmdAnimate(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
@@ -66,6 +68,8 @@ class Script {
         sf::Color txtColor, titleColor;
         sf::Texture arrowTxt;
         sf::Sprite arrow;
+        sf::Clock clock;
+        sf::Time waitLimit;
 
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;

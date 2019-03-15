@@ -70,15 +70,18 @@ bool Script::read(sf::RenderWindow &scr){
     else if (command == "set")  cmdSet(arguments, line);
     else if (command == "entity") cmdEntity(arguments, line);
     else if (command == "music")  cmdMusic(arguments, line);
+    else if (command == "wait") cmdWait(arguments, line);
+    else if (command == "animate") cmdAnimate(arguments, line);
     else if (command == "say")  displaying = cmdSay(arguments, line);
     else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
     else if (command == "echo") cmdEcho(arguments);
-    else if (command == "wait") displaying = true;
+    else if (command == "end") playing = false;
     else 
       std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
     iread++;
     while (displaying && playing) { //Main loop
       sf::Event event;
+      sf::Time currentTime = clock.getElapsedTime();
       while (scr.pollEvent(event)) {
         if (event.type == sf::Event::Closed) playing = false;
         if (event.type == sf::Event::KeyPressed) {
@@ -87,7 +90,7 @@ bool Script::read(sf::RenderWindow &scr){
               playing = false;
               break;
             case sf::Keyboard::Space :
-              if (animatingTextFinished) {
+              if (animatingTextFinished && !waiting) {
                 displaying = false;
                 arrowIter = 0;
               } else animatingTextFinished = true;
@@ -96,6 +99,7 @@ bool Script::read(sf::RenderWindow &scr){
           }
         }
       }
+      if (waiting && currentTime>=waitLimit ) displaying = waiting = false;
       scr.clear();
       drawBackground(scr);
       drawCharacters(scr);
@@ -194,7 +198,6 @@ bool Script::read(sf::RenderWindow &scr){
     return false;
   }
 
-
   bool Script::cmdMusic(std::string arg, unsigned int line){
     std::smatch match;
     std::regex syntax( rgVarNames + "(play|pause|stop)" + rgSpacestar + "(loop)?", std::regex::icase);
@@ -212,6 +215,44 @@ bool Script::read(sf::RenderWindow &scr){
         return true;
       } else { std::cerr<<"! Line "<<line<<" : Var Error (The variable ["<<match[1]<<"] is not a valid music entity"; return false; }
     } std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : music variable {play|stop|pause}).\n"; return false;
+  }
+
+  bool Script::cmdWait(std::string arg, unsigned int line){
+    std::smatch match;
+    if (arg=="pause") displaying = true;
+    else if ( std::regex_search(arg, match, std::regex("([[:digit:]]+)")) ){ //yeah, i know it isn't optimized but I haven't an Internet connection yet...
+      waiting = displaying = true;
+      waitLimit = clock.getElapsedTime() + sf::milliseconds( std::stoul(match[1]) );
+    } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : Wait {n milliseconds|pause}).\n"; return false;
+    return true;
+  }
+
+  bool Script::cmdAnimate(std::string arg, unsigned int line){
+    std::smatch match;
+    std::string prefix = rgSpacestar+'<'+rgVarNames+'>'+rgVarNames,
+    options = "/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]*";
+    std::regex syntax( prefix + "((?:"+options+")+)" );
+
+    if (std::regex_match(arg, match, syntax)){
+          const std::string s = match[3];
+          std::regex words_regex(options);
+          auto words_begin = 
+              std::sregex_iterator(s.begin(), s.end(), words_regex);
+          auto words_end = std::sregex_iterator();
+       
+          std::cout << "Found " 
+                    << std::distance(words_begin, words_end) 
+                    << " words:\n";
+       
+          for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
+              std::smatch match = *i;                                                 
+              std::string match_str = match.str(); 
+              std::cout << match_str << '\n';
+          }   
+    }
+    
+    else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options).\n";
+    return false;
   }
 //---------------HELPERS
   bool Script::assign(std::string var, std::string value, std::string object){
@@ -351,7 +392,7 @@ bool Script::read(sf::RenderWindow &scr){
             animatingTextFinished=true;
         }
       }
-    if (animatingTextFinished){
+    if (animatingTextFinished && !waiting){
       arrowIter += 0.1;
       int change = -5*( std::sin(0.6*arrowIter) + std::cos(1.2*arrowIter) );
         arrow.setPosition(winSize.x+change-50,winSize.y-50);
