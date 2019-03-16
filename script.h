@@ -2,6 +2,7 @@
 #define SCRIPT_H
 
 #include "game.h"
+//#include "easing.h"
 #include <cmath>
 #include <regex>
 

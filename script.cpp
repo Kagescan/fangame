@@ -226,32 +226,52 @@ bool Script::read(sf::RenderWindow &scr){
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : Wait {n milliseconds|pause}).\n"; return false;
     return true;
   }
-
+//
   bool Script::cmdAnimate(std::string arg, unsigned int line){
+    std::regex syntax(rgSpacestar+'<'+rgVarNames+'>'+rgVarNames+"(.+)");
     std::smatch match;
-    std::string prefix = rgSpacestar+'<'+rgVarNames+'>'+rgVarNames,
-    options = "/[[:alnum:]]+[[:space:]]+[[:alnum:]]+[[:space:]]*";
-    std::regex syntax( prefix + "((?:"+options+")+)" );
-
     if (std::regex_match(arg, match, syntax)){
-          const std::string s = match[3];
-          std::regex words_regex(options);
-          auto words_begin = 
-              std::sregex_iterator(s.begin(), s.end(), words_regex);
-          auto words_end = std::sregex_iterator();
-       
-          std::cout << "Found " 
-                    << std::distance(words_begin, words_end) 
-                    << " words:\n";
-       
-          for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
-              std::smatch match = *i;                                                 
-              std::string match_str = match.str(); 
-              std::cout << match_str << '\n';
-          }   
-    }
-    
-    else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options).\n";
+    // Parse options
+      std::string object( str_tolower(match[1]) ), entity(match[2]), lastCmd, from, to, ease, time;
+      for ( auto elem: split(match[3], ' ') ) {
+        if (elem.front()=='/')
+          lastCmd = str_tolower(elem.substr(1));
+        else {
+          if      (lastCmd == "from") from.append(elem);
+          else if (lastCmd == "to")   to.append(elem);
+          else if (lastCmd == "ease") ease.append(elem);
+          else if (lastCmd == "time") time.append(elem);
+          else { std::cerr<<"! Line "<<line<<" : Argument Error (Unknown option ["<<lastCmd<<"])\n"; return false; }
+        }
+      }
+    // Execute
+      if (allCharacters.find(entity) !=  allCharacters.end()){ //for character entities
+        int fromVal, toVal, timeVal;
+        if (! checkEase(ease)) ease = "easeLinear";
+        try { timeVal = std::stoi(time); }
+          catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+          catch (const std::out_of_range &e){std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+        if (object == "position"){
+          try {
+            fromVal = (from.empty()) ? allCharacters[entity].x : std::stoi(from);
+            toVal = std::stoi(to);
+          } catch (const std::invalid_argument &e){ std::cerr<<"! Line "<<line<<" : Option Error (The value for options /from or /to must be valid numbers !)\n"; return false;
+          } catch (...) { std::cerr<<"! Line "<<line<<" : Unknown Error (This may came from the option /from or /to)\n"; return false; }
+
+          std::cout<< "Animate : Succès !!\n From : "<<fromVal<<" - To :"<<toVal<<" - Time : "<<timeVal<<" - Ease : "<<ease<<"\n";
+
+        } else if (object == "spritechange"){
+          
+          sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite;
+          if (allSprites.find(to) !=  allSprites.end()){
+
+            std::cout<< "Animate : Succès :D\n";
+
+          } else { std::cerr<<"! Line "<<line<<" : Argument Error (["<<object<<"] is not a sprite entity.)\n"; return false; }
+        } else { std::cerr<<"! Line "<<line<<" : Argument Error (Unknown object ["<<object<<"]. This command works only with position or spriteChange.)\n"; return false; }
+        return true;
+      } else { std::cerr<<"! Line "<<line<<" : Var Error (This command works only with the entity 'Character', and ["<<entity<<"] is not a valid entity.)\n"; return false; }
+    } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options values).\n";
     return false;
   }
 //---------------HELPERS

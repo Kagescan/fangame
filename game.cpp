@@ -16,7 +16,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
         bool cityfaded=false,credit1faded=false;
         sf::Texture tcredit1,tcredit2,tcity,tcityglitch;
         sf::Sprite credit1,credit2,city,cityglitch;
-        Easing ease;
+
         if (!tcredit1.loadFromFile("resources/img/background/credit1.jpg"))         {return error("error loading credit1.jpg");}    else {credit1.setTexture(tcredit1);}
         if (!tcredit2.loadFromFile("resources/img/background/credit2.jpg"))         {return error("error loading credit2.jpg");}    else {credit2.setTexture(tcredit2);}
         if (!tcity.loadFromFile("resources/img/background/city.jpg"))               {return error("error loading city.jpg");}       else {city.setTexture(tcity);city.setPosition(sf::Vector2f(0, 100));}
@@ -39,7 +39,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
               int getms=timer2.asMilliseconds();
               if (getms<1500) {
                 scr.draw(credit1);
-                credit2.setPosition(sf::Vector2f( 0, ease.easeOutExpo(getms>1000?1000:getms,temp.y,-test,1000) ));
+                credit2.setPosition(sf::Vector2f( 0, easeOutExpo(getms>1000?1000:getms,temp.y,-test,1000) ));
               }
 
               scr.draw(credit2);

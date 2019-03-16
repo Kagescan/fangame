@@ -42,7 +42,6 @@ int main() {
 
     sf::Clock clock;
     sf::Time animStart=clock.getElapsedTime();
-    Easing ease;
     std::string theScriptFile("resources/scripts/script.txt");
     /*TileMap map;
     map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);*/
@@ -91,7 +90,7 @@ int main() {
         play.render(scr);
         if (playBlackTrans){
           int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();
-          int posy = ease.easeInOutCirc(
+          int posy = easeInOutCirc(
                     getms>1000 ? 1000:getms,//elapsed time or max value
                     0, //start value
                     -scrh, //move x px

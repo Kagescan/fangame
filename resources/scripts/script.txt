@@ -42,11 +42,10 @@ set outsideL = -40
 :part1
   echo ceci est la partie 1
   :: animate <object> variable finalValue easing duration beforeValue
-  animate <position> Shintaro /from %scrw% /to %right% /ease outExpo /time 1500 
+  animate <position> Shintaro /from %scrw% /to %right% /ease outExpo /time 1500
   music ost03 play loop
   say Shintaro "First line" "Second Line" "and the final line !"
   say Logan "Starfoullah..."
-  end up
   :: music chairs play
   animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 1500
   animate <spriteChange> Logan /to shintaroScary /ease outExpo /time 300
