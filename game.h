@@ -26,4 +26,22 @@ std::vector<std::string> split(std::string string, char search);
 std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine);
 sf::String toSfString(std::string theStdString);
 std::string calc(std::string input);
+
+
+class Character {
+
+    public:
+      Character(int winHeight = 720);
+      bool animatePos(std::string from, std::string to, std::string ease, sf::Time time, sf::Time curr, unsigned int line);
+      bool animateSprite(sf::Sprite from, sf::Sprite to, std::string ease, sf::Time time);
+      bool update(sf::RenderWindow& scr, sf::Time curr);
+      sf::Sprite sprite;
+      sf::Color titleColor;
+      int x, y;
+    private: 
+      bool animX, animSprite;
+      int animX_from, animX_to, scrh;
+      std::string animX_ease;
+      sf::Time animX_duration, animX_init;
+};
 #endif

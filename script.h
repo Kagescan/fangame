@@ -6,14 +6,6 @@
 #include <cmath>
 #include <regex>
 
-class Character {
-
-    public:
-      Character();
-      sf::Sprite sprite;
-      sf::Color titleColor;
-      int x, y;
-};
 class Script {
 
     public:

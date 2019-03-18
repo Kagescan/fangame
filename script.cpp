@@ -1,115 +1,116 @@
 #include "script.h"
 
-Script::Script(std::string file){
-  //regex helpers
-  rgQuote = "[\"|']";
-  rgSpacestar = "[[:space:]]*";
-  rgVarNames = rgSpacestar+ "([$_\\.[:alnum:]]+)" +rgSpacestar;
+//INIT
+  Script::Script(std::string file){
+    //regex helpers
+    rgQuote = "[\"|']";
+    rgSpacestar = "[[:space:]]*";
+    rgVarNames = rgSpacestar+ "([$_\\.[:alnum:]]+)" +rgSpacestar;
 
-  loadfile = file;
-  playing = true;
-  waiting = displaying = false;
-  arrowIter = iread = substrPos = 0;
-  textSpeed = 1;
-  if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
-    std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
-  if (!fontURW.loadFromFile("resources/fonts/URW"))
-    std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/URW] !!";
-  if (!arrowTxt.loadFromFile("resources/img/arrow.png"))
-    std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/arrow.png] !!";
-  else arrow.setTexture(arrowTxt);
+    loadfile = file;
+    playing = true;
+    waiting = displaying = false;
+    arrowIter = iread = substrPos = 0;
+    textSpeed = 1;
+    if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
+      std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
+    if (!fontURW.loadFromFile("resources/fonts/URW"))
+      std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/URW] !!";
+    if (!arrowTxt.loadFromFile("resources/img/arrow.png"))
+      std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/arrow.png] !!";
+    else arrow.setTexture(arrowTxt);
 
-  //let's "tokenize" the script
-  init();
-}
-
-bool Script::init() {
-  //This will read and parse commands/arguments from the script file. The syntax of the script engine is similar to batch
-    
-  int i(1);
-  //bool limitation=false;
-  std::string str;
-  std::regex command( rgVarNames+"[[:space:]]+(.+)"), tag( rgSpacestar + ":"+ rgSpacestar +"(.+)");
-  std::smatch match;
-
-  std::ifstream file(loadfile.c_str());
-  if (file) {
-    while (std::getline(file,str)) { //read line by line
-      str = replaceVars(str); // replace variables (%var%) by its value if available.
-      if (std::regex_match(str, match, command)) { //this is a command
-        std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
-        scriptInstructions.push_back(results); //store the command
-      } else if (std::regex_match(str, match, tag)) { //this is a tag
-        std::string tagContent = match[1];
-        if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1; //store if not a comment
-      } else {
-        if (!blank(str)) std::cout<<"! Line "<<i<<": Syntax Error (no arguments given or invalid command)\n";
-      }
-      i++;
-    }
-    return true;
-  } else {
-    std::cout<<"! : File Error (unable to open/read the file) !\n";
+    //let's "tokenize" the script
+    init();
   }
-  return false;
-}
 
-bool Script::read(sf::RenderWindow &scr){
-  winSize = scr.getSize();
-  barPosY = winSize.y - 300;
-  bar.setPosition(0,barPosY);
-  bar.setSize(sf::Vector2f(winSize.x,barPosY));
-  bar.setFillColor(sf::Color(255,255,255,200));
+  bool Script::init() {
+    //This will read and parse commands/arguments from the script file. The syntax of the script engine is similar to batch
+      
+    int i(1);
+    //bool limitation=false;
+    std::string str;
+    std::regex command( rgVarNames+"[[:space:]]+(.+)"), tag( rgSpacestar + ":"+ rgSpacestar +"(.+)");
+    std::smatch match;
 
-  while (iread<scriptInstructions.size() && playing){
-    //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
-    std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
-    unsigned int line = std::stoul(scriptInstructions[iread][2]);
+    std::ifstream file(loadfile.c_str());
+    if (file) {
+      while (std::getline(file,str)) { //read line by line
+        str = replaceVars(str); // replace variables (%var%) by its value if available.
+        if (std::regex_match(str, match, command)) { //this is a command
+          std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
+          scriptInstructions.push_back(results); //store the command
+        } else if (std::regex_match(str, match, tag)) { //this is a tag
+          std::string tagContent = match[1];
+          if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1; //store if not a comment
+        } else {
+          if (!blank(str)) std::cerr<<"! Line "<<i<<": Syntax Error (no arguments given or invalid command)\n";
+        }
+        i++;
+      }
+      return true;
+    } else {
+      std::cerr<<"! : File Error (unable to open/read the file) !\n";
+    }
+    return false;
+  }
 
-    if (command == "goto")  cmdGoto(arguments,line);
-    else if (command == "set")  cmdSet(arguments, line);
-    else if (command == "entity") cmdEntity(arguments, line);
-    else if (command == "music")  cmdMusic(arguments, line);
-    else if (command == "wait") cmdWait(arguments, line);
-    else if (command == "animate") cmdAnimate(arguments, line);
-    else if (command == "say")  displaying = cmdSay(arguments, line);
-    else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
-    else if (command == "echo") cmdEcho(arguments);
-    else if (command == "end") playing = false;
-    else 
-      std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
-    iread++;
-    while (displaying && playing) { //Main loop
-      sf::Event event;
-      sf::Time currentTime = clock.getElapsedTime();
-      while (scr.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) playing = false;
-        if (event.type == sf::Event::KeyPressed) {
-          switch (event.key.code) {
-            case sf::Keyboard::Escape :
-              playing = false;
-              break;
-            case sf::Keyboard::Space :
-              if (animatingTextFinished && !waiting) {
-                displaying = false;
-                arrowIter = 0;
-              } else animatingTextFinished = true;
-              break;
-            default : break;
+  bool Script::read(sf::RenderWindow &scr){
+    winSize = scr.getSize();
+    barPosY = winSize.y - 300;
+    bar.setPosition(0,barPosY);
+    bar.setSize(sf::Vector2f(winSize.x,barPosY));
+    bar.setFillColor(sf::Color(255,255,255,200));
+
+    while (iread<scriptInstructions.size() && playing){
+      //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
+      std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
+      unsigned int line = std::stoul(scriptInstructions[iread][2]);
+
+      if (command == "goto")  cmdGoto(arguments,line);
+      else if (command == "set")  cmdSet(arguments, line);
+      else if (command == "entity") cmdEntity(arguments, line);
+      else if (command == "music")  cmdMusic(arguments, line);
+      else if (command == "wait") cmdWait(arguments, line);
+      else if (command == "animate") cmdAnimate(arguments, line);
+      else if (command == "say")  displaying = cmdSay(arguments, line);
+      else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
+      else if (command == "echo") cmdEcho(arguments);
+      else if (command == "end") playing = false;
+      else 
+        std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
+      iread++;
+      while (displaying && playing) { //Main loop
+        sf::Event event;
+        sf::Time currentTime = clock.getElapsedTime();
+        while (scr.pollEvent(event)) {
+          if (event.type == sf::Event::Closed) playing = false;
+          if (event.type == sf::Event::KeyPressed) {
+            switch (event.key.code) {
+              case sf::Keyboard::Escape :
+                playing = false;
+                break;
+              case sf::Keyboard::Space :
+                if (animatingTextFinished && !waiting) {
+                  displaying = false;
+                  arrowIter = 0;
+                } else animatingTextFinished = true;
+                break;
+              default : break;
+            }
           }
         }
+        if (waiting && currentTime>=waitLimit ) displaying = waiting = false;
+        scr.clear();
+        drawBackground(scr);
+        drawCharacters(scr);
+        scr.draw(bar);
+        drawText(scr);
+        scr.display();
       }
-      if (waiting && currentTime>=waitLimit ) displaying = waiting = false;
-      scr.clear();
-      drawBackground(scr);
-      drawCharacters(scr);
-      scr.draw(bar);
-      drawText(scr);
-      scr.display();
     }
+    return 0;
   }
-  return 0;
-}
 
 //---------------Commands
   bool Script::cmdGoto(std::string arg, unsigned int line){
@@ -244,32 +245,24 @@ bool Script::read(sf::RenderWindow &scr){
           else { std::cerr<<"! Line "<<line<<" : Argument Error (Unknown option ["<<lastCmd<<"])\n"; return false; }
         }
       }
+    //treat default options
+      sf::Time timeVal;
+      if (! checkEase(ease)) ease = "none";
+      try { timeVal = sf::milliseconds( std::stoi(time) ); }
+        catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+        catch (const std::out_of_range &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+
     // Execute
       if (allCharacters.find(entity) !=  allCharacters.end()){ //for character entities
-        int fromVal, toVal, timeVal;
-        if (! checkEase(ease)) ease = "easeLinear";
-        try { timeVal = std::stoi(time); }
-          catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
-          catch (const std::out_of_range &e){std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
         if (object == "position"){
-          try {
-            fromVal = (from.empty()) ? allCharacters[entity].x : std::stoi(from);
-            toVal = std::stoi(to);
-          } catch (const std::invalid_argument &e){ std::cerr<<"! Line "<<line<<" : Option Error (The value for options /from or /to must be valid numbers !)\n"; return false;
-          } catch (...) { std::cerr<<"! Line "<<line<<" : Unknown Error (This may came from the option /from or /to)\n"; return false; }
-
-          std::cout<< "Animate : Succès !!\n From : "<<fromVal<<" - To :"<<toVal<<" - Time : "<<timeVal<<" - Ease : "<<ease<<"\n";
-
+          allCharacters[entity].animatePos(from, to, ease, timeVal, clock.getElapsedTime(), line);
         } else if (object == "spritechange"){
-          
-          sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite;
           if (allSprites.find(to) !=  allSprites.end()){
-
-            std::cout<< "Animate : Succès :D\n";
-
-          } else { std::cerr<<"! Line "<<line<<" : Argument Error (["<<object<<"] is not a sprite entity.)\n"; return false; }
-        } else { std::cerr<<"! Line "<<line<<" : Argument Error (Unknown object ["<<object<<"]. This command works only with position or spriteChange.)\n"; return false; }
-        return true;
+            sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite,
+              toVal = allSprites[to];
+            allCharacters[entity].animateSprite(fromVal, toVal, ease, timeVal);
+          } else {std::cerr<<"! Line "<<line<<" : Var Error ( ["<<entity<<"] is not a valid sprite entity.)\n"; return false; }
+        } else {std::cerr<<"! Line "<<line<<" : Var Error ( Unknown object ["<<entity<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
       } else { std::cerr<<"! Line "<<line<<" : Var Error (This command works only with the entity 'Character', and ["<<entity<<"] is not a valid entity.)\n"; return false; }
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options values).\n";
     return false;
@@ -298,7 +291,6 @@ bool Script::read(sf::RenderWindow &scr){
     return true;
   }
 
-//
   std::string Script::getValue(std::string varName){
     if (varValues.find(varName) !=  varValues.end() )
       return varValues[varName];
@@ -363,7 +355,7 @@ bool Script::read(sf::RenderWindow &scr){
     assign(name,"undef");
     assign(name,"character","type");
     assign(name,name,"name");
-    allCharacters[name] = Character();
+    allCharacters[name] = Character(winSize.y);
     if (spriteName != "")
       assign(name, spriteName, "image");
     return true;
@@ -379,10 +371,10 @@ bool Script::read(sf::RenderWindow &scr){
 
   bool Script::drawCharacters(sf::RenderWindow& scr){ //it isn't really optimized yet...
     for (auto& v: allCharacters)
-      scr.draw(v.second.sprite);
+      v.second.update(scr, clock.getElapsedTime());
     return true;
   }
-//
+
   bool Script::drawText(sf::RenderWindow& scr){
     //draw the title
       sf::Text titleTxt(actualCharacter,fontURW,24);
@@ -422,28 +414,7 @@ bool Script::read(sf::RenderWindow &scr){
     }
     return true;
   }
-//-------------character class /* but not useful yet */
-  Character::Character(){
-    titleColor = sf::Color(0,0,0);
-  }
-
-  /*
-  Character(std::string charaName, sf::Color color){
-    name = charaName;
-    titleColor = color;
-  }
-  bool updatePos(int x, int y) {
-    posx = x; poxy = y;
-    return sprite.setPosition(x,y);
-  }
-  bool draw(sf::RenderWindow& scr) {return scr.draw(sprite);}
-  void setSprite(sf::Sprite arg){sprite = arg;}
-  void setTitleColor(sf::Color color) {titleColor = color;}
-  void setName(std::string str) {name = str;}
-  sf::Color getTitleColor() {return titleColor;}*/
-
 //-------------Simple helpers
-
   template<size_t sz> bool in_array(const std::string &value, std::array<std::string, sz> array){
     return std::find(array.begin(), array.end(), value) != array.end();
   }
