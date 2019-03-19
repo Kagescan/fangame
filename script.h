@@ -56,11 +56,11 @@ class Script {
         //std::map<std::string, Character> allCharacters;
 
         sf::Vector2u winSize;
-        sf::RectangleShape bar;//,choiceWindow,blackWindow;
+        //sf::RectangleShape bar;,choiceWindow,blackWindow;
         sf::Font fontDeja, fontURW;
         sf::Color txtColor, titleColor;
-        sf::Texture arrowTxt;
-        sf::Sprite arrow;
+        sf::Texture arrowTxt, barTxt;
+        sf::Sprite arrow, bar;
         sf::Clock clock;
         sf::Time waitLimit;
 

@@ -39,19 +39,16 @@ set /c right = %scrw% - 255
 set /c center = %scrw%/2 - 127
 set outsideL = -255
 set outsideR = %scrw%+255
-echo Centre : %center%
+
 :part1
-  echo ceci est la partie 1
-  :: animate <object> variable finalValue easing duration beforeValue
-  animate <position> Shintaro /from 0 /to 30 /ease outExpo /time 1500
+  animate <position> Shintaro /from 0 /to 30 /ease outExpo /time 900
   music ost03 play loop
   say Shintaro "First line" "Second Line" "and the final line !"
-  animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 1500
+  animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 900
   say Logan "Starfoullah..."
   :: music chairs play
   echo changement
-  animate <position> Logan /from %center% /to %outsideR% /ease outExpo /time 1500
-  animate <spriteChange> Logan/to shintaroScary /ease outExpo /time 300
+  animate <spriteChange> Logan /to shintaroScary /ease outExpo /time 300
   say Logan "Quel est ton perso préféré"
   echo en train de faire un choix
   choice "Karin"=hope | "Yaki"=noHope
@@ -59,9 +56,10 @@ echo Centre : %center%
 
 :ok
   say Logan "Starf j'préfère Karrin"
+  animate <position> Logan /from %center% /to %outsideR% /ease outExpo /time 1500
   music ost03 stop
   :: $ay works with wait command
-  $ay KARIN_LE_DIEU "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
+  $ay KARIN_LA_DEESSE "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
   wait 4000
 
   goto ende

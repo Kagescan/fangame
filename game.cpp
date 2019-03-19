@@ -260,7 +260,13 @@ sf::String toSfString(std::string theStdString) {
     return true;
   }
 
-  bool Character::animateSprite(sf::Sprite from, sf::Sprite to, std::string ease, sf::Time time){
+  bool Character::animateSprite(sf::Sprite from, sf::Sprite to, std::string ease, sf::Time time, sf::Time curr){
+    animS_ease = ease;
+    animS_duration = time;
+    animS_init = curr;
+    animS = true;
+    oldSprite = from;
+    sprite = to;
     return true;
   }
 
@@ -275,6 +281,19 @@ sf::String toSfString(std::string theStdString) {
         x = returnEase(animX_ease, time, animX_from, animX_to - animX_from, duration);
       }
       sprite.setPosition(x,y);
+    }
+    if (animS){
+      if (curr > animS_init + animS_duration){
+        animS = false;
+        sprite.setColor(sf::Color::White);
+      } else {
+        const int time = sf::Time(curr - animS_init).asMilliseconds(),
+          duration = animS_duration.asMilliseconds();
+        oldSprite.setPosition(x,y);
+        oldSprite.setColor(sf::Color(255,255,255, returnEase(animS_ease, time, 255, -255, duration) ));
+        sprite.setColor(sf::Color(255,255,255, returnEase(animS_ease, time, 0, 255, duration) ));
+        scr.draw(oldSprite);
+      }
     }
     scr.draw(sprite);
     return true;

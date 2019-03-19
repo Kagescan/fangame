@@ -19,6 +19,9 @@
     if (!arrowTxt.loadFromFile("resources/img/arrow.png"))
       std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/arrow.png] !!";
     else arrow.setTexture(arrowTxt);
+    if (!barTxt.loadFromFile("resources/img/textbox.png"))
+      std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/textbox.png] !!";
+    else bar.setTexture(barTxt);
 
     //let's "tokenize" the script
     init();
@@ -57,10 +60,8 @@
 
   bool Script::read(sf::RenderWindow &scr){
     winSize = scr.getSize();
-    barPosY = winSize.y - 300;
+    barPosY = winSize.y - 185;
     bar.setPosition(0,barPosY);
-    bar.setSize(sf::Vector2f(winSize.x,barPosY));
-    bar.setFillColor(sf::Color(255,255,255,200));
 
     while (iread<scriptInstructions.size() && playing){
       //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
@@ -260,7 +261,7 @@
           if (allSprites.find(to) !=  allSprites.end()){
             sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite,
               toVal = allSprites[to];
-            allCharacters[entity].animateSprite(fromVal, toVal, ease, timeVal);
+            allCharacters[entity].animateSprite(fromVal, toVal, ease, timeVal, clock.getElapsedTime());
           } else {std::cerr<<"! Line "<<line<<" : Var Error ( ["<<entity<<"] is not a valid sprite entity.)\n"; return false; }
         } else {std::cerr<<"! Line "<<line<<" : Var Error ( Unknown object ["<<entity<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
       } else { std::cerr<<"! Line "<<line<<" : Var Error (This command works only with the entity 'Character', and ["<<entity<<"] is not a valid entity.)\n"; return false; }
@@ -276,10 +277,8 @@
           {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
         else if (getValue(var+".type")=="character")//assumes that allCharacters[var] is defined. Else => value is valid.
           allCharacters[var].sprite = allSprites[value];
-      } else if (object == "color" && (var == "__bar__" || getValue(var+".type")=="character")) {
-        if (var=="__bar__")
-          bar.setFillColor(hex2color(value));
-        else if (allCharacters.find(var) ==  allCharacters.end() )
+      } else if (object == "color" && (getValue(var+".type")=="character")) {
+        if (allCharacters.find(var) ==  allCharacters.end() )
           {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
         else
           allCharacters[var].titleColor = hex2color(value);
@@ -379,12 +378,12 @@
     //draw the title
       sf::Text titleTxt(actualCharacter,fontURW,24);
       titleTxt.setFillColor(titleColor);
-      titleTxt.setPosition(5,barPosY+5);
+      titleTxt.setPosition(265,barPosY+5);
       scr.draw(titleTxt);
 
     sf::Text tempTxt("",fontDeja,27); tempTxt.setFillColor(txtColor);
       for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
-        tempTxt.setPosition(10,barPosY+41+29*i);
+        tempTxt.setPosition(270,barPosY+41+29*i);
         if (!displayedTxt[i] && !animatingTextFinished){
           sf::String text=displaySay[i];
           tempTxt.setString(text.substring(0,substrPos));
@@ -407,7 +406,7 @@
     if (animatingTextFinished && !waiting){
       arrowIter += 0.1;
       int change = -5*( std::sin(0.6*arrowIter) + std::cos(1.2*arrowIter) );
-        arrow.setPosition(winSize.x+change-50,winSize.y-50);
+        arrow.setPosition(winSize.x+change-250,winSize.y-50);
       if      (arrowIter==0.1) arrow.setColor(sf::Color(255,255,255,0)); //initial
       else if (arrowIter<2.5)  arrow.setColor(sf::Color(255,255,255,arrowIter*100+5)); //before the 25 iterations
       scr.draw(arrow);
