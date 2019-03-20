@@ -245,6 +245,8 @@ sf::String toSfString(std::string theStdString) {
   }
 
   bool Character::animatePos(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line){
+    x = 0;
+    y = scrh - sprite.getTextureRect().height;
     try {
       animX_from = (from.empty()) ? x : std::stoi(from);
       animX_to = (to.empty()) ? 0 : std::stoi(to);
@@ -254,14 +256,24 @@ sf::String toSfString(std::string theStdString) {
     animX_duration = duration;
     animX_init = curr;
     animX = true;
-    // I ctrl-V this here... :
-      x = 0;
-      y = scrh - sprite.getTextureRect().height;
     return true;
   }
 
-  bool Character::animateSprite(sf::Sprite from, sf::Sprite to, std::string ease, sf::Time time, sf::Time curr){
-    animS_ease = ease;
+  bool Character::animateOpacity(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line){
+    try {
+      animO_from = (from.empty()) ? sprite.getColor().a : std::stoi(from);
+      animO_to = (to.empty()) ? 0 : std::stoi(to);
+      if (animO_from<0 || animO_from>255 || animO_to<0 || animO_to>255 ) {std::cerr<<"! Line "<<line<<" : Option Error (The value for options /from or /to must be a number between 0 and 255!)\n"; return false;}
+    } catch (const std::invalid_argument &e){ std::cerr<<"! Line "<<line<<" : Option Error (The value for options /from or /to must be valid numbers!)\n"; return false;
+    } catch (...) { std::cerr<<"! Line "<<line<<" : Unknown Error (This may came from the option /from or /to)\n"; return false; }
+    animO_ease = ease;
+    animO_duration = duration;
+    animO_init = curr;
+    animO = true;
+    return true;
+  }
+
+  bool Character::animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr){
     animS_duration = time;
     animS_init = curr;
     animS = true;
@@ -271,6 +283,7 @@ sf::String toSfString(std::string theStdString) {
   }
 
   bool Character::update(sf::RenderWindow& scr, sf::Time curr){
+  //animations
     if (animX){
       if (curr > animX_init + animX_duration){
         animX = false;
@@ -282,6 +295,17 @@ sf::String toSfString(std::string theStdString) {
       }
       sprite.setPosition(x,y);
     }
+    if (animO){
+      if (curr > animO_init + animO_duration){
+        animO = false;
+        sprite.setColor(sf::Color(255,255,255,animO_to));
+      } else {
+        const int time = sf::Time(curr - animO_init).asMilliseconds(),
+          duration = animO_duration.asMilliseconds(),
+          alpha = returnEase(animS_ease, time, animO_from, animO_to - animO_from, duration);
+        sprite.setColor(sf::Color(255,255,255, alpha ));
+      }
+    }
     if (animS){
       if (curr > animS_init + animS_duration){
         animS = false;
@@ -289,12 +313,14 @@ sf::String toSfString(std::string theStdString) {
       } else {
         const int time = sf::Time(curr - animS_init).asMilliseconds(),
           duration = animS_duration.asMilliseconds();
-        oldSprite.setPosition(x,y);
-        oldSprite.setColor(sf::Color(255,255,255, returnEase(animS_ease, time, 255, -255, duration) ));
-        sprite.setColor(sf::Color(255,255,255, returnEase(animS_ease, time, 0, 255, duration) ));
+        oldSprite.setColor(sf::Color(255,255,255, easeInExpo(time, 255, -255, duration) ));
+        sprite.setColor(sf::Color(255,255,255, easeOutExpo(time, 0, 255, duration) ));
         scr.draw(oldSprite);
       }
+      oldSprite.setPosition(x,y);
+      sprite.setPosition(x,y);
     }
+  //draw
     scr.draw(sprite);
     return true;
   }

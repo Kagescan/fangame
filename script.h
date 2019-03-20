@@ -25,6 +25,7 @@ class Script {
         bool cmdMusic(std::string arg, unsigned int line);
         bool cmdWait(std::string arg, unsigned int line);
         bool cmdAnimate(std::string arg, unsigned int line);
+        bool cmdChoice(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
@@ -32,6 +33,7 @@ class Script {
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
         bool drawBackground(sf::RenderWindow& scr);
         bool drawCharacters(sf::RenderWindow& scr);
+        bool drawChoices(sf::RenderWindow& scr);
         bool drawText(sf::RenderWindow& scr);
         //bool drawCharacters(sf::RenderWindow& scr, sf::Time currentTime, sf::Time initialTime);
         
@@ -53,23 +55,24 @@ class Script {
         std::map<std::string, sf::SoundBuffer> buffer;
         std::map<std::string, sf::Sound> allSounds;
         std::map<std::string, Character> allCharacters;
+        std::vector<std::array<std::string, 2> > allChoices;
         //std::map<std::string, Character> allCharacters;
 
         sf::Vector2u winSize;
         //sf::RectangleShape bar;,choiceWindow,blackWindow;
         sf::Font fontDeja, fontURW;
         sf::Color txtColor, titleColor;
-        sf::Texture arrowTxt, barTxt;
-        sf::Sprite arrow, bar;
+        sf::Texture arrowTxt, barTxt, choiceTxt;
+        sf::Sprite arrow, bar, choiceBar, choiceBarSelected;
         sf::Clock clock;
         sf::Time waitLimit;
 
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;
-        bool playing, waiting, displaying, pause, animatingTextFinished;
-        unsigned int iread, substrPos, textSpeed, txtSpeedIter;
+        bool playing, waiting, displaying, pause, animatingTextFinished, drawingChoices;
+        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine;
         float arrowIter;
-        int barPosY;
+        int barPosY, fps;
         //std::map<std::string, std::string> varTypes;
 };
 

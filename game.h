@@ -33,16 +33,17 @@ class Character {
     public:
       Character(int winHeight = 720);
       bool animatePos(std::string from, std::string to, std::string ease, sf::Time time, sf::Time curr, unsigned int line);
-      bool animateSprite(sf::Sprite from, sf::Sprite to, std::string ease, sf::Time time, sf::Time curr);
+      bool animateOpacity(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line);
+      bool animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr);
       bool update(sf::RenderWindow& scr, sf::Time curr);
       sf::Sprite sprite;
       sf::Color titleColor;
-      int x, y;
     private: 
-      bool animX, animS, animSprite;
-      int animX_from, animX_to, animS_from, animS_to, scrh;
-      std::string animX_ease, animS_ease;
-      sf::Time animX_duration, animX_init, animS_duration, animS_init;
+      int x, y;
+      bool animX, animS, animO;
+      int animX_from, animX_to, animS_from, animS_to, animO_from, animO_to, scrh;
+      std::string animX_ease, animS_ease, animO_ease;
+      sf::Time animX_duration, animX_init, animS_duration, animS_init, animO_duration, animO_init;
       sf::Sprite oldSprite;
 };
 #endif

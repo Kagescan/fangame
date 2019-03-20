@@ -160,8 +160,7 @@ bool checkEase(std::string e) {
       || e=="inOutBounce"
       || e=="none")
     return true;
-  else {
-    std::cerr<<"Warning : unknown easing function ["<<e<<"].\n\n";
+  else
+    //if (easing!="") std::cerr<<"Warning : unknown easing function ["<<e<<"].\n\n";
     return false;
-  }
 }

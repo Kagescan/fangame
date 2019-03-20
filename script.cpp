@@ -1,5 +1,7 @@
 #include "script.h"
 
+//not really optimized but runs easily at 60 FPS
+
 //INIT
   Script::Script(std::string file){
     //regex helpers
@@ -9,8 +11,8 @@
 
     loadfile = file;
     playing = true;
-    waiting = displaying = false;
-    arrowIter = iread = substrPos = 0;
+    waiting = displaying = drawingChoices = false;
+    arrowIter = iread = substrPos = choicePos = 0;
     textSpeed = 1;
     if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
       std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
@@ -22,6 +24,12 @@
     if (!barTxt.loadFromFile("resources/img/textbox.png"))
       std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/textbox.png] !!";
     else bar.setTexture(barTxt);
+    if (!choiceTxt.loadFromFile("resources/img/choice.png"))
+      std::cerr<<"INTERNAL ERROR : Can't load the image [resources/img/choice.png] !!";
+    else {
+      choiceBar.setTexture(choiceTxt);
+      choiceBarSelected.setTexture(choiceTxt);
+    }
 
     //let's "tokenize" the script
     init();
@@ -63,6 +71,7 @@
     barPosY = winSize.y - 185;
     bar.setPosition(0,barPosY);
 
+    //engine loop
     while (iread<scriptInstructions.size() && playing){
       //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
       std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
@@ -70,6 +79,7 @@
 
       if (command == "goto")  cmdGoto(arguments,line);
       else if (command == "set")  cmdSet(arguments, line);
+      else if (command == "choice")  cmdChoice(arguments, line);
       else if (command == "entity") cmdEntity(arguments, line);
       else if (command == "music")  cmdMusic(arguments, line);
       else if (command == "wait") cmdWait(arguments, line);
@@ -80,8 +90,9 @@
       else if (command == "end") playing = false;
       else 
         std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
-      iread++;
-      while (displaying && playing) { //Main loop
+
+      //rendering loop
+      while (displaying && playing) {
         sf::Event event;
         sf::Time currentTime = clock.getElapsedTime();
         while (scr.pollEvent(event)) {
@@ -92,23 +103,36 @@
                 playing = false;
                 break;
               case sf::Keyboard::Space :
-                if (animatingTextFinished && !waiting) {
-                  displaying = false;
+                if (!drawingChoices) {
+                  if (animatingTextFinished && !waiting) {
+                    displaying = false;
+                    arrowIter = 0;
+                  } else animatingTextFinished = true;
+                }
+                break;
+              case sf::Keyboard::Down:
+                if (drawingChoices) choicePos = (choicePos+1>=allChoices.size()) ? 0 : choicePos+1;
+                break;
+              case sf::Keyboard::Return:
+                if (drawingChoices) {
+                  cmdGoto(allChoices[choicePos][1], choiceErrLine);
+                  displaying = drawingChoices = false;
                   arrowIter = 0;
-                } else animatingTextFinished = true;
+                }
                 break;
               default : break;
             }
           }
         }
-        if (waiting && currentTime>=waitLimit ) displaying = waiting = false;
+        if (waiting && currentTime>=waitLimit )          displaying = waiting = false;
         scr.clear();
         drawBackground(scr);
         drawCharacters(scr);
-        scr.draw(bar);
-        drawText(scr);
+        if (drawingChoices) drawChoices(scr);
+        else drawText(scr);
         scr.display();
       }
+      iread++;
     }
     return 0;
   }
@@ -229,6 +253,18 @@
     return true;
   }
 //
+  bool Script::cmdChoice(std::string arg, unsigned int line){
+    std::regex syntax("[\"]([^\".]+)[\"]"+rgSpacestar+'='+rgVarNames);
+    auto words_begin = std::sregex_iterator(arg.begin(), arg.end(), syntax);
+    allChoices.clear();
+    for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
+      std::smatch match= *i;
+      allChoices.push_back( {match[1],match[2]} );
+    }
+    drawingChoices = true;
+    return true;
+  }
+//
   bool Script::cmdAnimate(std::string arg, unsigned int line){
     std::regex syntax(rgSpacestar+'<'+rgVarNames+'>'+rgVarNames+"(.+)");
     std::smatch match;
@@ -257,13 +293,15 @@
       if (allCharacters.find(entity) !=  allCharacters.end()){ //for character entities
         if (object == "position"){
           allCharacters[entity].animatePos(from, to, ease, timeVal, clock.getElapsedTime(), line);
+        } else if (object == "opacity"){
+          allCharacters[entity].animateOpacity(from, to, ease, timeVal, clock.getElapsedTime(), line);
         } else if (object == "spritechange"){
           if (allSprites.find(to) !=  allSprites.end()){
             sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite,
               toVal = allSprites[to];
-            allCharacters[entity].animateSprite(fromVal, toVal, ease, timeVal, clock.getElapsedTime());
+            allCharacters[entity].animateSprite(fromVal, toVal, timeVal, clock.getElapsedTime());
           } else {std::cerr<<"! Line "<<line<<" : Var Error ( ["<<entity<<"] is not a valid sprite entity.)\n"; return false; }
-        } else {std::cerr<<"! Line "<<line<<" : Var Error ( Unknown object ["<<entity<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
+        } else {std::cerr<<"! Line "<<line<<" : Var Error ( Unknown object ["<<object<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
       } else { std::cerr<<"! Line "<<line<<" : Var Error (This command works only with the entity 'Character', and ["<<entity<<"] is not a valid entity.)\n"; return false; }
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options values).\n";
     return false;
@@ -373,8 +411,28 @@
       v.second.update(scr, clock.getElapsedTime());
     return true;
   }
-
+//
+  bool Script::drawChoices(sf::RenderWindow& scr){
+    arrowIter++;
+    int originX = winSize.x/2 - 385,
+      originY = winSize.y/2 - allChoices.size()*50 / 2,
+      colorIter = 32*std::sin(0.05*arrowIter)+32;
+    choiceBarSelected.setColor(sf::Color(127+colorIter,255,127+colorIter));
+    for (unsigned int i(0); i<allChoices.size(); i++){
+      if (i==choicePos) {
+        choiceBarSelected.setPosition(originX,originY+i*50);
+        scr.draw(choiceBarSelected);
+      } else {
+        choiceBar.setPosition(originX,originY+i*50);
+        scr.draw(choiceBar);
+      }
+    }
+    return true;
+  }
+//
   bool Script::drawText(sf::RenderWindow& scr){
+    //draw the text box
+    scr.draw(bar);
     //draw the title
       sf::Text titleTxt(actualCharacter,fontURW,24);
       titleTxt.setFillColor(titleColor);
@@ -405,7 +463,7 @@
       }
     if (animatingTextFinished && !waiting){
       arrowIter += 0.1;
-      int change = -5*( std::sin(0.6*arrowIter) + std::cos(1.2*arrowIter) );
+      int change = -5*( std::cos(1.2*arrowIter) );
         arrow.setPosition(winSize.x+change-250,winSize.y-50);
       if      (arrowIter==0.1) arrow.setColor(sf::Color(255,255,255,0)); //initial
       else if (arrowIter<2.5)  arrow.setColor(sf::Color(255,255,255,arrowIter*100+5)); //before the 25 iterations

@@ -8,77 +8,78 @@
 :: TODO :
 ::varfile "resources/saves/main.save"
 ::mapfile "resources/map/couloir.txt"
-:: choices and animations
+:: choices
 
 ::var declarations
 
-entity <character> Shintaro
-set <color> Shintaro = #ff0000
 entity <character> Logan
-set <color> Logan = #ff0fff
+set <color> Logan = #ff0000
+entity <character> Elise
+set <color> Elise = #ff0fff
+entity <character> Antoine
+set <color> Antoine = #000000
 
 ::entity <sound> chairs="resources/noises/oldDays-chairs.ogg"
 
-entity <image> shintaroDefault="resources/img/characters/shintaro/default.png"
-entity <image> shintaroScream="resources/img/characters/shintaro/scream.png"
-entity <image> shintaroScary="resources/img/characters/shintaro/scary.png"
+entity <image> ink = "resources/img/characters/tests/STARF.png"
+entity <image> inkRire = "resources/img/characters/tests/Ink_rire.png"
+entity <image> nulpain = "resources/img/characters/tests/nulpain.png"
+entity <image> ripElise = "resources/img/characters/tests/Antoine-UWU.png"
 entity <image> backgroundClassroom="resources/img/background/classroom.night.jpg"
 entity <music> ost03="resources/sounds/OST03.ogg"
 
-set <color> __bar__ = #ffffffaa
 set <image> __scene__ = backgroundClassroom
 
-set <image> Shintaro = shintaroDefault
-set <image> Logan = shintaroScream
-set <name> Shintaro = LoganTheBest#2885
-set <name> Logan = MAMAN sama
+set <image> Logan = nulpain
+set <image> Elise = ink
+set <image> Antoine = ripElise
+set <name> Logan = Logan
+set <name> Elise = STARF
 
 
 set scrw = 1280
-set /c right = %scrw% - 255
-set /c center = %scrw%/2 - 127
-set outsideL = -255
-set outsideR = %scrw%+255
+set /c right = %scrw% - 400
+set /c center = %scrw%/2 - 25
+set outsideL = -600
+set outsideR = %scrw%+600
 
 :part1
-  animate <position> Shintaro /from 0 /to 30 /ease outExpo /time 900
-  music ost03 play loop
-  say Shintaro "First line" "Second Line" "and the final line !"
-  animate <position> Logan /from %outsideL% /to %center% /ease outExpo /time 900
-  say Logan "Starfoullah..."
-  :: music chairs play
-  echo changement
-  animate <spriteChange> Logan /to shintaroScary /ease outExpo /time 300
-  say Logan "Quel est ton perso préféré"
-  echo en train de faire un choix
-  choice "Karin"=hope | "Yaki"=noHope
+  ::wait 1000
+  ::animate <position> Logan /from 0 /to -10 /time 1
+  ::animate <opacity> Logan /from 0 /to 255 /time 900
+  ::music ost03 play loop
+  ::wait 900
+  say Logan "Bonjour..." "..." "Ceci est un test du moteur de jeu novel" "pour mon Kagerou Project fanga--..."
+  animate <position> Elise /from %outsideL% /to %center% /ease outExpo /time 900
+  say Elise "Starfoullah..."
+  animate <spriteChange> Elise /to inkRire /time 300
+  animate <position> Antoine /from %outsideR% /to %right% /ease outExpo /time 2000
+  ::goto Yaki
+  say Antoine "*mon sprite me respecte pas*" "breff..." "Karin ou Yaki ?"
+  choice "Karin :D" = Karin "Yaki :D"=Yaki
   goto hope
 
-:ok
-  say Logan "Starf j'préfère Karrin"
-  animate <position> Logan /from %center% /to %outsideR% /ease outExpo /time 1500
+:Yaki
+  say Logan "YAY"
+  say Elise "Karrin>ALL :c"
+  animate <position> Elise /from %center% /to %outsideR% /ease inExpo /time 1500
   music ost03 stop
-  :: $ay works with wait command
-  $ay KARIN_LA_DEESSE "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
+  $ay Elise "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
   wait 4000
-
   goto ende
-  say Shintaro "GEH"
 
+::Appartient toujours au label yaki
+echo TEST1
 
-:hope
-  say Shintaro "Great !"
-  echo HOPE
-goto ok
-
-
-:noHope
-  say Logan "NOPE"
-  echo NoHOPE
+:Karin
+echo TEST2
+  say Antoine "Bon choix."
+  animate <opacity> Antoine /to 0 /time 900
 goto ende
 
+
 :ende
-  say Shintaro "j'aime YAKI :P "
-  $ay Shintaro "Bye"
+  $ay Logan "Bye"
+  animate <opacity> Logan /to 0 /time 900
   wait pause
   end up
