@@ -14,10 +14,10 @@
 
 entity <character> Logan
 set <color> Logan = #ff0000
-entity <character> Elise
-set <color> Elise = #ff0fff
 entity <character> Antoine
 set <color> Antoine = #000000
+entity <character> Elise
+set <color> Elise = #ff0fff
 
 ::entity <sound> chairs="resources/noises/oldDays-chairs.ogg"
 
@@ -33,9 +33,9 @@ set <image> __scene__ = backgroundClassroom
 set <image> Logan = nulpain
 set <image> Elise = ink
 set <image> Antoine = ripElise
-set <name> Logan = Logan
-set <name> Elise = STARF
-
+set <name> Logan = Nulpain
+set <name> Elise = ink
+set <name> Antoine = RIP MA VIE
 
 set scrw = 1280
 set /c right = %scrw% - 400
@@ -44,20 +44,18 @@ set outsideL = -600
 set outsideR = %scrw%+600
 
 :part1
-  ::wait 1000
-  ::animate <position> Logan /from 0 /to -10 /time 1
-  ::animate <opacity> Logan /from 0 /to 255 /time 900
-  ::music ost03 play loop
-  ::wait 900
+  animate <position> Logan /from 0 /to -10 /time 1
+  animate <opacity> Logan /from 0 /to 255 /time 900
+  music ost03 play loop
+  wait 900
   say Logan "Bonjour..." "..." "Ceci est un test du moteur de jeu novel" "pour mon Kagerou Project fanga--..."
   animate <position> Elise /from %outsideL% /to %center% /ease outExpo /time 900
   say Elise "Starfoullah..."
   animate <spriteChange> Elise /to inkRire /time 300
   animate <position> Antoine /from %outsideR% /to %right% /ease outExpo /time 2000
-  ::goto Yaki
-  say Antoine "*mon sprite me respecte pas*" "breff..." "Karin ou Yaki ?"
-  choice "Karin :D" = Karin "Yaki :D"=Yaki
-  goto hope
+  say Antoine "*mon sprite me respecte pas*" "breff..." "Quelle est ta waifu préférée"
+  :choice
+  choice "Karin :D" = Karin "Yaki :D"=Yaki "Sans avis"=None
 
 :Yaki
   say Logan "YAY"
@@ -77,6 +75,9 @@ echo TEST2
   animate <opacity> Antoine /to 0 /time 900
 goto ende
 
+:None
+say Antoine "Non va falloir faire le choix..."
+goto choice
 
 :ende
   $ay Logan "Bye"

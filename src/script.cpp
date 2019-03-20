@@ -79,7 +79,7 @@
 
       if (command == "goto")  cmdGoto(arguments,line);
       else if (command == "set")  cmdSet(arguments, line);
-      else if (command == "choice")  cmdChoice(arguments, line);
+      else if (command == "choice")  displaying = cmdChoice(arguments, line);
       else if (command == "entity") cmdEntity(arguments, line);
       else if (command == "music")  cmdMusic(arguments, line);
       else if (command == "wait") cmdWait(arguments, line);
@@ -112,6 +112,9 @@
                 break;
               case sf::Keyboard::Down:
                 if (drawingChoices) choicePos = (choicePos+1>=allChoices.size()) ? 0 : choicePos+1;
+                break;
+              case sf::Keyboard::Up:
+                if (drawingChoices) choicePos = (choicePos<=0) ? allChoices.size()-1 : choicePos-1;
                 break;
               case sf::Keyboard::Return:
                 if (drawingChoices) {
@@ -413,11 +416,13 @@
   }
 //
   bool Script::drawChoices(sf::RenderWindow& scr){
-    arrowIter++;
-    int originX = winSize.x/2 - 385,
-      originY = winSize.y/2 - allChoices.size()*50 / 2,
-      colorIter = 32*std::sin(0.05*arrowIter)+32;
-    choiceBarSelected.setColor(sf::Color(127+colorIter,255,127+colorIter));
+    //var init
+      arrowIter++;
+      int originX = winSize.x/2 - 385,
+        originY = winSize.y/2 - allChoices.size()*50 / 2,
+        colorIter = 32*std::sin(0.1*arrowIter)+32;
+      sf::Text tempTxt("",fontDeja,27); tempTxt.setFillColor(sf::Color::Black);
+      choiceBarSelected.setColor( sf::Color(127+colorIter,255,127+colorIter) );
     for (unsigned int i(0); i<allChoices.size(); i++){
       if (i==choicePos) {
         choiceBarSelected.setPosition(originX,originY+i*50);
@@ -426,6 +431,10 @@
         choiceBar.setPosition(originX,originY+i*50);
         scr.draw(choiceBar);
       }
+      tempTxt.setString(allChoices[i][1]);
+      sf::Rect txtBounds = tempTxt.getGlobalBounds();
+      tempTxt.setPosition(winSize.x/2 - txtBounds.width/2, originY+i*50 + (10-txtBounds.height/2) );
+      scr.draw(tempTxt);
     }
     return true;
   }
