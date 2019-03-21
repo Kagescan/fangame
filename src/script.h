@@ -55,7 +55,7 @@ class Script {
         std::map<std::string, sf::SoundBuffer> buffer;
         std::map<std::string, sf::Sound> allSounds;
         std::map<std::string, Character> allCharacters;
-        std::vector<std::array<std::string, 2> > allChoices;
+        std::vector<std::array<sf::String, 2> > allChoices;
         //std::map<std::string, Character> allCharacters;
 
         sf::Vector2u winSize;

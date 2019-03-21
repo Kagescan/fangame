@@ -1,86 +1,267 @@
-
-::This is a test for the new synthax of the kagerou project fangame novel engine.
-::The kagescan game is a bit different than other novel engines, because there is a map and label whill be executed only if the player interacts with the map.
-::Like pokemon ! but in a event, it is a visual novel.
-::The new synthax is based of the ren'py scripts.
-::I will implement soon conditions (if else statements but not loop !)
-
-:: TODO :
-::varfile "resources/saves/main.save"
-::mapfile "resources/map/couloir.txt"
-:: choices
-
-::var declarations
-
-entity <character> Logan
-set <color> Logan = #ff0000
-entity <character> Antoine
-set <color> Antoine = #000000
-entity <character> Elise
-set <color> Elise = #ff0fff
-
-::entity <sound> chairs="resources/noises/oldDays-chairs.ogg"
-
-entity <image> ink = "resources/img/characters/tests/STARF.png"
-entity <image> inkRire = "resources/img/characters/tests/Ink_rire.png"
-entity <image> nulpain = "resources/img/characters/tests/nulpain.png"
-entity <image> ripElise = "resources/img/characters/tests/Antoine-UWU.png"
+entity <character> temp
+entity <character> Shintaro
+entity <character> Ayano
 entity <image> backgroundClassroom="resources/img/background/classroom.night.jpg"
-entity <music> ost03="resources/sounds/OST03.ogg"
-
+set <color> Shintaro = #ff0000
+set <color> Shintaro = #ff3333
+set <color> temp = #aaaaaa
 set <image> __scene__ = backgroundClassroom
+set <name> temp = Guide d'introduction
+:guide
+  say temp "Bienvenue dans le fangame Retaining's memories." "Ceci est un mini-guide présentant les contrôles et ce jeu" "Appuyez sur la barre espace pour passer les dialogues."
+  say temp "Bien ! Sachez que vous pouvez aussi passer plusieurs dialogues" "en maintenant la barre espace appuyée (même si cela" "n'est pas vraiment conseillé)"
+  say temp "Lorsque vous rencontrez des choix, il faudra utiliser les flèches" "droite et gauche de votre clavier, et sélectionner avec la barre" "espace."
+  choice "Ok, maintenant explique moi plus sur le jeu!" = continue "Euh, on peut répêter?" = guide
+  :continue
+  say temp "Ce fangame est un mélange entre un visual novel *reprenant toutes" "les timelines de la série Kagerou Project* intégrant avec lui" "quelques mini-jeux en tant qu'intéractions avec le personnage."
+  say temp "Ce jeu comprendra l'intégralité des timelines de Kagerou Project" "Celle des musiques (en guise d'introduction)," "du manga (histoire principale), du roman et de l'animé." "Ce jeu comprenndra aussi une fan-timeline!"
+  say temp "Les routes sont choisies selon vos actions mais certaines se" "débloquent une fois avoir fini le jeu (mais n'oubliez pas que" "vous pouvez passer les dialogues :P )"
+  say temp "Dans cette preview, seulement le mode novel est disponible. Les" "intéractions en jeu sont donc remplacées par des choix." "Un seul chapitre est présent dans cette preview (The Old Days," "le chapitre de la rencontre entre Shintaro et Ayano)."
+  say temp "Ce jeu a été créé par la communauté française Kagerou Project (Kagescan)" "Tout ce jeu a été créé par nos membres" "Au passage, le code source de ce jeu est open-source :D" "Nous espérons que notre travail vous plaîra !"
+  ::say temp "Avant de commencer à jouer, il me faudrait une estimation de ton âge..." "Tu verras pourquoi par la suite !"
+  ::choice "Bas âge" "Niveau de quatrième/troisième" "Niveau de seconde" "Niveau de première" "Niveau de terminale" "Au dessus..."
 
-set <image> Logan = nulpain
-set <image> Elise = ink
-set <image> Antoine = ripElise
-set <name> Logan = Nulpain
-set <name> Elise = ink
-set <name> Antoine = RIP MA VIE
 
-set scrw = 1280
-set /c right = %scrw% - 400
-set /c center = %scrw%/2 - 25
-set outsideL = -600
-set outsideR = %scrw%+600
+:debut
+  say Shintaro "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille" "Mais franchement,comment ça se fait que l'école soit si flippante la nuit?" "J'espère que rien de chelou ne va apparaitre..."
+  say Shintaro "Raah...Sérieux !!" "Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre..." "J'ai vraiment la poisse..."
+  say Shintaro "Rmmr !! En plus je ne vois presque rien"
+:choiceDoor1
+  choice "Tenter d'ouvrir la porte gauche" = porte1 "Continuer d'avancer..." = suite "La porte droite ?" = porte2
+:porte1 
+  say Shintaro "Ce n'est pas ma classe... En plus,la porte est fermée."
+  goto choiceDoor1
+:porte2
+  set <name> temp = *bruit*
+  say temp "Flock~~"
+  say Shintaro "Whaaahhh!!!??" "..." "..."
+  say Shintaro "Ah...-Ah..." "C'était quoi, ça ? Les robinets ?" "Ne te surprend pas comme ça, putain !"
+  goto choiceDoor1
+:suite
+  ::`5`resources/img/backgrounds/classroom.night.jpg
 
-:part1
-  animate <position> Logan /from 0 /to -10 /time 1
-  animate <opacity> Logan /from 0 /to 255 /time 900
-  music ost03 play loop
-  wait 900
-  say Logan "Bonjour..." "..." "Ceci est un test du moteur de jeu novel" "pour mon Kagerou Project fanga--..."
-  animate <position> Elise /from %outsideL% /to %center% /ease outExpo /time 900
-  say Elise "Starfoullah..."
-  animate <spriteChange> Elise /to inkRire /time 300
-  animate <position> Antoine /from %outsideR% /to %right% /ease outExpo /time 2000
-  say Antoine "*mon sprite me respecte pas*" "breff..." "Quelle est ta waifu préférée"
-  :choice
-  choice "Karin :D" = Karin "Yaki :D"=Yaki "Sans avis"=None
+  say Shintaro "Pff...Pourquoi je suis obligé de venir à l'école la nuit,comme ça?" "..." "Mais sinon..."
+  say Shintaro "Les gars de ma nouvelle classe... Ils avaient tous l'air de crétins finis" "En plus,la moyenne de la nouvelle interro était incroyablement basse" "Si ce n'est que ça, ça irait. Mais qu'ils peuvent être bruyants, à frapper dans les" "bureaux..."
+  say Shintaro "C'est pas croyable. Qu'est-ce que je pourrait gagner avec des types pareils ?" "C'est bien mieux de passer mon temps à feuilleter mes manuels scolaires" "chez moi."
+  say Shintaro "Et c'est la même chose pour les gens avec qui j'ai été jusqu'à aujourd'hui." "Ils osent se dire amis, mais ne font-ils pas semblant pour profiter de moi ?"
+  say Shintaro "Dans leurs dos, ils n'arrêtent pas de dire du mal des uns et des autres" "C'est plus que dégelasse."
+  say Shintaro "Franchement, qu'est-ce qu'ils ont, ceux là ?" "Je pense que ça aurait été mieux de rester seul depuis le début." "Non. Sérieusement... Pourquoi est-ce que je reste dans ce genre d'endroit ?"
+  say Shintaro "C'est vrai. C'est bien plus simple de rester seul." "Je pourrai passer plus de temps pour étudier. Ça ne peut m'apporter que de" "bonnes choses."
+  say Shintaro "Et puis de toute manière, je n'ai pas un seul vrai ami." "Maintenant que j'y pense, il n'y a pas une seule raison d'aller à l'éco--"
+  ::`2`sound`play`resources/sounds/OldDays01.ogg
+  say bruit "~bruits de chaises~"
+  say Shintaro "C-C'était quoi ce bruit ???" "Il y a quelqu'un à une heure pareille ? Attends, attends, attends." "C'est vraiment trop bizarre !!! Même si il y avait quelqu'un aucune lumière" "n'est allumée..."
+  say Shintaro "E-Et puis ce bruit, à l'instant, il vient de ma classe!!" "M-Me-Me dites pas que c'est un fantôme ou un truc du genre..." "L-laissez moi tranquille !!!"
+  say Shintaro "J'ai peur, mais si je ne rentre pas, je ne pourrai pas récupérer mon portefeuille" "Ah~hhh ... Qu'est ce que je suis censé faire?"
+  choice "Non, il faut chercher le porte-feuille !!" = porte3 "Partir >_<" = partir
+:partir
+  say Shintaro "Je sais que j'ai besoin de mon porte feuille mais j'ai si peur... Ok, je peux fuir mais j'en ai réelement besoin..." "Qu'est-ce que je dois faire?"
+  choice "Aller prendre le porte feuille" = porte3 "Fuir" = fuite
 
-:Yaki
-  say Logan "YAY"
-  say Elise "Karrin>ALL :c"
-  animate <position> Elise /from %center% /to %outsideR% /ease inExpo /time 1500
-  music ost03 stop
-  $ay Elise "Pour la peine je vais bloquer le jeu durant 4 secondes..." "... ... ..." "y compris mon temps de parole."
-  wait 4000
-  goto ende
+:fuite
+  say JEU "ROUTE 02 débloquée !"
+  end fadeblack
 
-::Appartient toujours au label yaki
-echo TEST1
+:porte3
+    ::`5`resources/img/backgrounds/classroom.night.jpg
+    ::`2`sound`play`resources/sounds/OldDays02.ogg`
+    ::`3`0`resources/img/sprite/Ayano5.png
+    ::`4`pause`500
+  set <name> temp = -inconnue ??? / -Shintaro 
+  set <name> Ayano = ???
+  say temp "-Whaaaaaaah !!" "-OUAAAHAAHAHAHA !! Hiiii !!"
+    ::`4`pause`2200
+    ::`2`sound`pause
+    ::`4`Epause
+  say Shintaro "Pardonnez moi ! Pardonnez moi !" "L-Laissez moi la vie sau~auve !!"
+    ::`2`sound`unpause
+    ::`4`pause`3150
+    ::`2`sound`pause
+    ::`4`Epause
+    ::`3`0`resources/img/sprite/Ayano6.png
+  say Ayano "Hum ?"
+    ::`2`sound`unpause
+    ::`4`pause`900
+    ::`2`sound`pause
+    ::`4`Epause
+  say Ayano "Shintaro...-kun ?"
+    ::`2`sound`unpause
+    ::`4`pause`3000
+    ::`2`sound`pause
+    ::`4`Epause
+    ::`3`0`resources/img/sprite/Ayano6.png
+  say Ayano "Ah j'en suis sûre, tu est bien Shintaro Kisaragi !"
+  say Shintaro "Hu~um ???"
+    ::`2`music`play`resources/sounds/OST03.ogg`-1
+    ::`3`0`resources/img/sprite/Ayano3.png
+  say Ayano "Hé, tu ne me reconnais pas ?" "Ayano Tateyama !"
+    ::`3`0`resources/img/sprite/Ayano2.png
+  set <name> Ayano = Sois disant "Ayano" (?)
+  say Ayano "Enfin,j'ai beau dire ça mais je crois bien que l'on a encore jamais parlé ensemble..."
+  say Shintaro "*perplexe*" "Aya...no Tateyama... ?" "... ..."
+  set <name> Ayano = Ayano
+  choice "AH ! *JE SAIS !!*" = jsais "EUHHHHH..." = euhh
+    :jsais
+      say Shintaro "M-Mais tu est celle qui est toujours en dessous de la moyenne !"
+      ::!`3`0`resources/img/sprite/Ayano3.png
+      say Ayano "Ah !Heu..." "C'est tout ce dont tu te rappelles de moi ?"
+      say Shintaro "J'ai raison ?"
+        ::`3`0`resources/img/sprite/Ayano4.png
+      say Ayano "Non,tu as raison,mais bon..." "Ah ah ..."
+        ::`3`0`resources/img/sprite/Ayano3.png
+      goto porte3next
+    :euhh
+      say Ayano "V-Vraiment ? M-Mais je suis la personne juste à côté de toi !!"
+      say Ayano "Je suis si discète que ça ?"
+  :porte3next
+  say Ayano "-- ..." "Mais le plus important, qu'est-ce que tu fait là à une heure pareille ?" "Il fait déjà noir dehors!"
+  say Shintaro "*gêné*"
+  choice "Lui retourner la question" = retourQuestion "Avouer d'un air idiot" = avouer
+    :avouer
+      say Shintaro "Eh bien..." "J'ai oublié mon porte-feuille dans la classe... Et je devais absoluement le retrouver"
+      say Ayano "C'était si gênant que ça ?"
+      say Shintaro "Erm... Tout compte fait" "*Comment lui dire que je ne la connais pas...*"
+      say Shintaro "Sinon, tu l'aurais pas vu ?"
+      say Ayano "Euh... pas à ma connaissance."
+      say Shintaro "RAAAH cette classe est juste remplie de --... RMMR" "Huuuh comment je vais faire !" "La tasse pour ma petite soeur..." "Comment je vais l'acheter !"
+      say Ayano "C'est si grave que ça ?"
+      say Shintaro "Oublie." "..." "..."
+    :retourQuestion
+      say Shintaro "Ah... Eh bien... Je te retourne la question." "Pourquoi est-tu dans la classe à une heure pareille?" "Sans lumière en plus !"
+  say Ayano "Euhh... Eh bien... C'est que... Tu vois..." "Comme mes dernières notes étaient un peu juste, le prof m'a donné du travail supplémentaire."
+  say Shintaro "Et donc ?"
+    ::`3`0`resources/img/sprite/Ayano4.png
+  say Ayano "Euh... En restant pour travailler, sans m'en rendre compte,je me suis endormie." "Sans même avoir terminée mes devoirs... Hihi ~"
+  say Shintaro "Ça valait le coup de rester après les cours ?"
+    ::`3`0`resources/img/sprite/Ayano2.png
+  say Ayano "Eh bien... C'est vrai, cela n'a aucun sens, n'est-ce pas ?" "Hum~... Qu'est-ce que je peux faire ?" "Si je ne lui rend pas demain matin, le prof va encore m’engueuler..."
+  say Shintaro "*pensées*" "Qu'est-ce qu'elle a celle-là ? Elle est trop chiante..." "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons." "Je dois me dépêcher de récupérer mon portefeuille."
+    ::`3`0`resources/img/sprite/Ayano1.png
+  say Ayano "Hé euh... Excuse moi !"
+  say Shintaro "Hum ? Qu'est-ce qu'il y a ?"
+  say Ayano "Shintaro-kun, tu est super intelligent, n'est-ce pas?" "T'as encore eu 100 à la dernière interro !"
+  say Shintaro "Eh? Qui t'as permis de regarder ma note?"
+    ::`3`0`resources/img/sprite/Ayano4.png
+  say Ayano "Hum? Euh... Désolée !"
+  say Shintaro "Qu'est-ce qu'il y a ?" "Dis moi clairement ce que tu veux."
+  say Ayano "Oh...Hum...C'est que... " "Est-ce que tu pourrais, juste un peu, m'aider à étudier..."
+  say Shintaro "Hein ?"
+    ::`3`0`resources/img/sprite/Ayano5.png
+  say Ayano "Juste pour aujourd'hui ! Pas très longtemps !"
+  say Shintaro "Tu veux dire maintenant ?!"
+  say Ayano "S'il te plaît... E-Euh... Je t'en supplie..."
+  say Shintaro "*gêné*" "Me supplier ?" "Urrm~ ! C'est bon, j'ai compris..." "..." "Mais c'est juste pour aujourd'hui !"
+    ::`3`0`resources/img/sprite/Ayano1.png
+  say Ayano "Vraiment ?"
+  say Shintaro "Je te dis que je voulais bien t'aider. Allez, on se dépêche de terminer pour pouvoir commencer."
+  say Ayano "O-Oui !"
 
-:Karin
-echo TEST2
-  say Antoine "Bon choix."
-  animate <opacity> Antoine /to 0 /time 900
-goto ende
+    ::`4`fade5`Y`30
+    ::`5`resources/img/backgrounds/classroom.work.jpg
+    ::`2`music`play`resources/sounds/OST04.ogg`-1
+    ::`4`color`bar`255,20,20
+    ::`3`0`rien
+    ::`4`changeA`resources/img/sprite/ayanosmall1.png
+    ::`4`blitinA`resources/img/sprite/particle2.png`73`153
+  say Shintaro "Et donc là, ça deviens ça !"
+  say Ayano "Hu~um !"
+    ::`4`blitinA`resources/img/sprite/particle1.png`50`137
+  say Shintaro "Et comme ça est égal à ça, ça deviens ça, non ?"
+    ::`4`changeA`resources/img/sprite/ayanosmall1.png
+    ::`4`blitinA`resources/img/sprite/particle1.png`50`137
+    ::`4`blitinA`resources/img/sprite/particle3.png`73`153
+  say Ayano "Hum~... Hum?"
+  say Shintaro "Et si on échange ça..." "Tu vois ,ça fonctionne !" "Tu peux répondre à ça, non ?"
+    ::`4`changeA`resources/img/sprite/ayanosmall2.png
+  say Ayano "Hu--" "Hein ? Je vois pas du tout où tu veux en venir !"
+  say Shintaro "Raaah !" "Combien de fois je vais devoir te l'expliquer avant que tu ne comprennes ?!"
+  say Ayano "Désolée..."
+  say Shintaro "Fais un effort, tu veux ?" "À ce rythme, on aura pas fini avant le matin!"
+  say Ayano "Hum... C'est vrai..."
+  say Shintaro "Sérieusement, c'est qui celle-là ?" "Il y a une limite à la connerie, normalement !"
 
-:None
-say Antoine "Non va falloir faire le choix..."
-goto choice
+    ::`4`changeA`resources/img/sprite/ayanosmall1.png
+    ::`4`blitinA`resources/img/sprite/particle2.png`73`153
+  say Ayano "..." "Mais je crois avoir compris pour ici..."
+  say Shintaro "Ha ?"
 
-:ende
-  $ay Logan "Bye"
-  animate <opacity> Logan /to 0 /time 900
-  wait pause
-  end up
+    ::`4`changeA`resources/img/sprite/ayanosmall1.png
+    ::`4`blitinA`resources/img/sprite/particle3.png`73`153
+  say Ayano "Ça deviens ça..." " " "puis ça,non?"
+  say Shintaro "Hum ? C'est pas trop mal !" "C'est ça, c'est ce qu'il faut faire !"
+
+    ::`4`changeA`resources/img/sprite/ayanosmall1.png
+    ::`4`blitinA`resources/img/sprite/particle2.png`73`153
+  say Ayano "Et donc ça deviens ça..." "Et puis comme ça ?!"
+  say Shintaro "C'est bon, tu as bon !" "Tu vois que tu peux le faire quant tu t'y mets..."
+
+    ::`4`changeA`resources/img/sprite/ayanosmall3.png
+  say Ayano "Hihi !"
+  say Shintaro "Pas la peine de rire autant... T'est vraiment glauque..."
+
+    ::`4`changeA`resources/img/sprite/ayanosmall4.png
+  say Ayano "Hum ? Glauque ?"
+  say Shintaro "Ne le prend pas sérieusement !" "Ce que tu peux être chiante..." "Allez, après avoir fait ça, tu as presque terminé. Dépêche-toi de finir."
+
+    ::`4`changeA`resources/img/sprite/ayanosmall3.png
+  say Ayano "Oui!"
+    ::`4`changeA`rien
+
+    ::`5`resources/img/backgrounds/classroom.night.jpg
+    ::`2`music`play`resources/sounds/OST05.ogg`-1
+    ::`4`color`bar`255,255,255
+    ::`3`0`resources/img/sprite/ayano2.png
+  say Ayano "Shintaro-kun, tu est vraiment intelligent. Tu étudie chez toi tout les jours ?"
+  say Shintaro "Pas particulièrement. Je n'ai lu les manuels qu'une seule fois."
+    ::`3`0`resources/img/sprite/ayano1.png
+  say Ayano "Et tu réussit quand même à ce point ?!" "Incroyable... Tu est vraiment intelligent."
+  say Shintaro "Hum...Plus qu'intelligent..." "Je ne sais pas pourquoi mais une fois que j'ai appris quelque chose, je ne l'oublie plus." "Depuis toujours..."
+  say Shintaro "Et comme j'ai déjà appris par cœur tout les manuels,je m'en sort aux interros."
+    ::`3`0`resources/img/sprite/ayano3.png
+  say Ayano "Je vois... Alors ça veut dire que, Shintaro-kun, ta mémoire est incroyable,c 'est ça ?" "La chance... J'oublie toujours très rapidement tout ce que j'apprends..."
+  say Shintaro "C'est pas forcément une bonne chose." "De toutes les choses les plus insignifiantes au plus désagréables, je retiens tout." "A me soucier de choses sans importance jour après jour, c'est loin d'être facile à vivre..."
+    ::`3`0`resources/img/sprite/ayano4.png
+  say Ayano "Huuum~..."
+  say Shintaro "Qu'est-ce qu'il y a ?"
+  say Ayano "--Hum ? C'est juste que, je me suis dit que si tu ne pouvait pas oublier les mauvais moments," "J'espérais qu'il t'arrive plein de bons moments..." "Tu finiras par ne plus te préoccuper des choses désagréables, non ?"
+  say Shintaro "Rooh~..."
+    ::`3`0`resources/img/sprite/ayano6.png
+  say Ayano "Oh ? Eh bien... Ou alors ça ne marche pas comme ça ?"
+  say Shintaro "Hein ? Heu... Non... Je suppose que ça va..." "De cette manière, ça a l'air plutôt simple à vivre."
+    ::`3`0`resources/img/sprite/ayano4.png
+  say Ayano "Ah ! Oui ! Je suis sûre qu'à partir de maintenant, plein de bonnes choses vont t'arriver !"
+  say Shintaro "Comment peux-tu me dire ça ?"
+    ::`3`0`resources/img/sprite/ayano2.png
+  say Ayano "Hihi! Par intuition..."
+    ::`3`0`resources/img/sprite/ayano3.png
+  say Shintaro "Et donc, tu l'as résolu, ce problème ? Si tu ne fais que de parler, tu ne vas pas le finir."
+    ::`3`0`resources/img/sprite/ayano2.png
+  say Ayano "Hum! Ah... Hum... Je crois que j'ai rien compris..."
+  say Shintaro "Toi alors..."
+
+    ::`5`resources/img/backgrounds/night.jpg
+    ::`2`music`play`resources/sounds/OST06.ogg`-1
+    ::`3`0`resources/img/sprite/ayano4.png
+  say Ayano "Tu m'as vraiment sauvée. Si tu n'avais pas été là, je n'aurais sûrement pas pu finir."
+  say Shintaro "Mais même avec moi, tu as pris trop de temps. Je te jure..." "Et dire que j'était juste venu récupérer mon porte feuille." "J'ai vraiment la poisse..."
+    ::`3`0`resources/img/sprite/ayano2.png
+  say Ayano "Ah... Je suis vraiment désolée... Mais je n'oublierai jamais cette soirée !"
+  say Shintaro "Qu'est-ce que tu as ?" "Tu ne m'avais pas dit que tu oublierai toujours tout ce que tu apprenais ?"
+  say Ayano "Aujourd'hui, je ferai de mon mieux pour ne pas oublier, alors ça devrait aller."
+  say Shintaro "Hum. Si tu te rappelles de ce que tu as vu aujourd'hui," "Tu devrais avoir une assez bonne note à la prochaine interro."
+  say Ayano "Ça aussi, c'est vrai, mais... Je ne parlais pas que des études."
+    ::`3`0`resources/img/sprite/ayano6.png
+  say Shintaro "Oh ? Tu as dit quelque chose ?"
+    ::`3`0`resources/img/sprite/ayano3.png
+  say Ayano "--Hum?? haha!!..." "R-Rien du tout!!"
+    ::`3`0`resources/img/sprite/ayano4.png
+  say Shintaro "Je vois... À plus. J'habite par là donc je tourne ici."
+    ::`3`0`resources/img/sprite/ayano5.png
+  say Ayano "Ha... Hum !! À bientôt !"
+    ::`3`0`resources/img/sprite/ayano2.png
+  say Ayano "..." "Hé ! Shintaro-kun !"
+  say Shintaro "Oui ?"
+    ::`3`0`resources/img/sprite/ayano1.png
+  say Ayano "À demain !"
+  say Shintaro "..." "Oui... À demain !"
+end fadeBlack

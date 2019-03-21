@@ -118,7 +118,7 @@
                 break;
               case sf::Keyboard::Return:
                 if (drawingChoices) {
-                  cmdGoto(allChoices[choicePos][1], choiceErrLine);
+                  cmdGoto(allChoices[choicePos][1].toAnsiString(), choiceErrLine);
                   displaying = drawingChoices = false;
                   arrowIter = 0;
                 }
@@ -257,14 +257,17 @@
   }
 //
   bool Script::cmdChoice(std::string arg, unsigned int line){
-    std::regex syntax("[\"]([^\".]+)[\"]"+rgSpacestar+'='+rgVarNames);
+    //std::regex syntax("[\"]([^\".]+)[\"]"+rgSpacestar+'='+rgVarNames);
+    std::regex syntax("[\"]([^\"]+)[\"]"+rgSpacestar+'='+rgSpacestar+"([^\\s]+)");
     auto words_begin = std::sregex_iterator(arg.begin(), arg.end(), syntax);
+    auto words_end = std::sregex_iterator();
     allChoices.clear();
-    for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
+    for (std::sregex_iterator i = words_begin; i != words_end; ++i) {
       std::smatch match= *i;
-      allChoices.push_back( {match[1],match[2]} );
+      allChoices.push_back( {toSfString(match[1]),toSfString(match[2])} );
     }
     drawingChoices = true;
+    choiceErrLine = line;
     return true;
   }
 //
@@ -431,9 +434,9 @@
         choiceBar.setPosition(originX,originY+i*50);
         scr.draw(choiceBar);
       }
-      tempTxt.setString(allChoices[i][1]);
+      tempTxt.setString(allChoices[i][0]);
       sf::Rect txtBounds = tempTxt.getGlobalBounds();
-      tempTxt.setPosition(winSize.x/2 - txtBounds.width/2, originY+i*50 + (10-txtBounds.height/2) );
+      tempTxt.setPosition(winSize.x/2 - txtBounds.width/2, originY+i*50 + (12-txtBounds.height/2) );
       scr.draw(tempTxt);
     }
     return true;
@@ -448,7 +451,7 @@
       titleTxt.setPosition(265,barPosY+5);
       scr.draw(titleTxt);
 
-    sf::Text tempTxt("",fontDeja,27); tempTxt.setFillColor(txtColor);
+    sf::Text tempTxt("",fontDeja,24); tempTxt.setFillColor(txtColor);
       for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
         tempTxt.setPosition(270,barPosY+41+29*i);
         if (!displayedTxt[i] && !animatingTextFinished){
