@@ -25,6 +25,7 @@ std::string str_tolower(std::string s);
 std::vector<std::string> split(std::string string, char search);
 std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine);
 sf::String toSfString(std::string theStdString);
+std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit);
 std::string calc(std::string input);
 
 

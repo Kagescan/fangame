@@ -102,12 +102,16 @@
               case sf::Keyboard::Escape :
                 playing = false;
                 break;
-              case sf::Keyboard::Space :
+              case sf::Keyboard::Space : case sf::Keyboard::Return:
                 if (!drawingChoices) {
                   if (animatingTextFinished && !waiting) {
                     displaying = false;
                     arrowIter = 0;
                   } else animatingTextFinished = true;
+                } else {
+                  cmdGoto(allChoices[choicePos][1].toAnsiString(), choiceErrLine);
+                  displaying = drawingChoices = false;
+                  arrowIter = 0;
                 }
                 break;
               case sf::Keyboard::Down:
@@ -115,13 +119,6 @@
                 break;
               case sf::Keyboard::Up:
                 if (drawingChoices) choicePos = (choicePos<=0) ? allChoices.size()-1 : choicePos-1;
-                break;
-              case sf::Keyboard::Return:
-                if (drawingChoices) {
-                  cmdGoto(allChoices[choicePos][1].toAnsiString(), choiceErrLine);
-                  displaying = drawingChoices = false;
-                  arrowIter = 0;
-                }
                 break;
               default : break;
             }
@@ -221,24 +218,12 @@
           actualCharacter = getValue(character+".name");
         } else actualCharacter = character;
 
-        const unsigned int lenghtLimit = 58;
-        for (unsigned int i(0); i<retval.size(); i++){ //fetch all rows
-          if (retval[i].getSize()<lenghtLimit) continue; //size is ok
-          for (unsigned int j(retval[i].getSize()-1); j>0; --j){ //fetch all chars from end to begin
-            if (isspace(retval[i][j]) && j<lenghtLimit) { //wrap
-              sf::String cut = retval[i].substring(j+1) + ' ';
-              if (i<retval.size()-1) //safe
-                retval[i+1].insert(0,cut);
-              else //this is the last row of the table, then push it into new row
-                retval.push_back(cut);
-              retval[i].erase(j, sf::String::InvalidPos);
-              break; //exit this row's loop
-            }
-          }
-        }
-
-        displaySay = retval;
+        displaySay.clear();
         displayedTxt.clear();
+        for (unsigned int i(0); i<retval.size(); i++) //fetch all rows
+          for (auto e:cutString(retval[i], 69)) //cut the text
+            displaySay.push_back(e); //add to the displaying array
+
         displayedTxt.resize(displaySay.size(),false);
         substrPos=true;
         animatingTextFinished=false;
@@ -472,7 +457,7 @@
       titleTxt.setPosition(265,barPosY+5);
       scr.draw(titleTxt);
 
-    sf::Text tempTxt("",fontDeja,24); tempTxt.setFillColor(txtColor);
+    sf::Text tempTxt("",fontDeja, 20); tempTxt.setFillColor(txtColor);
       for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
         tempTxt.setPosition(270,barPosY+41+29*i);
         if (!displayedTxt[i] && !animatingTextFinished){

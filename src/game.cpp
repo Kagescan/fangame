@@ -158,6 +158,26 @@ sf::String toSfString(std::string theStdString) {
     return parsed;
   }
 
+std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit){
+  std::vector<sf::String> retval;
+  unsigned int j(line.getSize()-1);
+  if (j<lenghtLimit) {
+    retval.push_back(line);
+  } else {
+    while (j>0){
+      if (isspace(line[j]) && j<lenghtLimit) { //wrap
+        sf::String cut = line.substring(j+1) + ' ';
+        line.erase(j, sf::String::InvalidPos);
+        retval.push_back(line);
+        line = cut;
+        j = line.getSize();
+      }
+      j--;
+    } 
+  }
+  return retval;
+}
+
   std::string calc(std::string input){
     /* Calc function : return the calculus entered. Support operative priorities.
       Edited from http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
