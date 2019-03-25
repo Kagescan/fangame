@@ -1,8 +1,8 @@
-# schéma de l'interface et du fonctionnement :
-
 > ***TROP D'AMBITIOOONNNNNNNNNNNNNN***
 
 Ce fichier est un répertoire complet du scénario envisagé, en fonction des versions. Chaque nouvelle version implique un ajout de chapitres, et des révisions sur le code et les précédents scénarios.
+
+# quelques trucs à faire/fonctionnement :
 
 **Routes possibles :** Musiques, Manga, Novel, Animé, fanroute M-X, spin-off Seek at Mekakucity et enfin reload si possible.  
 *Soit un total de 4 routes, deux routes non officielles (bonus) et une probable suite.*
@@ -11,10 +11,10 @@ Ce fichier est un répertoire complet du scénario envisagé, en fonction des ve
 
 **Introduction de bienvenue**
 > Ne pas oublier de dire que nous mettons tout en oeuvre pour respecter une meilleure compréhension de l'histoire. Seulement, l'ordre des routes peut être contradictoire.
+
 > point de vue de ayano et de shintaro au début
 
-# -- Release 2.1 --
-===================
+# -- Pour la Release 2.1 --
 
 ## The old days
 -rencontre entre shintaro et ayano (jeu possible : expliquer à ayano l'exo)  
@@ -34,7 +34,6 @@ Event en particulier : reload.
 
 
 # -- Release 2.2 --
-===================
 
 ## route manga
 (pas de rencontre avec ayano)
@@ -54,8 +53,7 @@ Event en particulier : reload.
 Event en particulier : Ayano devient yaki
 
 
-# -- Release 2.3 --
-===================
+# -- Pour la Release 2.3 --
 
 ## petit commentaire de yaki
 (fin originale de the old days ?)
@@ -84,8 +82,7 @@ Event : fin
 Le jeu est considéré comme complet *des traductions sont envisageables !*
 
 
-# -- Release 2.4 --
-===================
+# -- Pour la Release 2.4 --
 
 ## route novel
 *Naya va peut être s'en charger*
@@ -95,8 +92,7 @@ Bonne question...
 Seek At Mekakucity me semble faisable !!
 
 
-# -- Release 2.5 --
-===================
+# -- Pour la Release 2.5 --
 
 ## route M-X
 - Accessible après avoir fait toutes les routes
@@ -107,6 +103,5 @@ Event : Bah le jeu est parfait !! Y'aura sans doute le reload à rajouter.
 
 
 # -- Release 2.?? --
-====================
 
 ## Reload ? / traductions ?
