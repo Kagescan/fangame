@@ -142,13 +142,17 @@
 
 //---------------Commands
   bool Script::cmdGoto(std::string arg, unsigned int line){
-    if (labelRefs.find(arg) !=  labelRefs.end() ){
+    if (labelRefs.find(arg) !=  labelRefs.end() )
       iread = labelRefs[arg];
+    else if (arg == "begin")
+      iread = labelRefs[0];
+    else if (arg=="continue")
       return true;
-    } else {
+    else {
       std::cerr << "! Line "<<line<<" : Undefined label "<<arg<<"\n";
       return false;
     }
+    return true;
   }
 
   bool Script::cmdSet(std::string arg, unsigned int line){
@@ -216,6 +220,23 @@
           titleColor = allCharacters[character].titleColor;
           actualCharacter = getValue(character+".name");
         } else actualCharacter = character;
+
+        const unsigned int lenghtLimit = 58;
+        for (unsigned int i(0); i<retval.size(); i++){ //fetch all rows
+          if (retval[i].getSize()<lenghtLimit) continue; //size is ok
+          for (unsigned int j(retval[i].getSize()-1); j>0; --j){ //fetch all chars from end to begin
+            if (isspace(retval[i][j]) && j<lenghtLimit) { //wrap
+              sf::String cut = retval[i].substring(j+1) + ' ';
+              if (i<retval.size()-1) //safe
+                retval[i+1].insert(0,cut);
+              else //this is the last row of the table, then push it into new row
+                retval.push_back(cut);
+              retval[i].erase(j, sf::String::InvalidPos);
+              break; //exit this row's loop
+            }
+          }
+        }
+
         displaySay = retval;
         displayedTxt.clear();
         displayedTxt.resize(displaySay.size(),false);

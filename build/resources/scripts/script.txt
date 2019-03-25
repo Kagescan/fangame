@@ -5,24 +5,23 @@ entity <image> backgroundClassroom="resources/img/background/classroom.night.jpg
 set <color> Shintaro = #ff0000
 set <color> Shintaro = #ff3333
 set <color> temp = #aaaaaa
-set <image> __scene__ = backgroundClassroom
 set <name> temp = Guide d'introduction
 :guide
-  say temp "Bienvenue dans le fangame Retaining's memories." "Ceci est un mini-guide présentant les contrôles et ce jeu" "Appuyez sur la barre espace pour passer les dialogues."
-  say temp "Bien ! Sachez que vous pouvez aussi passer plusieurs dialogues" "en maintenant la barre espace appuyée (même si cela" "n'est pas vraiment conseillé)"
-  say temp "Lorsque vous rencontrez des choix, il faudra utiliser les flèches" "droite et gauche de votre clavier, et sélectionner avec la barre" "espace."
-  choice "Ok, maintenant explique moi plus sur le jeu!" = continue "Euh, on peut répêter?" = guide
-  :continue
-  say temp "Ce fangame est un mélange entre un visual novel *reprenant toutes" "les timelines de la série Kagerou Project* intégrant avec lui" "quelques mini-jeux en tant qu'intéractions avec le personnage."
-  say temp "Ce jeu comprendra l'intégralité des timelines de Kagerou Project" "Celle des musiques (en guise d'introduction)," "du manga (histoire principale), du roman et de l'animé." "Ce jeu comprenndra aussi une fan-timeline!"
-  say temp "Les routes sont choisies selon vos actions mais certaines se" "débloquent une fois avoir fini le jeu (mais n'oubliez pas que" "vous pouvez passer les dialogues :P )"
-  say temp "Dans cette preview, seulement le mode novel est disponible. Les" "intéractions en jeu sont donc remplacées par des choix." "Un seul chapitre est présent dans cette preview (The Old Days," "le chapitre de la rencontre entre Shintaro et Ayano)."
-  say temp "Ce jeu a été créé par la communauté française Kagerou Project (Kagescan)" "Tout ce jeu a été créé par nos membres" "Au passage, le code source de ce jeu est open-source :D" "Nous espérons que notre travail vous plaîra !"
+  say temp "Bienvenue dans Retaining's memories, un fangame basé sur la série Kagerou Project. Ce jeu se joue uniquement sur clavier. Appuyez sur la barre espace pour passer"
+  say temp "Lorsque vous rencontrez des choix, il faudra utiliser les flèches haut et bas de votre clavier, et sélectionner avec la barre espace." "Il existe d'autres contrôles listés dans le fichier readme.md"
+  choice "Euh, on peut répêter ?" = guide "Ok, maintenant explique moi plus sur le jeu !" = continue "Pas besoin je sais déjà !" = debut
+  say temp "ATTENTION : Ce jeu contient des spoilers concernant le manga et le roman de Kagerou Project!!" "Il est aussi possible de jouer sans avoir à connaître la série, mais il est vivement recommandé de la connaître afin de profiter de toutes les références introduites." 
+  say temp "Ce jeu étant encore en état de développement, certaines fonctions et chapitres ne sont pas présents (notemment les mini-jeux qui seront remplacés par de simples choix). Nous misons sur le scénario plutôt que les fonctions secondaires !"
+  say temp "Ce fangame est une sorte de visual novel reprenant toutes les timelines de la série Kagerou Project, qui intègre des mini-jeux en tant qu'intéractions avec l'histoire."
+  say temp "Les timelines intégrées sont celles des musiques (introduction), du manga (histoire principale), du roman, de l'animé (fin), une fanfiction (Route M-X) et un spin-off (Seek At Mekakucity)."
+  say temp "Les routes sont choisies selon vos actions mais certaines se débloquent une fois avoir fini le jeu (mais n'oubliez pas que vous pouvez passer les dialogues :P )"
+  
   ::say temp "Avant de commencer à jouer, il me faudrait une estimation de ton âge..." "Tu verras pourquoi par la suite !"
   ::choice "Bas âge" "Niveau de quatrième/troisième" "Niveau de seconde" "Niveau de première" "Niveau de terminale" "Au dessus..."
 
 
 :debut
+set <image> __scene__ = backgroundClassroom
   say Shintaro "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille" "Mais franchement,comment ça se fait que l'école soit si flippante la nuit?" "J'espère que rien de chelou ne va apparaitre..."
   say Shintaro "Raah...Sérieux !!" "Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre..." "J'ai vraiment la poisse..."
   say Shintaro "Rmmr !! En plus je ne vois presque rien"
