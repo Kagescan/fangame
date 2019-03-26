@@ -23,7 +23,7 @@ Done :
 Written in linux (Xubuntu 18.04 LTS), not tested in Windows.
 The commands are for unix systems, adapt this if you're running windows.
 
-1. This code needs the library SFML [http://sfml-dev.org]. You need to compile it, or using builds.
+1. This code needs the library SFML [http://sfml-dev.org] and uses cpp17 features. You need to compile it, or using builds.
 2. Open a terminal inside the root of this repository. 
 3. Type this code to build the project (inline compilation, i will add a cmake script later):  
   ```bash

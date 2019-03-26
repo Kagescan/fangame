@@ -20,29 +20,30 @@ int main() {
           if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) return error("error loading animeacefr.ttf");
 
         sf::Texture imgmenubg, logotxt, imgmenubgMore;
+        sf::Sprite menubg, menubgMore, logo;
           if (!imgmenubg.loadFromFile("resources/img/background/menu2.jpg")) return error("error loading menu2.jpg");
-          sf::Sprite menubg;menubg.setTexture(imgmenubg);
-          if (!imgmenubgMore.loadFromFile("resources/img/menu.png")) return error("error loading menu2.jpg");
-          sf::Sprite menubgMore;menubgMore.setTexture(imgmenubgMore);
-          menubg.setOrigin(scrw/2,scrh/2);
-          menubg.setPosition(scrw/2,scrh/2);
+            imgmenubg.setSmooth(true);
+            menubg.setTexture(imgmenubg);
+          if (!imgmenubgMore.loadFromFile("resources/img/menu.png")) return error("error loading menu.jpg");
+            menubgMore.setTexture(imgmenubgMore);
+            menubg.setOrigin(scrw/2,scrh/2);
+            menubg.setPosition(scrw/2,scrh/2);
           if (!logotxt.loadFromFile("resources/img/background/logo.png")) return error("error loading logo.png");
-          sf::Sprite logo;
             logotxt.setSmooth(true);
             logo.setTexture(logotxt);
             logo.setScale(0.5,0.5);
             logo.setPosition(scrw-10-logotxt.getSize().x/2,7);
-          bool playBlackTrans=false;
           menubgMore.setColor(sf::Color(0,0,0,0));
 
           sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
 
-    /*intro(scr,scrw,scrh,animeace);
-    inadaze.play();inadaze.setLoop(true);*/
+    //intro(scr,scrw,scrh,animeace);
+    inadaze.play();inadaze.setLoop(true);
 
     sf::Clock clock;
     sf::Time animStart=clock.getElapsedTime();
+    bool optionInTrans = false, optionOutTrans = false;
     float iter(0);
     guiSelect menu, options;
     menu.displaying = true;
@@ -75,7 +76,7 @@ int main() {
                 menu.displaying = true;
                 break; }
               case 1: 
-                playBlackTrans = !playBlackTrans;
+                optionInTrans = !optionInTrans;
                 iter = 0;
                 animStart=clock.getElapsedTime();
                 options.displaying = true;
@@ -100,10 +101,13 @@ int main() {
                 break; }
               case 2: 
                 screenOptions[2] = (screenOptions[2]==1) ? 0 : 1;
-                options.choices[2] = "Afficher le curseur : ";
-                options.choices[2] += (screenOptions[2]==1) ? "OUI" : "NON";
+                options.choices[2] = "Afficher le curseur : "; options.choices[2] += (screenOptions[2]==1) ? "OUI" : "NON";
                 break;
-              case 3: menu.displaying = true; continue; break;
+              case 3: 
+                menu.displaying = optionOutTrans = true;
+                optionInTrans = false;
+                animStart = clock.getElapsedTime();
+                continue; break;
               default: break;
               }
               scr.setFramerateLimit(screenOptions[1]);
@@ -121,19 +125,18 @@ int main() {
         default:break;
       }}
       scr.clear(sf::Color::White);
-      if (playBlackTrans){
+      if (optionInTrans || optionOutTrans){
         int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();
-        int alpha = easeOutCirc(
-                  getms>2000 ? 2000:getms,//elapsed time or max value
-                  0, //start value
-                  255, //adds 255
-                  2000 //duration of the animation
+        int alpha = easeOutExpo(
+                  getms>1500 ? 1500:getms,//elapsed time or max value
+                  (optionInTrans) ? 0 : 255, //start value
+                  (optionInTrans) ? 255 : -255, //adds 255
+                  1500 //duration of the animation
               );
         menubgMore.setColor(sf::Color(255,255,255,alpha));
         iter = alpha*0.001;
         menubg.setScale(1+iter,1+iter);
-        if (getms>2000)
-          playBlackTrans=false;
+        if (getms>1500) optionInTrans = optionOutTrans = false;
       }
       scr.draw(menubg);
       scr.draw(logo);
