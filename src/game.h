@@ -29,6 +29,28 @@ std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit);
 std::string calc(std::string input);
 
 
+class guiSelect{
+  public:
+    guiSelect();
+    bool setChoices(std::vector<std::string> choices);
+    bool draw(sf::RenderWindow& src);
+    sf::Vector2f position(sf::Vector2f position);
+    bool type(bool type);
+    bool change(bool direction);
+    unsigned int enter();
+    bool displaying = false;
+  private:
+    sf::Font fontDeja;
+    sf::Texture barTxt, smallBarTxt;
+    sf::Sprite bar, smallBar, barSelected, smallBarSelected;
+
+    bool valType;
+    sf::Vector2f valPosition;
+    unsigned int iter, choicePos;
+    std::vector<std::string> choices;
+};
+
+
 class Character {
 
     public:

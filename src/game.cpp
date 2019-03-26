@@ -256,6 +256,76 @@ std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit){
     return result;
   }
 
+
+guiSelect::guiSelect(){
+  if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
+    std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
+  if (!barTxt.loadFromFile("resources/img/choice.png"))
+    std::cerr<<"ERROR : unable to load [resources/img/choice.png]\n";
+  if (!smallBarTxt.loadFromFile("resources/img/smallChoice.png"))
+    std::cerr<<"ERROR : unable to load [resources/img/smallChoice.png]\n";
+  bar.setTexture(barTxt);
+  smallBar.setTexture(smallBarTxt);
+  bar.setColor(sf::Color(255,100,100));
+  smallBar.setColor(sf::Color(255,100,100));
+  barSelected.setTexture(barTxt);
+  smallBarSelected.setTexture(smallBarTxt);
+  valPosition = sf::Vector2f(0,0);
+  valType = true;
+  iter = choicePos = 0;
+}
+bool guiSelect::setChoices(std::vector<std::string> c){
+  choices = c;
+  return true;
+}
+bool guiSelect::change(bool direction){
+  if (direction) choicePos = (choicePos==0) ? choices.size()-1 : choicePos-1;
+  else choicePos = (choicePos+1>=choices.size()) ? 0 : choicePos+1;
+  return direction;
+}
+unsigned int guiSelect::enter(){
+  displaying = false;
+  return choicePos;
+}
+bool guiSelect::draw(sf::RenderWindow& scr){
+  iter++;
+  int colorIter = 32*std::sin(0.1*iter)+32;
+  sf::Text tempTxt("",fontDeja,27); tempTxt.setFillColor(sf::Color::Black);
+  if (valType) barSelected.setColor( sf::Color(255,colorIter,colorIter) );
+  else smallBarSelected.setColor( sf::Color(255,colorIter,colorIter) );
+
+  for (unsigned int i(0); i<choices.size(); i++){
+  //draw bar
+    sf::Vector2f position(valPosition.x,valPosition.y+i*50);
+    if (i==choicePos) {
+      if (valType){
+        barSelected.setPosition(position);
+        scr.draw(barSelected); 
+      } else {
+        smallBarSelected.setPosition(position);
+        scr.draw(smallBarSelected); 
+      }
+    } else {
+      if (valType){
+        bar.setPosition(position);
+        scr.draw(bar);
+      } else {
+        smallBar.setPosition(position);
+        scr.draw(smallBar);
+      }
+    }
+  //draw text
+    tempTxt.setString(choices[i]);
+    sf::Rect txtBounds = tempTxt.getGlobalBounds();
+    if (valType) tempTxt.setPosition(scr.getSize().x/2 - txtBounds.width/2, valPosition.y+i*50 + (12-txtBounds.height/2) );
+    else tempTxt.setPosition(valPosition.x + 200 - txtBounds.width/2, valPosition.y+i*50 + (12-txtBounds.height/2) );
+    scr.draw(tempTxt);
+  }
+  return true;
+}
+sf::Vector2f guiSelect::position(sf::Vector2f position){ return valPosition = position; }
+bool guiSelect::type(bool type){ return valType = type; }
+
 //---------------Character class
   Character::Character(int winHeight){
     titleColor = sf::Color(0,0,0);
