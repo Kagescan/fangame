@@ -19,25 +19,11 @@ set posOutsideR = 1080
 set <color> Shintaro = #ff0000
 set <color> Shintaro = #ff3333
 set <color> temp = #aaaaaa
-set <name> temp = Guide d'introduction
+set <name> temp = JEU
 
-:guide
-  say temp "Bienvenue dans Retaining's memories, un fangame basé sur la série Kagerou Project. Ce jeu se joue uniquement sur clavier. Appuyez sur la barre espace pour passer"
-  say temp "Lorsque vous rencontrez des choix, il faudra utiliser les flèches haut et bas de votre clavier, et sélectionner avec la barre espace." "Il existe d'autres contrôles listés dans le fichier readme.md"
-  choice "Euh, on peut répêter ?" = guide "Ok, maintenant explique moi plus sur le jeu !" = continue "Pas besoin je sais déjà !" = debut
-    say temp "Petit message d'information propre à cette version que vous êtes en train de jouer : "
-    say temp "Ce jeu étant encore en état de développement, certaines fonctions et chapitres ne sont pas présents (notemment les mini-jeux qui seront remplacés par de simples choix). Nous misons sur le scénario plutôt que les fonctions secondaires !"
-    say temp "(fin du message d'information)"
-    say temp "ATTENTION : Ce jeu contient des spoilers concernant le manga et le roman de Kagerou Project !!" "Il est aussi possible de jouer sans avoir à connaître la série, mais afin de comprendre toutes les références, il est vivement conseillé de l'avoir vue." 
-    say temp "CONCEPT :" "Ce fangame est une sorte de visual novel reprenant toutes les timelines de la série Kagerou Project, qui intègre des mini-jeux en tant qu'intéractions avec l'histoire."
-    say temp "Les timelines intégrées sont : celles des musiques (introduction), du manga (histoire principale), du roman, de l'animé (fin), une fanfiction (Route M-X) et un spin-off (Seek At Mekakucity)."
-    say temp "Les routes sont choisies selon vos actions mais certaines se débloquent une fois avoir fini le jeu (mais n'oubliez pas que vous pouvez passer les dialogues :P )"
-  
-  ::say temp "Avant de commencer à jouer, il me faudrait une estimation de ton âge..." "Tu verras pourquoi par la suite !"
-  ::choice "Bas âge" "Niveau de quatrième/troisième" "Niveau de seconde" "Niveau de première" "Niveau de terminale" "Au dessus..."
+say temp "Bienvenue dans Retaining's memories. Si vous n'avez pas encore lu le fichier user-readme.md, merci de le faire !" "Bon Jeu !!"
 
 :debut
-  say JEU "-- DÉBUT DU JEU --"
   say Shintaro "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille. Mais franchement,comment ça se fait que l'école soit si flippante la nuit? J'espère que rien de chelou ne va apparaitre..."
   say Shintaro "Raah...Sérieux !!" "Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre..." "J'ai vraiment la poisse..."
   say Shintaro "Rmmr !! En plus je ne vois presque rien"
