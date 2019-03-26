@@ -32,13 +32,13 @@ std::string calc(std::string input);
 class guiSelect{
   public:
     guiSelect();
-    bool setChoices(std::vector<std::string> choices);
     bool draw(sf::RenderWindow& src);
     sf::Vector2f position(sf::Vector2f position);
     bool type(bool type);
     bool change(bool direction);
     unsigned int enter();
     bool displaying = false;
+    std::vector<std::string> choices;
   private:
     sf::Font fontDeja;
     sf::Texture barTxt, smallBarTxt;
@@ -47,7 +47,6 @@ class guiSelect{
     bool valType;
     sf::Vector2f valPosition;
     unsigned int iter, choicePos;
-    std::vector<std::string> choices;
 };
 
 

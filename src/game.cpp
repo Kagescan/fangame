@@ -270,13 +270,8 @@ guiSelect::guiSelect(){
   smallBar.setColor(sf::Color(255,100,100));
   barSelected.setTexture(barTxt);
   smallBarSelected.setTexture(smallBarTxt);
-  valPosition = sf::Vector2f(0,0);
   valType = true;
   iter = choicePos = 0;
-}
-bool guiSelect::setChoices(std::vector<std::string> c){
-  choices = c;
-  return true;
 }
 bool guiSelect::change(bool direction){
   if (direction) choicePos = (choicePos==0) ? choices.size()-1 : choicePos-1;
@@ -315,7 +310,7 @@ bool guiSelect::draw(sf::RenderWindow& scr){
       }
     }
   //draw text
-    tempTxt.setString(choices[i]);
+    tempTxt.setString(toSfString(choices[i]));
     sf::Rect txtBounds = tempTxt.getGlobalBounds();
     if (valType) tempTxt.setPosition(scr.getSize().x/2 - txtBounds.width/2, valPosition.y+i*50 + (12-txtBounds.height/2) );
     else tempTxt.setPosition(valPosition.x + 200 - txtBounds.width/2, valPosition.y+i*50 + (12-txtBounds.height/2) );
