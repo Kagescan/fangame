@@ -1,7 +1,10 @@
 entity <character> temp
 entity <character> Shintaro
 entity <character> Ayano
-entity <image> backgroundClassroom="resources/img/background/classroom.night.jpg"
+entity <image> bg1="resources/img/todo/decor1.jpg"
+entity <image> bg2="resources/img/todo/decor2.jpg"
+entity <image> bg3="resources/img/todo/decor3.jpg"
+entity <image> bg4="resources/img/todo/decor4.jpg"
 entity <image> aya1 = "resources/img/characters/ayano/Ayasmile 1.png"
 entity <image> aya2 = "resources/img/characters/ayano/Ayasmile 2.png"
 entity <image> aya3 = "resources/img/characters/ayano/Ayawhat 1.png"
@@ -26,6 +29,7 @@ say temp "Bienvenue dans Retaining's memories. Si vous n'avez pas encore lu le f
 goto porte3
 
 :debut
+  set <image> __scene__ = bg1
   say Shintaro "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille. Mais franchement,comment ça se fait que l'école soit si flippante la nuit? J'espère que rien de chelou ne va apparaitre..."
   say Shintaro "Raah...Sérieux !!" "Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre..." "J'ai vraiment la poisse..."
   say Shintaro "Rmmr !! En plus je ne vois presque rien"
@@ -65,7 +69,7 @@ goto porte3
       end fadeblack
 
 :porte3
-  set <image> __scene__ = backgroundClassroom
+  set <image> __scene__ = bg2
   music oldDays02 play
   set <image> Ayano = aya5
   animate <position> Ayano /from %posOutsideR% /to %posCenter% /time 900 /ease outElastic
@@ -148,6 +152,7 @@ goto porte3
     animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
     music ost3 stop
     music ost4 play
+  set <image> __scene__ = bg3
     ::`4`fade5`Y`30
     ::`5`resources/img/backgrounds/classroom.work.jpg
     ::`2`music`play`resources/sounds/OST04.ogg`-1
@@ -243,6 +248,7 @@ goto porte3
 
   music ost5 stop
   music ost6 play
+  set <image> __scene__ = bg4
     ::`5`resources/img/backgrounds/night.jpg
     ::`2`music`play`resources/sounds/OST06.ogg`-1
     ::`3`0`resources/img/sprite/ayano4.png
