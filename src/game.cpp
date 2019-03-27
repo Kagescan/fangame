@@ -398,8 +398,8 @@ bool guiSelect::type(bool type){ return valType = type; }
       } else {
         const int time = sf::Time(curr - animS_init).asMilliseconds(),
           duration = animS_duration.asMilliseconds();
-        oldSprite.setColor(sf::Color(255,255,255, easeInExpo(time, 255, -255, duration) ));
-        sprite.setColor(sf::Color(255,255,255, easeOutExpo(time, 0, 255, duration) ));
+        oldSprite.setColor(sf::Color(255,255,255, easeOutSine(time, 255, -255, duration) ));
+        sprite.setColor(sf::Color(255,255,255, easeInSine(time, 0, 255, duration) ));
         scr.draw(oldSprite);
       }
       oldSprite.setPosition(x,y);

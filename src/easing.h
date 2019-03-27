@@ -29,4 +29,8 @@ float easeInOutBounce   (float t, float b, float c, float d);
 float returnEase(std::string easingFunction, float t, float b ,float c, float d);
 bool checkEase(std::string easingFunction);
 
+
+float easeInAtan(float t,float b,float c,float d);
+float easeOutAtan(float t,float b,float c,float d);
+
 #endif

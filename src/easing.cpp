@@ -137,6 +137,13 @@ float returnEase(std::string e, float t, float b, float c, float d){
   else return easeLinear(t,b,c,d);
 }
 
+float easeInAtan(float t,float b,float c,float d){
+  return 2 * c * atan(50*t/d) / PI + b;
+}
+float easeOutAtan(float t,float b,float c,float d){
+  return c * (1 - atan(t/d) * 4/PI) + b;
+}
+
 bool checkEase(std::string e) {
   if (   e=="inSine"
       || e=="outSine"

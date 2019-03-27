@@ -9,9 +9,6 @@ Ce fichier est un répertoire complet du scénario envisagé, en fonction des ve
 
 **écran de titre :** Fonctionnement du choix de sauvegarde : (une var stocke un label, accessible en choix)
 
-**Introduction de bienvenue**
-> Ne pas oublier de dire que nous mettons tout en oeuvre pour respecter une meilleure compréhension de l'histoire. Seulement, l'ordre des routes peut être contradictoire.
-
 > point de vue de ayano et de shintaro au début
 
 # -- Pour la Release 2.1 --
