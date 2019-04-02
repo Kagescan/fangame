@@ -11,7 +11,24 @@ Ce fichier est un répertoire complet du scénario envisagé, en fonction des ve
 
 > point de vue de ayano et de shintaro au début
 
+# -- Preview 2.1.01 --
+
+## Révision du code : 
+Le moteur de jeu est fonctionnel même si non terminé. Certains sprites et fonds ne sont pas finalisés (juste quelques schémas en guise de remplacement)
+
+## The old days
+Passage entre Shintaro et Ayano, sans le jeu.
+
+# -- Preview 2.1.02 --
+
+## Révision du code : 
+Ajout des structures conditionnelles, et des boucles ("For" en particulier), la syntaxe étant basée sur le TI basic.
+Ajout des fonctions (qui fonctionnent un peu comme le batch, c'est à dire avec call)
+
 # -- Pour la Release 2.1 --
+
+# Révision du code : 
+Ajouter des jeux dans the old days...
 
 ## The old days
 -rencontre entre shintaro et ayano (jeu possible : expliquer à ayano l'exo)  
@@ -32,6 +49,9 @@ Event en particulier : reload.
 
 # -- Release 2.2 --
 
+## Révision du code
+
+Ajout des maps
 ## route manga
 (pas de rencontre avec ayano)
 - Shintaro finit par ne plus revenir en classe. Trop chiant xD

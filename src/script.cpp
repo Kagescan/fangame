@@ -103,7 +103,7 @@
                 playing = false;
                 break;
               case sf::Keyboard::Space : case sf::Keyboard::Return:
-                if (!drawingChoices) {
+                if(!drawingChoices){
                   if (animatingTextFinished && !waiting) {
                     displaying = false;
                     arrowIter = 0;
@@ -322,16 +322,29 @@
   bool Script::assign(std::string var, std::string value, std::string object){
     //SPECIAL VALUES (that need to be treated)
     if (object != ""){
+      // Image object
       if (object == "image" && (var == "__scene__" || getValue(var+".type")=="character")) {
         if (allSprites.find(value) ==  allSprites.end() )
           {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
         else if (getValue(var+".type")=="character")//assumes that allCharacters[var] is defined. Else => value is valid.
           allCharacters[var].sprite = allSprites[value];
-      } else if (object == "color" && (getValue(var+".type")=="character")) {
-        if (allCharacters.find(var) ==  allCharacters.end() )
-          {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
-        else
-          allCharacters[var].titleColor = hex2color(value);
+      //Color object
+      } else if (object == "color" || object == "spriteColor") {
+        //for Characters
+        if (getValue(var+".type")=="character"){
+          if (allCharacters.find(var) ==  allCharacters.end() )
+            {std::cerr<<"! Declaring the object [Color or SpriteColor] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character|image entity !)\n"; return false;}
+          else if (object == "spriteColor")
+            allCharacters[var].spriteColor = hex2color(value);
+          else
+            allCharacters[var].titleColor = hex2color(value);
+        // or for images
+        } else if (getValue(var+".type")=="image"){
+          if (allSprites.find(var) ==  allSprites.end() )
+            {std::cerr<<"! Declaring the object [Color] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character|image entity !)\n"; return false;}
+          else
+            allSprites[var].setColor(hex2color(value));
+        }
       }
       var += '.'+object; // but do the most important stuff
     } 

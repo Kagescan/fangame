@@ -59,7 +59,7 @@ class Character {
       bool animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr);
       bool update(sf::RenderWindow& scr, sf::Time curr);
       sf::Sprite sprite;
-      sf::Color titleColor;
+      sf::Color titleColor, spriteColor;
     private: 
       int x, y;
       bool animX, animS, animO;

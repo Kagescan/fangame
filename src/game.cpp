@@ -323,7 +323,8 @@ bool guiSelect::type(bool type){ return valType = type; }
 
 //---------------Character class
   Character::Character(int winHeight){
-    titleColor = sf::Color(0,0,0);
+    titleColor = sf::Color::Black;
+    spriteColor = sf::Color::White;
     x = 0;
     y = 0;
     scrh = winHeight;
@@ -383,23 +384,23 @@ bool guiSelect::type(bool type){ return valType = type; }
     if (animO){
       if (curr > animO_init + animO_duration){
         animO = false;
-        sprite.setColor(sf::Color(255,255,255,animO_to));
+        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b,animO_to));
       } else {
         const int time = sf::Time(curr - animO_init).asMilliseconds(),
           duration = animO_duration.asMilliseconds(),
           alpha = returnEase(animS_ease, time, animO_from, animO_to - animO_from, duration);
-        sprite.setColor(sf::Color(255,255,255, alpha ));
+        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, alpha ));
       }
     }
     if (animS){
       if (curr > animS_init + animS_duration){
         animS = false;
-        sprite.setColor(sf::Color::White);
+        sprite.setColor(spriteColor);
       } else {
         const int time = sf::Time(curr - animS_init).asMilliseconds(),
           duration = animS_duration.asMilliseconds();
-        oldSprite.setColor(sf::Color(255,255,255, easeOutSine(time, 255, -255, duration) ));
-        sprite.setColor(sf::Color(255,255,255, easeInSine(time, 0, 255, duration) ));
+        oldSprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 255, -255, duration) ));
+        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 0, 255, duration) ));
         scr.draw(oldSprite);
       }
       oldSprite.setPosition(x,y);

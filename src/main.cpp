@@ -4,19 +4,18 @@
 #include "easing.h"
 
 int main() {
-    std::cout <<"\nRetaining's memory - Version 2.1\n"<<
+    std::cout <<"\nRetaining's memory - Preview, Version 2.1.01 \n"<<
                 "\n (c) The KageScan community - Under the MIT/X11 license,please read COPYRIGHT file"<<
                 "\n\n"<<std::flush;
     std::array<unsigned int, 3> screenOptions = {0,60,0};
     const int scrw = 1280, scrh = 720;
-    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
+    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
     scr.clear(sf::Color::White);
     scr.display();
     scr.setFramerateLimit(screenOptions[1]);
     scr.setMouseCursorVisible( screenOptions[2]!=0 );
     //LOADING GRAPHICS
-        sf::Font bloody,animeace;
-          if(!bloody.loadFromFile("resources/fonts/bloody.ttf")) return error("error loading bloody.ttf");
+        sf::Font animeace;
           if(!animeace.loadFromFile("resources/fonts/animeacefr.ttf")) return error("error loading animeacefr.ttf");
 
         sf::Texture imgmenubg, logotxt, imgmenubgMore;
@@ -24,16 +23,16 @@ int main() {
           if (!imgmenubg.loadFromFile("resources/img/background/menu2.jpg")) return error("error loading menu2.jpg");
             imgmenubg.setSmooth(true);
             menubg.setTexture(imgmenubg);
-          if (!imgmenubgMore.loadFromFile("resources/img/menu.png")) return error("error loading menu.jpg");
-            menubgMore.setTexture(imgmenubgMore);
             menubg.setOrigin(scrw/2,scrh/2);
             menubg.setPosition(scrw/2,scrh/2);
+          if (!imgmenubgMore.loadFromFile("resources/img/menu.png")) return error("error loading menu.jpg");
+            menubgMore.setTexture(imgmenubgMore);
+            menubgMore.setColor(sf::Color(0,0,0,0));
           if (!logotxt.loadFromFile("resources/img/background/logo.png")) return error("error loading logo.png");
             logotxt.setSmooth(true);
             logo.setTexture(logotxt);
             logo.setScale(0.5,0.5);
             logo.setPosition(scrw-10-logotxt.getSize().x/2,7);
-          menubgMore.setColor(sf::Color(0,0,0,0));
 
           sf::Music inadaze;
             if (!inadaze.openFromFile("resources/sounds/ostdaze.ogg")) return error("unable to load ostdaze.ogg");
@@ -43,18 +42,18 @@ int main() {
 
     sf::Clock clock;
     sf::Time animStart=clock.getElapsedTime();
-    bool optionInTrans = false, optionOutTrans = false;
     float iter(0);
+    bool optionInTrans = false, optionOutTrans = false, novelInTrans = false;
     guiSelect menu, options;
     menu.displaying = true;
-    menu.choices = {"Jouer", "Options", "Quitter"};
+    menu.choices = {"Jouer","Guide d'introduction", "Options", "Quitter"};
     menu.type(false);
     menu.position(sf::Vector2f(50,75));
-    options.position(sf::Vector2f(scrw/2 - 385,20));
     options.choices = { "Plein Écran : ", "FPS (recommandé : 60) : ", "Afficher le curseur : ", "Retour" };
     options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
     options.choices[1] += std::to_string(screenOptions[1]);
     options.choices[2] += (screenOptions[2]==1) ? "OUI" : "NON";
+    options.position(sf::Vector2f(scrw/2 - 385,20));
     //options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
     /*TileMap map;
     map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);*/
@@ -69,19 +68,24 @@ int main() {
             if (menu.displaying) { // Main Menu
               switch (menu.enter()){
               case 0: {
+                novelInTrans = true; optionInTrans = optionOutTrans = false;
+                animStart=clock.getElapsedTime();
+                break; }
+              case 1: {
                 inadaze.stop();
-                Script engine("resources/scripts/script.txt");
+                Script engine("resources/scripts/user_guide.txt");
                 engine.read(scr);
                 inadaze.play();
                 menu.displaying = true;
-                break; }
-              case 1: 
+                break;
+              }
+              case 2: 
                 optionInTrans = !optionInTrans;
                 iter = 0;
                 animStart=clock.getElapsedTime();
                 options.displaying = true;
                 break;
-              case 2: scr.close(); break;
+              case 3: scr.close(); break;
               default: break;
               }
             } else if (options.displaying) { // Settings
@@ -89,14 +93,14 @@ int main() {
               case 0:
                 screenOptions[0] = (screenOptions[0]==1) ? 0 : 1;
                 options.choices[0] = "Plein Écran : "; options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
-                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
+                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
                 break;
               case 1: {
                 switch (screenOptions[1]) {
                   case 30: screenOptions[1] = 60; break;
                   case 60: screenOptions[1] = 120;break;
                   case 120:screenOptions[1] = 30; break;
-                  default: screenOptions[1] = 60;break; }
+                  default: screenOptions[1] = 60; break; }
                 options.choices[1] = "FPS (recommandé : 60) : "; options.choices[1] += std::to_string(screenOptions[1]);
                 break; }
               case 2: 
@@ -137,13 +141,34 @@ int main() {
         iter = alpha*0.001;
         menubg.setScale(1+iter,1+iter);
         if (getms>1500) optionInTrans = optionOutTrans = false;
+      } else if (novelInTrans){
+        int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();
+        int x = easeOutCubic( getms>1500 ? 1500:getms, 0, 255, 1500 );
+        iter = x*0.025;
+        menubg.setColor(sf::Color(255-x,255-x,255-x));
+        //menubg.setColor(sf::Color(255,255,255,255-x));
+        menubg.setScale(1+iter,1+iter);
+        menubg.setRotation(x);
+        if (getms>1500) {
+          novelInTrans = false;
+          inadaze.stop();
+          Script engine("resources/scripts/script.txt");
+          engine.read(scr);
+          inadaze.play();
+          menubg.setScale(1,1);
+          menubg.setRotation(0);
+          menubg.setColor(sf::Color::White);
+          menu.displaying = true;
+        }
       }
+
       scr.draw(menubg);
-      scr.draw(logo);
-      scr.draw(menubgMore);
+      if (!novelInTrans){
+        scr.draw(logo);
+        scr.draw(menubgMore);
+      }
       if (menu.displaying) menu.draw(scr);
       if (options.displaying) options.draw(scr);
-      //if (testspace) scr.draw(map);
       scr.display();
     }
 
