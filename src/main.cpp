@@ -140,15 +140,15 @@ int main() {
         menubgMore.setColor(sf::Color(255,255,255,alpha));
         iter = alpha*0.001;
         menubg.setScale(1+iter,1+iter);
+        menubg.setRotation(alpha*0.07);
         if (getms>1500) optionInTrans = optionOutTrans = false;
       } else if (novelInTrans){
         int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();
-        int x = easeOutCubic( getms>1500 ? 1500:getms, 0, 255, 1500 );
+        int x = easeOutCubic( getms>700 ? 700:getms, 0, 255, 700 );
         iter = x*0.025;
         menubg.setColor(sf::Color(255-x,255-x,255-x));
-        //menubg.setColor(sf::Color(255,255,255,255-x));
         menubg.setScale(1+iter,1+iter);
-        menubg.setRotation(x);
+        menubg.setRotation(-x);
         if (getms>1500) {
           novelInTrans = false;
           inadaze.stop();

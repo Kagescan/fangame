@@ -4,11 +4,10 @@ entity <character> Ayano
 entity <image> bg1="resources/img/todo/decor1.jpg"
 entity <image> bg2="resources/img/todo/decor2.jpg"
 entity <image> bg3="resources/img/todo/decor3.jpg"
-entity <image> bg4="resources/img/todo/decor4.jpg"
+entity <image> bg4="resources/img/background/ltmNight.jpg"
 set <color> bg1 = #666666
 set <color> bg2 = #666666
 set <color> bg3 = #666666
-set <color> bg4 = #3300DD
 entity <image> aya1 = "resources/img/characters/ayano/Ayasmile 1.png"
 entity <image> aya2 = "resources/img/characters/ayano/Ayasmile 2.png"
 entity <image> aya3 = "resources/img/characters/ayano/Ayawhat 1.png"
@@ -139,7 +138,7 @@ set <name> temp = JEU
   say Shintaro "Ça valait le coup de rester après les cours ?"
     animate <spriteChange> Ayano /to aya2 /time 800
   say Ayano "Eh bien... C'est vrai, cela n'a aucun sens, n'est-ce pas ?" "Hum~... Qu'est-ce que je peux faire ?" "Si je ne lui rend pas demain matin, le prof va encore m’engueuler..."
-  say Shintaro "*pensées*" "Qu'est-ce qu'elle a celle-là ? Elle est trop chiante..." "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons." "Je dois me dépêcher de récupérer mon portefeuille."
+  say Shintaro "*pensées*" "Qu'est-ce qu'elle a celle-là ? Elle est trop chiante..." "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons." "Je dois me dépêcher de récupérer mon portefeuille et partir d'ici"
     animate <spriteChange> Ayano /to aya1 /time 800
   say Ayano "Hé euh... Excuse moi !"
   say Shintaro "Hum ? Qu'est-ce qu'il y a ?"
@@ -151,7 +150,7 @@ set <name> temp = JEU
   say Ayano "Oh... Hum... C'est que... " "Est-ce que tu pourrais, juste un peu, m'aider à étudier..."
   say Shintaro "Hein ?"
     animate <spriteChange> Ayano /to aya5 /time 800
-  say Ayano "Juste pour aujourd'hui ! Pas très longtemps !"
+  say Ayano "Juste pour aujourd'hui ! Pas pour très longtemps !"
   say Shintaro "Tu veux dire maintenant ?!"
   say Ayano "S'il te plaît... E-Euh... Je t'en supplie..."
   say Shintaro "*gêné* Me supplier ?" "Urrm~ ! C'est bon, j'ai compris..." "... Mais c'est juste pour aujourd'hui !"
