@@ -178,83 +178,18 @@ std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit){
   return retval;
 }
 
-  std::string calc(std::string input){
-    /* Calc function : return the calculus entered. Support operative priorities.
-      Edited from http://teknicalprog.blogspot.com/2014/10/c-program-to-evaluate-infix-expression.html
-        issues : (solution)
-        negative numbers: ((0-1)*x)
-            in = 25*-10
-            out = 10
-        limited to a number that have more than 30 numbers (x*10^n)
-            in : 11111111111111111111111111111111111111111111111111111111111111111111
-            *** stack smashing detected ***: <unknown> terminated
-            2520 Abandon                 (core dumped) ./a.out */
-    std::string inf = removeSpaces(input);
-    char post[30], temp[30];
-    //temp limited to 30 numbers lenght...
-    float oper[30],stack[30],so;
-    int top=-1,y=0,op=0;
-
-    for(size_t i(0); i < inf.size(); ++i) { //Reach all characters of the char*
-      if(std::isdigit(inf[i])) { //if number
-        post[y++]=inf[i];
-        //wrap the entire number
-          int z;
-          for(z=i;inf[z]=='.' || (inf[z]<=57&&inf[z]>=48);z++) temp[z-i]=inf[z];
-          temp[z-i]='\0'; 
-        oper[op++]=std::atof(temp); //convert to sciencist expr. (x.xxe+x) and add to a stack
-        i=z-1;
-      } else {
-        switch(inf[i]) {
-          case '+': case '-':
-            while(top>=0&&stack[top]!='(') post[y++]=stack[top--];
-            stack[++top]=inf[i];
-            break;
-          case '*': case '/':
-            while(stack[top]!='+'&&stack[top]!='-'&&top>=0&&stack[top]!='(') post[y++]=stack[top--];
-            stack[++top]=inf[i];
-            break;
-          case '^':case '(':
-            stack[++top]=inf[i];
-            break;
-          case ')':
-            while(stack[top]!='(') post[y++]=stack[top--];
-            top--;
-            break;
-          default :
-          std::cerr<<"Parsing the expression '"<<inf<< "' illegal char '"<<inf[i]<<"' !! Aborting.\n";
-          return input;
-        }
-      }
-    }
-    while(top>=0)
-      post[y++]=stack[top--];
-
-    //solve
-    op=0;
-    for(int i=0;i<y;i++) {
-      if(post[i]>=48&&post[i]<=57)
-        stack[++top]=oper[op++];
-      else {
-        switch(post[i]) {
-          case '+':  so=stack[top]+stack[top-1];  stack[--top]=so;  break;
-          case '-':  so=stack[top-1]-stack[top];  stack[--top]=so;  break;
-          case '*':  so=stack[top-1]*stack[top];  stack[--top]=so;  break;
-          case '/':  so=stack[top-1]/stack[top];  stack[--top]=so;  break;
-          case '^':  so=powf(stack[top-1],stack[top]);  stack[--top]=so;  break;
-          default :  std::cerr<<"Parsing the expression '"<<post<< "' illegal char '"<<post[i]<<"' !! Aborting.\n";  return input;
-        }
-      }
-    }
-    std::string result = std::to_string(stack[0]); //convert to str
-    // the result is always a float number not simplified :
-    int i = result.size(); //cursor 1 char before EOL
-    while (result[i-1] == '0') i--; //delete all 0
-    if (result[i-1] == '.') i--; //if before cursor is a dot then delete it
-    result.erase(i, result.size()); 
-
-    return result;
+std::string calc(std::string input){
+  try {
+    char test[input.size()];
+    strcpy(test, input.c_str());
+    Calc evaluator;
+    evaluator.parse(test);
+    return std::to_string(evaluator.get_numeric_answer());
+  } catch(ParsingException ex) {
+    std::cerr <<"! Evaluation Error : " << ex.get_msg() << ", at char #" << ex.get_col()<<" (Expression : "<<input<<")\n";
+    return "";
   }
+}
 
 
 guiSelect::guiSelect(){

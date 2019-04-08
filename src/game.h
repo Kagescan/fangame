@@ -6,6 +6,7 @@
 #include <SFML/Audio.hpp>
 #include "button.h"
 #include "easing.h"
+#include "calc.h"
 #include <fstream>
 #include <sstream>
 
@@ -27,7 +28,6 @@ std::vector<sf::String> splitQuotes(std::string str,unsigned int numLine);
 sf::String toSfString(std::string theStdString);
 std::vector<sf::String> cutString(sf::String line, unsigned int lenghtLimit);
 std::string calc(std::string input);
-
 
 class guiSelect{
   public:

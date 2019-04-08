@@ -342,19 +342,4 @@ class Calc {
   }
 };
 
-//
-
-double eval(std::string s){
-  try {
-    char test[s.size()];
-    strcpy(test, s.c_str());
-    Calc evaluator;
-    evaluator.parse(test);
-    return evaluator.get_numeric_answer();
-  } catch(ParsingException ex) {
-    std::cerr <<"! Evaluation Error : " << ex.get_msg() << ", at char #" << ex.get_col()<<" (Expression : "<<s<<")\n";
-    return 0;
-  }
-}
-
 #endif

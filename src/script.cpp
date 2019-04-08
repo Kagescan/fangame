@@ -360,7 +360,8 @@
   }
 
   std::string Script::replaceVars(std::string str){
-    std::string newStr=str;
+    std::string newStr=str, retval;
+    //part 1 : replace %variables%
     std::regex regexVar("%([_\\.[:alnum:]]+)%");
     auto words_begin = std::sregex_iterator(str.begin(), str.end(), regexVar);
     for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
@@ -368,6 +369,16 @@
       std::string strInitial = match.str(), strReplaced = getValue( strInitial.substr(1, strInitial.size()-2) );
       if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
     }
+    //part 2 : replace ${evaluations}
+
+    std::regex regexEval("\\$\\{([^\\}]+)\\}");
+    words_begin = std::sregex_iterator(newStr.begin(), newStr.end(), regexEval);
+    for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
+      std::smatch match = *i;
+      std::string strInitial = match.str(), strReplaced = calc(strInitial.substr(2, strInitial.size()-3));
+      if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
+    }
+
     return newStr;
   }
 
