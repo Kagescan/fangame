@@ -4,26 +4,35 @@
 
 #include "parser.h"
 
-using std::endl;
-using std::cout;
 
-using std::vector;
-
-int main(void) {
+int main() {
 
     try {
         Parser evaluator;
-        char expression[] = " 13-1 != 1+12";
-        evaluator.evaluate_expression_with_exception(expression);
-        evaluator.parse(expression);
+        evaluator.parse("2+2");
+        double a = evaluator.get_numeric_answer();
+        std::cout << "Ans 1: " << a << std::endl;
 
-        double result = evaluator.get_numeric_answer();
+        evaluator.parse("(4+6)*2");
+        a = evaluator.get_numeric_answer();
+        std::cout << "Ans 2: " << a << std::endl;
+        
+        evaluator.parse("12 == 11 + 1");
+        a = evaluator.get_numeric_answer();
+        std::cout << "Ans 3: " << a << std::endl;
+        
+        evaluator.parse("12 == 11 + 2");
+        a = evaluator.get_numeric_answer();
+        std::cout << "Ans 4: " << a << std::endl;
 
-        cout << "Ans: " << result << endl;
+        evaluator.parse("1.04 + 17");
+        a = evaluator.get_numeric_answer();
+        std::cout << "Ans 4: " << a << std::endl;
 
     } catch(ParsingException ex) {
-        cout << "Error: " << ex.get_msg() << ", at " << ex.get_col() << endl;
+        std::cout << "Error: " << ex.get_msg() << ", at " << ex.get_col() << std::endl;
     }
 
-    return EXIT_SUCCESS;
+    return 0;
+
 }
