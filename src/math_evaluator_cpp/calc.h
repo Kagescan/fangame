@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef CALC_H
+#define CALC_H
 
 #include <vector>
 #include <cstring>
@@ -59,7 +59,6 @@ class ParsingException {
       return "unknown error";
     }
 };
-
 class Lexema {
   public:
     Lexema(std::string lex, int i, int tipo) :
@@ -86,21 +85,21 @@ class Lexema {
     int inicio, final_pos, tipo;
 };
 
-class Parser {
+class Calc {
   public:
-    Parser(void) {
+    Calc(void) {
       expr[0] = '\0';
       pExpr = NULL;
       token[0] = '\0';
       tipoTokenActual = NADA;
       show_error_flag = false;
     }
-    ~Parser() {}
+    ~Calc() {}
     void set_error(bool error_flag) { show_error_flag = error_flag; }
     inline bool get_error_flag(void) const { return show_error_flag; }
     inline double get_numeric_answer(void) { return respuesta; }
     inline std::vector<Lexema>& get_lexemas_positions(void) { return lexemas_positions; }
-    void parse(const char new_expr[]) throw (ParsingException) {
+    void parse(const char new_expr[]) {
       try {
         if((int)strlen(new_expr) > MAX_TOKEN_ID) {
           if(show_error_flag) showError();
@@ -123,13 +122,12 @@ class Parser {
     }
 
 	private:
-
-        bool show_error_flag;
-		std::vector<Lexema> lexemas_positions;
+  bool show_error_flag;
+	std::vector<Lexema> lexemas_positions;
 
   enum TOKEN_TYPE { NADA = -1, DELIMITADOR, NUMERO, DESCONOCIDO, OPERADOR };
   enum OPERADOR_ID { AND,OR,  EQUAL,UNEQUAL,SMALLER,LARGER,SMALLEREQ,LARGEREQ,  PLUS,MINUS,  MULTIPLY,DIVIDE,MODULUS,  POW,  NOT };
- char token[MAX_TOKEN_ID + 1], expr[MAX_TOKEN_ID + 1];
+  char token[MAX_TOKEN_ID + 1], expr[MAX_TOKEN_ID + 1];
   char* pExpr;
   double respuesta;
   TOKEN_TYPE tipoTokenActual;
@@ -201,7 +199,7 @@ class Parser {
     throw ParsingException(col(), ERROR_SINTAXIS_PARTE, token);
     return;
   }
-  double parse_level_assign(void) throw (ParsingException) { return parse_level2(); }
+  double parse_level_assign(void) { return parse_level2(); }
   double parse_level2(void) {
     double answer = parse_level3();
     int op_id = get_operator_id(token);
@@ -344,6 +342,19 @@ class Parser {
   }
 };
 
+//
+
+double eval(std::string s){
+  try {
+    char test[s.size()];
+    strcpy(test, s.c_str());
+    Calc evaluator;
+    evaluator.parse(test);
+    return evaluator.get_numeric_answer();
+  } catch(ParsingException ex) {
+    std::cerr <<"! Evaluation Error : " << ex.get_msg() << ", at char #" << ex.get_col()<<" (Expression : "<<s<<")\n";
+    return 0;
+  }
+}
+
 #endif
-
-
