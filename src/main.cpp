@@ -1,4 +1,4 @@
-/* Retaining's memories, Version 2.1.01 (Preview)
+/* Retaining's memories, Version 2.1.02 (Preview)
  * Copyright (c) 2018, 2019 ShinProg
  * Under MIT license, more informations in the file LICENSE
  */
@@ -7,12 +7,12 @@
 #include "script.h"
 
 int main() {
-    std::cout <<"\nRetaining's memories, Version 2.1.01 (Preview) \n"<<
+    std::cout <<"\nRetaining's memories, Version 2.1.02 (Preview) \n"<<
                 "\n (c) ShinProg - Under the MIT/X11 license, please read LICENSE file"<<
                 "\n\n"<<std::flush;
     std::array<unsigned int, 3> screenOptions = {0,60,0};
     const int scrw = 1280, scrh = 720;
-    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
+    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.02", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
     scr.clear(sf::Color::White);
     scr.display();
     scr.setFramerateLimit(screenOptions[1]);
@@ -91,7 +91,7 @@ int main() {
               case 0:
                 screenOptions[0] = (screenOptions[0]==1) ? 0 : 1;
                 options.choices[0] = "Plein Écran : "; options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
-                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
+                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.02", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
                 break;
               case 1: {
                 switch (screenOptions[1]) {

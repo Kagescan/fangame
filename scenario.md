@@ -25,6 +25,10 @@ Passage entre Shintaro et Ayano, sans le jeu.
 Ajout des structures conditionnelles, et des boucles ("For" en particulier), la syntaxe étant basée sur le TI basic.
 Ajout des fonctions (qui fonctionnent un peu comme le batch, c'est à dire avec call)
 
+## Route Musiques
+On passe le passage du yuukei quartet.
+On continue directement sur le présent.
+
 # -- Pour la Release 2.1 --
 
 # Révision du code : 

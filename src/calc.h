@@ -1,5 +1,5 @@
 /* CALC - Evaluate a math expression from a string.
- * Copyright (c) 2018, 2019 ShinProg
+ * Copyright (c) 2018, 2019 ShinProg, inspiration from https://github.com/leogtzr/math_evaluator_cpp
  * Under MIT license, more informations in the file LICENSE
  */
 
