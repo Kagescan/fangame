@@ -31,14 +31,13 @@ class Script {
         bool newSound(std::string name, std::string path, unsigned int line);
         bool newSprite(std::string name, std::string path, unsigned int line);
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
-        bool drawBackground(sf::RenderWindow& scr);
         bool drawCharacters(sf::RenderWindow& scr);
         bool drawChoices(sf::RenderWindow& scr);
         bool drawText(sf::RenderWindow& scr);
         //bool drawCharacters(sf::RenderWindow& scr, sf::Time currentTime, sf::Time initialTime);
         
         std::string getValue(std::string varName);
-        std::string replaceVars(std::string str);
+        std::string replaceVars(std::string str, bool replaceEvals = false);
 
       /* Var declarations*/
         //std::vector<std::string[2]> scriptInstructions;

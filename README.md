@@ -1,34 +1,36 @@
-# Retaining's Memories (v2.1)
+# Retaining's Memories (v2.1.01)
 Retaining's Memories : A kagerou project fangame.
 This is a remake of a fangame that I made with my community.
 The version 1 was written in Python but in this remake, the entire code is in C++.
 
 ### status
-**The game inside this branch is not finished : even if the code is inside the master branch, you can't play. You can just try some features.**  
-Because of that, there is not builds of this code.
+**UNDER DEVELOPEMENT**
 
-To do : 
+Game Version : 2.1 (Alpha version : 01)
+
+Features of this version : 
+- can read script files and interpret them
+- basic visual novel features with var and math evaluations support
+
+Features coming soon : 
 - conditions
 - varfiles
 - mapfiles
 - ...
-
-Done :
-- loads script and parse the commands and the arguments
-- loads entities (sprites, characters, sounds...)
-- display a visual novel (speechs, sounds, choices, waiting, animations, goto/labels...)
 
 ### compiling
 
 Written in linux (Xubuntu 18.04 LTS), not tested in Windows.
 The commands are for unix systems, adapt this if you're running windows.
 
+Builds coming soon.
+
 1. This code needs the library SFML [http://sfml-dev.org] and uses cpp17 features. You need to compile it, or using builds.
 2. Open a terminal inside the root of this repository. 
 3. Type this code to build the project (inline compilation, i will add a cmake script later):  
   ```bash
     # Adapt this command with the path of sfml lib (/usr/local/lib, /usr/local/include/SFML ...)
-    $ g++ src/main.cpp src/button.cpp src/easing.cpp src/game.cpp src/script.cpp \
+    $ g++ src/main.cpp src/easing.cpp src/game.cpp src/script.cpp \
         -o build/kagepro2 -Wall -g --std=c++17\
         -L/usr/local/lib/ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network \
         -I/usr/local/include/SFML/
@@ -38,7 +40,6 @@ The commands are for unix systems, adapt this if you're running windows.
     $ cd build
     $ ./kagepro2
   ```
-
 
 ### project main page
 

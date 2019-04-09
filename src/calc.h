@@ -1,3 +1,8 @@
+/* CALC - Evaluate a math expression from a string.
+ * Copyright (c) 2018, 2019 ShinProg
+ * Under MIT license, more informations in the file LICENSE
+ */
+
 #ifndef CALC_H
 #define CALC_H
 #include <vector>
@@ -6,8 +11,8 @@
 #include <limits>
 #include <cassert>
 #include <cstdarg>
-
 #define   MAX_TOKEN_ID      1000
+
 enum Errores {
   ERROR_SINTAXIS_PARTE = 1,
   ERROR_SINTAXIS = 2,
@@ -82,44 +87,47 @@ class Lexema {
     std::string lexema;
     int inicio, final_pos, tipo;
 };
-// MAIN CLASS -----------------------------------------------------
+
 class Calc {
   public:
-  Calc(void) {
-    expr[0] = '\0';
-    pExpr = NULL;
-    token[0] = '\0';
-    tipoTokenActual = NADA;
-    show_error_flag = false;
-  }
-  ~Calc() {}
-  void set_error(bool error_flag) { show_error_flag = error_flag; }
-  inline bool get_error_flag(void) const { return show_error_flag; }
-  inline double get_numeric_answer(void) { return respuesta; }
-  inline std::vector<Lexema>& get_lexemas_positions(void) { return lexemas_positions; }
-  void parse(const char new_expr[]) throw (ParsingException) {
-    try {
-      if((int)strlen(new_expr) > MAX_TOKEN_ID) {
-        if(show_error_flag) showError();
-        throw ParsingException(0, EXPRESION_DEMASIADA_LARGA);
-      }
-      strncpy(expr, new_expr, MAX_TOKEN_ID - 1);
-      pExpr = expr;
-      respuesta = 0.0;
-      get_token_2(); // Obtener el primer token:
-      if(tipoTokenActual == DELIMITADOR && *token == '\0') {
-        if(show_error_flag) showError();
-        throw ParsingException(col(), EXPRESION_VACIA);
-      }
-      respuesta = parse_level_assign();
-      if(tipoTokenActual != DELIMITADOR || *token != '\0') {
-        if(show_error_flag) showError();
-        throw ParsingException(col(), (tipoTokenActual == DELIMITADOR) ? OPERADOR_DESCONOCIDO : PARTE_NO_ESPERADA, token);
-      }
-    } catch(ParsingException errEx) { throw errEx; }
-  }
-private:
-  bool show_error_flag, evaluate;
+    Calc(void) {
+      expr[0] = '\0';
+      pExpr = NULL;
+      token[0] = '\0';
+      tipoTokenActual = NADA;
+      show_error_flag = false;
+    }
+    ~Calc() {}
+    void set_error(bool error_flag) { show_error_flag = error_flag; }
+    inline bool get_error_flag(void) const { return show_error_flag; }
+    inline double get_numeric_answer(void) { return respuesta; }
+    inline std::vector<Lexema>& get_lexemas_positions(void) { return lexemas_positions; }
+    void parse(const char new_expr[]) {
+      try {
+        if((int)strlen(new_expr) > MAX_TOKEN_ID) {
+          if(show_error_flag) showError();
+          throw ParsingException(0, EXPRESION_DEMASIADA_LARGA);
+        }
+        strncpy(expr, new_expr, MAX_TOKEN_ID - 1);
+        pExpr = expr;
+        respuesta = 0.0;
+        get_token_2(); // Obtener el primer token:
+        if(tipoTokenActual == DELIMITADOR && *token == '\0') {
+          if(show_error_flag) showError();
+          throw ParsingException(col(), EXPRESION_VACIA);
+        }
+        respuesta = parse_level_assign();
+        if(tipoTokenActual != DELIMITADOR || *token != '\0') {
+          if(show_error_flag) showError();
+          throw ParsingException(col(), (tipoTokenActual == DELIMITADOR) ? OPERADOR_DESCONOCIDO : PARTE_NO_ESPERADA, token);
+        }
+      } catch(ParsingException errEx) { throw errEx; }
+    }
+
+	private:
+  bool show_error_flag;
+	std::vector<Lexema> lexemas_positions;
+
   enum TOKEN_TYPE { NADA = -1, DELIMITADOR, NUMERO, DESCONOCIDO, OPERADOR };
   enum OPERADOR_ID { AND,OR,  EQUAL,UNEQUAL,SMALLER,LARGER,SMALLEREQ,LARGEREQ,  PLUS,MINUS,  MULTIPLY,DIVIDE,MODULUS,  POW,  NOT };
   char token[MAX_TOKEN_ID + 1], expr[MAX_TOKEN_ID + 1];
@@ -127,7 +135,6 @@ private:
   double respuesta;
   TOKEN_TYPE tipoTokenActual;
   std::vector<std::string> _tokens_list;
-  std::vector<Lexema> lexemas_positions;
   inline bool is_digit_dot(const char c) { return (c == 0) ? false : strchr("0123456789.", c) != 0; }
   inline bool is_digit(const char c) { return (c == 0) ? false : strchr("0123456789", c) != 0; }
   inline int col(void) { return (pExpr - expr - strlen(token) + 1); }
@@ -195,7 +202,7 @@ private:
     throw ParsingException(col(), ERROR_SINTAXIS_PARTE, token);
     return;
   }
-  double parse_level_assign(void) throw (ParsingException) { return parse_level2(); }
+  double parse_level_assign(void) { return parse_level2(); }
   double parse_level2(void) {
     double answer = parse_level3();
     int op_id = get_operator_id(token);
@@ -313,7 +320,7 @@ private:
     return -1;
   }
   double eval_operator(const int op_id, const double &lhs, const double &rhs) {
-    if(evaluate) return 1.0;
+    //if(evaluate) return 1.0;
     switch (op_id) {
       case AND:     return static_cast<int>(lhs) && static_cast<int>(rhs);
       case OR:      return static_cast<int>(lhs) || static_cast<int>(rhs);
@@ -336,7 +343,6 @@ private:
     throw ParsingException(col(), 104, op_id);
     return 0;
   }
-
 };
 
 #endif

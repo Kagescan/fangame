@@ -1,9 +1,13 @@
 entity <character> e
+entity <image> bg = "resources/img/background/user_guide.jpg"
 set <name> e = Guide d'introduction
+set <image> e = bg
+animate <position> e /to 0 /time 1
+animate <opacity> e /from 0 /to 255 /time 700
 
-say e "Bonjour et merci d'avoir téléchargé ce fangame ! Avant de commencer à jouer, veuillez lire ces instructions afin d'avoir la meilleure expérience utilisateur possible." "Appuyez sur la barre espace pour continuer."
+say e "Bonjour et merci d'avoir téléchargé ce fangame ! Avant de commencer à jouer, veuillez lire ces instructions afin d'avoir la meilleure expérience utilisateur possible."
 
-set <name> e = Note pour cette version (Retaining's Memories -preview- V2.1.01)
+set <name> e = Note pour cette version (Retaining's Memories V2.1.01)
 say e "Ce jeu étant encore en état de développement, nous misons sur le scénario plutôt que les fonctions secondaires !"
 say e "Tous les mini-jeux prévus pour la version finale sont donc remplacés par de simples choix dans le novel. Aussi, certains points de ce guide ne sont pas à tenir compte telle que la présentation des différentes timelines."
 
@@ -12,7 +16,9 @@ say e "Pour parcourir les choix, utilisez les flèches haut et bas de votre clav
 
 :choice
   choice "Concept" = concept "Histoire" = histoire "Contrôles" = controles "Infos recommmandées" = infos "Astuces/anecdotes" = astuces "Crédits" = credits "quitter" = continue
-  say JEU "appuyez sur la barre espace pour quitter"
+  animate <opacity> e /from 255 /to 0 /time 1000 /ease inSine
+  $ay none " "
+  wait 1500
   end up
 
 :concept
@@ -64,20 +70,20 @@ goto choice
 goto choice
 
 :astuces
-  set <name> e = Repères temporels
+  set <name> e = Reperes temporels
   say e "Le chapitre The Old Days se situerait en avril 2011, tandis que l'époque du Yuukei Quartet se situerait durant l'année scolaire japonaise 2012." "Le repère du présent serait quant à lui situé au 15 aout 2014, dans la Ville de Kashiwa City (préfecture de Chiba)."
   set <name> e = Passer des dialogues.
   say e "Pour accéder à certaines routes, il va falloir finir le jeu. Plutôt que de devoir subir les mêmes paroles, n'oubliez pas que vous avez la possibilité de passer des dialogues en maintenant la barre espace appuyée."
   say e "Attention tout de même, le bouton permettant de passer les dialogues est aussi celui pour valider son choix. Fonction à utiliser avec attention, car on peut valider un choix trop vite sans le faire exprès."
   set <name> e = Histoire ?
-  say "Bien que ce fangame raconte l'histoire de Kagerou Project, le véritable intéret du jeu est toute autre. Mais ça, vous le découvrirez après avoir fini le jeu !" "Un indice : ce jeu porte tout son intéret sur les points de vues et son titre. "
+  say e "Bien que ce fangame raconte l'histoire de Kagerou Project, le véritable intéret du jeu est toute autre. Mais ça, vous le découvrirez après avoir fini le jeu !" "Un indice : ce jeu porte tout son intéret sur les points de vues et son titre. "
 goto choice
 
 :credits
   set <name> e = CREDITS
   say e "Ce fangame a été créé par la communauté française Kagescan (Kagerou Project Fr)" "Le code-source du jeu est libre, sous license open-source MIT/X11." "github : https://github.com/LoganTann/kagepro2/"
   say e "L'organisation du projet, la création du moteur de jeu et du jeu en lui-même ainsi que la compilation du code a été faite par ShinProg." "Le scénario a été dirigé par ShinProg et Nayamea."
-  say e "Les dessins ont été réalisés par les membres de la communauté française Kagescan, en particulier :" "* Lines : Lucie Fournier" "* Couleurs : Maxence Porelli" "* Décors : Furi"
+  say e "Les dessins ont été réalisés par les membres de la communauté française Kagescan, en particulier :" "* Lines : Maxence Porelli" "* Couleurs : Lucie Fournier" "* Décors : Furi"
   say e "les bandes sons et toutes les autres routes viennent de la série Kagerou Project, sur quelque support que ce soit, avec éventuellement quelques légères modifications de notre part."
   ::say e "La route M-X a été imaginée par Yoomster."
 goto choice
