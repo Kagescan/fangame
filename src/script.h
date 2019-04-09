@@ -31,7 +31,6 @@ class Script {
         bool newSound(std::string name, std::string path, unsigned int line);
         bool newSprite(std::string name, std::string path, unsigned int line);
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
-        bool drawBackground(sf::RenderWindow& scr);
         bool drawCharacters(sf::RenderWindow& scr);
         bool drawChoices(sf::RenderWindow& scr);
         bool drawText(sf::RenderWindow& scr);

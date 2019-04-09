@@ -28,7 +28,7 @@ The commands are for unix systems, adapt this if you're running windows.
 3. Type this code to build the project (inline compilation, i will add a cmake script later):  
   ```bash
     # Adapt this command with the path of sfml lib (/usr/local/lib, /usr/local/include/SFML ...)
-    $ g++ src/main.cpp src/button.cpp src/easing.cpp src/game.cpp src/script.cpp \
+    $ g++ src/main.cpp src/easing.cpp src/game.cpp src/script.cpp \
         -o build/kagepro2 -Wall -g --std=c++17\
         -L/usr/local/lib/ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network \
         -I/usr/local/include/SFML/

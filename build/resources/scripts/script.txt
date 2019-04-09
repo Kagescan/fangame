@@ -77,9 +77,8 @@ set <image> $bg = bg1
 
 :porte3
   ::change background
-    set <color> temp = #ffffff00
     animate <opacity> $bg /to 0 /time 300 /ease inSine
-    $ay temp " "
+    $ay none " "
     wait 1700
     set <image> $bg = bg2
     animate <opacity> $bg /from 0 /to 255 /time 1000 /ease outSine
@@ -91,9 +90,8 @@ set <image> $bg = bg1
     set <spriteColor> Ayano = #AAAAFF
     animate <opacity> Ayano /to 255 /time 1
   animate <position> Ayano /from %posOutsideR% /to %posCenter% /time 900 /ease outElastic
-  $ay temp " "
+  $ay none " "
   wait 400
-  set <color> temp = #000000
   set <name> temp = -inconnue ??? / -Shintaro 
   set <name> Ayano = ???
   $ay temp "-Whaaaaaaah !!" "-OUAAAHAAHAHAHA !! Hiiii !!"
@@ -158,10 +156,9 @@ set <image> $bg = bg1
   say Shintaro "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons."
   animate <spriteChange> Ayano /to aya7 /time 800
   say Shintaro "Je dois me dépêcher de récupérer mon portefeuille et partir d'ici en l'ignorant." "Il faudrait déjà que j'entre..."
-  set /c calc = %posCenter% + 300
-  animate <position> Ayano /from %posCenter% /to %calc% /time 800 /ease inOutCubic
+  animate <position> Ayano /from %posCenter% /to ${%posCenter% + 300} /time 800 /ease inOutCubic
   say Ayano "... ?"
-  animate <position> Ayano /from %calc% /to %posCenter% /time 800 /ease inOutCubic
+  animate <position> Ayano /from ${%posCenter% + 300} /to %posCenter% /time 800 /ease inOutCubic
   animate <spriteChange> Ayano /to aya5 /time 800
   say Ayano "Hé euh... Excuse moi !"
   say Shintaro "... " "Hum ?" "Qu'est-ce qu'il y a ?"
@@ -184,11 +181,10 @@ set <image> $bg = bg1
   say Ayano "O-Oui !"
 
   ::change background
-      set <color> temp = #ffffff00
       music ost3 stop
       animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
       animate <opacity> $bg /to 0 /time 300 /ease inSine
-      $ay temp " "
+      $ay none " "
     wait 1700
       set <image> $bg = bg3
       animate <opacity> $bg /from 0 /to 255 /time 1000 /ease outSine
@@ -280,7 +276,7 @@ set <image> $bg = bg1
       music ost5 stop
       animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
       animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
-      $ay temp " "
+      $ay none " "
     wait 1700
       set <image> $bg = bg4
       animate <spriteChange> Ayano /to aya4 /time 1
@@ -317,6 +313,6 @@ set <image> $bg = bg1
 music ost6 stop
 animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
 animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
-$ay temp " "
+$ay none " "
 wait 1700
 end fadeBlack

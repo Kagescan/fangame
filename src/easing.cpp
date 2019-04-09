@@ -1,6 +1,8 @@
+/* EASING CPP - Smooth-animation Curves for CPP
+ * Copyright (c) 2018, 2019 ShinProg
+ * Under MIT license, more informations in the file LICENSE
+ */
 #include "easing.h"
-
-
 double PI=3.141592653589793238463;
 
 float easeLinear (float t,float b , float c, float d)    {return c*t/d + b;}
@@ -33,25 +35,19 @@ float easeInOutCirc (float t,float b , float c, float d) {
 }
 
 float easeInElastic (float t,float b , float c, float d) {
-	if (t==0) return b;  if ((t/=d)==1) return b+c;
-	float p=d*.3f;
-	float a=c;
-	float s=p/4;
-	float postFix =a*pow(2,10*(t-=1)); // this is a fix, again, with post-increment operators
+	if (t==0) {return b;}  if ((t/=d)==1) {return b+c;}
+	float p=d*.3f, a=c, s=p/4, postFix =a*pow(2,10*(t-=1));
 	return -(postFix * sin((t*d-s)*(2*PI)/p )) + b;
 }
 
 float easeOutElastic(float t,float b , float c, float d) {
-	if (t==0) return b;  if ((t/=d)==1) return b+c;
-	float p=d*.3f;
-	float a=c;
-	float s=p/4;
+	if (t==0) {return b;}  if ((t/=d)==1) {return b+c;}
+	float p=d*.3f, a=c, s=p/4;
 	return (a*pow(2,-10*t) * sin( (t*d-s)*(2*PI)/p ) + c + b);
 }
 
 float easeInBack (float t,float b , float c, float d) {
-	float s = 1.70158f;
-	float postFix = t/=d;
+	float s = 1.70158f, postFix = t/=d;
 	return c*(postFix)*t*((s+1)*t - s) + b;
 }
 float easeOutBack(float t,float b , float c, float d) {
@@ -67,10 +63,8 @@ float easeInOutBack(float t,float b , float c, float d) {
 }
 
 float easeInOutElastic(float t,float b , float c, float d) {
-	if (t==0) return b;  if ((t/=d/2)==2) return b+c;
-	float p=d*(.3f*1.5f);
-	float a=c;
-	float s=p/4;
+	if (t==0) {return b;}  if ((t/=d/2)==2) {return b+c;}
+	float p=d*(.3f*1.5f), a=c, s=p/4;
 
 	if (t < 1) {
 		float postFix =a*pow(2,10*(t-=1)); // postIncrement is evil
@@ -135,13 +129,6 @@ float returnEase(std::string e, float t, float b, float c, float d){
   else if (e=="inOutBounce")return easeInOutBounce(t,b,c,d);
 
   else return easeLinear(t,b,c,d);
-}
-
-float easeInAtan(float t,float b,float c,float d){
-  return 2 * c * atan(50*t/d) / PI + b;
-}
-float easeOutAtan(float t,float b,float c,float d){
-  return c * (1 - atan(t/d) * 4/PI) + b;
 }
 
 bool checkEase(std::string e) {

@@ -1,7 +1,8 @@
-
+/* GAME - Helpers functions for the game
+ * Copyright (c) 2018, 2019 ShinProg
+ * Under MIT license, more informations in the file LICENSE
+ */
 #include "game.h"
-
-/*Basic game functions*/
 
 
 int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
@@ -10,7 +11,6 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
   sf::Time time,timer2;
   int secs=0;
   sf::Vector2u temp=scr.getSize();
-  //int scrh=temp.y;
   bool cityfaded=false,credit1faded=false;
   sf::Texture tcredit1,tcredit2,tcity,tcityglitch;
   sf::Sprite credit1,credit2,city,cityglitch;
@@ -19,10 +19,7 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
   if (!tcredit2.loadFromFile("resources/img/background/credit2.jpg"))         {return error("error loading credit2.jpg");}    else {credit2.setTexture(tcredit2);}
   if (!tcity.loadFromFile("resources/img/background/city.jpg"))               {return error("error loading city.jpg");}       else {city.setTexture(tcity);city.setPosition(sf::Vector2f(0, 100));}
   if (!tcityglitch.loadFromFile("resources/img/background/cityglitch.jpg"))   {return error("error loading cityglitch.jpg");} else {cityglitch.setTexture(tcityglitch);cityglitch.setPosition(sf::Vector2f(0, 100));}
-  Button *script[3];script[0] = new Button(font,"It was an ordinary Day",50,sf::Color::White);script[1] = new Button(font,"Without a single obstacle in my path",50,sf::Color::White);script[2] = new Button(font,"Until such time that the sound of the annoying cricket",30,sf::Color::White);script[3] = new Button(font,"disapparead",70,sf::Color::Red);
-  for (unsigned int i=0;i<4;i++) {script[i]->centerx(scrw,0,true);}
 
-  sf::sleep(sf::seconds(0.5));
   scr.clear();
   prologue.play();
   do {
@@ -43,12 +40,13 @@ int intro(sf::RenderWindow &scr,int scrw,int scrh,sf::Font&font) {
         scr.draw(credit2);
       }
       if (secs>=12 and secs<=22) {if (cityfaded) {scr.draw(city);} else {cityfaded = fadein(scr,city,1);}} else if (secs>=24){scr.draw(cityglitch);}
-    //subtitles
+    /*/subtitles
       if (secs>12 and secs<15)            {scr.draw(script[0]->gettxt());}
       else if (secs>15 and secs<18)       {scr.draw(script[1]->gettxt());}
       else if (secs>=20 and secs<=22)     {scr.draw(script[2]->gettxt());}
       else if (secs==23)                  {scr.draw(cityglitch);}
       else if (secs>=24 and secs<26)      {scr.draw(cityglitch);scr.draw(script[3]->gettxt());}
+      */
     sf::Event event;
       while (scr.pollEvent(event)) {switch (event.type){
         case sf::Event::Closed: scr.close();  return 0;  break;
@@ -184,7 +182,14 @@ std::string calc(std::string input){
     strcpy(test, input.c_str());
     Calc evaluator;
     evaluator.parse(test);
-    return std::to_string(evaluator.get_numeric_answer());
+    std::string result = std::to_string(evaluator.get_numeric_answer()); //convert to str
+    // the result is always a float number not simplified : we need to reduce it
+    int i = result.size(); //cursor 1 char before EOL
+    while (result[i-1] == '0') i--; //delete all 0
+    if (result[i-1] == '.') i--; //if before cursor is a dot then delete it
+    result.erase(i, result.size()); 
+
+    return result;
   } catch(ParsingException ex) {
     std::cerr <<"! Evaluation Error : " << ex.get_msg() << ", at char #" << ex.get_col()<<" (Expression : "<<input<<")\n";
     return "";

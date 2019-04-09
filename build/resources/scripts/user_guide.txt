@@ -1,18 +1,13 @@
 entity <character> e
-entity <image> bg = "resources/img/background/ltmNight.jpg"
+entity <image> bg = "resources/img/background/user_guide.jpg"
 set <name> e = Guide d'introduction
 set <image> e = bg
 animate <position> e /to 0 /time 1
 animate <opacity> e /from 0 /to 255 /time 700
 
-set a = 4
-set b = 2
-
-say e "Test calcul " "%a%+%b% = ${ %a%+%b%}" "(2+7)²*10 + 9*10 = ${(2+7)^2*10+9*10}"
-
 say e "Bonjour et merci d'avoir téléchargé ce fangame ! Avant de commencer à jouer, veuillez lire ces instructions afin d'avoir la meilleure expérience utilisateur possible."
 
-set <name> e = Note pour cette version (Retaining's Memories -preview- V2.1.01)
+set <name> e = Note pour cette version (Retaining's Memories V2.1.01)
 say e "Ce jeu étant encore en état de développement, nous misons sur le scénario plutôt que les fonctions secondaires !"
 say e "Tous les mini-jeux prévus pour la version finale sont donc remplacés par de simples choix dans le novel. Aussi, certains points de ce guide ne sont pas à tenir compte telle que la présentation des différentes timelines."
 
@@ -21,7 +16,9 @@ say e "Pour parcourir les choix, utilisez les flèches haut et bas de votre clav
 
 :choice
   choice "Concept" = concept "Histoire" = histoire "Contrôles" = controles "Infos recommmandées" = infos "Astuces/anecdotes" = astuces "Crédits" = credits "quitter" = continue
-  say JEU "appuyez sur la barre espace pour quitter"
+  animate <opacity> e /from 255 /to 0 /time 1000 /ease inSine
+  $ay none " "
+  wait 1500
   end up
 
 :concept

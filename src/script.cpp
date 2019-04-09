@@ -47,7 +47,7 @@
     std::ifstream file(loadfile.c_str());
     if (file) {
       while (std::getline(file,str)) { //read line by line
-        str = replaceVars(str); // replace variables (%var%) by its value if available.
+        //str = replaceVars(str); // replace variables (%var%) by its value if available.
         if (std::regex_match(str, match, command)) { //this is a command
           std::array<std::string,3> results = {match[1], match[2], std::to_string(i)}; //command, arg, line N°
           scriptInstructions.push_back(results); //store the command
@@ -124,9 +124,8 @@
             }
           }
         }
-        if (waiting && currentTime>=waitLimit )          displaying = waiting = false;
+        if (waiting && currentTime>=waitLimit) displaying = waiting = false;
         scr.clear();
-        drawBackground(scr);
         drawCharacters(scr);
         if (drawingChoices) drawChoices(scr);
         else drawText(scr);
@@ -155,16 +154,11 @@
   bool Script::cmdSet(std::string arg, unsigned int line){
     std::smatch match;
     std::string suffix = rgVarNames+ "=" +rgSpacestar+ "(.+)";
-    std::regex setC( rgSpacestar + "/c" + suffix),
-      setO( rgSpacestar + '<'+rgVarNames+'>' + suffix),
-      setOC( rgSpacestar + "/c" + rgSpacestar+'<'+rgVarNames+'>' + suffix),
-      set(  rgSpacestar + suffix);
-    if (std::regex_match(arg, match, setOC))     assign(match[2],calc(match[3]),match[1]);  
-    else if (std::regex_match(arg, match, setC)) assign(match[1],calc(match[2]));
-    else if (std::regex_match(arg, match, setO)) assign(match[2],match[3],match[1]);
-    else if (std::regex_match(arg, match, set))  assign(match[1],match[2]);
+    std::regex setO(rgSpacestar + '<'+rgVarNames+'>' + suffix), set(rgSpacestar + suffix);
+    if (std::regex_match(arg, match, setO))     assign(match[2],match[3],match[1]);
+    else if (std::regex_match(arg, match, set)) assign(match[1],match[2]);
     else{
-      std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : set (/c) (<object>) variable = value).\n";
+      std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : set (<object>) variable = value).\n";
       return false;
     }
     return true;
@@ -216,7 +210,8 @@
         if (allCharacters.find(character) != allCharacters.end()) {
           titleColor = allCharacters[character].titleColor;
           actualCharacter = getValue(character+".name");
-        } else actualCharacter = character;
+        } else
+          actualCharacter = character;
 
         displaySay.clear();
         displayedTxt.clear();
@@ -261,9 +256,8 @@
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : Wait {n milliseconds|pause}).\n"; return false;
     return true;
   }
-//
+
   bool Script::cmdChoice(std::string arg, unsigned int line){
-    //std::regex syntax("[\"]([^\".]+)[\"]"+rgSpacestar+'='+rgVarNames);
     std::regex syntax("[\"]([^\"]+)[\"]"+rgSpacestar+'='+rgSpacestar+"([^\\s]+)");
     auto words_begin = std::sregex_iterator(arg.begin(), arg.end(), syntax);
     auto words_end = std::sregex_iterator();
@@ -276,7 +270,7 @@
     choiceErrLine = line;
     return true;
   }
-//
+
   bool Script::cmdAnimate(std::string arg, unsigned int line){
     std::regex syntax(rgSpacestar+'<'+rgVarNames+'>'+rgVarNames+"(.+)");
     std::smatch match;
@@ -300,7 +294,6 @@
       try { timeVal = sf::milliseconds( std::stoi(time) ); }
         catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
         catch (const std::out_of_range &e) {std::cerr<<"! Line "<<line<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
-
     // Execute
       if (allCharacters.find(entity) !=  allCharacters.end()){ //for character entities
         if (object == "position"){
@@ -323,7 +316,7 @@
     //SPECIAL VALUES (that need to be treated)
     if (object != ""){
       // Image object
-      if (object == "image" && (var == "__scene__" || getValue(var+".type")=="character")) {
+      if (object == "image" && getValue(var+".type")=="character") {
         if (allSprites.find(value) ==  allSprites.end() )
           {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
         else if (getValue(var+".type")=="character")//assumes that allCharacters[var] is defined. Else => value is valid.
@@ -333,17 +326,11 @@
         //for Characters
         if (getValue(var+".type")=="character"){
           if (allCharacters.find(var) ==  allCharacters.end() )
-            {std::cerr<<"! Declaring the object [Color or SpriteColor] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character|image entity !)\n"; return false;}
+            {std::cerr<<"! Declaring the object [Color or SpriteColor] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
           else if (object == "spriteColor")
             allCharacters[var].spriteColor = hex2color(value);
           else
             allCharacters[var].titleColor = hex2color(value);
-        // or for images
-        } else if (getValue(var+".type")=="image"){
-          if (allSprites.find(var) ==  allSprites.end() )
-            {std::cerr<<"! Declaring the object [Color] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character|image entity !)\n"; return false;}
-          else
-            allSprites[var].setColor(hex2color(value));
         }
       }
       var += '.'+object; // but do the most important stuff
@@ -360,26 +347,24 @@
   }
 //
   std::string Script::replaceVars(std::string str, bool replaceEvals){
-    std::string newStr=str, retval;
+    std::string newStr=str;
+    std::regex regexVar("%([_\\.[:alnum:]]+)%"), regexEval("\\$\\{([^\\}]+)\\}");
+
     //part 1 : replace %variables%
-    std::regex regexVar("%([_\\.[:alnum:]]+)%");
     auto words_begin = std::sregex_iterator(str.begin(), str.end(), regexVar);
     for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
       std::smatch match = *i;
       std::string strInitial = match.str(), strReplaced = getValue( strInitial.substr(1, strInitial.size()-2) );
       if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
     }
-    if (replaceEvals){
-      //part 2 : replace ${evaluations}s
-      std::regex regexEval("\\$\\{([^\\}]+)\\}");
-      words_begin = std::sregex_iterator(newStr.begin(), newStr.end(), regexEval);
-      for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
-        std::smatch match = *i;
-        std::string strInitial = match.str(), strReplaced = calc(strInitial.substr(2, strInitial.size()-3));
-        if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
-      }
+    //part 2 : replace ${evaluations}s
+    str = newStr; //create copy
+    words_begin = std::sregex_iterator(str.begin(), str.end(), regexEval);
+    for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
+      std::smatch match = *i;
+      std::string strInitial = match.str(), strReplaced = calc(strInitial.substr(2, strInitial.size()-3));
+      if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
     }
-
     return newStr;
   }
 
@@ -435,14 +420,6 @@
     return true;
   }
 
-  bool Script::drawBackground(sf::RenderWindow& scr){
-    const std::string bgRef( getValue("__scene__.image") );
-    if (allSprites.find(bgRef) !=  allSprites.end() ){ //if inside the map then it's a valid image
-      scr.draw(allSprites[bgRef]);
-      return true;
-    } else return false;
-  }
-
   bool Script::drawCharacters(sf::RenderWindow& scr){ //it isn't really optimized yet...
     for (auto& v: allCharacters)
       v.second.update(scr, clock.getElapsedTime());
@@ -477,7 +454,7 @@
     //draw the text box
     scr.draw(bar);
     //draw the title
-      sf::Text titleTxt(actualCharacter,fontURW,24);
+      sf::Text titleTxt((actualCharacter == "none") ? "" : actualCharacter,fontURW,24);
       titleTxt.setFillColor(titleColor);
       titleTxt.setPosition(265,barPosY+5);
       scr.draw(titleTxt);

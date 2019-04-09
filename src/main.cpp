@@ -1,15 +1,18 @@
+/* Retaining's memories, Version 2.1.01 (Preview)
+ * Copyright (c) 2018, 2019 ShinProg
+ * Under MIT license, more informations in the file LICENSE
+ */
+
 #include "game.h"
-#include "button.h"
 #include "script.h"
-#include "easing.h"
 
 int main() {
-    std::cout <<"\nRetaining's memory - Preview, Version 2.1.01 \n"<<
-                "\n (c) The KageScan community - Under the MIT/X11 license,please read COPYRIGHT file"<<
+    std::cout <<"\nRetaining's memories, Version 2.1.01 (Preview) \n"<<
+                "\n (c) ShinProg - Under the MIT/X11 license, please read LICENSE file"<<
                 "\n\n"<<std::flush;
     std::array<unsigned int, 3> screenOptions = {0,60,0};
     const int scrw = 1280, scrh = 720;
-    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
+    sf::RenderWindow scr(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);//,sf::Style::Fullscreen
     scr.clear(sf::Color::White);
     scr.display();
     scr.setFramerateLimit(screenOptions[1]);
@@ -54,11 +57,6 @@ int main() {
     options.choices[1] += std::to_string(screenOptions[1]);
     options.choices[2] += (screenOptions[2]==1) ? "OUI" : "NON";
     options.position(sf::Vector2f(scrw/2 - 385,20));
-    //options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
-    /*TileMap map;
-    map.load("resources/img/tilesets/school.png",sf::Vector2u(32,32),18,3);*/
-    //bool testspace(false);
-    //LOOP
     while (scr.isOpen()) {
       sf::Event event;
       while (scr.pollEvent(event)) {switch (event.type){
@@ -93,7 +91,7 @@ int main() {
               case 0:
                 screenOptions[0] = (screenOptions[0]==1) ? 0 : 1;
                 options.choices[0] = "Plein Écran : "; options.choices[0] += (screenOptions[0]==1) ? "OUI" : "NON";
-                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memory V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
+                scr.create(sf::VideoMode(scrw,scrh), "Retaining's memories V2.1.01", (screenOptions[0]==1) ? sf::Style::Fullscreen : sf::Style::Default);
                 break;
               case 1: {
                 switch (screenOptions[1]) {
@@ -140,7 +138,6 @@ int main() {
         menubgMore.setColor(sf::Color(255,255,255,alpha));
         iter = alpha*0.001;
         menubg.setScale(1+iter,1+iter);
-        menubg.setRotation(alpha*0.07);
         if (getms>1500) optionInTrans = optionOutTrans = false;
       } else if (novelInTrans){
         int getms = clock.getElapsedTime().asMilliseconds() - animStart.asMilliseconds();

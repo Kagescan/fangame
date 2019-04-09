@@ -1,13 +1,16 @@
+/* CALC - Evaluate a math expression from a string.
+ * Copyright (c) 2018, 2019 ShinProg
+ * Under MIT license, more informations in the file LICENSE
+ */
+
 #ifndef CALC_H
 #define CALC_H
-
 #include <vector>
 #include <cstring>
 #include <cmath>
 #include <limits>
 #include <cassert>
 #include <cstdarg>
-
 #define   MAX_TOKEN_ID      1000
 
 enum Errores {

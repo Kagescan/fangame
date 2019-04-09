@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
-#include "button.h"
 #include "easing.h"
 #include "calc.h"
 #include <fstream>
