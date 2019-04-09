@@ -1,4 +1,4 @@
-# Retaining's Memories (v2.1.01)
+# Retaining's Memories (v2.1.02)
 Retaining's Memories : A kagerou project fangame.
 This is a remake of a fangame that I made with my community.
 The version 1 was written in Python but in this remake, the entire code is in C++.
@@ -6,13 +6,9 @@ The version 1 was written in Python but in this remake, the entire code is in C+
 ### status
 **UNDER DEVELOPEMENT**
 
-Game Version : 2.1 (Alpha version : 01)
+Game Version : 2.1 (Alpha version : 02)
 
-Features of this version : 
-- can read script files and interpret them
-- basic visual novel features with var and math evaluations support
-
-Features coming soon : 
+working : 
 - conditions
 - varfiles
 - mapfiles
