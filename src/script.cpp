@@ -74,7 +74,7 @@
     //engine loop
     while (iread<scriptInstructions.size() && playing){
       //std::cout<<scriptInstructions[iread][2]<<" : "<<scriptInstructions[iread][0]<<"("<<scriptInstructions[iread][1]<<")\n";
-      std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1]);
+      std::string command = str_tolower(scriptInstructions[iread][0]), arguments = replaceVars(scriptInstructions[iread][1], true);
       unsigned int line = std::stoul(scriptInstructions[iread][2]);
 
       if (command == "goto")  cmdGoto(arguments,line);
@@ -358,8 +358,8 @@
       return varValues[varName];
     else return "";
   }
-
-  std::string Script::replaceVars(std::string str){
+//
+  std::string Script::replaceVars(std::string str, bool replaceEvals){
     std::string newStr=str, retval;
     //part 1 : replace %variables%
     std::regex regexVar("%([_\\.[:alnum:]]+)%");
@@ -369,14 +369,15 @@
       std::string strInitial = match.str(), strReplaced = getValue( strInitial.substr(1, strInitial.size()-2) );
       if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
     }
-    //part 2 : replace ${evaluations}
-
-    std::regex regexEval("\\$\\{([^\\}]+)\\}");
-    words_begin = std::sregex_iterator(newStr.begin(), newStr.end(), regexEval);
-    for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
-      std::smatch match = *i;
-      std::string strInitial = match.str(), strReplaced = calc(strInitial.substr(2, strInitial.size()-3));
-      if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
+    if (replaceEvals){
+      //part 2 : replace ${evaluations}s
+      std::regex regexEval("\\$\\{([^\\}]+)\\}");
+      words_begin = std::sregex_iterator(newStr.begin(), newStr.end(), regexEval);
+      for (std::sregex_iterator i = words_begin; i != std::sregex_iterator(); ++i) {
+        std::smatch match = *i;
+        std::string strInitial = match.str(), strReplaced = calc(strInitial.substr(2, strInitial.size()-3));
+        if (strReplaced != "") strReplace(newStr, strInitial, strReplaced);
+      }
     }
 
     return newStr;

@@ -38,7 +38,7 @@ class Script {
         //bool drawCharacters(sf::RenderWindow& scr, sf::Time currentTime, sf::Time initialTime);
         
         std::string getValue(std::string varName);
-        std::string replaceVars(std::string str);
+        std::string replaceVars(std::string str, bool replaceEvals = false);
 
       /* Var declarations*/
         //std::vector<std::string[2]> scriptInstructions;

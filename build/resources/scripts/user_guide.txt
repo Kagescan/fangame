@@ -4,7 +4,11 @@ set <name> e = Guide d'introduction
 set <image> e = bg
 animate <position> e /to 0 /time 1
 animate <opacity> e /from 0 /to 255 /time 700
-say e "Bonjour, ceci est un test de calcul mental ! " "2+2 = ${2+2}" "(2+7)²*10 + 9*10 = ${(2+7)^2*10+9*10}"
+
+set a = 4
+set b = 2
+
+say e "Test calcul " "%a%+%b% = ${ %a%+%b%}" "(2+7)²*10 + 9*10 = ${(2+7)^2*10+9*10}"
 
 say e "Bonjour et merci d'avoir téléchargé ce fangame ! Avant de commencer à jouer, veuillez lire ces instructions afin d'avoir la meilleure expérience utilisateur possible."
 
