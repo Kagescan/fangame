@@ -1,9 +1,17 @@
+entity <save> mem = "resources/save.txt"
 entity <image> bg_default = "resources/img/background/menu2.jpg"
 entity <image> bg_oldDays = "resources/img/background/oldDaysBG.jpg"
 entity <image> bg_route01 = "resources/img/background/route1BG.jpg"
 
 entity <character> $bg
 set <image> $bg = bg_default
+
+echo INITIAL : 
+save log mem
+set <foo> mem = bar
+set <ttt> mem = foobar
+save write mem
+
 :: -- STORY TABLE --
 
 ::>The old days 
@@ -53,8 +61,7 @@ goto noAnimate
 
   :intro
     animate <spriteChange> $bg /to bg_oldDays /time 1000
-    choice "---CHAPITRES D'INTRODUCTION : ---" = intro "1. The Old Days" = intro "Retour" = choice1
-    echo runScript "/resources/scripts/theOldDays.txt"
+    choice "---CHAPITRES D'INTRODUCTION : ---" = intro "1. The Old Days" = theOldDays "Retour" = choice1
   goto choice1
 
   :choice2
@@ -64,7 +71,6 @@ goto noAnimate
 
     :musiques
       choice "--ROUTE 01 : --" = musiques "1. Artificial ENEmy" = musiques "2. Mekakushi Code" = musiques "3. Let's play !" = musiques "4. Outer Science" = musiques "Retour" = choice2
-      echo runScript "/resources/scripts/theOldDays.txt"
     goto choice1
 
     :XX
@@ -82,3 +88,9 @@ goto noAnimate
     goto choice1
 
 
+:theOldDays
+  playScript resources/scripts/theOldDays.txt
+  
+  save reload mem
+  save log mem
+goto choice1

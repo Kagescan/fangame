@@ -2,7 +2,6 @@
 #define SCRIPT_H
 
 #include "game.h"
-//#include "easing.h"
 #include <cmath>
 #include <regex>
 
@@ -26,10 +25,13 @@ class Script {
         bool cmdWait(std::string arg, unsigned int line);
         bool cmdAnimate(std::string arg, unsigned int line);
         bool cmdChoice(std::string arg, unsigned int line);
+        bool cmdPlayScript(std::string arg, unsigned int line, sf::RenderWindow& scr);
+        bool cmdSave(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
         bool newSprite(std::string name, std::string path, unsigned int line);
+        bool newSave(std::string varName, std::string loadfile, unsigned int line);
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
         bool drawCharacters(sf::RenderWindow& scr);
         bool drawChoices(sf::RenderWindow& scr);

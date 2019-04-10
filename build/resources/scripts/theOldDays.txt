@@ -1,3 +1,8 @@
+entity <save> mem = "resources/save.txt"
+set <ttt> mem = The old days
+
+save write mem
+
 entity <character> $bg
 entity <character> empty
 entity <character> temp

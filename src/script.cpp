@@ -61,7 +61,7 @@
       }
       return true;
     } else {
-      std::cerr<<"! : File Error (unable to open/read the file) !\n";
+      std::cerr<<"! : File Error (unable to open/read the file ["<<loadfile<<"] ) !\n";
     }
     return false;
   }
@@ -84,6 +84,8 @@
       else if (command == "music")  cmdMusic(arguments, line);
       else if (command == "wait") cmdWait(arguments, line);
       else if (command == "animate") cmdAnimate(arguments, line);
+      else if (command == "playscript") cmdPlayScript(arguments, line, scr);
+      else if (command == "save") cmdSave(arguments, line);
       else if (command == "say")  displaying = cmdSay(arguments, line);
       else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
       else if (command == "echo") cmdEcho(arguments);
@@ -171,7 +173,7 @@
 
     if (std::regex_match(arg, match, entity)){
       std::string entityType = str_tolower(match[1]);
-      std::array<std::string, 3> availableTypes= {"image","music","sound"};
+      std::array<std::string, 4> availableTypes= {"image","music","sound", "save"};
       if (entityType=="character")
         newCharacter(match[2],"",line);
       else if (in_array(entityType,availableTypes)){ //do something for nothing
@@ -191,6 +193,8 @@
         newMusic(match[2], match[3], line);
       else if (entityType == "sound")
         newSound(match[2], match[3], line);
+      else if (entityType == "save")
+        newSave(match[2], match[3], line);
     } else {
       std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected: entity <type> variable (= \"value\") ).\n";
       return false;
@@ -311,6 +315,32 @@
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options values).\n";
     return false;
   }
+
+  bool Script::cmdPlayScript(std::string arg, unsigned int line, sf::RenderWindow& scr){
+    Script toRead(arg);
+    toRead.read(scr);
+    return true;
+  }
+
+  bool Script::cmdSave(std::string arg, unsigned int line){
+    std::smatch match;
+    if ( std::regex_match(arg, match, std::regex("(write|reload|log)"+rgVarNames)) ) { 
+      std::string varName = match[2], loadfile = getValue(varName);
+      std::ifstream file(loadfile.c_str());
+      if (match[1] == "reload") newSave(varName, loadfile, line);
+      else if (file) {
+        std::ofstream ostrm(loadfile);//,std::ios::trunc);
+        for (auto& v: varValues) if (v.first.size() > varName.size() && v.first.substr(0,1+varName.size()) == varName+'.') {
+          if (match[1] == "log") std::cout<<"I ("<<loadfile<<") : "<<v.first<<" -> "<<v.second<<"\n";
+          else if (match[1] == "write")
+            ostrm<<v.first.substr(1+varName.size())<<' '<<v.second<<'\n';
+        }
+        ostrm.close();
+        return true;
+      } else std::cerr<<"! Line "<<line<<": Var error (The variable "<<loadfile<<" is not a valid save entity, or has a wrong value/file path)\n";
+    } else std::cerr<<"! Line "<<line<<": Syntax Error (Syntax expected : save [write|reload|log] entityName)\n";
+    return false;
+  }
 //---------------HELPERS
   bool Script::assign(std::string var, std::string value, std::string object){
     //SPECIAL VALUES (that need to be treated)
@@ -345,7 +375,7 @@
       return varValues[varName];
     else return "";
   }
-//
+
   std::string Script::replaceVars(std::string str, bool replaceEvals){
     std::string newStr=str;
     std::regex regexVar("%([_\\.[:alnum:]]+)%"), regexEval("\\$\\{([^\\}]+)\\}");
@@ -420,12 +450,41 @@
     return true;
   }
 
+  bool Script::newSave(std::string varName, std::string loadfile, unsigned int line){
+    std::ifstream file(loadfile.c_str());
+    assign(varName, loadfile);
+    assign(varName, "save", "type");
+    std::regex command(rgVarNames+"[[:space:]]+(.+)");
+    std::smatch match;
+    std::string str;
+    unsigned int i(0);
+    if (file) { //file exists
+      std::cout<<"TEST";
+      while (std::getline(file,str)) { //read line by line
+        if (std::regex_match(str, match, command)) { 
+          assign(varName, match[2], match[1]);
+        } else if (!blank(str)) {
+          std::cerr<<"! SAVE FILE ("<<loadfile<<':'<<i<<"): Syntax Error (No value for the variable)\n";
+          return false;
+        }
+        i++;
+      }
+      return true;
+    } else { //file not exists
+      std::cerr << "W SAVE FILE ("<<loadfile<<") : File Warning (The file don't exist. This program will write a new file to this location.)\n";
+      std::ofstream ostrm(loadfile);
+      ostrm << "type save\n";
+      ostrm.close();
+    }
+    return true;
+  }
+
   bool Script::drawCharacters(sf::RenderWindow& scr){ //it isn't really optimized yet...
     for (auto& v: allCharacters)
       v.second.update(scr, clock.getElapsedTime());
     return true;
   }
-//
+
   bool Script::drawChoices(sf::RenderWindow& scr){
     //var init
       arrowIter++;
@@ -449,7 +508,7 @@
     }
     return true;
   }
-//
+
   bool Script::drawText(sf::RenderWindow& scr){
     //draw the text box
     scr.draw(bar);
