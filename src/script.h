@@ -27,6 +27,8 @@ class Script {
         bool cmdChoice(std::string arg, unsigned int line);
         bool cmdPlayScript(std::string arg, unsigned int line, sf::RenderWindow& scr);
         bool cmdSave(std::string arg, unsigned int line);
+        bool cmdFor(std::string arg, unsigned int line);
+        bool cmdEnd(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
@@ -43,7 +45,8 @@ class Script {
 
       /* Var declarations*/
         //std::vector<std::string[2]> scriptInstructions;
-        std::vector< std::array<std::string,3> > scriptInstructions;
+        std::vector< std::array<std::string,3> > scriptInstructions, forActions;
+        std::vector<unsigned int> forBlocks;
         std::vector<sf::String> displaySay;
         std::vector<bool> displayedTxt;
         std::map<std::string, int> labelRefs;

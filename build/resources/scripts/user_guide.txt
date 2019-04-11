@@ -19,7 +19,7 @@ say e "Pour parcourir les choix, utilisez les flèches haut et bas de votre clav
   animate <opacity> e /from 255 /to 0 /time 1000 /ease inSine
   $ay none " "
   wait 1500
-  end up
+  quit up
 
 :concept
   set <name> e = CONCEPT

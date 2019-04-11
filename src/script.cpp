@@ -86,10 +86,12 @@
       else if (command == "animate") cmdAnimate(arguments, line);
       else if (command == "playscript") cmdPlayScript(arguments, line, scr);
       else if (command == "save") cmdSave(arguments, line);
+      else if (command == "for") cmdFor(scriptInstructions[iread][1], line);
+      else if (command == "end") cmdEnd(arguments, line);
       else if (command == "say")  displaying = cmdSay(arguments, line);
       else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
       else if (command == "echo") cmdEcho(arguments);
-      else if (command == "end") playing = false;
+      else if (command == "quit") playing = false;
       else 
         std::cerr << "! Line "<<line<<" : Unknown command : ["<<command<<"]\n";
 
@@ -341,6 +343,31 @@
     } else std::cerr<<"! Line "<<line<<": Syntax Error (Syntax expected : save [write|reload|log] entityName)\n";
     return false;
   }
+//
+  bool Script::cmdFor(std::string arg, unsigned int line){
+    std::vector<std::string> args = split(arg,',');
+    if (args.size()==3){
+      std::vector<std::string> initVals = split(args[0],':');
+      assign( removeTabs(initVals[0]) , (initVals.size()==2) ? initVals[1] : "0");
+      forBlocks.push_back( iread );
+      forActions.push_back({initVals[0], args[1], args[2]});
+    } else std::cerr<<"! Line "<<line<<" : Syntax Error (Syntax expected : for variable[:initialValue=0], condition, newVarValue).\n";
+    return true;
+  }
+  bool Script::cmdEnd(std::string arg, unsigned int line){
+    if (arg == "for"){
+      if (!forActions.empty()){
+        assign( forActions.back()[0], calc(replaceVars( forActions.back()[2] )) );
+        if ( calc(replaceVars( forActions.back()[1] )) != "1"){
+          forActions.pop_back();
+          forBlocks.pop_back();
+        } else iread = forBlocks.back();
+      } else {
+        std::cerr<< "! Line "<<line<<" : Usage Error (closing a for block, but no block declared).\n";
+      } 
+    }
+    return true;
+  }
 //---------------HELPERS
   bool Script::assign(std::string var, std::string value, std::string object){
     //SPECIAL VALUES (that need to be treated)
@@ -451,25 +478,20 @@
   }
 
   bool Script::newSave(std::string varName, std::string loadfile, unsigned int line){
-    std::ifstream file(loadfile.c_str());
-    assign(varName, loadfile);
-    assign(varName, "save", "type");
-    std::regex command(rgVarNames+"[[:space:]]+(.+)");
-    std::smatch match;
     std::string str;
     unsigned int i(0);
+    std::ifstream file(loadfile.c_str());
+    std::smatch match;
+    assign(varName, loadfile);
+    assign(varName, "save", "type");
     if (file) { //file exists
-      std::cout<<"TEST";
       while (std::getline(file,str)) { //read line by line
-        if (std::regex_match(str, match, command)) { 
+        if (std::regex_match(str, match, std::regex(rgVarNames+"[[:space:]]+(.+)") ))
           assign(varName, match[2], match[1]);
-        } else if (!blank(str)) {
-          std::cerr<<"! SAVE FILE ("<<loadfile<<':'<<i<<"): Syntax Error (No value for the variable)\n";
-          return false;
-        }
+        else if (!blank(str))
+          std::cerr<<"W SAVE FILE ("<<loadfile<<':'<<i<<"): Syntax Error Warning (No value for the variable)\n";
         i++;
       }
-      return true;
     } else { //file not exists
       std::cerr << "W SAVE FILE ("<<loadfile<<") : File Warning (The file don't exist. This program will write a new file to this location.)\n";
       std::ofstream ostrm(loadfile);

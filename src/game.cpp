@@ -101,6 +101,10 @@ sf::String toSfString(std::string theStdString) {
     return true;
   }
 
+  std::string removeTabs(std::string str){
+    for (int i(0);str[i];i++) if (!isspace(str[i])) return str.substr(i);
+    return str;
+  }
   std::string removeSpaces(std::string str) { //remove all spaces from a string
     std::string output;
     output.reserve(str.size()); // optional, avoids buffer reallocations in the loop

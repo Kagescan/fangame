@@ -1,8 +1,3 @@
-entity <save> mem = "resources/save.txt"
-set <ttt> mem = The old days
-
-save write mem
-
 entity <character> $bg
 entity <character> empty
 entity <character> temp
@@ -13,6 +8,7 @@ entity <image> bg1="resources/img/todo/decor1.jpg"
 entity <image> bg2="resources/img/todo/decor2.jpg"
 entity <image> bg3="resources/img/todo/decor3.jpg"
 entity <image> bg4="resources/img/background/ltmNight.jpg"
+
 entity <image> aya1 = "resources/img/characters/ayano/Ayasmile 1.png"
 entity <image> aya2 = "resources/img/characters/ayano/Ayasmile 2.png"
 entity <image> aya3 = "resources/img/characters/ayano/Ayawhat 1.png"
@@ -20,8 +16,10 @@ entity <image> aya4 = "resources/img/characters/ayano/Ayawhat 2.png"
 entity <image> aya5 = "resources/img/characters/ayano/Ayawhat 3.png"
 entity <image> aya6 = "resources/img/characters/ayano/Ayawhat 4.png"
 entity <image> aya7 = "resources/img/characters/ayano/Ayasmile 3.png"
+
 entity <sound> oldDays01 = "resources/sounds/OldDays01.ogg"
 entity <sound> oldDays02 = "resources/sounds/OldDays02.ogg"
+
 entity <music> ost3 = "resources/sounds/OST03.ogg"
 entity <music> ost4 = "resources/sounds/OST04.ogg"
 entity <music> ost5 = "resources/sounds/OST05.ogg"
@@ -78,7 +76,7 @@ set <image> $bg = bg1
     say Shintaro "J'ai vraiment besoin de mon porte feuille." "Mais d'un autre côté..." "Sûr ?"
     choice "Aller prendre le porte feuille" = porte3 "Fuir" = continue
       say JEU "En théorie, la route 02 est débloquée... Mais comme ce jeu est en développement, on s'en arrête là !"
-      end fadeblack
+      quit fadeblack
 
 :porte3
   ::change background
@@ -109,7 +107,7 @@ set <image> $bg = bg1
   say Ayano "Shintaro...-kun ?"
   animate <spriteChange> Ayano /to aya1 /time 800
   music ost3 play loop
-  say Ayano "Ah j'en suis sûre, tu est bien Shintaro Kisaragi !"
+  say Ayano "Ah j'en suis sûre, tu es bien Shintaro Kisaragi !"
   say Shintaro "Hu~um ???"
     animate <spriteChange> Ayano /to aya3 /time 800
   say Ayano "Hé, tu ne me reconnais pas ?" "Ayano Tateyama !"
@@ -119,7 +117,7 @@ set <image> $bg = bg1
   say Shintaro "*perplexe*" "Aya...no Tateyama... ?" "... ..." "AH !"
   set <name> Ayano = Ayano
   choice "*JE SAIS !!*" = continue "*Mieux vaux ne pas dire ce que je pense*" = euhh
-      say Shintaro "M-Mais tu est celle qui est toujours en dessous de la moyenne !"
+      say Shintaro "M-Mais tu es celle qui est toujours en dessous de la moyenne !"
     animate <spriteChange> Ayano /to aya3 /time 800
       say Ayano "Ah !Heu..." "C'est tout ce dont tu te rappelles de moi ?"
       say Shintaro "J'ai raison ?"
@@ -168,7 +166,7 @@ set <image> $bg = bg1
   say Ayano "Hé euh... Excuse moi !"
   say Shintaro "... " "Hum ?" "Qu'est-ce qu'il y a ?"
   animate <spriteChange> Ayano /to aya1 /time 800
-  say Ayano "Shintaro-kun, tu est super intelligent, n'est-ce pas ?" "T'as encore eu 100 à la dernière interro !"
+  say Ayano "Shintaro-kun, tu es super intelligent, n'est-ce pas ?" "T'as encore eu 100 à la dernière interro !"
   say Shintaro "Eh ? Qui t'as permis de regarder ma note ?"
     animate <spriteChange> Ayano /to aya4 /time 800
   say Ayano "Hum? Euh... Désolée !"
@@ -246,7 +244,7 @@ set <image> $bg = bg1
     ::`4`color`bar`255,255,255
     ::`3`0`resources/img/sprite/ayano2.png
   animate <opacity> Ayano /from 0 /to 255 /ease inExpo /time 800
-  say Ayano "Shintaro-kun, tu est vraiment intelligent. Tu étudie chez toi tout les jours ?"
+  say Ayano "Shintaro-kun, tu es vraiment intelligent. Tu étudie chez toi tout les jours ?"
   say Shintaro "Pas particulièrement. Je n'ai lu les manuels qu'une seule fois."
     animate <spriteChange> Ayano /to aya1 /time 800
   say Ayano "Et tu réussit quand même à ce point ?!" "Incroyable... Tu est vraiment intelligent."
@@ -283,6 +281,7 @@ set <image> $bg = bg1
       animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
       $ay none " "
     wait 1700
+      set <spriteColor> $bg = #ffffff
       set <image> $bg = bg4
       animate <spriteChange> Ayano /to aya4 /time 1
       animate <opacity> $bg /from 0 /to 255 /ease outSine /time 1000
@@ -320,5 +319,4 @@ animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
 animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
 $ay none " "
 wait 1700
-end fadeBlack
-end up
+quit fadeBlack

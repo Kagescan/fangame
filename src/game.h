@@ -18,7 +18,7 @@ bool fadeout(sf::RenderWindow &scr,int scrw=1280,int scrh=720,int time=0); //sho
 bool fadein(sf::RenderWindow &scr,sf::Sprite &texture,int time=0);
 
 bool blank(std::string str);
-
+std::string removeTabs(std::string str);
 std::string removeSpaces(std::string str);
 std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
 std::string str_tolower(std::string s);

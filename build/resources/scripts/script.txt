@@ -6,11 +6,11 @@ entity <image> bg_route01 = "resources/img/background/route1BG.jpg"
 entity <character> $bg
 set <image> $bg = bg_default
 
-echo INITIAL : 
+::echo INITIAL : 
 save log mem
-set <foo> mem = bar
-set <ttt> mem = foobar
-save write mem
+::set <foo> mem = bar
+::set <ttt> mem = foobar
+::save write mem
 
 :: -- STORY TABLE --
 
@@ -54,10 +54,10 @@ goto noAnimate
 :choice1
   animate <spriteChange> $bg /to bg_default /time 1000
   :noAnimate
-  choice "---CHAPITRES : ---" = choice1 "Chapitres d'introduction" = intro "Chapitres en cours d'écriture" = choice2 "Quitter" = continue
+  choice "---CHAPITRES : ---" = choice1 "tests" = runTests "Chapitres d'introduction" = intro "Chapitres en cours d'écriture" = choice2 "Quitter" = continue
   animate <opacity> $bg /from 255 /to 0 /time 1000
   wait 700
-  end up
+  quit up
 
   :intro
     animate <spriteChange> $bg /to bg_oldDays /time 1000
@@ -90,7 +90,11 @@ goto noAnimate
 
 :theOldDays
   playScript resources/scripts/theOldDays.txt
-  
+goto choice1
+
+:runTests
+  save log mem
+  playScript resources/scripts/test.txt
   save reload mem
   save log mem
 goto choice1

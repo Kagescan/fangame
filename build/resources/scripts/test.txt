@@ -1,0 +1,15 @@
+entity <save> mem = "resources/save.txt"
+set <ttt> mem = The old days
+
+save write mem
+
+
+for i, %i%<5, %i%+1
+  set a = TEST : 
+  for j, %j%<=10, %j%+2
+    set a = %a% %j%
+  end for
+  echo FIN %i% : %a%
+end for
+
+quit up
