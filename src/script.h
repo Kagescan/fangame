@@ -28,6 +28,8 @@ class Script {
         bool cmdPlayScript(std::string arg, unsigned int line, sf::RenderWindow& scr);
         bool cmdSave(std::string arg, unsigned int line);
         bool cmdFor(std::string arg, unsigned int line);
+        bool cmdIf(std::string arg, unsigned int line);
+        bool cmdElse(std::string arg, unsigned int line);
         bool cmdEnd(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
@@ -74,7 +76,7 @@ class Script {
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;
         bool playing, waiting, displaying, pause, animatingTextFinished, drawingChoices;
-        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine;
+        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine, ifBlocks;
         float arrowIter;
         int barPosY, fps;
         //std::map<std::string, std::string> varTypes;

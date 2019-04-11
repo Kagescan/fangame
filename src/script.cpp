@@ -12,7 +12,7 @@
     loadfile = file;
     playing = true;
     waiting = displaying = drawingChoices = false;
-    arrowIter = iread = substrPos = choicePos = 0;
+    arrowIter = iread = substrPos = choicePos = ifBlocks = 0;
     textSpeed = 1;
     if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
       std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
@@ -55,7 +55,13 @@
           std::string tagContent = match[1];
           if (tagContent[1] != ':') labelRefs[tagContent] = scriptInstructions.size()-1; //store if not a comment
         } else {
-          if (!blank(str)) std::cerr<<"! Line "<<i<<": Syntax Error (no arguments given or invalid command)\n";
+          if (!blank(str)) {
+            const std::string command = removeSpaces(str);
+            if (command == "quit" || command =="else")
+              scriptInstructions.push_back({command, " ", std::to_string(i)});
+            else 
+              std::cerr<<"! Line "<<i<<": Syntax Error (no arguments given or invalid command)\n";
+          }
         }
         i++;
       }
@@ -87,6 +93,8 @@
       else if (command == "playscript") cmdPlayScript(arguments, line, scr);
       else if (command == "save") cmdSave(arguments, line);
       else if (command == "for") cmdFor(scriptInstructions[iread][1], line);
+      else if (command == "if") cmdIf(arguments, line);
+      else if (command == "else") cmdElse(arguments, line);
       else if (command == "end") cmdEnd(arguments, line);
       else if (command == "say")  displaying = cmdSay(arguments, line);
       else if (command == "$ay")  displaying = cmdSay(arguments, line, true);
@@ -356,6 +364,55 @@
     } else std::cerr<<"! Line "<<line<<" : Syntax Error (Syntax expected : for variable[:initialValue=0], condition, newVarValue).\n";
     return true;
   }
+//
+  bool Script::cmdIf(std::string arg, unsigned int line){
+    ifBlocks++;
+    const unsigned int thisBlock = ifBlocks;
+    if (calc(arg) == "1"){ //true
+      return true; //continue
+    } else { //false
+      std::string whileCommand, whileArg;
+      do {
+        iread++;
+        if (iread>=scriptInstructions.size()){
+          std::cerr<<"! IF block, started line "<<line<<" : Block Error (Reached end of file and the if block isn't closed with a end if)\n";
+          return playing = false;
+        }
+        whileCommand = str_tolower(scriptInstructions[iread][0]);
+        whileArg = scriptInstructions[iread][1];
+        if (whileCommand == "if") ifBlocks++;
+        else if (whileCommand == "end" && whileArg == "if"){
+          ifBlocks--;
+          if (ifBlocks == thisBlock-1) break; //reached end if of this block so quit the loop
+        }
+      } while (whileCommand != "else" && ifBlocks == thisBlock);
+      return true;
+    }
+  }
+
+  bool Script::cmdElse(std::string arg, unsigned int line){ //assume that there were a previous if
+    const unsigned int thisBlock = ifBlocks;
+    if (ifBlocks > 0) {
+      std::string command, whileArg, whileCommand;
+      do {
+        iread++;
+        if (iread>=scriptInstructions.size()){
+          std::cerr<<"! Line "<<line<<" : Block Error (Reached end of file and the else block isn't closed with a end if)\n";
+          return playing = false;
+        }
+        command = str_tolower(scriptInstructions[iread][0]);
+        whileArg = scriptInstructions[iread][1];
+
+        if (command == "if") ifBlocks++;
+        else if (command == "end" && whileArg == "if") ifBlocks--;
+      } while (command == "end" && whileArg == "if" && ifBlocks == thisBlock-1);
+      return true;
+    } else {
+      std::cerr<<"! Line "<<line<<" : Block Error (using else block without a previous if command)\n";
+    }
+    return false;
+  }
+
   bool Script::cmdEnd(std::string arg, unsigned int line){
     if (arg == "for"){
       if (!forActions.empty()){
@@ -365,8 +422,12 @@
           forBlocks.pop_back();
         } else iread = forBlocks.back();
       } else {
-        std::cerr<< "! Line "<<line<<" : Usage Error (closing a for block, but no block declared).\n";
+        std::cerr<< "! Line "<<line<<" : Block Error (closing a for block, but no block declared).\n";
       } 
+    } else if (arg == "if"){
+      if (ifBlocks <= 0)
+        std::cerr<<"! Line "<<line<<" : Block Error (closing a if block, but no block declared).\n";
+      else ifBlocks--;
     }
     return true;
   }
