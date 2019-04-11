@@ -7,7 +7,7 @@ entity <character> $bg
 set <image> $bg = bg_default
 
 ::echo INITIAL : 
-save log mem
+::save log mem
 ::set <foo> mem = bar
 ::set <ttt> mem = foobar
 ::save write mem

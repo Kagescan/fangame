@@ -331,19 +331,21 @@
       std::ifstream file(loadfile.c_str());
       if (match[1] == "reload") newSave(varName, loadfile, line);
       else if (file) {
-        std::ofstream ostrm(loadfile);//,std::ios::trunc);
-        for (auto& v: varValues) if (v.first.size() > varName.size() && v.first.substr(0,1+varName.size()) == varName+'.') {
-          if (match[1] == "log") std::cout<<"I ("<<loadfile<<") : "<<v.first<<" -> "<<v.second<<"\n";
-          else if (match[1] == "write")
+        if (match[1] == "write"){
+          std::ofstream ostrm(loadfile, std::ios::out | std::ios::trunc);
+          for (auto& v: varValues) if (v.first.size() > varName.size() && v.first.substr(0,1+varName.size()) == varName+'.')
             ostrm<<v.first.substr(1+varName.size())<<' '<<v.second<<'\n';
-        }
-        ostrm.close();
+          ostrm.close();
+        } else if (match[1] == "log"){
+          for (auto& v: varValues) if (v.first.size() > varName.size() && v.first.substr(0,1+varName.size()) == varName+'.')
+            std::cout<<"I ("<<loadfile<<") : "<<v.first<<" -> "<<v.second<<"\n";  
+        } 
         return true;
       } else std::cerr<<"! Line "<<line<<": Var error (The variable "<<loadfile<<" is not a valid save entity, or has a wrong value/file path)\n";
     } else std::cerr<<"! Line "<<line<<": Syntax Error (Syntax expected : save [write|reload|log] entityName)\n";
     return false;
   }
-//
+
   bool Script::cmdFor(std::string arg, unsigned int line){
     std::vector<std::string> args = split(arg,',');
     if (args.size()==3){
@@ -494,9 +496,9 @@
       }
     } else { //file not exists
       std::cerr << "W SAVE FILE ("<<loadfile<<") : File Warning (The file don't exist. This program will write a new file to this location.)\n";
-      std::ofstream ostrm(loadfile);
-      ostrm << "type save\n";
-      ostrm.close();
+      std::ofstream ostrm(loadfile, std::ios::out | std::ios::trunc);
+        ostrm << "type save\n";
+        ostrm.close();
     }
     return true;
   }
