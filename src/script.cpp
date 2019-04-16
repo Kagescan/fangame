@@ -238,7 +238,7 @@
         animatingTextFinished=false;
       return !noWait;
     }
-    std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : say variable \"line 1\" \"line2\" ... ).\n";
+    std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : say variable \"line 1\" \"line 2\" ... ).\n";
     return false;
   }
 
@@ -368,6 +368,7 @@
   bool Script::cmdIf(std::string arg, unsigned int line){
     ifBlocks++;
     const unsigned int thisBlock = ifBlocks;
+    bool condition = true;
     if (calc(arg) == "1"){ //true
       return true; //continue
     } else { //false
@@ -384,8 +385,16 @@
         else if (whileCommand == "end" && whileArg == "if"){
           ifBlocks--;
           if (ifBlocks == thisBlock-1) break; //reached end if of this block so quit the loop
+        } else if (whileCommand == "else" && ifBlocks == thisBlock){ //else command
+          std::smatch match;
+          if (blank(whileArg))
+            condition = false;
+          else if ( std::regex_match(whileArg, match, std::regex(rgSpacestar+"if"+rgSpacestar+"(.+)")) )
+            if (calc(replaceVars(match[1])) == "1")
+              condition = false;
+          else std::cerr<<"! Line "<<scriptInstructions[iread][2]<<" : Syntax Error (syntax expected : else (if [statement]) )\n";
         }
-      } while (whileCommand != "else" && ifBlocks == thisBlock);
+      } while (condition);
       return true;
     }
   }
@@ -595,14 +604,12 @@
   }
 
   bool Script::drawText(sf::RenderWindow& scr){
-    //draw the text box
-    scr.draw(bar);
+    scr.draw(bar);    //draw the text box
     //draw the title
       sf::Text titleTxt((actualCharacter == "none") ? "" : actualCharacter,fontURW,24);
       titleTxt.setFillColor(titleColor);
       titleTxt.setPosition(265,barPosY+5);
       scr.draw(titleTxt);
-
     sf::Text tempTxt("",fontDeja, 20); tempTxt.setFillColor(txtColor);
       for (unsigned int i=0; i<displaySay.size();i++){ //fetch all lines
         tempTxt.setPosition(270,barPosY+41+29*i);
@@ -642,10 +649,8 @@
 
 
   sf::Color hex2color(std::string arg){
-
     std::smatch match;
     std::regex color_regex("#([a-fA-F0-9]{2}[a-fA-F0-9]{2}[a-fA-F0-9]{2})([a-fA-F0-9]{2})?");
-
     if (std::regex_search(arg, match, color_regex)){
       std::string hex = match[1];
       if (match[2]=="") hex += "ff";
