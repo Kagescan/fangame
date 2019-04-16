@@ -76,9 +76,9 @@ class Script {
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;
         bool playing, waiting, displaying, pause, animatingTextFinished, drawingChoices;
-        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine, ifBlocks;
+        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine, ifBlocks, animChoiceType;
         float arrowIter;
-        int barPosY, fps;
+        int barPosY, fps, animAlpha;
         //std::map<std::string, std::string> varTypes;
 };
 

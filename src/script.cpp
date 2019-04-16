@@ -12,7 +12,7 @@
     loadfile = file;
     playing = true;
     waiting = displaying = drawingChoices = false;
-    arrowIter = iread = substrPos = choicePos = ifBlocks = 0;
+    arrowIter = iread = substrPos = choicePos = ifBlocks = animAlpha = 0;
     textSpeed = 1;
     if (!fontDeja.loadFromFile("resources/fonts/DejaVuSans.ttf"))
       std::cerr<<"INTERNAL ERROR : Can't load default font [resources/fonts/DejaVuSans.ttf] !!";
@@ -115,16 +115,12 @@
                 playing = false;
                 break;
               case sf::Keyboard::Space : case sf::Keyboard::Return:
-                if(!drawingChoices){
+                if (!drawingChoices){
                   if (animatingTextFinished && !waiting) {
                     displaying = false;
                     arrowIter = 0;
                   } else animatingTextFinished = true;
-                } else {
-                  cmdGoto(allChoices[choicePos][1].toAnsiString(), choiceErrLine);
-                  displaying = drawingChoices = false;
-                  arrowIter = 0;
-                }
+                } else animChoiceType = 2;
                 break;
               case sf::Keyboard::Down:
                 if (drawingChoices) choicePos = (choicePos+1>=allChoices.size()) ? 0 : choicePos+1;
@@ -282,6 +278,7 @@
     }
     drawingChoices = true;
     choiceErrLine = line;
+    animChoiceType = 1;
     return true;
   }
 
@@ -364,7 +361,6 @@
     } else std::cerr<<"! Line "<<line<<" : Syntax Error (Syntax expected : for variable[:initialValue=0], condition, newVarValue).\n";
     return true;
   }
-//
   bool Script::cmdIf(std::string arg, unsigned int line){
     ifBlocks++;
     const unsigned int thisBlock = ifBlocks;
@@ -451,6 +447,15 @@
         else if (getValue(var+".type")=="character")//assumes that allCharacters[var] is defined. Else => value is valid.
           allCharacters[var].sprite = allSprites[value];
       //Color object
+      } else if (object == "y") {
+        if ( getValue(var+".type")=="character" && allCharacters.find(var) != allCharacters.end() ){
+          if (value=="reload")
+            allCharacters[var].reloadY();
+          else try { allCharacters[var].reloadY(std::stoi(value));}
+            catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<scriptInstructions[iread][2]<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+            catch (const std::out_of_range &e) {std::cerr<<"! Line "<<scriptInstructions[iread][2]<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
+        } else 
+          {std::cerr<<"! Declaring the object [y] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
       } else if (object == "color" || object == "spriteColor") {
         //for Characters
         if (getValue(var+".type")=="character"){
@@ -461,6 +466,7 @@
           else
             allCharacters[var].titleColor = hex2color(value);
         }
+        else if (var=="__bar__") bar.setColor(hex2color(value)); //for the bar
       }
       var += '.'+object; // but do the most important stuff
     } 
@@ -578,15 +584,39 @@
       v.second.update(scr, clock.getElapsedTime());
     return true;
   }
-
+//
   bool Script::drawChoices(sf::RenderWindow& scr){
-    //var init
+    int originX = winSize.x/2 - 385, originY = winSize.y/2 - allChoices.size()*50 / 2;
+    sf::Text tempTxt("",fontDeja,27); 
+    //Animation
+    if (animChoiceType==0){ //default
       arrowIter++;
-      int originX = winSize.x/2 - 385,
-        originY = winSize.y/2 - allChoices.size()*50 / 2,
-        colorIter = 32*std::sin(0.1*arrowIter)+32;
-      sf::Text tempTxt("",fontDeja,27); tempTxt.setFillColor(sf::Color::Black);
+      int colorIter = 32*std::sin(0.1*arrowIter)+32;
+      tempTxt.setFillColor(sf::Color::Black);
       choiceBarSelected.setColor( sf::Color(127+colorIter,255,127+colorIter) );
+    } else if (animChoiceType==1){ //fadeIn
+      animAlpha+=8;
+      if ( animAlpha >= 255){ //fadeIn finished
+        animChoiceType = 0;
+        animAlpha = 255;
+      }
+      tempTxt.setFillColor(sf::Color(0,0,0,animAlpha));
+      choiceBar.setColor( sf::Color(255,255,255, animAlpha) );
+      choiceBarSelected.setColor( sf::Color(255,255,255, animAlpha) );
+    } else if (animChoiceType==2){ //fadeOut
+      if (animAlpha<=2){ //fadeout finished
+        arrowIter = animAlpha = 0;
+        animChoiceType = 1;
+        cmdGoto(allChoices[choicePos][1].toAnsiString(), choiceErrLine);
+        return displaying = drawingChoices = false;
+      } else {
+        tempTxt.setFillColor(sf::Color(0,0,0,animAlpha));
+        choiceBar.setColor( sf::Color(255,255,255, animAlpha) );
+        choiceBarSelected.setColor( sf::Color(127,255,127, animAlpha) );
+        animAlpha-=8;
+      }
+    }
+
     for (unsigned int i(0); i<allChoices.size(); i++){
       if (i==choicePos) {
         choiceBarSelected.setPosition(originX,originY+i*50);

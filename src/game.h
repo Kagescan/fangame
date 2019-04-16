@@ -57,6 +57,7 @@ class Character {
       bool animateOpacity(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line);
       bool animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr);
       bool update(sf::RenderWindow& scr, sf::Time curr);
+      int reloadY(int changeY = 0);
       sf::Sprite sprite;
       sf::Color titleColor, spriteColor;
     private: 
