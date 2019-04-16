@@ -7,45 +7,50 @@ entity <character> $bg
 set <image> $bg = bg_default
 set <color> __bar__ = #00000000
 
-::echo INITIAL : 
-::save log mem
-::set <foo> mem = bar
-::set <ttt> mem = foobar
-::save write mem
+set choixMusiques = none
+set choixWtng = none
+set choixRM1 = none
+set choixRM2 = none
+set choixRx = none
+set choixRA = none
 
 :: -- STORY TABLE --
+:: Total : 13 chapters (story)
 
-::>The old days 
-:: +-> (first time) : Route 01
-::   +-> 1. Artificial ENEmy
-::   +-> 2. Mekakushi Code
-::   +-> 3. Let's play !
-::   +-> 4. Outer Science
-:: +-> (Don't met ayano) : Route M
-::   +-> 1. Lost Days
-::   +-> 2. My friend
-::   +-> 3. Neet under the blasing sun
-::   +-> 4. The secret organisation
-::   +-> 5. Eye Abilities
-::   +-> 6. RED
-::   +-> 7. I will find you
-::   +-> 8. Imaginary Reload
-::   +-> 9. Retaining Eyes
-:: +-> Route XX
-::   +-> 1. Yuukei Yesterday
-::   +-> 2. Tomei answer
-::   +-> 3. Let me die
-::   +-> (no suicide) : Mekaku Route
-::     +-> 1. Artificial ENEmy
-::     +-> 2. Kaien Panzermast
-::     +-> 3. Lost Time Memory
-::     +-> 4. Do you remember ?
-::     +-> 5. Summertime Record
-:: Total : 13 chapters
+set choixIntro = "1. The Old Days" = theOldDays
+  set choixWtng = %choixWtng% "Route 01" = musiques
+    set choixMusiques = %choixMusiques% "1. Artificial ENEmy" = artificialEnemy
+    set choixMusiques = %choixMusiques% "2. Mekakushi Code" = musiques
+    set choixMusiques = %choixMusiques% "3. Let's play !" = musiques
+    set choixMusiques = %choixMusiques% "4. Outer Science" = musiques 
+  set choixWtng = %choixWtng% "Route M" = manga 
+    set choixRM1 = %choixRM1% "1. Lost Days" = manga
+    set choixRM1 = %choixRM1% "2. My friend" = manga
+    set choixRM1 = %choixRM1% "3. Neet under the blasing sun" = manga
+    set choixRM1 = %choixRM1% "4. The secret organisation" = manga
+    set choixRM1 = %choixRM1% "5. Eye Abilities" = manga 
+    set choixRM2 = %choixRM2% "6. Children Record" = manga
+    set choixRM2 = %choixRM2% "7. RED" = manga
+    set choixRM2 = %choixRM2% "8. I will find you" = manga
+    set choixRM2 = %choixRM2% "9. Imaginary Reload" = manga
+    set choixRM2 = %choixRM2% "10. Retaining Eyes" = manga 
+  set choixWtng = %choixWtng% "Route XX" = XX
+    set choixRx   = %choixRx% "1. Yuukei Yesterday" = XX
+    set choixRx   = %choixRx% "2. Tomei Answer" = XX
+    set choixRx   = %choixRx% "3. Let me die" = XX
+    set choixRx   = %choixRx% "Mekaku Route" = anime
+    set choixWtng = %choixWtng% "Route Mekaku" = anime
+      set choixRA = %choixRA% "1. Artificial ENEmy" =artificialEnemy
+      set choixRA = %choixRA% "2. Kaien Panzermast" = anime
+      set choixRA = %choixRA% "3. Lost Time Memory" = anime
+      set choixRA = %choixRA% "4. Do you remember ?"=anime
+      set choixRA = %choixRA% "5. Summertime Record"=anime
+
 
 ::>(only if the entire game is finished)
 :: +-> Route M-X
 :: +-> Seek At Mekakucity
+:: (2 spin-off)
 
 animate <position> $bg /from 0 /to 0 /time 1
 animate <opacity> $bg /from 0 /to 255 /time 1000
@@ -62,35 +67,39 @@ goto noAnimate
 
   :intro
     animate <spriteChange> $bg /to bg_oldDays /time 1000
-    choice "---CHAPITRES D'INTRODUCTION : ---" = intro "1. The Old Days" = theOldDays "Retour" = choice1
+    choice "---CHAPITRES D'INTRODUCTION : ---" = intro %choixIntro% "Retour" = choice1
   goto choice1
 
   :choice2
     animate <spriteChange> $bg /to bg_route01 /time 1000
-    choice "---Chapitres en cours d'écriture : ---" = choice2 "Route 01" = musiques "Route XX" = XX "Route M" = manga "Retour" = continue
+    choice "---Chapitres en cours d'écriture : ---" = choice2 %choixWtng% "Retour" = continue
   goto choice1
 
     :musiques
-      choice "--ROUTE 01 : --" = musiques "1. Artificial ENEmy" = musiques "2. Mekakushi Code" = musiques "3. Let's play !" = musiques "4. Outer Science" = musiques "Retour" = choice2
+      choice "--ROUTE 01 : --" = musiques %choixMusiques% "Retour" = choice2
     goto choice1
 
     :XX
-      choice "--ROUTE XX : --" = XX "1. Yuukei Yesterday" = XX "2. Tomei Answer" = XX "3. Let me die" = XX "Mekaku Route" = anime "Retour" = choice2
+      choice "--ROUTE XX : --" = XX %choixRx% "Retour" = choice2
     goto choice1
 
       :anime
-       choice "--MEKAKU ROUTE : --"=anime "1. Artificial ENEmy"=anime "2. Kaien Panzermast" = anime "3. Lost Time Memory" = anime "4. Do you remember ?"=anime "5. Summertime Record"=anime "Retour" = XX
+       choice "--MEKAKU ROUTE : --"=anime %choixRA% "Retour" = XX
       goto choice1
 
     :manga
-      choice "Route M (1/2)" = manga "1. Lost Days" = manga "2. My friend" = manga "3. Neet under the blasing sun" = manga "4. The secret organisation" = manga "5. Eye Abilities" = manga "Retour" = choice2 "Next ->" = continue
-      choice "Route M (2/2)" = manga "6. Children Record" = manga "7. RED" = manga "8. I will find you" = manga "9. Imaginary Reload" = manga "10. Retaining Eyes" = manga "Retour" = choice2 "<- Preview" = manga
+      choice "Route M (1/2)" = manga %choixRM1% "Retour" = choice2 "Next ->" = continue
+      choice "Route M (2/2)" = manga %choixRM2% "Retour" = choice2 "<- Preview" = manga
       
     goto choice1
 
 
 :theOldDays
   playScript resources/scripts/theOldDays.txt
+goto choice1
+
+:artificialEnemy
+  playScript resources/scripts/artificialEnemy.txt
 goto choice1
 
 :runTests

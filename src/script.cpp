@@ -470,6 +470,7 @@
       }
       var += '.'+object; // but do the most important stuff
     } 
+    if (value=="none") value = "";
     //ASSIGN
     varValues[var] = value;
     return true;
