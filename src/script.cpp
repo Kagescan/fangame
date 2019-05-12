@@ -316,8 +316,8 @@
             sf::Sprite fromVal = (allSprites.find(from) !=  allSprites.end()) ? allSprites[from] : allCharacters[entity].sprite,
               toVal = allSprites[to];
             allCharacters[entity].animateSprite(fromVal, toVal, timeVal, clock.getElapsedTime());
-          } else {std::cerr<<"! Line "<<line<<" : Var Error ( ["<<entity<<"] is not a valid sprite entity.)\n"; return false; }
-        } else {std::cerr<<"! Line "<<line<<" : Var Error ( Unknown object ["<<object<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
+          } else {std::cerr<<"! Line "<<line<<" : Var Error (["<<entity<<"] is not a valid sprite entity.)\n"; return false; }
+        } else {std::cerr<<"! Line "<<line<<" : Var Error (Unknown object ["<<object<<"]. The entity 'character' works only with the object position or spriteChange )\n"; return false; }
       } else { std::cerr<<"! Line "<<line<<" : Var Error (This command works only with the entity 'Character', and ["<<entity<<"] is not a valid entity.)\n"; return false; }
     } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : animate <object> variable /options values).\n";
     return false;
