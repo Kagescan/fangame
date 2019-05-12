@@ -441,12 +441,14 @@
     //SPECIAL VALUES (that need to be treated)
     if (object != ""){
       // Image object
-      if (object == "image" && getValue(var+".type")=="character") {
-        if (allSprites.find(value) ==  allSprites.end() )
-          {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
-        else if (getValue(var+".type")=="character")//assumes that allCharacters[var] is defined. Else => value is valid.
-          allCharacters[var].sprite = allSprites[value];
-      //Color object
+      if (object == "image") {
+        if (getValue(var+".type")=="character"){
+          if (allSprites.find(value) ==  allSprites.end() )
+            {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
+          else //assumes that allCharacters[var] is defined. Else => value is valid.
+            allCharacters[var].sprite = allSprites[value];
+        } else  {std::cerr<<"! Declaring the object [image] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
+      // Y object
       } else if (object == "y") {
         if ( getValue(var+".type")=="character" && allCharacters.find(var) != allCharacters.end() ){
           if (value=="reload")
@@ -454,8 +456,8 @@
           else try { allCharacters[var].reloadY(std::stoi(value));}
             catch (const std::invalid_argument &e) {std::cerr<<"! Line "<<scriptInstructions[iread][2]<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
             catch (const std::out_of_range &e) {std::cerr<<"! Line "<<scriptInstructions[iread][2]<<" : Option Error (The value of /time must be a positive number)\n"; return false;}
-        } else 
-          {std::cerr<<"! Declaring the object [y] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
+        } else  {std::cerr<<"! Declaring the object [y] for the variable ["<<var<<"] : Var Error (The variable ["<<var<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
+      // Color or spriteColor Object.
       } else if (object == "color" || object == "spriteColor") {
         //for Characters
         if (getValue(var+".type")=="character"){

@@ -8,11 +8,14 @@ The version 1 was written in Python but in this remake, the entire code is in C+
 
 Game Version : 2.1 (Alpha version : 02)
 
-working : 
-- conditions
-- varfiles
-- mapfiles
-- ...
+to do : 
+* functions
+
+done : 
+* conditions
+* for loop
+* save files
+* langage documentation
 
 ### compiling
 
