@@ -92,7 +92,7 @@ Event en particulier : Ayano devient yaki
 
 petit commentaire de yaki (fin originale de the old days ?)...
 
-**route animé : la plus importante !!** (accessible en remplacement à la route manga)  
+L'objectif des patchs de la 2.3 est d'inclure la **route animé : la plus importante !!** (accessible en remplacement à la route manga)  
 Même si incohérence chronologique, c'est de ce qu'il y a de plus judicieux.
 
 - Yuukei quartet (Jeu possible : headphone actors)
@@ -118,18 +118,29 @@ Le jeu est considéré comme complet *des traductions sont envisageables !*
 ## Patchs créés durant la 2.4 (objectifs uniquement)
 
 * route novel
-* ajouter des passages ou des bonus (Bonne question...)  
-  Seek At Mekakucity me semble faisable !!
 
 
 ## Patchs créés durant la 2.5 (objectifs uniquement)
 
-__route M-X__
+L'objectf est de faire la __route M-X__
+
 - Accessible après avoir fait toutes les routes
 - Une fois avoir fini le jeu, yaki brise le quatrième mur et l'intéret du jeu est dévoilé :D (ENFINNNNN !!!!!)
 - (Introduction de Yaki)
 - On va suivre l'histoire de yoomters à la lettre (et intégrer des jeux comme la cuisine et le dessin)
 Event : Bah le jeu est parfait !! Y'aura sans doute le reload à rajouter.
+
+## Patchs créés durant la 2.6 (objectifs uniquement)
+
+L'objectif est d'intégrer ayano en tant que personnage jouable.
+
+Bref, un PDV d'ayano
+
+## Patchs créés durant la 2.7 (objectifs uniquement)
+
+L'objectif est de créer encore un spin-off : seek at mekakucity
+
+On pourra s'inspirer des dessins officiels.
 
 
 ## -- Release 2.?? --
