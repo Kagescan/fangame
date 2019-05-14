@@ -19,7 +19,7 @@ Actually, this langage have no name... Examples inside this document aren't test
 * I.   This langage and the general syntax
 * II.  Variables and math evaluations
 * III. Statements
-* IV.  Commands Overview
+* IV.  The real documentation !
 
 ## I. This langage and the general syntax
 
@@ -229,10 +229,155 @@ echo As you can see, the variable isn't local ! >>%i%<<
 
 ...
 
-> ##  IV. Command Overview (doc coming soon)
-> 
-> ### A - Control
->
-> #### 1)
->
-> ### B - Display
+##  IV. The real documentation !
+
+* `...` means that the argument can be repeated.
+* `WORLD` in uppercase can be replaced with a specified value.
+* `wolrd` in lowercase cannot be relpaced (pre-defined arguments...)
+* An argument between `()` is optionnal.
+* An argument between `[choice1 | choice2 | ...]` is an argument that can be `choice1`, or `choice2`, or `...`.
+* A `variable string` is a string of characters that contains only `$`, `_`, `.`, and alpha-numerics characters (A->Z, a->z, 0->9)
+
+
+### A - Langage basics
+
+**set**  
+Syntax : `set (<OBJECT>) VARIABLE = VALUE`
+
+* OBJECT : can be a `variable string`. 
+* VARIABLE : can be a `variable string`. 
+* VALUE : can be anything but not an empty value.
+
+**entity**  
+Syntax : `entity <TYPE> VARIABLE (= VALUE)`
+
+* TYPE : can be a `variable string`. 
+* VARIABLE : can be a `variable string`. 
+* VALUE : can be anything but not an empty value.
+
+**for**  
+Syntax :
+```
+for VARIABLE(:INT), BOOL, NEWVARVALUE
+  BLOCK
+end for
+```
+
+* VARIABLE : can be a `variable string`. 
+* INT : can be a number. Optionnal (Default value : 0).
+* BOOL : can be `0` or `1`
+
+**if else else if**  
+Syntax :
+```
+if BOOL
+  BLOCK
+(else if BOOL
+  BLOCK)
+(else if BOOL
+  BLOCK ...)
+(else
+  BLOCK)
+end if
+```
+* BOOL : can be `0` or `1`
+* BLOCK : can be a delimited and fixed block of code.
+
+Note : using `goto` or `choice` inside a block may cause issues (Not tested, just stimulated the situation in my brain)
+In that case, you can use labels and mathematics evaluations !
+
+```
+echo Testing if 1+1 equal 2 
+goto conditionA_${1+1==2}
+  :conditionA_1
+    echo test
+    ::In a if block, this could make a bug !
+    goto coolLabel
+
+  :conditionA_0
+    echo this is false ! Strange...
+:endConditionA
+
+quit fade
+
+:coolLabel
+  echo This is true ! 1+1 == 2
+quit fade
+```
+
+**end**  
+Syntax : `end [for|if]`
+
+**echo**  
+Syntax : `echo ANY`
+
+* ANY : can be anything.
+
+### B - Engine control
+
+**playscript**  
+Syntax : `playscript PATH`
+
+* PATH : relative path of a script file.
+
+**goto**  
+Syntax : `goto LABEL`
+
+* LABEL : can be a `variable string`. Jump into the line of the label.
+
+**save**  
+Syntax : `save [write|reload|log] ENTITYNAME`
+
+* ENTITYNAME : can be a `variable string`.
+* `write` : write the data into the file associated with ENTITYNAME.
+* `reload` : update the data from the file associated with ENTITYNAME.
+* `log` : output (in std::cout) the data associated with ENTITYNAME.
+
+**quit**  
+Syntax : `quit ANIMATION`
+
+* ANIMATION : not implemented yet. So at the moment, can be anything.
+
+
+### C - Rendering / Interactions
+**animate**  
+Syntax : `animate <OBJECT> VARIABLE /OPTION VALUE (/OPTION VALUE...)`
+
+1. OBJECT : can be a `variable string`.
+2. VARIABLE : can be a `variable string`.
+3. (pair of arguments + ...)
+  * OPTION : can be a `variable string`.
+  * VALUE : depends of the OPTION.
+
+**music**  
+Syntax : `music ENTITYNAME [play|stop|pause]`
+1. ENTITYNAME : can be a `variable string`.
+2. [play|stop|pause]
+  * `play` : play the audio associated with ENTITYNAME 
+  * `stop` : stop the audio associated with ENTITYNAME
+  * `pause` : pause the audio associated with ENTITYNAME
+
+**choice**  
+Syntax : `choice "TITLE" = LABEL "TITLE" = LABEL ("TITLE" = LABEL ...)`
+1. (pair of arguments + ...)
+  * TITLE : can be anything else `"`.
+  * LABEL : can be a `variable string`.
+
+**say / $ay**  
+Syntax : `[say|$ay] CHARACTER "LINE" ("LINE" ...)`
+1. [say|$ay]
+  * `say` : will wait the user input to continue
+  * `$ay` : will not wait the user input to continue. It is usually associated with the `wait` command.
+2. can be a `variable string`.
+3. LINE : can be anything else `"`.
+
+**wait**  
+Syntax : `wait [MILLISECONDS|pause]`
+
+1. [MILLISECONDS|pause]
+  * MILLISECONDS : can be an integrer.
+  * `pause` : wait the user input to continue.
+
+### D - Entities
+
+> soon

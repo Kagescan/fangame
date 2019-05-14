@@ -1,13 +1,13 @@
-# Versions
+# Versions à venir (objectifs)
 
 > ***TROP D'AMBITIOOONNNNNNNNNNNNNN***
 
 Ce fichier est un répertoire complet du scénario envisagé, en fonction des versions.
 
-Un code de version est composé comme suit :
-* **Version principale** : n'importe quelle version est fille d'un code. Un changement du numéro d'une version principale implique une reconstruction complête du code à partir de zéro, ou à une release finale. Ainsi, elle ne change que très rarement.
-* **Version beta** : Il s'agit d'une très grande mise à jour qui donne résultat à une release avec un processus de build. Un changement de numéro d'une version beta implique que assez de patchs sur la version précédente ont été suffisants.
-* **Version alpha** (ou Patchs) : Il s'agit de modifications majeures telles que des ajouts de fonctionnalités. Les version alpha son créés sur une nouvelle branche git, et sont ensuite fusionnées avec la branche master. Ces versions sont créées à partir d'une succession d'ajouts mineurs.
+Un code de version est composé comme suit (A.b.cc):
+* A \ **Version principale** : n'importe quelle version est fille d'un code. Un changement du numéro d'une version principale implique une reconstruction complête du code à partir de zéro, ou à une release finale. Ainsi, elle ne change que très rarement.
+* b \ **Version beta** : Il s'agit d'une très grande mise à jour qui donne résultat à une release avec un processus de build. Un changement de numéro d'une version beta implique que assez de patchs sur la version précédente ont été suffisants.
+* cc \ **Version alpha** (ou Patchs) : Il s'agit de modifications majeures telles que des ajouts de fonctionnalités. Les version alpha son créés sur une nouvelle branche git, et sont ensuite fusionnées avec la branche master. Ces versions sont créées à partir d'une succession d'ajouts mineurs.
 
 Note : si nous suivons cette logique, alors la version 2.1.0 aurait dû être la version 3.0.0 . Seulement, aucune build n'a été faite sur la version 2.0 .
 
@@ -29,11 +29,14 @@ __En cours : patch 02__
 
 __patch 03__  
 * Ajout des fonctions (qui fonctionnent un peu comme le batch, c'est à dire avec call)
-* Modification du chapitre The Old Days (qui doit être théoriquement finalisé).  
-  Si des dessins sont en attente, alors on passe au patch suivant, et on ajoutera plus tard.
+* Ajout des animations de fin.
+* Mise à jour du système de worldwrap
+
 
 __patch 04__  
-Début d'écriture de la Route Musiques. *On passe le passage du yuukei quartet : on continue directement sur le présent.*
+* Début d'écriture de la Route Musiques (chapitre 1). *On passe le passage du yuukei quartet : on continue directement sur le présent.*
+
+
 > **Rappel de la route musique :**
 > Accessible automatiquement la première fois, et est remplacée par l'animé lorsqu'elle est finie !
 > On peut par contre la rejouer à partir du menu :3
@@ -44,14 +47,18 @@ Début d'écriture de la Route Musiques. *On passe le passage du yuukei quartet 
 > Event en particulier : reload.
 
 __patch 05__
+* Création des chapitres 2,3,4
+* En attente des dessins.
+
+__patch 06__
 * Ajout du système de maps
 * Création des sprites de maps de Shintaro et d'Ayano (en utilisant MMD et la magie du montage de l'écran vert.)
 * Adaptation d'une map pour The Old Days
 
-__patch 06__
+__patch 07__
 * Création des maps de la route musique (respectivement : la chambre de Shintaro, le centre commercial étage 3 et 7, la base du mekakushi-dan - chambre de kido, le parc d'attraction [rdc, manoir, salle des glasses], et la rue près de l'air de jeu des enfants)
 
-__patch 07__
+__patch 08__
 
 * Ajouter les jeux...
 
@@ -62,7 +69,7 @@ __À faire lorsque le temps le permet__
 ## Version 2.2
 
 Première release :  
-Une fois la route musique complêtement terminée, alors la release 2.2 peut être faite.
+Une fois la route musique complêtement terminée (avec les dessins), alors la release 2.2 peut être faite.
 
 Après avoir joué la route musique, alors choix possible avec la route manga (partir -> pas de rencontre avec ayano).  
 Sinon suite sur l'animé. Mais ça, c'est pour la release 2.3.

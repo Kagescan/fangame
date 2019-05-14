@@ -254,7 +254,7 @@
         else if (cmd=="stop")   allSounds[match[1]].stop();
         return true;
       } else { std::cerr<<"! Line "<<line<<" : Var Error (The variable ["<<match[1]<<"] is not a valid music entity"; return false; }
-    } std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : music variable {play|stop|pause}).\n"; return false;
+    } std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : music variable [play|stop|pause]).\n"; return false;
   }
 
   bool Script::cmdWait(std::string arg, unsigned int line){
@@ -263,7 +263,7 @@
     else if ( std::regex_search(arg, match, std::regex("([[:digit:]]+)")) ){ //yeah, i know it isn't optimized but I haven't an Internet connection yet...
       waiting = displaying = true;
       waitLimit = clock.getElapsedTime() + sf::milliseconds( std::stoul(match[1]) );
-    } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : Wait {n milliseconds|pause}).\n"; return false;
+    } else std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : Wait [n milliseconds|pause]).\n"; return false;
     return true;
   }
 
