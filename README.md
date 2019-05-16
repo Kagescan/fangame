@@ -4,17 +4,11 @@ This is a remake of a fangame that I made with my community.
 The version 1 was written in Python but in this remake, the entire code is in C++.
 
 ### status
-**UNDER DEVELOPEMENT**
+**UNDER DEVELOPEMENT** - Master branch (alpha released).
 
 Game Version : 2.1 (Alpha version : 02)
 
-to finish :
-* langage documentation
-
-done : 
-* conditions
-* for loop
-* save files
+Changelog of this version : <https://github.com/LoganTann/kagepro2/pull/3>
 
 ### compiling
 
