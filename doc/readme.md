@@ -1,4 +1,4 @@
-RETAINING'S MEMORY - LANGAGE DOCUMENTATION 2.1.02
+RETAINING'S MEMORY - language DOCUMENTATION 2.1.02
 =================================================
 
 In contrary of most visual novel games, Retaining's Memory wasn't made with Renpy.  
@@ -10,28 +10,38 @@ I agree this isn't as perfect as most other engines, but i wanted to add the DIY
 Then there is the documentation of this engine !
 
 The scripting/parsing side of the engine is inside the script.cpp file, and the helpers are mostly inside game.cpp .
-Notice that this game is fisrtly french. I intent to translate it afer I will made a release version.
+Notice that this game is firstly French. I intent to translate it after I will made a release version.
 
-Actually, this langage have no name... Examples inside this document aren't tested yet...
+Actually, this language have no name... Examples inside this document aren't tested yet...
 
 ## Index
 
-* I.   This langage and the general syntax
-* II.  Variables and math evaluations
-* III. Statements
-* IV.  The real documentation !
+* [I.   This language and the general syntax](#I. This language and the general syntax)
+* [II. Variables and math evaluations.](#II. Variables and math evaluations.)
+  * A - Access and edit the value of a variable
+  * B - Math evaluation
+  * C - Entities
+  * D - Special Variables
+* [III. Statements](#III. Statements)
+  * A - Labels and goto
+  * B - Conditions
+  * C - For loop
+* [IV. The real documentation !](#IV. The real documentation !)
+  * A - Language basics
+  * B - Engine control
+  * C - Rendering / Interactions
 
-## I. This langage and the general syntax
+## I. This language and the general syntax
 
-This langage is mostly inspired from the batch (MS-DOS/Windows console's langage). Batch isn't powerful but easy to learn and undersand.
+This language is mostly inspired from the batch (MS-DOS/Windows console's language). Batch isn't powerful but easy to learn and understand.
 
 A script is a text file that contains sequence of instructions. Each line is an instruction to interpret.  
 The first word is a command, and the rest of the line is the argument of the command.
-If there is `::` in the beginning of the line, it will be ignored (this is a commment).
+If there is `::` in the beginning of the line, it will be ignored (this is a comment).
 
-The program will make a copy of the source code without empty lines in the memory, and iterpret it line by line inside the main loop. A script can call another script like if it were called alone, so the program will make one more copy and not free the old script's memory. Don't call too much scripts too many times in a row, and don't forget to end the script with the quit command or jump into the end of the file.
+The program will make a copy of the source code without empty lines in the memory, and interpret it line by line inside the main loop. A script can call another script like if it were called alone, so the program will make one more copy and not free the old script's memory. Don't call too much scripts too many times in a row, and don't forget to end the script with the quit command or jump into the end of the file.
 
-As you could see, instead of most other langages, this program will execute line by line the script without checking anything (syntax...) . If there is an error somewhere, you should produce the error to get a message !
+As you could see, instead of most other languages, this program will execute line by line the script without checking anything (syntax...) . If there is an error somewhere, you should produce the error to get a message !
 
 ```
 :: example program
@@ -47,19 +57,19 @@ echo This is a test for the syntax
 
 ### A - Access and edit the value of the variable
 
-A variable is a entity of a programming langage that can store a value. It is like a small letter reconized by it's name, that the program can access to its content.
+A variable is a entity of a programming language that can store a value. It is like a small letter recognized by it's name, that the program can access to its content.
 
-Variables works like the batch langage : they are all "strings" (character sequences) even if the value is only a number.
+Variables works like the batch language : they are all "strings" (character sequences) even if the value is only a number.
 
-**To declare a variable or edit its value**, you will use the commmand `set`. The syntax is `set (<object>) varName = value`  
+**To declare a variable or edit its value**, you will use the command `set`. The syntax is `set (<object>) varName = value`  
 Don't worry with the `<object>`, it will be explained later.
 
-Set will acces (or define) the variable with the name before the `=` sign, and assign the value after the `=` into this variable.  
-`<object>` is optionnal. For simple variables, is just another way to do this : `set varName.object = value`, but it isn't recommended, because it will be used later with the entity command.
+Set will access (or define) the variable with the name before the `=` sign, and assign the value after the `=` into this variable.  
+`<object>` is optional. For simple variables, is just another way to do this : `set varName.object = value`, but it isn't recommended, because it will be used later with the entity command.
 
 **To access to the variable's value**, you should just write the name of the variable between the `%` character. Like the batch, `%(varName)%` will be replaced just before the argument of a command, so the value of a variable can be the entire argument of a command.
 
-Instead of other programming langages, the NULL value is `none` (can be used directly in the set or the say/$ay command). You can use it to declare variables with empty values.
+Instead of other programming languages, the NULL value is `none` (can be used directly in the set or the say/$ay command). You can use it to declare variables with empty values.
 
 ```
 set test = Hello
@@ -123,24 +133,27 @@ Entities have default object to control them. To change their object, you need t
 __Here's a list of all entity types :__
 
 __Image__ : Import a picture, to use with a character entity. 
-  * value : the relative path of the targeted file.
+  * Init value : the relative path of the targeted file.
 
 __Music__ : Import a music file, to use with the `play` command. This will use a stream process : it is used for soundtracks and other large music files.
-  * value : the relative path of the targeted file.
+  * Init value : the relative path of the targeted file.
 
 __Sound__ : Import a sound file, to use with the `play` command. This will load the entire file in the memory : it is used for sounds effects and other small music files.
-  * value : the relative path of the targeted file.
+  * Init value : the relative path of the targeted file.
 
 __Character__ : a character entity, to use with the `say` command.
-  * value : none
+  * Init value : none
   * `<image>` : value : the variable name of the targeted image entity.
-  * `<y>` : value : Integrer or "reload".
+  * `<y>` : value : integer or "reload".
   * `<color>` : value : a hexadecimal color (See III.D for more informations).  
     Change the character's title (name that will be displayed when he will speak) color.
   * `<spriteColor>` : value : a hexadecimal color (See III.D for more informations).  
     Apply a color filter to the displayed sprite.
+  * `<position>` : Animate the character's position. *Can only be used with the `animate` command.*
+  * `<opacity>` : Animate the character's opacity. *Can only be used with the `animate` command.*
+  * `<spritechange>` : Change the sprite of the character using a transition. *Can only be used with the `animate` command.*
 
-__Save__ : Import a save file. To use with the `save` command
+__Save__ : Import a save file. To use with the `save` command.
   * value : the relative path of the targeted file.
   * `<any objects>` : objects are used to store a value, and can be loaded/saved between scripts using the `save` command.
 
@@ -179,10 +192,11 @@ There are also special labels. They are mainly used in the choice command.
 
 ### B - Conditions
 
-Like all programing langages, you can use if/else if/else blocks like this : 
+Like all programing languages, you can use if/else if/else blocks like this : 
 
 In a `if` statement, the condition is respected if and only if there is the number `1` inside the argument.  
 You should close the statement with the `end if` command.
+
 ```
 set test = 9
 if ${1+1 == 3}
@@ -197,10 +211,10 @@ end if
 ```
 ### C - For loop
 
-The for syntax taked inpiration from ECMA but has a really different system.  
-The argument is splitted in 3 parts, separated with `,`.
+The for syntax took inspiration from ECMA but has a really different system.  
+The argument is split in 3 parts, separated with `,`.
 
-* The first part is the initialisation. You should declare a variable by entering his name and you could add its value by entering `:` and his value. The default value for a variable is `0`.
+* The first part is the initialization. You should declare a variable by entering his name and you could add its value by entering `:` and his value. The default value for a variable is `0`.
 * The second part is a condition. The block will loop until the condition is not respected.
 * the final part is the new variable value at the end of the loop.
 
@@ -225,50 +239,54 @@ echo As you can see, the variable isn't local ! >>%i%<<
 
 ### D - Other
 
-* **Colors** : In some commands, you can change the color of something. Use a hexadecimal color code (#XXXXXX, search in google if you don't know what is it). You can add a tranparancy value too, by adding an additional hexadecimal value : #ff0000aa will make a transparent color of the value AA (= 1010 1010 in binary => 170(/255) in decimal). 
+* **Colors** : In some commands, you can change the color of something. Use a hexadecimal color code (#XXXXXX, search in google if you don't know what is it). You can add a transparency value too, by adding an additional hexadecimal value : #ff0000aa will make a transparent color of the value AA (= 1010 1010 in binary => 170(/255) in decimal). 
 
 ...
 
 ##  IV. The real documentation !
 
 * `...` means that the argument can be repeated.
-* `WORLD` in uppercase can be replaced with a specified value.
-* `wolrd` in lowercase cannot be relpaced (pre-defined arguments...)
-* An argument between `()` is optionnal.
+* `WORDS` in uppercase can be replaced with a specified value.
+* `words` in lowercase cannot be replaced (pre-defined arguments...)
+* An argument between `()` is optional.
 * An argument between `[choice1 | choice2 | ...]` is an argument that can be `choice1`, or `choice2`, or `...`.
 * A `variable string` is a string of characters that contains only `$`, `_`, `.`, and alpha-numerics characters (A->Z, a->z, 0->9)
 
 
-### A - Langage basics
+### A - Language basics
 
-**set**  
-Syntax : `set (<OBJECT>) VARIABLE = VALUE`
+**set** - Define and edit global variables. *See II.A for more informations*  
+Syntax : `set (<OBJECT>) VARIABLE = VALUE`. 
 
-* OBJECT : can be a `variable string`. 
-* VARIABLE : can be a `variable string`. 
-* VALUE : can be anything but not an empty value.
+* OBJECT (can be a `variable string`) : The object of the variable to edit. Optionnal.
+* VARIABLE (can be a `variable string`) : The name of the variable to edit.
+* VALUE (can be a string) : Will be the value of the variable. To define a variable (set an empty value), use `none` keyword as value.
 
-**entity**  
-Syntax : `entity <TYPE> VARIABLE (= VALUE)`
+**entity** - Define an entity. *See II.C for more informations*   
+Syntax : `entity <TYPE> VARIABLE (= VALUE)`. 
 
-* TYPE : can be a `variable string`. 
-* VARIABLE : can be a `variable string`. 
-* VALUE : can be anything but not an empty value.
+* TYPE (can be a `variable string`) : The type of the entity to define.
+* VARIABLE (can be a `variable string`) :  The name of the entity.
+* VALUE (can be a string) : The argument of the initialization of the entity.
 
-**for**  
+**for** - a for loop. *See III.C for more informations*  
 Syntax :
+
 ```
 for VARIABLE(:INT), BOOL, NEWVARVALUE
   BLOCK
 end for
 ```
 
-* VARIABLE : can be a `variable string`. 
-* INT : can be a number. Optionnal (Default value : 0).
-* BOOL : can be `0` or `1`
+* VARIABLE (can be a `variable string`) :   A variable to define as initialization.
+* INT (can be a number - optional - default value : 0) :  The value to define for the variable initialized.
+* BOOL (can be a math evaluation). When the engine reach `end for`, if the evaluation return true, the engine will jump into the beginning of the block, else, it continue.
+* NEWVARVALUE (can be anything) : When the engine reach `end for`, variable will take the value NEWVARVALUE.
+* __Warning__ : Don't use the command goto or choice in this block.
 
-**if else else if**  
+**if else else if** - statements. *See III.B for more informations*  
 Syntax :
+
 ```
 if BOOL
   BLOCK
@@ -280,10 +298,11 @@ if BOOL
   BLOCK)
 end if
 ```
-* BOOL : can be `0` or `1`
+* BOOL : can be `0` or `1` (math evaluation) .
 * BLOCK : can be a delimited and fixed block of code.
+* __Warning__ : Don't use the command goto or choice in this block.
 
-Note : using `goto` or `choice` inside a block may cause issues (Not tested, just stimulated the situation in my brain)
+Note : using `goto` or `choice` inside a block may cause issues
 In that case, you can use labels and mathematics evaluations !
 
 ```
@@ -305,79 +324,79 @@ quit fade
 quit fade
 ```
 
-**end**  
+**end** - End a block.  
 Syntax : `end [for|if]`
 
-**echo**  
+**echo** - Output the argument given in the console.  
 Syntax : `echo ANY`
 
-* ANY : can be anything.
+* ANY : can be a string.
 
 ### B - Engine control
 
-**playscript**  
+**playscript** - read another script file and continue when the script is ended. 
 Syntax : `playscript PATH`
 
 * PATH : relative path of a script file.
+* Note : due to performance issues, don't call too much script recursively. Using this command will load a new engine instance and will quit until the script is explicitly ended.
 
-**goto**  
+**goto** - jump into a place of the code using label. *See III.A for more informations*  
 Syntax : `goto LABEL`
 
-* LABEL : can be a `variable string`. Jump into the line of the label.
+* LABEL (can be a `variable string`) : Jump into the line of the label.
 
-**save**  
+**save** - make variable saves.  
 Syntax : `save [write|reload|log] ENTITYNAME`
 
-* ENTITYNAME : can be a `variable string`.
+* ENTITYNAME (can be a `variable string`) : It should be previously declared with the `entity` command.
 * `write` : write the data into the file associated with ENTITYNAME.
 * `reload` : update the data from the file associated with ENTITYNAME.
 * `log` : output (in std::cout) the data associated with ENTITYNAME.
 
-**quit**  
+**quit** - quit the engine instance  
 Syntax : `quit ANIMATION`
 
 * ANIMATION : not implemented yet. So at the moment, can be anything.
 
 
 ### C - Rendering / Interactions
-**animate**  
+**animate** - animate things of entities  
 Syntax : `animate <OBJECT> VARIABLE /OPTION VALUE (/OPTION VALUE...)`
 
-1. OBJECT : can be a `variable string`.
-2. VARIABLE : can be a `variable string`.
+1. OBJECT (can be a `variable string`) :  What to animate *(depends of the entity type of VARIABLE)*.
+2. VARIABLE (can be a `variable string`) :  The reference of the entity to animate. *Actually, the entity type should only be a character.*
 3. (pair of arguments + ...)
-  * OPTION : can be a `variable string`.
+  * OPTION (can be a `from`, `to`, `ease`, `time`) : arguments to control the command.
   * VALUE : depends of the OPTION.
 
-**music**  
+**music** - manage audio entities  
 Syntax : `music ENTITYNAME [play|stop|pause]`
-1. ENTITYNAME : can be a `variable string`.
+
+1. ENTITYNAME (can be a `variable string`) : the name of the audio entity to treat.
 2. [play|stop|pause]
-  * `play` : play the audio associated with ENTITYNAME 
-  * `stop` : stop the audio associated with ENTITYNAME
-  * `pause` : pause the audio associated with ENTITYNAME
+  * `play` : play the audio associated with ENTITYNAME .
+  * `stop` : stop the audio associated with ENTITYNAME.
+  * `pause` : pause the audio associated with ENTITYNAME.
 
-**choice**  
+**choice** - display a menu of choices and jump into an assigned label  
 Syntax : `choice "TITLE" = LABEL "TITLE" = LABEL ("TITLE" = LABEL ...)`
-1. (pair of arguments + ...)
-  * TITLE : can be anything else `"`.
-  * LABEL : can be a `variable string`.
 
-**say / $ay**  
+1. (pair of arguments + ...)
+  * TITLE (can be anything else `"`) : the text displayed as a choice.
+  * LABEL (can be a `variable string`) : will do `goto LABEL` when TITLE is selected.
+
+**say / $ay** - make a character speak  
 Syntax : `[say|$ay] CHARACTER "LINE" ("LINE" ...)`
+
 1. [say|$ay]
   * `say` : will wait the user input to continue
   * `$ay` : will not wait the user input to continue. It is usually associated with the `wait` command.
-2. can be a `variable string`.
-3. LINE : can be anything else `"`.
+2. CHARACTER (can be a `variable string`) : The name of the character entity.
+3. LINE (can be anything else `"`) : say a line in the first quotation, the second line in the second quotation....
 
-**wait**  
+**wait** - pause the script for a determinate time / user input  
 Syntax : `wait [MILLISECONDS|pause]`
 
 1. [MILLISECONDS|pause]
-  * MILLISECONDS : can be an integrer.
-  * `pause` : wait the user input to continue.
-
-### D - Entities
-
-> soon
+  * MILLISECONDS (can be an integer) : pause the script for ... milliseconds.
+  * `pause` : wait the user input to continue : pause the script until the user press space or enter touch.

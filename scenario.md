@@ -27,13 +27,8 @@ __En cours : patch 02__
 * Ajout des systèmes de sauvegarde et autres commandes.
 * Ajout de la documentation.
 
+
 __patch 03__  
-* Ajout des fonctions (qui fonctionnent un peu comme le batch, c'est à dire avec call)
-* Ajout des animations de fin.
-* Mise à jour du système de worldwrap
-
-
-__patch 04__  
 * Début d'écriture de la Route Musiques (chapitre 1). *On passe le passage du yuukei quartet : on continue directement sur le présent.*
 
 
@@ -45,6 +40,13 @@ __patch 04__
 > - il va au parc d'attraction (possible jeux envisageables, et possibilité de choisir). Les montagnes russes sont forcément en mode novel.
 > - il se fait tuer. C'est la fin ? En fait non... C'est le début
 > Event en particulier : reload.
+
+__patch 04__  
+
+- Ajout des fonctions (qui fonctionnent un peu comme le batch, c'est à dire avec call)
+- Support des animations avec les entités musique/sons.
+- Ajout des animations de fin.
+- Mise à jour du système de worldwrap.
 
 __patch 05__
 * Création des chapitres 2,3,4
