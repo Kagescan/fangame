@@ -21,11 +21,11 @@ Par ailleurs, si une version est en attente (dessins en cours...) alors on peut 
 ## Version 2.1
 
 > __Fait : patch 01__ : Le moteur de jeu est fonctionnel même si non terminé. Certains sprites et fonds ne sont pas finalisés (juste quelques schémas en guise de remplacement). Le script du chapitre The Old Days est fait.
-
-__En cours : patch 02__  
-* Ajout des structures conditionnelles (if else else if), et de la boucle for.
-* Ajout des systèmes de sauvegarde et autres commandes.
-* Ajout de la documentation.
+>
+>__Fait : patch 02__  
+> * Ajout des structures conditionnelles (if else else if), et de la boucle for.
+> * Ajout des systèmes de sauvegarde et autres commandes.
+> * Ajout de la documentation.
 
 
 __patch 03__  
