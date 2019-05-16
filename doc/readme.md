@@ -16,17 +16,17 @@ Actually, this language have no name... Examples inside this document aren't tes
 
 ## Index
 
-* [I.   This language and the general syntax](#I. This language and the general syntax)
-* [II. Variables and math evaluations.](#II. Variables and math evaluations.)
+* [I.   This language and the general syntax](#i-this-language-and-the-general-syntax)
+* [II. Variables and math evaluations.](#ii-variables-and-math-evaluations)
   * A - Access and edit the value of a variable
   * B - Math evaluation
   * C - Entities
   * D - Special Variables
-* [III. Statements](#III. Statements)
+* [III. Statements](#iii-statements)
   * A - Labels and goto
   * B - Conditions
   * C - For loop
-* [IV. The real documentation !](#IV. The real documentation !)
+* [IV. The real documentation !](#iv-the-real-documentation-)
   * A - Language basics
   * B - Engine control
   * C - Rendering / Interactions
