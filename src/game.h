@@ -18,7 +18,7 @@ bool fadeout(sf::RenderWindow &scr,int scrw=1280,int scrh=720,int time=0); //sho
 bool fadein(sf::RenderWindow &scr,sf::Sprite &texture,int time=0);
 
 bool blank(std::string str);
-
+std::string removeTabs(std::string str);
 std::string removeSpaces(std::string str);
 std::string strReplace(std::string& s, const std::string& toReplace, const std::string& replaceWith);
 std::string str_tolower(std::string s);
@@ -57,6 +57,7 @@ class Character {
       bool animateOpacity(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line);
       bool animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr);
       bool update(sf::RenderWindow& scr, sf::Time curr);
+      int reloadY(int changeY = 0);
       sf::Sprite sprite;
       sf::Color titleColor, spriteColor;
     private: 

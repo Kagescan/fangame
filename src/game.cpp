@@ -101,6 +101,10 @@ sf::String toSfString(std::string theStdString) {
     return true;
   }
 
+  std::string removeTabs(std::string str){
+    for (int i(0);str[i];i++) if (!isspace(str[i])) return str.substr(i);
+    return str;
+  }
   std::string removeSpaces(std::string str) { //remove all spaces from a string
     std::string output;
     output.reserve(str.size()); // optional, avoids buffer reallocations in the loop
@@ -269,7 +273,9 @@ bool guiSelect::type(bool type){ return valType = type; }
     y = 0;
     scrh = winHeight;
   }
-
+  int Character::reloadY(int changeY) {
+    return y = (changeY==0) ? scrh - sprite.getTextureRect().height : changeY;
+  }
   bool Character::animatePos(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line){
     x = 0;
     y = scrh - sprite.getTextureRect().height;
@@ -336,6 +342,7 @@ bool guiSelect::type(bool type){ return valType = type; }
       if (curr > animS_init + animS_duration){
         animS = false;
         sprite.setColor(spriteColor);
+        y = scrh - sprite.getTextureRect().height;
       } else {
         const int time = sf::Time(curr - animS_init).asMilliseconds(),
           duration = animS_duration.asMilliseconds();
@@ -343,8 +350,8 @@ bool guiSelect::type(bool type){ return valType = type; }
         sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 0, 255, duration) ));
         scr.draw(oldSprite);
       }
-      oldSprite.setPosition(x,y);
-      sprite.setPosition(x,y);
+      oldSprite.setPosition(x, scrh - oldSprite.getTextureRect().height);
+      sprite.setPosition(x, scrh - sprite.getTextureRect().height);
     }
   //draw
     scr.draw(sprite);

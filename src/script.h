@@ -2,7 +2,6 @@
 #define SCRIPT_H
 
 #include "game.h"
-//#include "easing.h"
 #include <cmath>
 #include <regex>
 
@@ -26,10 +25,17 @@ class Script {
         bool cmdWait(std::string arg, unsigned int line);
         bool cmdAnimate(std::string arg, unsigned int line);
         bool cmdChoice(std::string arg, unsigned int line);
+        bool cmdPlayScript(std::string arg, unsigned int line, sf::RenderWindow& scr);
+        bool cmdSave(std::string arg, unsigned int line);
+        bool cmdFor(std::string arg, unsigned int line);
+        bool cmdIf(std::string arg, unsigned int line);
+        bool cmdElse(std::string arg, unsigned int line);
+        bool cmdEnd(std::string arg, unsigned int line);
         bool newCharacter(std::string name, std::string spriteName, unsigned int line);
         bool newMusic(std::string name, std::string path, unsigned int line);
         bool newSound(std::string name, std::string path, unsigned int line);
         bool newSprite(std::string name, std::string path, unsigned int line);
+        bool newSave(std::string varName, std::string loadfile, unsigned int line);
         bool setCharacterSprite(std::string charaName, std::string spriteName, unsigned int line);
         bool drawCharacters(sf::RenderWindow& scr);
         bool drawChoices(sf::RenderWindow& scr);
@@ -41,7 +47,8 @@ class Script {
 
       /* Var declarations*/
         //std::vector<std::string[2]> scriptInstructions;
-        std::vector< std::array<std::string,3> > scriptInstructions;
+        std::vector< std::array<std::string,3> > scriptInstructions, forActions;
+        std::vector<unsigned int> forBlocks;
         std::vector<sf::String> displaySay;
         std::vector<bool> displayedTxt;
         std::map<std::string, int> labelRefs;
@@ -69,9 +76,9 @@ class Script {
         std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
         std::smatch m;
         bool playing, waiting, displaying, pause, animatingTextFinished, drawingChoices;
-        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine;
+        unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine, ifBlocks, animChoiceType;
         float arrowIter;
-        int barPosY, fps;
+        int barPosY, fps, animAlpha;
         //std::map<std::string, std::string> varTypes;
 };
 

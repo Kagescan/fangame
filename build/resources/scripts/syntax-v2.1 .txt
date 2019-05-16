@@ -1,14 +1,10 @@
 
 ::This is a test for the new synthax of the kagerou project fangame novel engine.
 ::The kagescan game is a bit different than other novel engines, because there is a map and label whill be executed only if the player interacts with the map.
-::Like pokemon ! but in a event, it is a visual novel.
-::The new synthax is based of the ren'py scripts.
-::I will implement soon conditions (if else statements but not loop !)
+::Like pokemon mystery dungeon! but in a event, it is a visual novel.
 
 :: TODO :
-::varfile "resources/saves/main.save"
 ::mapfile "resources/map/couloir.txt"
-:: choices
 
 ::var declarations
 

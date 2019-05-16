@@ -1,5 +1,5 @@
 /* EASING CPP - Smooth-animation Curves for CPP
- * Copyright (c) 2018, 2019 ShinProg
+ * Copyright (c) 2018, 2019 ShinProg, inspiration from https://github.com/jesusgollonet/ofpennereasing/tree/master/PennerEasing
  * Under MIT license, more informations in the file LICENSE
  */
 #include "easing.h"

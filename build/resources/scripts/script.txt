@@ -1,318 +1,110 @@
+entity <save> mem = "resources/save.txt"
+entity <image> bg_default = "resources/img/background/menu2.jpg"
+entity <image> bg_oldDays = "resources/img/background/oldDaysBG.jpg"
+entity <image> bg_route01 = "resources/img/background/route1BG.jpg"
+
 entity <character> $bg
-entity <character> empty
-entity <character> temp
-entity <character> Shintaro
-entity <character> Ayano
+set <image> $bg = bg_default
+set <color> __bar__ = #00000000
 
-entity <image> bg1="resources/img/todo/decor1.jpg"
-entity <image> bg2="resources/img/todo/decor2.jpg"
-entity <image> bg3="resources/img/todo/decor3.jpg"
-entity <image> bg4="resources/img/background/ltmNight.jpg"
-entity <image> aya1 = "resources/img/characters/ayano/Ayasmile 1.png"
-entity <image> aya2 = "resources/img/characters/ayano/Ayasmile 2.png"
-entity <image> aya3 = "resources/img/characters/ayano/Ayawhat 1.png"
-entity <image> aya4 = "resources/img/characters/ayano/Ayawhat 2.png"
-entity <image> aya5 = "resources/img/characters/ayano/Ayawhat 3.png"
-entity <image> aya6 = "resources/img/characters/ayano/Ayawhat 4.png"
-entity <image> aya7 = "resources/img/characters/ayano/Ayasmile 3.png"
-entity <sound> oldDays01 = "resources/sounds/OldDays01.ogg"
-entity <sound> oldDays02 = "resources/sounds/OldDays02.ogg"
-entity <music> ost3 = "resources/sounds/OST03.ogg"
-entity <music> ost4 = "resources/sounds/OST04.ogg"
-entity <music> ost5 = "resources/sounds/OST05.ogg"
-entity <music> ost6 = "resources/sounds/OST06.ogg"
+set choixMusiques = none
+set choixWtng = none
+set choixRM1 = none
+set choixRM2 = none
+set choixRx = none
+set choixRA = none
 
-set posCenter = 400
-set posOutsideR = 1080
-set <color> Shintaro = #ff0000
-set <color> Shintaro = #ff3333
-set <color> temp = #aaaaaa
-set <name> temp = JEU
+:: -- STORY TABLE --
+:: Total : 13 chapters (story)
 
-set <image> $bg = bg1
-  set <spriteColor> $bg = #666666
-  animate <position> $bg /to 0 /time 1
-  animate <opacity> $bg /from 0 /to 255 /time 900
-  wait 900
-
-:debut
-  say Shintaro "*bruits de pas dans un couloir*"
-  say Shintaro "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille. Mais franchement,comment ça se fait que l'école soit si flippante la nuit? J'espère que rien de chelou ne va apparaitre..."
-  say Shintaro "Raah...Sérieux !!" "Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre..." "J'ai vraiment la poisse..."
-  say Shintaro "Rmmr !! En plus je ne vois presque rien"
-  :choiceDoor1
-  choice "Tenter d'ouvrir la porte gauche" = continue "Continuer d'avancer..." = suite "La porte droite ?" = porte2
-      say Shintaro "Ce n'est pas ma classe... En plus,la porte est fermée."
-    goto choiceDoor1
-    :porte2
-      set <name> temp = *bruit*
-      say temp "Flock~~"
-      say Shintaro "Whaaahhh!!!??" "..." "..."
-      say Shintaro "Ah...-Ah..." "C'était quoi, ça ? Les robinets ?" "Ne te surprend pas comme ça, putain !"
-    goto choiceDoor1
-
-:suite
-  ::`5`resources/img/backgrounds/classroom.night.jpg
-
-  say Shintaro "Pff... Pourquoi je suis obligé de venir à l'école la nuit, comme ça ?" "..." "Mais sinon..."
-  say Shintaro "Les gars de ma nouvelle classe... Ils avaient tous l'air de crétins finis. En plus, la moyenne de la nouvelle interro était incroyablement basse ! Si ce n'est que ça, ça irait. Mais qu'ils peuvent être bruyants, à frapper dans les bureaux..."
-  say Shintaro "C'est pas croyable. Qu'est-ce que je pourrait gagner avec des types pareils ? C'est bien mieux de passer mon temps à feuilleter mes manuels scolaires chez moi."
-  say Shintaro "Et c'est la même chose pour les gens avec qui j'ai été jusqu'à aujourd'hui. Ils osent se dire amis, mais ne font-ils pas semblant pour profiter de moi ?"
-  say Shintaro "Dans leurs dos, ils n'arrêtent pas de dire du mal des uns et des autres" "C'est plus que dégelasse."
-  say Shintaro "Franchement, qu'est-ce qu'ils ont, ceux là ?" "Je pense que ça aurait été mieux de rester seul depuis le début." "Non. Sérieusement... Pourquoi est-ce que je reste dans ce genre d'endroit ?"
-  say Shintaro "C'est vrai. C'est bien plus simple de rester seul." "Je pourrai passer plus de temps pour étudier. Ça ne peut m'apporter que de bonnes choses."
-  say Shintaro "Et puis de toute manière, je n'ai pas un seul vrai ami." "Maintenant que j'y pense, il n'y a pas une seule raison d'aller à l'éco--"
-  music oldDays01 play
-  ::`2`sound`play`resources/sounds/OldDays01.ogg
-  say bruit "~bruits de chaises~"
-  say Shintaro "C-C'était quoi ce bruit ???" "Il y a quelqu'un à une heure pareille ? Attends, attends, attends." "C'est vraiment trop bizarre !!! Même si il y avait quelqu'un aucune lumière n'est allumée..."
-  say Shintaro "E-Et puis ce bruit, à l'instant, il vient de ma classe!!" "M-Me-Me dites pas que c'est un fantôme ou un truc du genre..." "L-laissez moi tranquille !!!"
-  say Shintaro "J'ai peur, mais si je ne rentre pas, je ne pourrai pas récupérer mon portefeuille" "Ah~hhh ... Qu'est ce que je suis censé faire?"
-  choice "Partir >_<" = continue "Non, il faut chercher le porte-feuille !!" = porte3
-    say Shintaro "P-Partir ?"
-    say Shintaro "J'ai vraiment besoin de mon porte feuille." "Mais d'un autre côté..." "Sûr ?"
-    choice "Aller prendre le porte feuille" = porte3 "Fuir" = continue
-      say JEU "En théorie, la route 02 est débloquée... Mais comme ce jeu est en développement, on s'en arrête là !"
-      end fadeblack
-
-:porte3
-  ::change background
-    animate <opacity> $bg /to 0 /time 300 /ease inSine
-    $ay none " "
-    wait 1700
-    set <image> $bg = bg2
-    animate <opacity> $bg /from 0 /to 255 /time 1000 /ease outSine
-    wait 1000
-
-  music oldDays02 play
-  set <image> Ayano = aya5
-  :: just a hack to force the color change
-    set <spriteColor> Ayano = #AAAAFF
-    animate <opacity> Ayano /to 255 /time 1
-  animate <position> Ayano /from %posOutsideR% /to %posCenter% /time 900 /ease outElastic
-  $ay none " "
-  wait 400
-  set <name> temp = -inconnue ??? / -Shintaro 
-  set <name> Ayano = ???
-  $ay temp "-Whaaaaaaah !!" "-OUAAAHAAHAHAHA !! Hiiii !!"
-  wait 2200
-  $ay Shintaro "Pardonnez moi ! Pardonnez moi !" "L-Laissez moi la vie sau~auve !!"
-  wait 3200
-  animate <spriteChange> Ayano /to aya6 /time 800
-  $ay Ayano "Hum ?"
-  wait 900
-  say Ayano "Shintaro...-kun ?"
-  animate <spriteChange> Ayano /to aya1 /time 800
-  music ost3 play loop
-  say Ayano "Ah j'en suis sûre, tu est bien Shintaro Kisaragi !"
-  say Shintaro "Hu~um ???"
-    animate <spriteChange> Ayano /to aya3 /time 800
-  say Ayano "Hé, tu ne me reconnais pas ?" "Ayano Tateyama !"
-    animate <spriteChange> Ayano /to aya2 /time 800
-  set <name> Ayano = Sois disant "Ayano" (?)
-  say Ayano "Enfin,j'ai beau dire ça mais je crois bien que l'on a encore jamais parlé ensemble..."
-  say Shintaro "*perplexe*" "Aya...no Tateyama... ?" "... ..." "AH !"
-  set <name> Ayano = Ayano
-  choice "*JE SAIS !!*" = continue "*Mieux vaux ne pas dire ce que je pense*" = euhh
-      say Shintaro "M-Mais tu est celle qui est toujours en dessous de la moyenne !"
-    animate <spriteChange> Ayano /to aya3 /time 800
-      say Ayano "Ah !Heu..." "C'est tout ce dont tu te rappelles de moi ?"
-      say Shintaro "J'ai raison ?"
-    animate <spriteChange> Ayano /to aya4 /time 800
-      say Ayano "Non,tu as raison,mais bon..." "Ah ah ..."
-      goto porte3next
-    :euhh
-    animate <spriteChange> Ayano /to aya6 /time 800
-      say Ayano "V-Vraiment ? M-Mais je suis la personne juste à côté de toi !!"
-      say Ayano "Je suis si discète que ça ?"
-  :porte3next
-    animate <spriteChange> Ayano /to aya7 /time 800
-  say Ayano "-- ..." "Mais le plus important, qu'est-ce que tu fait là à une heure pareille ?" "Il fait déjà noir dehors !"
-  say Shintaro "*gêné*"
-  choice "Lui retourner la question" = retourQuestion "Avouer d'un air idiot" = continue
-    animate <spriteChange> Ayano /to aya7 /time 800
-    say Shintaro "Eh bien..." "J'ai oublié mon porte-feuille dans la classe... Et je devais absoluement le retrouver"
-    animate <spriteChange> Ayano /to aya6 /time 800
-    say Ayano "C'était si gênant que ça ?"
-    say Shintaro "Erm... Tout compte fait" "*Comment lui dire que ma gênance vient du fait que je ne la connaissait pas...*"
-    animate <spriteChange> Ayano /to aya7 /time 800
-    say Shintaro "Sinon, tu l'aurais pas vu ?"
-    animate <spriteChange> Ayano /to aya5 /time 800
-    say Ayano "Euh... Non. Je ne sais vraiment pas, désolée !"
-    animate <spriteChange> Ayano /to aya7 /time 800
-    say Shintaro "RAAAH cette classe est juste remplie de --... RMMR" "Huuuh comment je vais faire !" "La tasse pour ma petite soeur..." "Comment je vais la lui racheter !"
-    say Ayano "C'est si grave que ça ?"
-    say Shintaro "Non rien. Oublie." "..." "..."
-    animate <spriteChange> Ayano /to aya4 /time 800
-  :retourQuestion
-    say Shintaro "Ah... Sinon... Je te retourne la question." "Pourquoi est-tu dans la classe à une heure pareille?" "Sans lumière en plus !"
-  say Ayano "Euhh... Eh bien... C'est que... Tu vois..." "Comme mes dernières notes étaient un peu juste, le prof m'a donné du travail supplémentaire."
-  say Shintaro "Et donc ?"
-  say Ayano "Euh... En restant pour travailler, sans m'en rendre compte, je me suis endormie." "Sans même avoir terminée mes devoirs... Hihi ~"
-  say Shintaro "Ça valait le coup de rester après les cours ?"
-    animate <spriteChange> Ayano /to aya2 /time 800
-  say Ayano "Eh bien... C'est vrai, cela n'a aucun sens, n'est-ce pas ?" "Hum~... Qu'est-ce que je peux faire ?" "Si je ne lui rend pas demain matin, le prof va encore m’engueuler..."
-  say Shintaro "*pensées*" "Qu'est-ce qu'elle a celle-là ? Elle est trop chiante..."
-  say Shintaro "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons."
-  animate <spriteChange> Ayano /to aya7 /time 800
-  say Shintaro "Je dois me dépêcher de récupérer mon portefeuille et partir d'ici en l'ignorant." "Il faudrait déjà que j'entre..."
-  animate <position> Ayano /from %posCenter% /to ${%posCenter% + 300} /time 800 /ease inOutCubic
-  say Ayano "... ?"
-  animate <position> Ayano /from ${%posCenter% + 300} /to %posCenter% /time 800 /ease inOutCubic
-  animate <spriteChange> Ayano /to aya5 /time 800
-  say Ayano "Hé euh... Excuse moi !"
-  say Shintaro "... " "Hum ?" "Qu'est-ce qu'il y a ?"
-  animate <spriteChange> Ayano /to aya1 /time 800
-  say Ayano "Shintaro-kun, tu est super intelligent, n'est-ce pas ?" "T'as encore eu 100 à la dernière interro !"
-  say Shintaro "Eh ? Qui t'as permis de regarder ma note ?"
-    animate <spriteChange> Ayano /to aya4 /time 800
-  say Ayano "Hum? Euh... Désolée !"
-  say Shintaro "Qu'est-ce qu'il y a ?" "Dis moi clairement ce que tu veux."
-  say Ayano "Oh... Hum... C'est que... " "Est-ce que tu pourrais, juste un peu, m'aider à étudier..."
-  say Shintaro "Hein ?"
-    animate <spriteChange> Ayano /to aya5 /time 800
-  say Ayano "Juste pour aujourd'hui ! Pas pour très longtemps !"
-  say Shintaro "Tu veux dire maintenant ?!"
-  say Ayano "S'il te plaît... E-Euh... Je t'en supplie..."
-  say Shintaro "*gêné* Me supplier ?" "Urrm~ ! C'est bon, j'ai compris..." "... Mais c'est juste pour aujourd'hui !"
-    animate <spriteChange> Ayano /to aya1 /time 800
-  say Ayano "Vraiment ?"
-  say Shintaro "Je te dis que je voulais bien t'aider. Allez, dépêche toi si tu veux commencer !"
-  say Ayano "O-Oui !"
-
-  ::change background
-      music ost3 stop
-      animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
-      animate <opacity> $bg /to 0 /time 300 /ease inSine
-      $ay none " "
-    wait 1700
-      set <image> $bg = bg3
-      animate <opacity> $bg /from 0 /to 255 /time 1000 /ease outSine
-      music ost4 play loop
-    wait 1000
-
-  say Shintaro "Et donc là, ça deviens ça !"
-  say Ayano "Hu~um !"
-    ::`4`blitinA`resources/img/sprite/particle1.png`50`137
-  say Shintaro "Et comme ça est égal à ça, ça deviens ça, non ?"
-    ::`4`changeA`resources/img/sprite/ayanosmall1.png
-    ::`4`blitinA`resources/img/sprite/particle1.png`50`137
-    ::`4`blitinA`resources/img/sprite/particle3.png`73`153
-  say Ayano "Hum~... Hum?"
-  say Shintaro "Et si on échange ça..." "Tu vois, ça fonctionne !" "Tu peux répondre à ça, non ?"
-    ::`4`changeA`resources/img/sprite/ayanosmall2.png
-  say Ayano "Hu--" "Hein ? Je vois pas du tout où tu veux en venir !"
-  say Shintaro "Raaah !" "Combien de fois je vais devoir te l'expliquer avant que tu ne comprennes ?!"
-  say Ayano "Désolée..."
-  say Shintaro "Fais un effort, tu veux ?" "À ce rythme, on aura pas fini avant le matin!"
-  say Ayano "Hum... C'est vrai..."
-  say Shintaro "Sérieusement, c'est qui celle-là ?" "Il y a une limite à la connerie, normalement !"
-
-    ::`4`changeA`resources/img/sprite/ayanosmall1.png
-    ::`4`blitinA`resources/img/sprite/particle2.png`73`153
-  say Ayano "..." "Mais je crois avoir compris pour ici..."
-  say Shintaro "Ha ?"
-
-    ::`4`changeA`resources/img/sprite/ayanosmall1.png
-    ::`4`blitinA`resources/img/sprite/particle3.png`73`153
-  say Ayano "Ça deviens ça..." " " "puis ça,non?"
-  say Shintaro "Hum ? C'est pas trop mal !" "C'est ça, c'est ce qu'il faut faire !"
-
-    ::`4`changeA`resources/img/sprite/ayanosmall1.png
-    ::`4`blitinA`resources/img/sprite/particle2.png`73`153
-  say Ayano "Et donc ça deviens ça..." "Et puis comme ça ?!"
-  say Shintaro "C'est bon, tu as bon !" "Tu vois que tu peux le faire quant tu t'y mets..."
-
-    ::`4`changeA`resources/img/sprite/ayanosmall3.png
-  say Ayano "Hihi !"
-  say Shintaro "Pas la peine de rire autant... T'est vraiment glauque..."
-
-    ::`4`changeA`resources/img/sprite/ayanosmall4.png
-  say Ayano "Hum ? Glauque ?"
-  say Shintaro "Ne le prend pas sérieusement !" "Ce que tu peux être chiante..." "Allez, après avoir fait ça, tu as presque terminé. Dépêche-toi de finir."
-
-    ::`4`changeA`resources/img/sprite/ayanosmall3.png
-  say Ayano "Oui !"
-    ::`4`changeA`rien
-    music ost4 stop
-    music ost5 play loop
-    ::`5`resources/img/backgrounds/classroom.night.jpg
-    ::`2`music`play`resources/sounds/OST05.ogg`-1
-    ::`4`color`bar`255,255,255
-    ::`3`0`resources/img/sprite/ayano2.png
-  animate <opacity> Ayano /from 0 /to 255 /ease inExpo /time 800
-  say Ayano "Shintaro-kun, tu est vraiment intelligent. Tu étudie chez toi tout les jours ?"
-  say Shintaro "Pas particulièrement. Je n'ai lu les manuels qu'une seule fois."
-    animate <spriteChange> Ayano /to aya1 /time 800
-  say Ayano "Et tu réussit quand même à ce point ?!" "Incroyable... Tu est vraiment intelligent."
-  say Shintaro "Hum... Plus qu'intelligent... Je ne sais pas pourquoi mais une fois que j'ai appris quelque chose, je ne l'oublie plus." "Depuis toujours..."
-  say Shintaro "Et comme j'ai déjà appris par cœur tout les manuels, je m'en sort aux interros."
-    animate <spriteChange> Ayano /to aya3 /time 800
-  say Ayano "Je vois... Alors ça veut dire que, Shintaro-kun, ta mémoire est incroyable, c'est ça ?" "La chance... J'oublie toujours très rapidement tout ce que j'apprends..."
-  say Shintaro "C'est pas forcément une bonne chose. De toutes les choses les plus insignifiantes au plus désagréables, je retiens tout." "A me soucier de choses sans importance jour après jour, c'est loin d'être facile à vivre..."
-    animate <spriteChange> Ayano /to aya4 /time 800
-  say Ayano "Huuum~..."
-  say Shintaro "Qu'est-ce qu'il y a ?"
-    animate <spriteChange> Ayano /to aya7 /time 800
-  say Ayano "...-- Hum ? C'est juste que, je me suis dit que si tu ne pouvait pas oublier les mauvais moments, j'espérais qu'il t'arrive plein de bons moments..." "Tu finiras par ne plus te préoccuper des choses désagréables, non ?"
-  say Shintaro "Rooh~..."
-    animate <spriteChange> Ayano /to aya6 /time 800
-  say Ayano "Oh ? Eh bien... Ou alors ça ne marche pas comme ça ?"
-  say Shintaro "Hein ? Heu... Non... Je suppose que ça va..." "De cette manière, ça a l'air plutôt simple à vivre."
-    animate <spriteChange> Ayano /to aya4 /time 800
-  say Ayano "Ah ! Oui ! Je suis sûre qu'à partir de maintenant, plein de bonnes choses vont t'arriver !"
-  say Shintaro "Comment peux-tu me dire ça ?"
-    animate <spriteChange> Ayano /to aya2 /time 800
-  say Ayano "Hihi! Par intuition..."
-    animate <spriteChange> Ayano /to aya3 /time 800
-  say Shintaro "Et donc, tu l'as résolu, ce problème ? Si tu ne fais que de parler, tu ne vas pas le finir."
-    ::`3`0`resources/img/sprite/ayano2.png
-    animate <spriteChange> Ayano /to aya2 /time 800
-  say Ayano "Hum! Ah... Hum... Je crois que j'ai rien compris..."
-  say Shintaro "Toi alors..."
+set choixIntro = "1. The Old Days" = theOldDays
+  set choixWtng = %choixWtng% "Route 01" = musiques
+    set choixMusiques = %choixMusiques% "1. Artificial ENEmy" = artificialEnemy
+    set choixMusiques = %choixMusiques% "2. Mekakushi Code" = musiques
+    set choixMusiques = %choixMusiques% "3. Let's play !" = musiques
+    set choixMusiques = %choixMusiques% "4. Outer Science" = musiques 
+  set choixWtng = %choixWtng% "Route M" = manga 
+    set choixRM1 = %choixRM1% "1. Lost Days" = manga
+    set choixRM1 = %choixRM1% "2. My friend" = manga
+    set choixRM1 = %choixRM1% "3. Neet under the blasing sun" = manga
+    set choixRM1 = %choixRM1% "4. The secret organisation" = manga
+    set choixRM1 = %choixRM1% "5. Eye Abilities" = manga 
+    set choixRM2 = %choixRM2% "6. Children Record" = manga
+    set choixRM2 = %choixRM2% "7. RED" = manga
+    set choixRM2 = %choixRM2% "8. I will find you" = manga
+    set choixRM2 = %choixRM2% "9. Imaginary Reload" = manga
+    set choixRM2 = %choixRM2% "10. Retaining Eyes" = manga 
+  set choixWtng = %choixWtng% "Route XX" = XX
+    set choixRx   = %choixRx% "1. Yuukei Yesterday" = XX
+    set choixRx   = %choixRx% "2. Tomei Answer" = XX
+    set choixRx   = %choixRx% "3. Let me die" = XX
+    set choixRx   = %choixRx% "Mekaku Route" = anime
+    set choixWtng = %choixWtng% "Route Mekaku" = anime
+      set choixRA = %choixRA% "1. Artificial ENEmy" =artificialEnemy
+      set choixRA = %choixRA% "2. Kaien Panzermast" = anime
+      set choixRA = %choixRA% "3. Lost Time Memory" = anime
+      set choixRA = %choixRA% "4. Do you remember ?"=anime
+      set choixRA = %choixRA% "5. Summertime Record"=anime
 
 
-  ::change background
-      music ost5 stop
-      animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
-      animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
-      $ay none " "
-    wait 1700
-      set <image> $bg = bg4
-      animate <spriteChange> Ayano /to aya4 /time 1
-      animate <opacity> $bg /from 0 /to 255 /ease outSine /time 1000
-      animate <opacity> Ayano /from 0 /to 255 /ease outExpo /time 800
-      music ost6 play loop
-    wait 1000
+::>(only if the entire game is finished)
+:: +-> Route M-X
+:: +-> Seek At Mekakucity
+:: (2 spin-off)
 
-  say Ayano "Tu m'as vraiment sauvée. Si tu n'avais pas été là, je n'aurais sûrement pas pu finir."
-  say Shintaro "Mais même avec moi, tu as pris trop de temps. Je te jure..." "Et dire que j'était juste venu récupérer mon porte feuille." "J'ai vraiment la poisse..."
-    animate <spriteChange> Ayano /to aya2 /time 800
-  say Ayano "Ah... Je suis vraiment désolée... Mais je n'oublierai jamais cette soirée !"
-  say Shintaro "Qu'est-ce que tu as ?" "Tu ne m'avais pas dit que tu oublierai toujours tout ce que tu apprenais ?"
-    animate <spriteChange> Ayano /to aya7 /time 800
-  say Ayano "Aujourd'hui, je ferai de mon mieux pour ne pas oublier, alors ça devrait aller."
-  say Shintaro "Hum. Si tu te rappelles de ce que tu as vu aujourd'hui," "Tu devrais avoir une assez bonne note à la prochaine interro."
-  say Ayano "Ça aussi, c'est vrai, mais... Je ne parlais pas que des études."
-    animate <spriteChange> Ayano /to aya6 /time 800
-  say Shintaro "Oh ? Tu as dit quelque chose ?"
-    animate <spriteChange> Ayano /to aya3 /time 800
-  say Ayano "--Hum?? haha!!..." "R-Rien du tout!!"
-    animate <spriteChange> Ayano /to aya7 /time 800
-  say Shintaro "Je vois... À plus. J'habite par là donc je tourne ici."
-    animate <spriteChange> Ayano /to aya5 /time 800
-  say Ayano "Ha... Hum !! À bientôt !"
-    animate <spriteChange> Ayano /to aya2 /time 800
-  say Ayano "..." "Hé ! Shintaro-kun !"
-  say Shintaro "Oui ?"
-  say Ayano "À demain !"
-  say Shintaro "..." "Oui... À demain !"
+animate <position> $bg /from 0 /to 0 /time 1
+animate <opacity> $bg /from 0 /to 255 /time 1000
+set <spriteColor> $bg = #774444
+
+goto noAnimate
+:choice1
+  animate <spriteChange> $bg /to bg_default /time 1000
+  :noAnimate
+  choice "---CHAPITRES : ---" = choice1 "tests" = runTests "Chapitres d'introduction" = intro "Chapitres en cours d'écriture" = choice2 "Quitter" = continue
+  animate <opacity> $bg /from 255 /to 0 /time 600
+  wait 1000
+  quit up
+
+  :intro
+    animate <spriteChange> $bg /to bg_oldDays /time 1000
+    choice "---CHAPITRES D'INTRODUCTION : ---" = intro %choixIntro% "Retour" = choice1
+  goto choice1
+
+  :choice2
+    animate <spriteChange> $bg /to bg_route01 /time 1000
+    choice "---Chapitres en cours d'écriture : ---" = choice2 %choixWtng% "Retour" = continue
+  goto choice1
+
+    :musiques
+      choice "--ROUTE 01 : --" = musiques %choixMusiques% "Retour" = choice2
+    goto choice1
+
+    :XX
+      choice "--ROUTE XX : --" = XX %choixRx% "Retour" = choice2
+    goto choice1
+
+      :anime
+       choice "--MEKAKU ROUTE : --"=anime %choixRA% "Retour" = XX
+      goto choice1
+
+    :manga
+      choice "Route M (1/2)" = manga %choixRM1% "Retour" = choice2 "Next ->" = continue
+      choice "Route M (2/2)" = manga %choixRM2% "Retour" = choice2 "<- Preview" = manga
+      
+    goto choice1
 
 
-:: end
-music ost6 stop
-animate <opacity> Ayano /from 255 /to 0 /ease outExpo /time 800
-animate <opacity> $bg /from 255 /to 0 /ease inSine /time 300
-$ay none " "
-wait 1700
-end fadeBlack
+:theOldDays
+  playScript resources/scripts/theOldDays.txt
+goto choice1
+
+:artificialEnemy
+  playScript resources/scripts/artificialEnemy.txt
+goto choice1
+
+:runTests
+  save log mem
+  playScript resources/scripts/test.txt
+  save reload mem
+  save log mem
+goto choice1
