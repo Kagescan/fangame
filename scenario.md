@@ -30,6 +30,7 @@ Par ailleurs, si une version est en attente (dessins en cours...) alors on peut 
 
 __patch 03__  
 * Début d'écriture de la Route Musiques (chapitre 1). *On passe le passage du yuukei quartet : on continue directement sur le présent.*
+* Ajout des animations de personnages qui sont en train de parler.
 
 
 > **Rappel de la route musique :**

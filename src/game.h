@@ -56,16 +56,18 @@ class Character {
       bool animatePos(std::string from, std::string to, std::string ease, sf::Time time, sf::Time curr, unsigned int line);
       bool animateOpacity(std::string from, std::string to, std::string ease, sf::Time duration, sf::Time curr, unsigned int line);
       bool animateSprite(sf::Sprite from, sf::Sprite to, sf::Time time, sf::Time curr);
+      bool animateSpeak(bool in, sf::Time curr);
       bool update(sf::RenderWindow& scr, sf::Time curr);
       int reloadY(int changeY = 0);
       sf::Sprite sprite;
       sf::Color titleColor, spriteColor;
     private: 
       int x, y;
-      bool animX, animS, animO;
-      int animX_from, animX_to, animS_from, animS_to, animO_from, animO_to, scrh;
+      bool animX, animS, animO, animSp, animSp_type;
+      int animX_from, animX_to, animS_from, animS_to, animO_from, animO_to, animSp_posy, scrh;
       std::string animX_ease, animS_ease, animO_ease;
-      sf::Time animX_duration, animX_init, animS_duration, animS_init, animO_duration, animO_init;
+      sf::Time animX_duration, animX_init, animS_duration, animS_init, animO_duration, animO_init, animSp_init;
       sf::Sprite oldSprite;
+      sf::Texture emptyTxt;
 };
 #endif

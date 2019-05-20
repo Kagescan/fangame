@@ -82,3 +82,7 @@ say Shintaro "Quoi encore ?! Uh ?!" "Ah !" "Attends, tu ne pensais pas…"
 say Ene "Allons ! C’est la seule et unique solution, maître !"
 
 
+::changement de partie.
+
+
+

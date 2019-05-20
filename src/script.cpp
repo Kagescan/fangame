@@ -218,8 +218,14 @@
     std::string character = split(arg,' ')[0]; //1st argument is the name of the characters
     if (! retval.empty() ){
         if (allCharacters.find(character) != allCharacters.end()) {
+          std::cout<<"ACT : "<<refOldChara<<" -> "<<character<<"\n";
+          if (refOldChara != character){
+            allCharacters[refOldChara].animateSpeak(false, clock.getElapsedTime());
+            allCharacters[character].animateSpeak(true, clock.getElapsedTime()); //enable the new character.
+          }
           titleColor = allCharacters[character].titleColor;
           actualCharacter = getValue(character+".name");
+          refOldChara = character;
         } else
           actualCharacter = character;
 

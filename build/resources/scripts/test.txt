@@ -1,0 +1,26 @@
+entity <character> Shintaro
+entity <character> Ayano
+
+entity <image> aya6 = "resources/img/characters/ayano/Ayawhat 4.png"
+
+  animate <position> Ayano /to 0 /time 1
+  animate <position> Shintaro /to 0 /time 1
+  animate <opacity> Ayano /from 0 /to 255 /time 900
+  animate <opacity> Shintaro /from 0 /to 255 /time 900
+
+  animate <spriteChange> Ayano /to aya6 /time 800
+  say Ayano "Hum ?"
+  say Ayano "Shintaro...-kun ?"
+
+say Shintaro "a"
+say Ayano "b"
+say Shintaro "a"
+say Ayano "b"
+say Shintaro "a"
+say Ayano "b"
+say Shintaro "a"
+say Ayano "b"
+say Shintaro "a"
+say Ayano "b"
+say Shintaro "a"
+say Ayano "b"

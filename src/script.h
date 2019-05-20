@@ -73,7 +73,7 @@ class Script {
         sf::Clock clock;
         sf::Time waitLimit;
 
-        std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter;
+        std::string loadfile, rgQuote, rgSpacestar, rgVarNames, actualCharacter, refOldChara;
         std::smatch m;
         bool playing, waiting, displaying, pause, animatingTextFinished, drawingChoices;
         unsigned int iread, substrPos, textSpeed, txtSpeedIter, choicePos, choiceErrLine, ifBlocks, animChoiceType;
