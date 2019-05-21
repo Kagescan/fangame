@@ -269,13 +269,8 @@ bool guiSelect::type(bool type){ return valType = type; }
   Character::Character(int winHeight){
     titleColor = sf::Color::Black;
     spriteColor = sf::Color::White;
-    x = 0;
-    y = 0;
+    x = y = coef = 0;
     scrh = winHeight;
-    sf::Image i;
-    i.create(5,5, sf::Color::Red);
-    emptyTxt.loadFromImage(i);
-    sprite.setTexture(emptyTxt);
   }
   int Character::reloadY(int changeY) {
     return y = (changeY==0) ? scrh - sprite.getTextureRect().height : changeY;
@@ -319,9 +314,8 @@ bool guiSelect::type(bool type){ return valType = type; }
   }
 
   bool Character::animateSpeak(bool in, sf::Time curr){
-    if (in){
-      animSp_posy = y;
-    } else std::cout<<"FOO\n";
+    animSp_posy = y;
+    coef = 0;
     animSp_type = in;
     animSp_init = curr;
     animSp = true;
@@ -330,24 +324,22 @@ bool guiSelect::type(bool type){ return valType = type; }
 
   bool Character::update(sf::RenderWindow& scr, sf::Time curr){
   //animations
+    int alpha = animSp_type ? 255 : 150;
     if (animSp){ //Animation speaking OR animation Opacity but not at the same time.
-      int alpha = animSp_type ? 255 : 150;
-      if (curr > animSp_init + sf::milliseconds(700)){ //reset value
+      if (curr > animSp_init + sf::milliseconds(400)){ //reset value
         animSp = false;
-        y = animSp_type ? animSp_posy-50 : animSp_posy;
       } else {
         const int time = sf::Time(curr - animSp_init).asMilliseconds();
         if (animSp_type) { //in
-          y = animSp_posy - easeInSine(time, 0, 50, 700);
-          alpha = easeInSine(time, 150, 105, 700);
+          coef = easeInSine(time, 50, -50, 400);
+          alpha = easeInSine(time, 150, 105, 400);
         } else { //out
-          y = animSp_posy - easeInSine(time, 50, 0, 700);
-          alpha = easeInSine(time, 255, -105, 700);
+          coef = easeInSine(time, 0, 50, 400);
+          alpha = easeInSine(time, 255, -105, 400);
         }
       }
       sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, alpha ));
-      sprite.setPosition(x,y);
-      std::cout<<"alpha("<<alpha<<") y("<<y<<")\n";
+      sprite.setPosition(x,y+coef);
     } else if (animO) {
       if (curr > animO_init + animO_duration){
         animO = false;
@@ -368,22 +360,22 @@ bool guiSelect::type(bool type){ return valType = type; }
           duration = animX_duration.asMilliseconds();
         x = returnEase(animX_ease, time, animX_from, animX_to - animX_from, duration);
       }
-      sprite.setPosition(x,y);
+      sprite.setPosition(x,y+coef);
     }
     if (animS){ //Animate Sprite.
       if (curr > animS_init + animS_duration){
         animS = false;
-        sprite.setColor(spriteColor);
+        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, alpha ));
         y = scrh - sprite.getTextureRect().height;
       } else {
         const int time = sf::Time(curr - animS_init).asMilliseconds(),
           duration = animS_duration.asMilliseconds();
-        oldSprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 255, -255, duration) ));
-        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 0, 255, duration) ));
+        oldSprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, animSp_type?255:150, animSp_type?-255:-150, duration) ));
+        sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, easeLinear(time, 0, animSp_type?255:150, duration) ));
         scr.draw(oldSprite);
       }
-      oldSprite.setPosition(x, scrh - oldSprite.getTextureRect().height);
-      sprite.setPosition(x, scrh - sprite.getTextureRect().height);
+      oldSprite.setPosition(x, scrh - oldSprite.getTextureRect().height+coef);
+      sprite.setPosition(x, scrh - sprite.getTextureRect().height+coef);
     }
   //draw
     scr.draw(sprite);

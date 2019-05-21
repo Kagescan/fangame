@@ -218,7 +218,6 @@
     std::string character = split(arg,' ')[0]; //1st argument is the name of the characters
     if (! retval.empty() ){
         if (allCharacters.find(character) != allCharacters.end()) {
-          std::cout<<"ACT : "<<refOldChara<<" -> "<<character<<"\n";
           if (refOldChara != character){
             allCharacters[refOldChara].animateSpeak(false, clock.getElapsedTime());
             allCharacters[character].animateSpeak(true, clock.getElapsedTime()); //enable the new character.
@@ -559,6 +558,7 @@
     assign(name,"character","type");
     assign(name,name,"name");
     allCharacters[name] = Character(winSize.y);
+    allCharacters[name].animateSpeak(false, clock.getElapsedTime());
     if (spriteName != "")
       assign(name, spriteName, "image");
     return true;

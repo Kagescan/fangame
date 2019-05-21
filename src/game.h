@@ -64,7 +64,7 @@ class Character {
     private: 
       int x, y;
       bool animX, animS, animO, animSp, animSp_type;
-      int animX_from, animX_to, animS_from, animS_to, animO_from, animO_to, animSp_posy, scrh;
+      int animX_from, animX_to, animS_from, animS_to, animO_from, animO_to, animSp_posy, scrh,coef;
       std::string animX_ease, animS_ease, animO_ease;
       sf::Time animX_duration, animX_init, animS_duration, animS_init, animO_duration, animO_init, animSp_init;
       sf::Sprite oldSprite;
