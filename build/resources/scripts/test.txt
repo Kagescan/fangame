@@ -1,35 +1,27 @@
-entity <character> Shintaro
+entity <character> Yaki
 entity <character> Ayano
+entity <image> aya6 = "resources/img/characters/ayano/Ayawhat 2.png"
+entity <image> aya5 = "resources/img/characters/ayano/Ayasmile 2.png"
 
-entity <image> aya6 = "resources/img/characters/ayano/Ayawhat 4.png"
-entity <image> aya5 = "resources/img/characters/ayano/Ayawhat 3.png"
+  set <animSpeak> Yaki = 1
+  set <animSpeak> Ayano = 1
 
-  animate <position> Ayano /to 0 /time 1
-  animate <position> Shintaro /to 300 /time 1
-  animate <opacity> Ayano /from 0 /to 255 /time 900
-  animate <opacity> Shintaro /from 0 /to 255 /time 900
+  animate <position> Ayano /to 0 /time 500
+  animate <position> Yaki /to 300 /time 500
 
   animate <spriteChange> Ayano /to aya6 /time 800
-  animate <spriteChange> Shintaro /to aya6 /time 800
+  animate <spriteChange> Yaki /to aya5 /time 800
 
 
-say Shintaro "a"
-say Ayano "b"
-
-animate <spriteChange> Ayano /to aya5 /time 800
-animate <spriteChange> Shintaro /to aya5 /time 800
-
-say Shintaro "a"
-say Ayano "Hum ?"
-say Ayano "Shintaro...-kun ?"
-
-say Shintaro "a"
-say Ayano "b"
-say Shintaro "a"
-say Ayano "b"
-say Shintaro "a"
-say Ayano "b"
-say Shintaro "a"
-say Ayano "b"
-say Shintaro "a"
-say Ayano "b"
+say Yaki "foo"
+say Ayano "bar"
+say Yaki "foo"
+say Ayano "bar"
+say Ayano "bar"
+say Ayano "bar"
+say Ayano "bar"
+say Ayano "bar"
+say Yaki "foo"
+say Ayano "bar"
+say Yaki "foo"
+say Ayano "bar"
