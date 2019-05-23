@@ -3,14 +3,24 @@
 entity <Character> Shintaro
 entity <Character> temp
 entity <Character> Ene
+entity <image> shinTest = "resources/img/characters/shinTest.png"
+entity <image> eneTest = "resources/img/characters/eneTest.png"
 
-set <name> temp = Présentateur
+set <name> temp = Presentateur
 set <color> Shintaro = #ff0000
 set <color> Ene = #5555ff
 set <color> temp = #aaaaaa
+set <image> Shintaro = shinTest
+set <image> Ene = eneTest
+
 
 say temp "Aujourd’hui, la journée sera ensoleillée, avec des températures plus élevées que la normale. Pensez à prendre avec vous de quoi vous hydrater correctement."
 say temp "Maintenant, le journal..."
+
+animate <position> Ene /to 500 /time 1
+animate <position> Shintaro /to 0 /time 1
+set <animSpeak> Shintaro = 1
+set <animSpeak> Ene = 1
 
 say Ene "«Suite à cette canicule, beaucoup de livreurs...»" "AAhhh~ "
 say Ene "L’été bat son pleeein… Faisait-il aussi chaud l’année dernière ?!" "Le soleil est vraiment mauvais pour ma peeeau…"
@@ -18,7 +28,7 @@ say Ene "Oh ! Ces crèmes solaires ont l’air intéressantes ! Dites Maître,
 say Shintaro "*pas de réponse*"
 say Ene "Oh. Qu’est-ce que c’est… « Pour l’achat d’un set complet tarifs réduits » ?!" "Wow !"
 say Ene "C’est le meilleur moment pour en acheter ! Vous ne pensez pas ?!"
-say Ene "Maître !" "Allez Maître !" "Achetons-les, (en chantonnant) ache-tons-les !"
+say Ene "Maître !" "Allez Maître !" "Achetons-les, 🎶 ache-tons-les 🎶 !"
 say Shintaro "RM..."
 say Shintaro "Je n’en ai pas besoin !" "De plus, je ne vois vraiment pas en quoi cela pourrait te servir, surtout pour une personne comme toi."
 say Shintaro "Maintenant silence."
@@ -38,7 +48,7 @@ say Shintaro "Laisse-moi un peu de répit!"
 say bruit "*main frappant une bouteille de soda*"
 say Shintaro "Eh !"
 say Ene "Oh !"
-say Shintaro "GAAAAAAAAAAAHHHHHHHHHHHH !!!! AAAAAAAHAAAAAAAAAA~~aa"
+say Shintaro "GAAAAAAAAAAAHHHHHHHHHHHH !!!! AAAAAAAHAAAAAAAAAA~~aa" "La bouteille vient de se renverser sur le clavier !!!"
 say Ene "Mais qu’est ce que vous avez encore fait Maître ?! Vite des mouchoirs !"
 say Shintaro "Ah, ah, rah !" "Je le sais ça !"
 say Shintaro "Merde !" "*sauve au moins une vie, Shintaro !*" "Reviens ! S'il te plaît, MARCHEEE !"
@@ -82,7 +92,40 @@ say Shintaro "Quoi encore ?! Uh ?!" "Ah !" "Attends, tu ne pensais pas…"
 say Ene "Allons ! C’est la seule et unique solution, maître !"
 
 
-::changement de partie.
+say JEU "changement de partie."
 
 
+say Ene "Maaaaître, courage ! Nous y sommes bientôt !" "Aller ! Aller !"
+say Shintaro "Je vais y passer… Sérieusement y passer…"
+say Ene "Vous avez correctement bu avant de partir, il n’y a aucune raison pour que ça n’aille pas."
+say Ene "Aller ! Un peu de courage !"
+say Shintaro "Hey. Active le microphone." "j’aimerais enregistrer mon testament tant que je peux encore parler…"
+say Ene "Roh, n’importe quoi ! Aller, courage !" "Et nous rentrerons sains et saufs !"
+say Ene "De plus... Pensez à supprimer vos « dossiers importants » avant de mourir, si vous voyez ce que je veux dire, Maître !"
+say Ene "Si quelqu’un venait à les trouver, cela risque d’être encore plus dur pour vos proches."
+say Shintaro "TU LES AS VU ?!"
+say Ene "Oui, en effet, en entier."
+say Shintaro "Non, non, non ! Ce n’est pas possible..." "Je les avais pourtant tous bloqués, n’est-ce pas ?!"
+say Ene "Hé hé ! Oh vous êtes mignon…" "Tous vos mots de passes sont identiques : 4510471. Ce n’était vraiment pas difficile à trouver, Maître."
+say Shintaro "AAAH !" "Bon, oublie tout ce que tu as vu. D’accord ?"
+say Ene "Eeeeh… Hors de question…" "Je ne suis pas du genre à publier des informations privées. Cependant quand j’ai une prise, je la dévore jusqu’aux viscères."
+say Shintaro "Pourquoi tes métaphores sont-elles si imagées ?"
+say Ene "Oh, j’oubliais !" "Le centre commercial où nous allons à construit un parc d’attraction sur son toit !"
+say Ene "Il y a même une grande roue !" "Il y a également ce truc qui monte qui descend qui monte qui descend !"
+say Ene "Si, par le plus grand des hasards, vous m’y emmeniez… Ene oubliera sûrement cette histoire de dossier."
+say Shintaro "Menteuse."
+say Ene "Ooh ! Bien sûr que non !" "Dites, une fois nos courses terminées, on pourrait y faire un tour, non ?" "Maître ! Dîtes ouiii !"
+say Shintaro "Oooh..." "Bien. Mais pas longtemps. D’accord ?"
+say Ene "Eh ?! C’est vrai ?! Vraiment vrai ?! Génial !" "Et si mignon ! Un vrai beau gosse !"
+say Shintaro "Arrête avec ces compliments ! En échange, oublie juste ce que tu as vu..."
+say Ene "(robotique) Compris. Ene. Oublier. Dossier."
+say Shintaro "Tu le fais exprès ?"
+say Ene "Oh allez, je plaisante !" "Mais en fait Maître. C’était facile de vous convaincre finalement."
+say Shintaro "Oh. Et bien…" "C’est probablement parce que je ne remettrai plus les pieds dehors." "Profitons-en."
+say Ene "oh oh ! Ah, si je ne vous connaissais pas Maître, je penserais que vous vous amusiez."
+say Shintaro "Mais bien sûr que non !"
+
+say JEU "changement de chap"
+
+say Shintaro "(essouflé)" "Fuh... Fuuhhhh~~~ Finalement on y est."
 
