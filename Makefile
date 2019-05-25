@@ -1,26 +1,23 @@
+## OPTIONS TO ADAPT WITH YOUR SYSTEM (macros) ##
+
+# Compiler (g++/clang/msvc/mingw64 ?)
 CXX ?= g++
-CFLAGS  ?= -Wall --std=c++17 -I/usr/local/include/SFML/ -g
+# Compilation Flags
+CFLAGS  ?= -g -Wall --std=c++17
+# Path to libs (for the linker)
 LDFLAGS ?= -L/usr/local/lib/
+# Include the SFML lib
 LDLIBS  ?= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
+# Compile me this ...
+OBJS ?=  src/obj/easing.o src/obj/game.o src/obj/script.o src/obj/main.o
+# for making that executable :
+PROG ?= build/kagepro2 
 
-#build/kagepro2 : src/main.cpp src/game.cpp src/script.cpp src/easing.cpp
-#	$(CXX) src/obj/main.o src/obj/game.o src/obj/script.o src/obj/easing.o $(LDFLAGS) -o $@
 
-
-# Reconnaître les extensions de nom de fichier *.c et *.o comme suffixes
-SUFFIXES ?= .cpp .o 
-.SUFFIXES: $(SUFFIXES) .
-
-# Nom de l'exécutable
-PROG = build/kagepro2 
-
-# Liste de fichiers objets nécessaires pour le programme final
-OBJS =  src/obj/easing.o src/obj/game.o src/obj/script.o src/obj/main.o
+## STUFF THAT WILL WORK AS LONG AS MACROS ARE VALID : ##
 
 all: $(PROG)
 
-# Étape de compilation et d'éditions de liens
-# ATTENTION, les lignes suivantes contenant "$(CC)" commencent par un caractère TABULATION et non pas des espaces
 $(PROG): $(OBJS)
 	$(CXX) -o $(PROG) $(OBJS) $(LDFLAGS) $(LDLIBS) 
 
