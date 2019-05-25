@@ -4,7 +4,7 @@ This is a remake of a fangame that I made with my community.
 The version 1 was written in Python but in this remake, the entire code is in C++.
 
 ### status
-**UNDER DEVELOPEMENT** - Alpha3 branch.
+**UNDER DEVELOPMENT** - Alpha3 branch.
 
 Game Version : 2.1 (Alpha version : 03)
 
@@ -15,17 +15,21 @@ To do :
 Done : 
 
 * Added the speaking animation.
+* (additional/tests) : animations with frames.
+* (additional) : added a Makefile and Visual Studio Code support.
 
 ### compiling
 
 Written in linux (Xubuntu 18.04 LTS), not tested in Windows.
 The commands are for unix systems, adapt this if you're running windows.
 
-Builds coming soon.
+No builds at the moment.
 
-1. This code needs the library SFML [http://sfml-dev.org] and uses cpp17 features. You need to compile it, or using builds.
+1. This code needs the library SFML [http://sfml-dev.org] and uses cpp17 features. You need to compile it, or using -unavailable- builds.
 2. Open a terminal inside the root of this repository. 
-3. Type this code to build the project (inline compilation, i will add a cmake script later):  
+3. Two ways to compile :
+  * **Using make command** (recommended) : edit the Makefile with your system and use the command `make`.
+  * **Inline compilation** :
   ```bash
     # Adapt this command with the path of sfml lib (/usr/local/lib, /usr/local/include/SFML ...)
     $ g++ src/main.cpp src/easing.cpp src/game.cpp src/script.cpp \
