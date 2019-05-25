@@ -3,4 +3,5 @@ obj/
 a.out
 kagepro2
 run.sh
-
+.vscode/ipch/
+main
