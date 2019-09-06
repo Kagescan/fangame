@@ -1,3 +1,0 @@
-#A cmake test...
-project(kagepro2)
-add_executable(kagepro2 main.cpp)
