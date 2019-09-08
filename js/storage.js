@@ -4,5 +4,8 @@
 monogatari.storage ({
 	player: {
 		name: ''
-	}
+	},
+  fanservice: true
 });
+
+var script = {};
