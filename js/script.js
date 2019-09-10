@@ -12,14 +12,14 @@ monogatari.action ('message').messages ({
 	}
 });
 
-// Define the notifications used in the game
+/*/ Define the notifications used in the game
 monogatari.action ('notification').notifications ({
 	'Welcome': {
 		title: 'Welcome',
 		body: 'This is the Monogatari VN Engine',
 		icon: ''
 	}
-});
+});*/
 
 // Define the Particles JS Configurations used in the game
 monogatari.action ('particles').particles ({
@@ -63,72 +63,46 @@ monogatari.assets ('scenes', {
 
 // Define the Characters
 monogatari.characters ({
-	'y': {
-		name: 'Yui',
-		color: '#5bcaff'
-	}
+	'v' : {
+		name: '',
+		color: '#000000'
+	},
+	'shin' : {
+		name: 'Shintaro Kisaragi',
+		color: '#ff0000'
+	},
+	'aya' : {
+		name: 'Ayano Tateyama',
+		color: '#ffaaaa',
+    directory: 'Ayano',
+    sprites:{ // Images Identifier for the "Show" statement.
+      normal: "cool.png",
+      excited: "clapclap.png",
+      embarrassed: "embarrassed.png",
+      question: "what.png",
+      smile: "smile.png",
+      please: "please.png",
+      shadow: "shadow.png",
+      shy: "shy.png"
+    },
+    expressions: { // Side images identifiers to show on dialogs when the character speaks with a colon and side image name, like e:Smiling
+      Smiling: "shadow.png"
+    }
+	},
+	'ene' : {
+		name: 'Ene',
+		color: '#aaaaff'
+	},
+  'bruit' : {
+    name: 'bruit',
+    color: '#aaaaaa'
+  },
+  'uk' : {
+    name: '???',
+    color: '#aaaaaa'
+  }
 });
 
-monogatari.script ({
-	// The game starts here.
-	'Start': [
-		'show scene #f7f6f6 with fadeIn',
-		'show notification Welcome',
-		{
-			'Input': {
-				'Text': 'What is your name?',
-				'Validation': function (input) {
-					return input.trim ().length > 0;
-				},
-				'Save': function (input) {
-					this.storage ({
-						player: {
-							name: input
-						}
-					});
-					return true;
-				},
-				'Revert': function () {
-					this.storage ({
-						player: {
-							name: ''
-						}
-					});
-				},
-				'Warning': 'You must enter a name!'
-			}
-		},
-		'y Hi {{player.name}} Welcome to Monogatari!',
-		{
-			'Choice': {
-				'Dialog': 'y Have you already read some documentation?',
-				'Yes': {
-					'Text': 'Yes',
-					'Do': 'jump Yes'
-				},
-				'No': {
-					'Text': 'No',
-					'Do': 'jump No'
-				}
-			}
-		}
-	],
+script["Start"] = ["jump chapter00-start"];
 
-	'Yes': [
-		'y Thats awesome!',
-		'y Then you are ready to go ahead and create an amazing Game!',
-		'y I can’t wait to see what story you’ll tell!',
-		'end'
-	],
-
-	'No': [
-
-		'y You can do it now.',
-
-		'show message Help',
-
-		'y Go ahead and create an amazing Game!',
-		'y I can’t wait to see what story you’ll tell!',
-		'end'
-	]
-});
+monogatari.script (script);
