@@ -3,7 +3,7 @@
 /* global monogatari */
 const { $_ready, $_ } = Monogatari;
 $_ready (() => {
-	monogatari.init ('#monogatari').then (() => {
+	monogatari.init('#monogatari').then (() => {
 		var textbox = document.getElementsByTagName('text-box')[0];
 
 		// change text box html structure

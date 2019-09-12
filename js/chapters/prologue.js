@@ -10,7 +10,9 @@
 
 // système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en aout. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
 script["chapter00-start"] = [
-  'show scene #666666 with fadeIn',
+  'show scene oldBridge_night with fadeIn',
+  'show character aya embarrassed center with fadeIn',
+  "aya Je vois... Alors ça veut dire que, Shintaro-kun, ta mémoire est incroyable, c'est ça ?<br> La chance...<br> J'oublie toujours très rapidement tout ce que j'apprends...",
   "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille.<br> Mais franchement,comment ça se fait que l'école soit si flippante la nuit?",
   "J'espère que rien de chelou ne va apparaitre...",
   "Raah...Sérieux !!",

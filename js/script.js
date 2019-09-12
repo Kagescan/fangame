@@ -57,7 +57,7 @@ monogatari.assets ('images', {
 
 // Define the backgrounds for each scene.
 monogatari.assets ('scenes', {
-
+	'oldBridge_night': "ltmNight.jpg"
 });
 
 
