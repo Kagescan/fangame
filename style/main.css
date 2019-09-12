@@ -126,6 +126,17 @@ text-box [data-content="wrapper"] {
 [data-ui="who"]:empty {
 	display:none;
 }
+[data-content="text"] {
+	margin: 0 auto;
+	max-width:1280px;
+    width: 90%;
+}
+@media only screen and (min-width: 601px) {
+ [data-content="text"] { width:85%; }
+}
+@media only screen and (min-width: 993px) {
+ [data-content="text"] { width:70%; }
+}
 
 /* Style for Centered Text */
 [data-component="centered-dialog"] {
