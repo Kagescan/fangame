@@ -93,13 +93,81 @@ button:hover {
 }
 
 /* Text Box styling */
-[data-component="text-box"] {
+/**
+ * ===========================
+ * Text Box Component
+ * ===========================
+ */
 
+text-box {
+  background-color: transparent;
+  min-height: initial;
+  max-height: initial;
+  overflow-y: initial;
+  /*width: 100%;
+  z-index: 10;
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  color: rgb(255, 255, 255);
+  flex-direction: column;*/
+}
+text-box [data-content="wrapper"] {
+  overflow-y: auto;
+  background-color: var(--main-color);
+  min-height: 20vh;
+  max-height: 25vh;
+  padding: 1rem 0 0 0;
+  border-top: white 1px solid;
+  margin: -2px 0 0 0;
 }
 
-/* Character Name Style */
-[data-ui="who"] {
+/*
+text-box::after {
+  content: ' ';
+  width: 100%;
+  height: 0;
+  display: block;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.22) 85%);
+  position: sticky;
+  bottom: 0;
+  transition: all ease 0.5s;
+}
 
+text-box.unread::after {
+  height: 2rem
+}
+
+text-box.nvl {
+  max-height: 100%;
+  height: 100%;
+}
+
+text-box p {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin: 0;
+}*/
+
+/* Character Name Style */
+#customCharacterName {
+  align-self: flex-start;
+  padding: 0 31px 0 31px;
+  margin: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../assets/ui/charaBoxRight.png"),url("../assets/ui/charaBoxLeft.png");
+  background-position: right,left;
+  border-bottom: rgba(0,0,0,0.9) 2px solid;
+  z-index: 11;
+}
+[data-ui="who"] {
+  padding: 2px 3px 0 3px;
+  margin: initial;
+  background-image: url("../assets/ui/charaBoxCenter.png");
+  background-repeat: repeat-x;
+  background-size: contain;
 }
 
 /* Style for Centered Text */
