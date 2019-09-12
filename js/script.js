@@ -63,10 +63,6 @@ monogatari.assets ('scenes', {
 
 // Define the Characters
 monogatari.characters ({
-	'v' : {
-		name: '',
-		color: '#000000'
-	},
 	'shin' : {
 		name: 'Shintaro Kisaragi',
 		color: '#ff0000'

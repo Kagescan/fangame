@@ -1,52 +1,35 @@
 'use strict';
 /* global Monogatari */
 /* global monogatari */
-
-/**
- * =============================================================================
- * This is the file where you should put all your custom JavaScript code,
- * depending on what you want to do, there are 3 different places in this file
- * where you can add code.
- *
- * 1. Outside the $_ready function: At this point, the page may not be fully
- *    loaded yet, however you can interact with Monogatari to register new
- *    actions, components, labels, characters, etc.
- *
- * 2. Inside the $_ready function: At this point, the page has been loaded, and
- *    you can now interact with the HTML elements on it.
- *
- * 3. Inside the init function: At this point, Monogatari has been initialized,
- *    the event listeners for its inner workings have been registered, assets
- *    have been preloaded (if enabled) and your game is ready to be played.
- *
- * You should always keep the $_ready function as the last thing on this file.
- * =============================================================================
- **/
-
 const { $_ready, $_ } = Monogatari;
-
-// 1. Outside the $_ready function:
-
-
 $_ready (() => {
-	// 2. Inside the $_ready function:
-
 	monogatari.init ('#monogatari').then (() => {
+		var textbox = document.getElementsByTagName('text-box')[0];
+
 		// change text box html structure
-    $("text-box").html(`
-      <div id='customCharacterName'>
-          <span data-ui="who" data-content="character-name"></span>
-      </div>
-      <div data-content="wrapper">
-        <div data-content="side-image">
-          <img data-ui="face" alt="" data-content="character_expression">
-        </div>
-        <div data-content="text">
-          <p data-ui="say" data_content="dialog"></p>
-        </div>
-      </div>
-  	`);
-    
-    console.log("logan here");
-  });
+	    textbox.innerHTML = `
+	      <div id='customCharacterName'>
+	          <span data-ui="who" data-content="character-name"></span>
+	      </div>
+	      <div data-content="wrapper">
+	        <div data-content="side-image">
+	          <img data-ui="face" alt="" data-content="character_expression">
+	        </div>
+	        <div data-content="text">
+	          <p data-ui="say" data_content="dialog"></p>
+	        </div>
+	      </div> `;
+  		var charaBox = document.getElementById('customCharacterName');
+
+		// trigger when a new character is speaking
+		var observer = new MutationObserver(function() {
+			charaBox.style.display = (textbox.dataset.speaking == "narrator") ? "none" : "initial";
+		})
+		observer.observe(textbox, {
+		  attributes: true,
+		  attributeFilter: ['data-speaking'],
+		  childList: false,
+		  characterData: false
+		})
+	});
 });
