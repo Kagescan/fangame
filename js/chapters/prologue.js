@@ -1,16 +1,18 @@
 
+/*
 
-
-// système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en aout. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
-script["chapter00-start"] = [
-	'show character scene #000000 with fadeIn',
+  'show character scene #000000 with fadeIn',
   "centered Une rencontre inattendue...<br>",
   "centered C'était celle qui allait complêtement changer ma vie",
   "centered Enfin... Dans le bon ou dans le mauvais côté ?",
   "centered Quoi qu'il en soit, soyez patient. Vous le saurez un jour ou l'autre.<br> Si on revenais à cette fameuse 'rencontre' ?",
-  'show character scene #666666 with fadeIn',
-  "v J'imagine que c'est normal qu'il n'y ait personne à une heure pareille.<br> Mais franchement,comment ça se fait que l'école soit si flippante la nuit?",
-  "v J'espère que rien de chelou ne va apparaitre...",
+*/
+
+// système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en aout. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
+script["chapter00-start"] = [
+  'show scene #666666 with fadeIn',
+  "shin J'imagine que c'est normal qu'il n'y ait personne à une heure pareille.<br> Mais franchement,comment ça se fait que l'école soit si flippante la nuit?",
+  "shin J'espère que rien de chelou ne va apparaitre..<br>e<br>e<br>r<br>r<br>e",
   "v Raah...Sérieux !!",
   "v Que j'oublie mon porte feuille en classe dès le premier jour de ce trimestre... <br>J'ai vraiment la poisse...",
   "v Il fait si noir... Je ne vois pas au délà des 5 mètres.",
