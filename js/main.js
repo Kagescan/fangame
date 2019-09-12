@@ -32,7 +32,21 @@ $_ready (() => {
 	// 2. Inside the $_ready function:
 
 	monogatari.init ('#monogatari').then (() => {
-		// 3. Inside the init function:
-
-	});
+		// change text box html structure
+    $("text-box").html(`
+      <div id='customCharacterName'>
+          <span data-ui="who" data-content="character-name"></span>
+      </div>
+      <div data-content="wrapper">
+        <div data-content="side-image">
+          <img data-ui="face" alt="" data-content="character_expression">
+        </div>
+        <div data-content="text">
+          <p data-ui="say" data_content="dialog"></p>
+        </div>
+      </div>
+  	`);
+    
+    console.log("logan here");
+  });
 });

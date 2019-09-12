@@ -89,13 +89,39 @@ button:hover {
 }
 
 /* Text Box styling */
-[data-component="text-box"] {
-	/*background: url("../assets/ui/bg_grid.png") repeat;*/
+text-box {
+  background-color: transparent;
+  min-height: initial;
+  max-height: initial;
+  overflow-y: initial;
 }
-
+text-box [data-content="wrapper"] {
+  overflow-y: auto;
+  background-color: var(--main-color);
+  min-height: 20vh;
+  max-height: 25vh;
+  padding: 1rem 0 0 0;
+  border-top: white 1px solid;
+  margin: -2px 0 0 0;
+}
 /* Character Name Style */
+#customCharacterName {
+  align-self: flex-start;
+  padding: 0 31px 0 31px;
+  margin: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("../assets/ui/charaBoxRight.png"),url("../assets/ui/charaBoxLeft.png");
+  background-position: right,left;
+  border-bottom: rgba(0,0,0,0.9) 2px solid;
+  z-index: 11;
+}
 [data-ui="who"] {
-
+  padding: 2px 3px 0 3px;
+  margin: initial;
+  background-image: url("../assets/ui/charaBoxCenter.png");
+  background-repeat: repeat-x;
+  background-size: contain;
 }
 
 /* Style for Centered Text */
