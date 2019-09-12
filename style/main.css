@@ -107,9 +107,9 @@ text-box [data-content="wrapper"] {
 /* Character Name Style */
 #customCharacterName {
   align-self: flex-start;
-  padding: 0 31px 0 31px;
+  padding: 0 30px;
   margin: 0;
-  background-size: contain;
+  background-size: 30px;
   background-repeat: no-repeat;
   background-image: url("../assets/ui/charaBoxRight.png"),url("../assets/ui/charaBoxLeft.png");
   background-position: right,left;
