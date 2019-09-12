@@ -19,17 +19,5 @@ $_ready (() => {
 	          <p data-ui="say" data_content="dialog"></p>
 	        </div>
 	      </div> `;
-  		var charaBox = document.getElementById('customCharacterName');
-
-		// trigger when a new character is speaking
-		var observer = new MutationObserver(function() {
-			charaBox.style.display = (textbox.dataset.speaking == "narrator") ? "none" : "initial";
-		})
-		observer.observe(textbox, {
-		  attributes: true,
-		  attributeFilter: ['data-speaking'],
-		  childList: false,
-		  characterData: false
-		})
 	});
 });

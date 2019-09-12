@@ -98,11 +98,12 @@ text-box {
 text-box [data-content="wrapper"] {
   overflow-y: auto;
   background-color: var(--main-color);
+  background-image: url("../assets/ui/bg_grid.png");
   min-height: 20vh;
   max-height: 25vh;
   padding: 1rem 0 0 0;
   border-top: white 1px solid;
-  margin: -2px 0 0 0;
+  margin: -1px 0 0 0;
 }
 /* Character Name Style */
 #customCharacterName {
@@ -113,7 +114,6 @@ text-box [data-content="wrapper"] {
   background-repeat: no-repeat;
   background-image: url("../assets/ui/charaBoxRight.png"),url("../assets/ui/charaBoxLeft.png");
   background-position: right,left;
-  border-bottom: rgba(0,0,0,0.9) 2px solid;
   z-index: 11;
 }
 [data-ui="who"] {
@@ -122,6 +122,9 @@ text-box [data-content="wrapper"] {
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
   background-size: contain;
+}
+[data-ui="who"]:empty {
+	display:none;
 }
 
 /* Style for Centered Text */
