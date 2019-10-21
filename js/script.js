@@ -99,6 +99,6 @@ monogatari.characters ({
   }
 });
 
-script["Start"] = ["jump chapter00-start"];
+script["Start"] = ["jump chapter01-start"];
 
 monogatari.script (script);

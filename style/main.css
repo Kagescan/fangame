@@ -6,10 +6,36 @@
 	font-size: .8rem;
 }
 
+.hide {
+	display:none !important;
+}
 /*
 	General Styling
  */
 
+#gamePlugins {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: black;
+	z-index: 11;
+}
+#gamePlugins.shinOs {
+	background: white;
+	color: red;
+}
+#shinOsWinContainer {
+	flex-grow: 1;
+	background: blue;
+}
+#shinOsBottomBar {
+	height: 32px;
+	background: green;
+}
 /* General Style */
 body {
 
