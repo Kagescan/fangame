@@ -13,8 +13,9 @@ let shinOSinstance = {
 			<div id='shinOsWindows'></div>
 		</div>
 		<div id='shinOsBottomBar'>
-			<div id='shinOsStartMenu'></div>
+			<div id='shinOsStartMenu'>Shintaro</div>
 			<div id='shinOsAppsNav'></div>
+			<div id='shinOsClock'>8:30<br>08/15/20XX</div>
 		</div>
 		`;
 	this.allCallbacks = [];
@@ -43,15 +44,15 @@ let shinOSinstance = {
 		/*desk = this.windowContainer;
 		var newDiv = document.createElement("div");*/
 	},
-	addApp(t, callback){
+	addApp(title, icon="fa-file-image", callback){
 		let desktopIcons = document.getElementById("shinOsDesktop");
 		let newIcon = document.createElement("div");
-		let i = this.allCallbacks.length;
-		newIcon.innerHTML = t;
-		newIcon.dataset.title = t;
+		let index = this.allCallbacks.length;
+		newIcon.innerHTML = `<i class="fas ${icon}"></i><span>${title}</span>`;
+		newIcon.dataset.title = title;
 		newIcon.dataset.type = "icon";
-		newIcon.dataset.i = i;
+		newIcon.dataset.i = index;
 		desktopIcons.appendChild(newIcon);
-		this.allCallbacks[i] = callback;
+		this.allCallbacks[index] = callback;
 	}
 }

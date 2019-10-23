@@ -26,15 +26,53 @@
 }
 #gamePlugins.shinOs {
 	background: white;
-	color: red;
+	color: white;
 }
 #shinOsWinContainer {
 	flex-grow: 1;
-	background: blue;
+	background: #0f2027; /* fallback for old browsers */
+	background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+#shinOsDesktop {
+	display: flex;
+	flex-direction: column;
+}
+#shinOsDesktop>div{
+	width: 80px;
+	display: flex;
+	flex-direction: column;
+	margin: 3px;
+	padding: 10px;
+	border: solid 1px transparent;
+  	border-radius: 2px;
+}
+#shinOsDesktop>div:hover{
+	background-color: rgba(255,255,255,.3);
+	border-color:rgba(255,255,255,.3);
+}
+#shinOsDesktop>div>svg{
+	width: 100%;
+	height: auto;
+}
+#shinOsDesktop>div>span{
+	font-size: 10px;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
 }
 #shinOsBottomBar {
-	height: 32px;
-	background: green;
+	height: 42px;
+	background: #1c2429;
+	display: flex;
+	padding: 0 10px;
+	align-items: center;
+}
+#shinOsAppsNav {
+	flex-grow: 1;
+	display: flex;
+}
+#shinOsClock {
+	text-align: center;
 }
 /* General Style */
 body {
