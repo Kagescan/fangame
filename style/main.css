@@ -245,6 +245,7 @@ text-box [data-content="wrapper"] {
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
   background-size: contain;
+  height: 30px;
 }
 [data-ui="who"]:empty {
 	display:none;

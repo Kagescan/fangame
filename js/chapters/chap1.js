@@ -5,9 +5,9 @@ script["chapter01-start"] = [
 	"Déjà, combien de temps me suis-je endormi ?",
 	"show scene ShinOSClock01",
 	"...",
-	"Ah, j'ai dû sur-travailler sur ma musique et m'endormir en plein travail.",
+	"Ah, j'ai dû sur-travailler sur ma musique et m'endormir en pleine composition.",
 	"En parlant de ça, j'ai l'impression qu'<span class='rem'>Ene</span> n'est pas là pour le moment",
-	"Je devrais en profiter",
+	"Je devrais en profiter !",
 	"jump chapter01-shinOS"
 ];
 script["chapter01-shinOS"] = [
@@ -17,8 +17,7 @@ script["chapter01-shinOS"] = [
 		} else {
 			shinOSinstance.run();
 			shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
-				alert("Navigateur web indisponible pour le moment !");
-				//monogatari.run("jump chapter01-tempWeb");
+				monogatari.run("jump chapter01-tempWeb");
 			});
 			shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
 				//shinOSinstance.addWindow("vocaloid", "ça bug (?)", "fa-guitar");
@@ -31,7 +30,6 @@ script["chapter01-shinOS"] = [
 			      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
 			      'Warning': 'Mot de passe incorrect'
 			    }});
-				/*if (prompt("Mot de passe ?") == "4510471") shinOSinstance.addWindow("jambes", "empty... ?", "fa-folder-open");*/
 			});
 		}
 	},
@@ -48,9 +46,10 @@ script["chapter01-tempWeb"] = [
 script["chapter01-legs"] = [
   /*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
-  "QUE ?!",
+	"WHAT",
+  "shin KESKE ?!",
   "Elle a supprimé tous mes fichiers privés ?!",
-  "...<br>AAhhh -- Je suis maudit...<br> J'espère au moins que les fichiers de ma musique n'ont pas subi le même sort.",
+  "...<br>AAhhh -- Je suis maudit...<br> J'espère au moins que les fichiers de ma musique n'ont pas subi le même sort !",
   /* +1 achievement DOSSIERS_VOLÉS */
   "jump chapter01-shinOS"
 ];
@@ -83,7 +82,7 @@ script["chapter01-MAO"] = [
   "jump chapter01-MAO-doSave"
 ];
 script["chapter01-MAO-doSave"] = [
-  /*Afficher ShinOS. Il y a un bouton play, on peut écouter la musique de shintaro. Aussi un bouton sauvegarder...*/,
+  /*Afficher ShinOS. Il y a un bouton play, on peut écouter la musique de shintaro. Aussi un bouton sauvegarder...*/
   function(){ //si le game engine possède sa propre fonction confirm, alors on l'utilise, sinon on prend celle du navigateur
     if (confirm("sauvegarder ?"))
       monogatari.run("jump chapter01-MAO-continue");
@@ -106,7 +105,9 @@ script["chapter01-MAO-continue"] = [
   "shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
   "ene La souris ! sauvez la souris !",
   /*bruit de click*/
-  "centered rottotorrrorooro<br>totoro<br>toto<br>roto<span class='censored'>to</span>",
+  "centered rottotorrrorooro",
+	"centered totoro",
+	"centered toto roto<span class='censored'>to</span>",
   "shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
   "ene Vous pouvez écrire Totoro !",
   /*tête de la dépression*/
