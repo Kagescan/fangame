@@ -27,6 +27,8 @@ let shinOSinstance = {
 			<div id='shinOsClock'>8:30<br>08/15/20XX</div>
 		</div>
 		`;
+		this.started = true;
+		console.log("shinOs démarré");
 		/*this.allCallbacks = [];
 		document.getElementById("shinOsDesktop").addEventListener("click", function(c){
 			let e = c.target;
@@ -35,15 +37,18 @@ let shinOSinstance = {
 				//shinOSinstance.addWindow(e.dataset.title);
 			}
 		});*/
-		console.log("shinOs démarré");
 	},
-	toggle(){
-		this.container.classList.toggle("hide");
+	show(){
+		this.container.classList.remove("hide");
+	},
+	hide(){
+		this.container.classList.add("hide");
 	},
 	exit(){
 		this.container.classList.add("hide");
 		this.container.classList.remove("shinOs");
 		this.container.innerHTML = "";
+		this.started = false;
 		console.log("ShinOS éteint");
 	},
 	addWindow(title, content, icon){
