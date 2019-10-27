@@ -1,7 +1,7 @@
 /* Shintaro OS. Part of the Retaining's memories fangame
  * Copyright (c) 2017-2019 ShinProg / Kagescan
 */
-function isDescendantOfDatasetType(name, child) {
+/*function isDescendantOfDatasetType(name, child) {
      var node = child.parentNode;
      while (node != null) {
          if (node.dataset.type == name) {
@@ -10,8 +10,8 @@ function isDescendantOfDatasetType(name, child) {
          node = node.parentNode;
      }
      return false;
-}
-let shinOSinstance = {
+}*/
+var shinOSinstance = {
 	run(){
 		this.container = document.getElementById("gamePlugins");
 		this.container.classList.add("shinOs");
@@ -51,26 +51,20 @@ let shinOSinstance = {
 		this.started = false;
 		console.log("ShinOS éteint");
 	},
-	addWindow(title, content, icon){
+	addWindow(title, icon, callback){
 		let win = document.createElement("div"), taskIcon = document.createElement("div");
 		win.classList.add("active");
-		win.innerHTML = `
-		<div class='title'>
-			<a href='#'><i class="fas fa-times-circle"></i></a>
-			<span>${title}</span>
-			<i class="fas ${icon}"></i>
-		</div>
-		<div class='content'>${content}</div>`;
+		win.innerHTML = `<div class='title'>  <a href='#'><i class="fas fa-times-circle"></i></a>  <span>${title}</span>  <i class="fas ${icon}"></i></div>    <div class='content'></div>`;
 		win.firstElementChild.firstElementChild.addEventListener('click', ()=>{ shinOSinstance.closeWindow(title); });
 		taskIcon.innerHTML = `<i class="fas ${icon}"></i>`;
 		taskIcon.classList.add("active");
 		taskIcon.dataset.title = win.dataset.title = title;
-		taskIcon.addEventListener('click', ()=>{ console.log("foobar") });
+		taskIcon.addEventListener('click', ()=>{ console.log("icône cliquée") });
 		document.getElementById("shinOsWindows").appendChild(win);
 		document.getElementById("shinOsAppsNav").appendChild(taskIcon);
+    callback(win.lastElementChild);
 	},
 	closeWindow(title){
-		console.log(`#shinOsAppsNav [data-title=${title}]`);
 		document.querySelector(`#shinOsAppsNav div[data-title=${title}]`).remove();
 		document.querySelector(`#shinOsWindows div[data-title=${title}]`).remove();
 	},
@@ -85,4 +79,37 @@ let shinOSinstance = {
 		desktopIcons.appendChild(newIcon);
 		newIcon.onclick = callback;
 	}
+}
+
+
+
+
+var kageBrowser = {
+  hi: "Pas d'éléments",
+  history: [{title: "page d'acceuil", url: "home"}],
+  start(e, hi=""){
+    this.container = e;
+    if (hi!="") this.hi = hi;
+    e.innerHTML = `
+      <div id='kageBrowserSearchbar'>
+        <div> <span id='kageBrowserHomebtn'><i class='fas fa-home'></i></span> </div>
+        <div> <input name='search' title='Rechercher sur le web'></input> <a title='Rechercher'><i class='fas fa-search'></i></a> </div>
+      </div>
+      <div id='kageBrowserPageContent'> </div>`;
+    this.pageContent = e.querySelector("#kageBrowserPageContent");
+    e.querySelector("#kageBrowserHomebtn").addEventListener("click", (e)=>{ kageBrowser.home(); });
+    this.home();
+  },
+  home(){
+    console.log("home");
+    this.pageContent.innerHTML = `<p>Sites les plus visités</p> <div id='kageBrowserHighlights'> ${this.hi} </div>`;
+    this.container.querySelectorAll("#kageBrowserHighlights a").forEach(function(a){
+      a.addEventListener("click", function(event){
+        event.preventDefault();
+        if (a.dataset.action == "monogatari"){
+          monogatari.run(a.dataset.arg);
+        }
+      });
+    });
+  }
 }

@@ -17,10 +17,14 @@ script["chapter01-shinOS"] = [
 		} else {
 			shinOSinstance.run();
 			shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
-				monogatari.run("jump chapter01-tempWeb");
+				shinOSinstance.addWindow("web","fa-globe-americas", function(e){
+					kageBrowser.start(e,`
+						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>);
+				})
 			});
 			shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
-				//shinOSinstance.addWindow("vocaloid", "ça bug (?)", "fa-guitar");
 				monogatari.run("jump chapter01-MAO");
 			});
 			shinOSinstance.addApp("jambes", "fa-folder-open", function(){
@@ -33,16 +37,9 @@ script["chapter01-shinOS"] = [
 			});
 		}
 	},
-	"Dude, je sais pas ce que j'ai foutu pour briser le jeu (et le quatrième mur)... Mais je suis figé dedans, pas le choix.",
+	"(cliquez pour redémarrer shinOS)",
 	"jump chapter01-shinOS"
 ];
-script["chapter01-tempWeb"] = [
-	/* WEB : Page d'acceuil
-	       {Recherche google, Kagescan}
-	       Forum Weebs (-> Jeu du weeb pour convaincre (à venir); +1 achievement TROUVERLENOM)
-	       Informations
-	    */
-]
 script["chapter01-legs"] = [
   /*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
