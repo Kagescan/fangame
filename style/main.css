@@ -201,6 +201,10 @@ button:hover {
  * ===========================
 **/
 
+#background{
+	transition: background-color 1s;
+}
+
 /* Choice Buttons style */
 [data-component="choice-container"] button {
 

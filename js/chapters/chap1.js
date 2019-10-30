@@ -1,16 +1,29 @@
 script["chapter01-start"] = [
-	/*"show scene ShinEnTrainDeDormirDeDos",*/
+	"show scene ShinDodo with fadeIn duration 3s",
+	"play music 02.08 with fade 3 loop",
+	"wait 2500",
 	"... ...",
 	"Hmmm ?<br> J'ai beaucoup transpiré... Quel genre de rêve ai-je fait cette nuit ?",
-	"Déjà, combien de temps me suis-je endormi ?",
-	"show scene ShinOSClock01",
+	"Pff, sans doute toujours la même chose. Je n'avancerais pas si je ne fais que de me poser ce genre de questions.",
 	"...",
-	"Ah, j'ai dû sur-travailler sur ma musique et m'endormir en pleine composition.",
-	"En parlant de ça, j'ai l'impression qu'<span class='rem'>Ene</span> n'est pas là pour le moment",
+	"show background ShinGotoPC with fadeIn",
+	"Quoi qu'il en soit, il faut que je finisse la <span class='rem'>composition de ma musique !</span>",
+	"Reprenons le travail... à cause d'<span class='rem'>elle</span> je n'aurai jamais fini !",
+	"show background ShinGotoPC with fadeOut",
+	"play sound pcBooted",
+	"wait 1500",
+	"show scene ShinOrdi with fadeIn",
+	"Ah mais...",
+	"Je n'ai été réveillé que par la lumière du jour...<br>Mon PC a démarré rapidement... et le seul son sorti des hauts parleurs a été celui du démarrage !",
+	"Ce qui veut dire...",
+	"vibrate 200",
+	"Qu'<span class='rem'>Ene</span> n'est pas là pour le moment !!",
+	"show background ShinOrdiHands with fadeIn",
 	"Je devrais en profiter !",
 	"jump chapter01-shinOS"
 ];
 script["chapter01-shinOS"] = [
+	"show background ShinOrdiEyes",
 	function(){
 		if (shinOSinstance.started){
 			shinOSinstance.show();
@@ -21,7 +34,8 @@ script["chapter01-shinOS"] = [
 					kageBrowser.start(e,`
 						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a>
 			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>);
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>`
+					);
 				})
 			});
 			shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
@@ -29,7 +43,7 @@ script["chapter01-shinOS"] = [
 			});
 			shinOSinstance.addApp("jambes", "fa-folder-open", function(){
 				monogatari.run({'Input': {
-			      'Text': 'Mot de passe de Shintaro ? (entrez vide pour quitter)',
+			      'Text': 'Mot de passe de Shintaro ?<br><em style="font-size: 12px;">(entrez vide pour quitter)</em>',
 			      'Validation': (input) => (input == "4510471" || input.trim().length<=0),
 			      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
 			      'Warning': 'Mot de passe incorrect'
@@ -37,7 +51,7 @@ script["chapter01-shinOS"] = [
 			});
 		}
 	},
-	"(cliquez pour redémarrer shinOS)",
+	"<span class='hide>Le pc est allumé</span>",
 	"jump chapter01-shinOS"
 ];
 script["chapter01-legs"] = [
@@ -68,11 +82,15 @@ script["chapter01-weebGame"] = [
 ];
 script["chapter01-MAO"] = [
   function(){shinOSinstance.exit()},
-  "show scene MAO-freeze",
+  //"show scene MAO-freeze",
+	"show scene shinPC with fadeIn",
+	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+	"play sound pcBooted",
   "wait 5000",
   "shin Oh non. Oh non non non non non pas encore ! C’est pas vrai !",
   "shin Je n’ai pas besoin de boire, manger ou dormir pour vivre mais si l’ordinateur me lâche c’est fini. Je vais mourir, je vais-",
-  "show scene MAO-unfreeze",
+	()=>{ document.getElementById("background").style.backgroundColor = "blue"; },
+  //"show scene MAO-unfreeze",
   "shin Aaaah ! Dieu merci ça n’a pas tout effacé.",
   /*avec une tête comme celle du manga !*/
   "shin Cette chanson est destinée au hall of fame de <span class='def'>niconico</span>. Je ne peux pas me permettre de perdre un tel futur succès.",
@@ -89,22 +107,30 @@ script["chapter01-MAO-doSave"] = [
 ];
 
 script["chapter01-MAO-continue"] = [
-  "show scene MAO-freeze",
+	"stop music 02.08 with fade 3",
+  //"show scene MAO-freeze",
+	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+	"play sound pcBooted",
   "wait 5000",
   "shin QUOI ?! ENCORE !!<br> C'est pas possible ?!!",
+	"play music 01.02 with fade 3 loop",
   "ene Allons allons maître !",
-  "ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien",
-  "show scene MAO-clickClose",
+  "ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",
+  //"show scene MAO-clickClose",
   /* avec une tête comme celle du manga , temblement d'écran*/
   "shin EH !! Non, arrête tes conneries !",
   /*Cinématique de l'animé AHHHHHHHHHHHHHHHHHHHHHHHH*/
-  "show scene MAO-keyboard",
+  //"show scene MAO-keyboard",
+	"play sound pcBooted",
+	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
   "shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
   "ene La souris ! sauvez la souris !",
   /*bruit de click*/
+	"show background black",
   "centered rottotorrrorooro",
 	"centered totoro",
 	"centered toto roto<span class='censored'>to</span>",
+	"show background shinPC with fadeIn",
   "shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
   "ene Vous pouvez écrire Totoro !",
   /*tête de la dépression*/
@@ -117,9 +143,9 @@ script["chapter01-MAO-continue"] = [
   "Elle se vante maintenant. pff.",
   "shin Prends celui qui sera livré le plus vite",
   "ene C’est le festival d’Obon...personne ne livrera avant après demain",
-  "...<br>non...",
-  "Je vais vraiment mourir aujourd’hui",
-  "ene Allons en acheter un !",
+  "...<br>non. Je...",
+  "shin Je vais vraiment mourir aujourd’hui",
+  "ene Alors...<br>Allons en acheter un !",
   "shin Pardon ?!",
   "ene Le nouveau centre commercial géant de Kashiwa est ouvert !!",
   "ene On pourra aussi acheter ces supers tubes de crème solaire pour lutter contre la canicule !",

@@ -13,42 +13,21 @@
 const { Monogatari: monogatari } = Monogatari;
 
 monogatari.settings({
-
-	// The name of your game, this will be used to store all the data so once
-	// you've released a game using one name, it shouldn't change. Please use the
-	// Version Setting to indicate a new release of your game!
-	'Name': 'My Visual Novel',
-
-	// The version of your game in semantic versioning (https://semver.org/).
-	'Version': '0.1.0',
-
-	// Initial Label *
+	'Name': 'Retaining\'s Memories',
+	'Version': '2.99.0',
 	'Label': 'Start',
-
-	// Number of AutoSave Slots
 	'Slots': 10,
-
-	// Change to true for a MultiLanguage GameScreen.
-	'MultiLanguage': false,
-
-	// Music for the Main Menu.
-	'MainScreenMusic': '',
+	'MultiLanguage': false, // Change to true for a MultiLanguage GameScreen.
+	'MainScreenMusic': '01.22', // Music for the Main Menu.
+	'ShowMainScreen': true, // Turn main menu on/off; Default: true *
+	'Preload': true, // Turn image preloading on/off, Default: true
+	'AutoSave': 0, // Time interval between autosaves (In Minutes). 0 = Off
+	'ServiceWorkers': true, // Enable service workers; Default: true *
+	'TypeAnimation': true,
 
 	// Prefix for the Save Slots in Local Storage.
 	'SaveLabel': 'Save',
 	'AutoSaveLabel': 'AutoSave',
-
-	// Turn main menu on/off; Default: true *
-	'ShowMainScreen': true,
-
-	// Turn image preloading on/off, Default: true
-	'Preload': true,
-
-	// Time interval between autosaves (In Minutes). Default: 0 (Off)
-	'AutoSave': 0,
-
-	// Enable service workers; Default: true *
-	'ServiceWorkers': true,
 
 	// The Aspect Ratio your background images are on. This only has effect on
 	// web deployed novels if forceAspectRatio flag is on.
@@ -58,9 +37,6 @@ monogatari.settings({
 	// Values: 'None' (don't force), 'Visuals' (force only visuals)
 	// or 'Global' (force all game)
 	'ForceAspectRatio': 'None',
-
-	// Enables or disables the typing text animation for the whole game.
-	'TypeAnimation': true,
 
 	// Enables or disables the typing text animation in NVL dialogs for the
 	// whole game.
@@ -87,7 +63,7 @@ monogatari.settings({
 	// If this value is set to 0, no skipping will be allowed but if it's set
 	// to a higher number, skipping will be allowed and that value will be taken
 	// as the speed in milliseconds with which the game will skip through the script
-	'Skip': 0,
+	'Skip': 100,
 
 	// Define the directories where the assets are located. The root directory is
 	// the holder for the other asset specific directories, this directories are
@@ -130,7 +106,7 @@ monogatari.settings({
 monogatari.preferences ({
 
 	// Initial Language for Multilanguage Games or for the Default GUI Language.
-	'Language': 'English',
+	'Language': 'Français',
 
 	// Initial Volumes from 0.0 to 1.
 	'Volume': {
@@ -142,10 +118,10 @@ monogatari.preferences ({
 
 	// Initial resolution used for Electron, it must match the settings inside
 	// the electron.js file. This has no effect on web deployed novels.
-	'Resolution': '800x600',
+	'Resolution': '1280x720',
 
 	// Speed at which dialog text will appear
-	'TextSpeed': 20,
+	'TextSpeed': 10,
 
 	// Speed at which the Auto Play feature will show the next statement
 	// It is measured in seconds and starts counting after the text is

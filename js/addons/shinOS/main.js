@@ -15,7 +15,6 @@ var shinOSinstance = {
 	run(){
 		this.container = document.getElementById("gamePlugins");
 		this.container.classList.add("shinOs");
-		this.container.classList.remove("hide");
 		this.container.innerHTML = `
 		<div id='shinOsWinContainer'>
 			<div id='shinOsWindows'></div>
@@ -28,6 +27,7 @@ var shinOSinstance = {
 		</div>
 		`;
 		this.started = true;
+		this.show();
 		console.log("shinOs démarré");
 		/*this.allCallbacks = [];
 		document.getElementById("shinOsDesktop").addEventListener("click", function(c){
@@ -39,34 +39,57 @@ var shinOSinstance = {
 		});*/
 	},
 	show(){
-		this.container.classList.remove("hide");
+		let cl = this.container.classList;
+		cl.remove("hide");
+		cl.add("animated", "fadeInUp", "faster");
+		setTimeout(()=>{
+			cl.remove("animated", "fadeInUp", "faster");
+		}, 800);
 	},
-	hide(){
-		this.container.classList.add("hide");
+	hide(finished = function(){}){
+		let cl = this.container.classList;
+		cl.add("animated", "fadeOutUp", "faster");
+		setTimeout(()=>{
+			cl.remove("animated", "fadeOutUp", "faster");
+			cl.add("hide");
+			finished();
+		}, 800);
 	},
 	exit(){
-		this.container.classList.add("hide");
-		this.container.classList.remove("shinOs");
-		this.container.innerHTML = "";
-		this.started = false;
-		console.log("ShinOS éteint");
+		this.hide(()=>{
+			this.container.classList.remove("shinOs");
+			this.container.innerHTML = "";
+			this.started = false;
+			console.log("ShinOS éteint");
+		});
 	},
 	addWindow(title, icon, callback){
 		let win = document.createElement("div"), taskIcon = document.createElement("div");
-		win.classList.add("active");
 		win.innerHTML = `<div class='title'>  <a href='#'><i class="fas fa-times-circle"></i></a>  <span>${title}</span>  <i class="fas ${icon}"></i></div>    <div class='content'></div>`;
 		win.firstElementChild.firstElementChild.addEventListener('click', ()=>{ shinOSinstance.closeWindow(title); });
 		taskIcon.innerHTML = `<i class="fas ${icon}"></i>`;
 		taskIcon.classList.add("active");
 		taskIcon.dataset.title = win.dataset.title = title;
 		taskIcon.addEventListener('click', ()=>{ console.log("icône cliquée") });
+		win.classList.add("active", "animated", "zoomIn", "faster");
+		taskIcon.classList.add("active", "animated", "flipInX", "faster");
+		setTimeout(()=>{
+			win.classList.remove("animated", "zoomIn", "faster");
+			taskIcon.classList.remove("animated", "flipInX", "faster");
+		}, 800);
 		document.getElementById("shinOsWindows").appendChild(win);
 		document.getElementById("shinOsAppsNav").appendChild(taskIcon);
     callback(win.lastElementChild);
 	},
 	closeWindow(title){
-		document.querySelector(`#shinOsAppsNav div[data-title=${title}]`).remove();
-		document.querySelector(`#shinOsWindows div[data-title=${title}]`).remove();
+		let win = document.querySelector(`#shinOsWindows div[data-title=${title}]`);
+		let taskIcon = document.querySelector(`#shinOsAppsNav div[data-title=${title}]`);
+		win.classList.add("animated", "zoomOut", "fast");
+		taskIcon.classList.add("animated", "flipOutX", "faster");
+		setTimeout(()=>{
+			win.remove();
+			taskIcon.remove();
+		}, 800);
 	},
 	addApp(title, icon="fa-file-image", callback){
 		let desktopIcons = document.getElementById("shinOsDesktop");

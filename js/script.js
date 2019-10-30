@@ -32,7 +32,9 @@ monogatari.assets ('gallery', {
 
 // Define the music used in the game.
 monogatari.assets ('music', {
-
+	'01.02': "01.02. Osanpo Biyori.mp3",
+	'01.22': '01.22 In a daze.ogg',
+	'02.08': '02.08. Tosou Sentai Rakugaki Ranger.mp3'
 });
 
 // Define the voice files used in the game.
@@ -42,7 +44,7 @@ monogatari.assets ('voice', {
 
 // Define the sounds used in the game.
 monogatari.assets ('sound', {
-
+	'pcBooted': 'criticHP.wav'
 });
 
 // Define the videos used in the game.
@@ -57,7 +59,13 @@ monogatari.assets ('images', {
 
 // Define the backgrounds for each scene.
 monogatari.assets ('scenes', {
-	'oldBridge_night': "ltmNight.jpg"
+	'oldBridge_night': "ltmNight.jpg",
+	'ShinDodo': 'ShinDodo.jpg',
+	'ShinGotoPC': 'ShinGotoPC.jpg',
+	'ShinOrdi': 'ShinOrdi.jpg',
+	'ShinOrdiEyes': 'ShinOrdiEyes.jpg',
+	'ShinOrdiHands': 'ShinOrdiHands.jpg',
+	'shinPC': 'PC.png'
 });
 
 
