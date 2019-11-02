@@ -270,6 +270,8 @@ bool guiSelect::type(bool type){ return valType = type; }
     titleColor = sf::Color::Black;
     spriteColor = sf::Color::White;
     x = y = coef = 0;
+    animSp_type = true;
+    blockAnimSp = true;
     scrh = winHeight;
   }
   int Character::reloadY(int changeY) {
@@ -314,33 +316,35 @@ bool guiSelect::type(bool type){ return valType = type; }
   }
 
   bool Character::animateSpeak(bool in, sf::Time curr){
-    animSp_posy = y;
-    coef = 0;
-    animSp_type = in;
-    animSp_init = curr;
-    animSp = true;
+    if (!blockAnimSp){
+      animSp_posy = y;
+      coef = 0;
+      animSp_type = in;
+      animSp_init = curr;
+      animSp = true;
+    }
     return in;
   }
 
   bool Character::update(sf::RenderWindow& scr, sf::Time curr){
   //animations
     int alpha = animSp_type ? 255 : 150;
-    if (animSp){ //Animation speaking OR animation Opacity but not at the same time.
+    if (!blockAnimSp && animSp){ 
       if (curr > animSp_init + sf::milliseconds(400)){ //reset value
         animSp = false;
       } else {
         const int time = sf::Time(curr - animSp_init).asMilliseconds();
         if (animSp_type) { //in
-          coef = easeInSine(time, 50, -50, 400);
-          alpha = easeInSine(time, 150, 105, 400);
+          coef = easeInOutCirc(time, 50, -50, 400);
+          alpha = easeInOutCirc(time, 150, 105, 400);
         } else { //out
-          coef = easeInSine(time, 0, 50, 400);
-          alpha = easeInSine(time, 255, -105, 400);
+          coef = easeInOutCirc(time, 0, 50, 400);
+          alpha = easeInOutCirc(time, 255, -105, 400);
         }
       }
       sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b, alpha ));
       sprite.setPosition(x,y+coef);
-    } else if (animO) {
+    } else if (animO) { //Animation speaking OR animation Opacity but not at the same time.
       if (curr > animO_init + animO_duration){
         animO = false;
         sprite.setColor(sf::Color(spriteColor.r,spriteColor.g,spriteColor.b,animO_to));

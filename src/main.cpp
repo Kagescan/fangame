@@ -7,7 +7,7 @@
 #include "script.h"
 
 int main() {
-    std::cout <<"\nRetaining's memories, Version 2.1.02 (Preview) \n"<<
+    std::cout <<"\nRetaining's memories, Version 2.1.03 (Preview) \n"<<
                 "\n (c) ShinProg - Under the MIT/X11 license, please read LICENSE file"<<
                 "\n\n"<<std::flush;
     std::array<unsigned int, 3> screenOptions = {0,60,0};

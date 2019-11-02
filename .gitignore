@@ -1,6 +1,14 @@
+## IGNORE THOSES FILES FOR COMMIT :
+
+# tests and useless files
 test/
+
+# Compilation tools and waste
+run.sh
 obj/
+.vscode/ipch/
+
+# Executables
 a.out
 kagepro2
-run.sh
-
+main

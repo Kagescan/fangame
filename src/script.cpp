@@ -242,7 +242,7 @@
     std::cerr<< "! Line "<<line<<" : Syntax Error (Syntax expected : say variable \"line 1\" \"line 2\" ... ).\n";
     return false;
   }
-
+//
   bool Script::cmdMusic(std::string arg, unsigned int line){
     std::smatch match;
     std::regex syntax( rgVarNames + "(play|pause|stop)" + rgSpacestar + "(loop)?", std::regex::icase);
@@ -445,8 +445,16 @@
   bool Script::assign(std::string var, std::string value, std::string object){
     //SPECIAL VALUES (that need to be treated)
     if (object != ""){
+      //AnimSpeak Object
+      if (object == "animSpeak"){
+        if (allCharacters.find(var) != allCharacters.end()){
+          if (value=="1"){
+            allCharacters[var].blockAnimSp = false;
+            allCharacters[var].animateSpeak(false, clock.getElapsedTime());
+          } else allCharacters[var].blockAnimSp = true;
+        } else {std::cerr<<"! Declaring the object [animSpeak] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't a character entity !)\n"; return false;}
       // Image object
-      if (object == "image") {
+      } else if (object == "image") {
         if (getValue(var+".type")=="character"){
           if (allSprites.find(value) ==  allSprites.end() )
             {std::cerr<<"! Declaring the object [Image] for the variable ["<<var<<"] : Var Error (The variable ["<<value<<"] hasn't been defined, or isn't an image entity !)\n"; return false;}
@@ -558,7 +566,6 @@
     assign(name,"character","type");
     assign(name,name,"name");
     allCharacters[name] = Character(winSize.y);
-    allCharacters[name].animateSpeak(false, clock.getElapsedTime());
     if (spriteName != "")
       assign(name, spriteName, "image");
     return true;
