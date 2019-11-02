@@ -44,7 +44,8 @@ monogatari.assets ('voice', {
 
 // Define the sounds used in the game.
 monogatari.assets ('sound', {
-	'pcBooted': 'criticHP.wav'
+	'pcBooted': 'startup.ogg',
+	'pcError': 'error.ogg'
 });
 
 // Define the videos used in the game.
