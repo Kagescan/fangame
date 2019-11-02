@@ -1,0 +1,89 @@
+entity <character> e
+entity <image> bg = "resources/img/background/user_guide.jpg"
+set <name> e = Guide d'introduction
+set <image> e = bg
+animate <position> e /to 0 /time 1
+animate <opacity> e /from 0 /to 255 /time 700
+
+say e "Bonjour et merci d'avoir téléchargé ce fangame ! Avant de commencer à jouer, veuillez lire ces instructions afin d'avoir la meilleure expérience utilisateur possible."
+
+set <name> e = Note pour cette version (Retaining's Memories V2.1.01)
+say e "Ce jeu étant encore en état de développement, nous misons sur le scénario plutôt que les fonctions secondaires !"
+say e "Tous les mini-jeux prévus pour la version finale sont donc remplacés par de simples choix dans le novel. Aussi, certains points de ce guide ne sont pas à tenir compte telle que la présentation des différentes timelines."
+
+set <name> e = Guide d'introduction
+say e "Pour parcourir les choix, utilisez les flèches haut et bas de votre clavier." "Pour sélectionner le choix, appuyez sur la touche Enter."
+
+:choice
+  choice "Concept" = concept "Histoire" = histoire "Contrôles" = controles "Infos recommmandées" = infos "Astuces/anecdotes" = astuces "Crédits" = credits "quitter" = continue
+  animate <opacity> e /from 255 /to 0 /time 1000 /ease inSine
+  $ay none " "
+  wait 1500
+  quit up
+
+:concept
+  set <name> e = CONCEPT
+  say e "Ce fangame est une sorte de visual novel reprenant toutes les timelines de la série Kagerou Project, mais qui intègre en plus des mini-jeux en tant qu'intéractions avec l'histoire."
+  say e "Les timelines intégrées sont : celles des musiques (introduction), du manga (histoire principale), du roman, de l'animé (fin), une fanfiction (Route M-X) et un spin-off (Seek At Mekakucity)." "Les routes sont choisies selon vos actions mais certaines se débloquent une fois avoir fini le jeu"
+  say e "Bien entendu, les routes sont ajoutées au fur et à mesure des mises à jours (car la création d'un chapitre prend énormément de temps...). Même en version finale, l'histoire peut ne pas être complête. Restez au courant des mises à jours sur nos réseaux sociaux."
+  say e "Il est aussi possible de jouer sans avoir à connaître la série, mais afin de comprendre toutes les références et sauts de passages, il est vivement conseillé de l'avoir vue."
+  say e "Nous avons mis tout en oeuvre pour respecter une certaine compréhension de l'histoire, seulement, l'ordre logique des routes peut être contradictoire vis à vis de la véritable série." "Inversement, certaines explications peuvent être sautées pour être expliquée plus tard afin de garder une certaine cohérence."
+
+  set <name> e = ATTENTION
+  say e "Ce jeu contient des spoilers concernant notamment le manga et le roman de Kagerou Project !! Ces spoilers peuvent par ailleurs impacter votre interprétation sur d'autres routes (Animé en particulier)."
+
+  set <name> e = LEXIQUE
+  say e "* Route : La série Kagerou Project est une histoire qui se déroule dans une boucle temporelle. Cela signifie que l'histoire se répète : cela crée plusieurs scénarios (même univers et personnages mais évènements différents) appellées timelines, ou Routes."
+
+goto choice
+
+:histoire
+  set <name> e = HISTOIRE
+  say e "Shintaro Kisaragi est un NEET enfermé chez lui depuis deux ans, suite à la mistérieuse disparition de ses trois seuls amis. Son écran lui a permis d'oublier petit à petit les mauvais souvenirs qu'il a eu auparavant."
+  say e "Il vit avec ENE, sorte de programme informatique intelligent qui vit sur son ordinateur et passe son temps à l'embêter."
+  say e "Un beau jour de 15 Aout, Shintaro mets accidentellement hors-service son clavier, et se retrouve contraint de sortir de chez lui." "Après plusieurs mésaventures, Shintaro rejoint malgré lui un étrange groupe d'adolescents nommé Mekakushi-Dan, qui possèdent un pouvoir qu'ils peuvent déclencher avec leurs yeux."
+  say e "Et si ce groupe et tous ces évènements passés étaient en fait liés ? En suivant ce groupe, Shintaro va s'embarquer par la suite dans une véritable tragédie."
+
+  say e "Dans ce jeu, vous suivrez l'histoire de Shintaro, mais contrairement à la série, vous allez prendre son point de vue et subir les évènements dans l'ordre."
+
+  set <name> e = Cette version (Retaining's Memories -PREVIEW- V2.1.01)
+  say e "Dans cette version, seule le chapitre The Old Days est disponible, et sans les mini-jeux."
+goto choice
+
+:controles
+  set <name> e = CONTROLES
+  say e "Le jeu se contrôle uniquement au clavier."
+  set <name> e = Dans le menu principal
+  say e "* Utilisez les flèches haut et bas pour naviger à travers les chapitres." "* Utilisez la touche Enter pour valider la sélection."
+  set <name> e = Dans le jeu (visual novel en particulier)
+  say e "Le bouton principal est la barre espace ou la touche Enter." "La touche Echap permet de stopper le script courant (revient au menu ou à l'index selon la manière dont le script a été programmé."
+  say e "Lorsque le texte défile : Appuyer sur le bouton principal permet de sauter le défilement du texte actuel" "Une fois le défilement arrêté : Appuyer sur le bouton principal permet de passer à la réplique suivante."
+  say e "Lorsqu'il faut faire un choix :" "Utilisez les flèches haut et bas pour sélectionner dans un choix, et utilisez le bouton principal pour valider."
+goto choice
+  
+:infos
+  set <name> e = CONFIGURATION
+  say e "Ce jeu fonctionne théoriquement sur n'importe quelle configuration (un processeur à environ 2.00Ghz et 200Mo de RAM suffisent.), pourvu qu'il ait été compilé sur le bon système d'exploitation (Windows/Linux) et que le programme puisse démarrer en mode interface graphique."
+  say e "Autrement dit, bonne chance si vous voulez tenter de faire tourner le code source sur android..."
+  say e "Le jeu a été conçu pour un rendu moyen de 60 images par secondes (FPS), et certaines valeurs du mécanisme de rendu se déterminent en fonction de cette valeur plutôt qu'en fonction du temps passé." "Afin d'avoir la meilleure expérience utilisateur possible, il est vivement recommandé de rester sur cette valeur par défaut."
+  say e "Si le jeu est démarré depuis une console/un terminal, le répertoire courant doit être celui où se trouve le binaire."
+goto choice
+
+:astuces
+  set <name> e = Reperes temporels
+  say e "Le chapitre The Old Days se situerait en avril 2011, tandis que l'époque du Yuukei Quartet se situerait durant l'année scolaire japonaise 2012." "Le repère du présent serait quant à lui situé au 15 aout 2014, dans la Ville de Kashiwa City (préfecture de Chiba)."
+  set <name> e = Passer des dialogues.
+  say e "Pour accéder à certaines routes, il va falloir finir le jeu. Plutôt que de devoir subir les mêmes paroles, n'oubliez pas que vous avez la possibilité de passer des dialogues en maintenant la barre espace appuyée."
+  say e "Attention tout de même, le bouton permettant de passer les dialogues est aussi celui pour valider son choix. Fonction à utiliser avec attention, car on peut valider un choix trop vite sans le faire exprès."
+  set <name> e = Histoire ?
+  say e "Bien que ce fangame raconte l'histoire de Kagerou Project, le véritable intéret du jeu est toute autre. Mais ça, vous le découvrirez après avoir fini le jeu !" "Un indice : ce jeu porte tout son intéret sur les points de vues et son titre. "
+goto choice
+
+:credits
+  set <name> e = CREDITS
+  say e "Ce fangame a été créé par la communauté française Kagescan (Kagerou Project Fr)" "Le code-source du jeu est libre, sous license open-source MIT/X11." "github : https://github.com/LoganTann/kagepro2/"
+  say e "L'organisation du projet, la création du moteur de jeu et du jeu en lui-même ainsi que la compilation du code a été faite par ShinProg." "Le scénario a été dirigé par ShinProg et Nayamea."
+  say e "Les dessins ont été réalisés par les membres de la communauté française Kagescan, en particulier :" "* Lines : Maxence Porelli" "* Couleurs : Lucie Fournier" "* Décors : Furi"
+  say e "les bandes sons et toutes les autres routes viennent de la série Kagerou Project, sur quelque support que ce soit, avec éventuellement quelques légères modifications de notre part."
+  ::say e "La route M-X a été imaginée par Yoomster."
+goto choice

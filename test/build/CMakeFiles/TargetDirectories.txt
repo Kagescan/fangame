@@ -1,3 +1,0 @@
-/home/logan/Bureau/kagepro2/test/build/CMakeFiles/edit_cache.dir
-/home/logan/Bureau/kagepro2/test/build/CMakeFiles/rebuild_cache.dir
-/home/logan/Bureau/kagepro2/test/build/CMakeFiles/fangame.dir
