@@ -19,7 +19,7 @@ Online mode could temporary block the game when the game engine is preloading an
 This game uses html's and javascript's latest features and requires to be run on a popular and updated browser !
 
 Available :  
-* [https://logantann.github.io/kagepro2/](Play Online in github) : *unstable, no assets preloading*
+* [Play Online in github](https://logantann.github.io/kagepro2/) : *unstable, no assets preloading*
 * Download the latest version (html, unstable) : click download zip button, and run index.html
 
 > Unavailable now : stable version and native offline apps  
