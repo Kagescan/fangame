@@ -14,7 +14,7 @@ script["chapter01-start"] = [
 	"wait 1500",
 	"show scene ShinOrdi with fadeIn",
 	"Ah mais...",
-	"Je n'ai été réveillé que par la lumière du jour...<br>Mon PC a démarré rapidement... et le seul son sorti des hauts parleurs a été celui du démarrage !",
+	"J'ai été réveillé par la lumière du jour...<br>Mon PC a démarré rapidement et le seul son sorti des hauts parleurs a été celui du démarrage...",
 	"Ce qui veut dire...",
 	"vibrate 1000",
 	"Qu'<span class='rem'>Ene</span> n'est pas là pour le moment !!",
@@ -76,7 +76,7 @@ script["chapter01-news"] = [
 ];
 script["chapter01-weebGame"] = [
   function(){shinOSinstance.hide()},
-	"\"Le site est actuellement fermé. Il réouvra une fois la programmation du nouveau forum finie.\"",
+	"\"Le site est actuellement fermé. Il réouvrira une fois la programmation du nouveau forum finie.\"",
 	"shin Ah, le créateur de ce site fais encore une mise à jour... Il faudra que je repasse un autre jour !",
 	/* +1 achivement : Revenez plus tard*/
 	"jump chapter01-shinOS"
@@ -114,13 +114,13 @@ script["chapter01-MAO-continue"] = [
 	"play sound pcError",
 	"wait 2000",
 	"shin huh oh",
-	"par pité... Pas elle !!",
+	"par pitié... Pas elle !!",
 	"play music 01.02 with fade 3 loop",
 	"ene Allons allons maître !",
-	"hide image enePop.svg with fadeOUt",
+	"hide image enePop.svg with fadeOut",
 	"ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",
 	//"show scene MAO-clickClose",
-	/* avec une tête comme celle du manga , temblement d'écran*/
+	/* avec une tête comme celle du manga , temblement d'écran */
 	"vibrate 1000",
 	"shin EH !! Non, arrête tes conneries !",
 	/*Cinématique de l'animé AHHHHHHHHHHHHHHHHHHHHHHHH*/
@@ -138,8 +138,8 @@ script["chapter01-MAO-continue"] = [
 	"show background shinPC with fadeIn",
 	"shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
 	"ene Vous pouvez écrire Totoro !",
-	/*tête de la dépression*/
-	"ene ... ?",
+	"shin ...",
+	"ene ??",
 	"shin ... huuuh",
 	"ene ...",
 	"ene Maître ? Il suffit de tout racheter...",

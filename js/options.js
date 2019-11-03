@@ -20,9 +20,9 @@ monogatari.settings({
 	'MultiLanguage': false, // Change to true for a MultiLanguage GameScreen.
 	'MainScreenMusic': '01.22', // Music for the Main Menu.
 	'ShowMainScreen': true, // Turn main menu on/off; Default: true *
-	'Preload': true, // Turn image preloading on/off, Default: true
+	'Preload': false, // Turn image preloading on/off, Default: true
 	'AutoSave': 0, // Time interval between autosaves (In Minutes). 0 = Off
-	'ServiceWorkers': true, // Enable service workers; Default: true *
+	'ServiceWorkers': false, // Enable service workers; Default: true *
 	'TypeAnimation': true,
 
 	// Prefix for the Save Slots in Local Storage.
