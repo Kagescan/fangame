@@ -124,8 +124,8 @@ script["chapter01-MAO-continue"] = [
 	"vibrate 1000",
 	"shin EH !! Non, arrête tes conneries !",
 	"show video shincola immersive with close",
-	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
 	"ene La souris ! sauvez la souris !",
+	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
 	"shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
 	"stop music 01.02 with fade 3",
 	/*bruit de click*/
