@@ -43,13 +43,13 @@ monogatari.assets ('voice', {
 });
 
 // Define the sounds used in the game.
-monogatari.assets ('sound', {
+monogatari.assets ('sounds', {
 	pcBooted: 'startup.ogg',
 	pcError: 'error.ogg'
 });
 
 // Define the videos used in the game.
-monogatari.assets ('video', {
+monogatari.assets ('videos', {
 	shincola: "shincola.mp4"
 });
 
