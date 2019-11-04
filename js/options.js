@@ -13,7 +13,7 @@
 const { Monogatari: monogatari } = Monogatari;
 let preload = false;
 if (typeof(window.location.search) !== 'undefined')
-	preload = window.location.search == "preload";
+	preload = window.location.search == "?preload";
 monogatari.settings({
 	'Name': 'Retaining\'s Memories',
 	'Version': '2.99.0',
