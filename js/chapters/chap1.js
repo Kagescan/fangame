@@ -115,7 +115,7 @@ script["chapter01-MAO-continue"] = [
 	"wait 2000",
 	"shin huh oh",
 	"par pitié... Pas elle !!",
-	"play music 01.02 with fade 3 loop",
+	"play music 01.02 with volume 1 loop fade 3",
 	"ene Allons allons maître !",
 	"hide image enePop.svg with fadeOut",
 	"ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",
@@ -123,12 +123,10 @@ script["chapter01-MAO-continue"] = [
 	/* avec une tête comme celle du manga , temblement d'écran */
 	"vibrate 1000",
 	"shin EH !! Non, arrête tes conneries !",
-	/*Cinématique de l'animé AHHHHHHHHHHHHHHHHHHHHHHHH*/
-	//"show scene MAO-keyboard",
-	"play sound pcError",
+	"show video shincola immersive with close",
 	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
-	"shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
 	"ene La souris ! sauvez la souris !",
+	"shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
 	"stop music 01.02 with fade 3",
 	/*bruit de click*/
 	"show background black",

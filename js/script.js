@@ -50,7 +50,7 @@ monogatari.assets ('sound', {
 
 // Define the videos used in the game.
 monogatari.assets ('video', {
-
+	"shincola": "shincola.mp4"
 });
 
 // Define the images used in the game.
@@ -79,7 +79,7 @@ monogatari.characters ({
 	'aya' : {
 		name: 'Ayano Tateyama',
 		color: '#ffaaaa',
-    directory: 'Ayano',
+    directory: 'ayano',
     sprites:{ // Images Identifier for the "Show" statement.
       normal: "cool.png",
       excited: "clapclap.png",
@@ -96,7 +96,18 @@ monogatari.characters ({
 	},
 	'ene' : {
 		name: 'Ene',
-		color: '#aaaaff'
+		color: '#aaaaff',
+		directory: 'ene',
+    sprites:{ // Images Identifier for the "Show" statement.
+      normal: "cool.png",
+      excited: "clapclap.png",
+      embarrassed: "embarrassed.png",
+      question: "what.png",
+      smile: "smile.png",
+      please: "please.png",
+      shadow: "shadow.png",
+      shy: "shy.png"
+    }
 	},
   'bruit' : {
     name: 'bruit',
