@@ -81,13 +81,14 @@ monogatari.characters ({
 		color: '#ffaaaa',
     directory: 'ayano',
     sprites:{ // Images Identifier for the "Show" statement.
-      cool: "cool.png",
-      concerned: "concerned.png",
-      oh: "oh.png",
-      superior: "superior.png",
-      usingPC: "usingPC.png",
-      warn: "warn.png",
-      yay: "yay.png"
+			normal: "cool.png",
+			excited: "clapclap.png",
+			embarrassed: "embarrassed.png",
+			question: "what.png",
+			smile: "smile.png",
+			please: "please.png",
+			shadow: "shadow.png",
+			shy: "shy.png"
     },
     expressions: { // Side images identifiers to show on dialogs when the character speaks with a colon and side image name, like e:Smiling
       Smiling: "shadow.png"
@@ -98,14 +99,13 @@ monogatari.characters ({
 		color: '#aaaaff',
 		directory: 'ene',
     sprites:{ // Images Identifier for the "Show" statement.
-      normal: "cool.png",
-      excited: "clapclap.png",
-      embarrassed: "embarrassed.png",
-      question: "what.png",
-      smile: "smile.png",
-      please: "please.png",
-      shadow: "shadow.png",
-      shy: "shy.png"
+      cool: "cool.png",
+      concerned: "concerned.png",
+      oh: "oh.png",
+      superior: "superior.png",
+      usingPC: "usingPC.png",
+      warn: "warn.png",
+      yay: "yay.png"
     }
 	},
   'bruit' : {
