@@ -115,7 +115,7 @@ script["chapter01-MAO-continue"] = [
 	"wait 2000",
 	"shin huh oh",
 	"par pitié... Pas elle !!",
-	"play music 01.02 with volume 1 loop fade 3",
+	"play music 01.02 with volume 4",
 	"ene Allons allons maître !",
 	"hide image enePop.svg with fadeOut",
 	"ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",

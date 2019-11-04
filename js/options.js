@@ -10,7 +10,7 @@
 'use strict';
 /* global Monogatari */
 
-const { Monogatari: monogatari } = Monogatari;
+const monogatari = Monogatari.default;
 let preload = false;
 if (typeof(window.location.search) !== 'undefined')
 	preload = window.location.search == "?preload";
