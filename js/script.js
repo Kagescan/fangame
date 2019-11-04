@@ -44,13 +44,13 @@ monogatari.assets ('voice', {
 
 // Define the sounds used in the game.
 monogatari.assets ('sound', {
-	'pcBooted': 'startup.ogg',
-	'pcError': 'error.ogg'
+	pcBooted: 'startup.ogg',
+	pcError: 'error.ogg'
 });
 
 // Define the videos used in the game.
 monogatari.assets ('video', {
-	"shincola": "shincola.mp4"
+	shincola: "shincola.mp4"
 });
 
 // Define the images used in the game.
@@ -81,14 +81,13 @@ monogatari.characters ({
 		color: '#ffaaaa',
     directory: 'ayano',
     sprites:{ // Images Identifier for the "Show" statement.
-      normal: "cool.png",
-      excited: "clapclap.png",
-      embarrassed: "embarrassed.png",
-      question: "what.png",
-      smile: "smile.png",
-      please: "please.png",
-      shadow: "shadow.png",
-      shy: "shy.png"
+      cool: "cool.png",
+      concerned: "concerned.png",
+      oh: "oh.png",
+      superior: "superior.png",
+      usingPC: "usingPC.png",
+      warn: "warn.png",
+      yay: "yay.png"
     },
     expressions: { // Side images identifiers to show on dialogs when the character speaks with a colon and side image name, like e:Smiling
       Smiling: "shadow.png"
