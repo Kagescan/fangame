@@ -24,7 +24,7 @@ monogatari.settings({
 	'ShowMainScreen': true, // Turn main menu on/off; Default: true *
 	'Preload': preload, // Turn image preloading on/off, Default: true
 	'AutoSave': 0, // Time interval between autosaves (In Minutes). 0 = Off
-	'ServiceWorkers': preload, // Enable service workers; Default: true *
+	'ServiceWorkers': true, // Enable service workers; Default: true *
 	'TypeAnimation': true,
 
 	// Prefix for the Save Slots in Local Storage.
@@ -106,27 +106,28 @@ monogatari.settings({
 
 // Initial Settings
 monogatari.preferences ({
-
-	// Initial Language for Multilanguage Games or for the Default GUI Language.
 	'Language': 'Français',
-
-	// Initial Volumes from 0.0 to 1.
 	'Volume': {
 		'Music': 1,
 		'Voice': 1,
 		'Sound': 1,
 		'Video': 1
 	},
-
-	// Initial resolution used for Electron, it must match the settings inside
-	// the electron.js file. This has no effect on web deployed novels.
 	'Resolution': '1280x720',
-
-	// Speed at which dialog text will appear
 	'TextSpeed': 10,
-
-	// Speed at which the Auto Play feature will show the next statement
-	// It is measured in seconds and starts counting after the text is
-	// completely displayed.
 	'AutoPlaySpeed': 5
 });
+
+// change text box html structure
+monogatari.component('text-box').template (() => `
+	<div id='customCharacterName'>
+			<span data-ui="who" data-content="character-name"></span>
+	</div>
+	<div data-content="wrapper">
+		<div data-content="side-image">
+			<img data-ui="face" alt="" data-content="character_expression">
+		</div>
+		<div data-content="text">
+			<p data-ui="say" data_content="dialog"></p>
+		</div>
+	</div> `);
