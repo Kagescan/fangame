@@ -30,7 +30,13 @@ Available :
 > * Setup executable (exe) : if you wish to install the game inside your windows PC rather than your usb stick
 > * Setup for Android (APK) : run inside a real android app
 
-### project main page
+
+
+### Known bugs
+
+* The version of the game engine is my edit and sprite transitions are unstable (might block the game) when we skip the text too faster.
+
+### Project main page
 
 __No project page available for this version at the moment__
 

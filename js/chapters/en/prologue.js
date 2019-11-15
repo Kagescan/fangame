@@ -9,10 +9,7 @@
   "centered ",*/
 
 // système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en aout. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
-script["chapter00-start"] = [
-  'show scene oldBridge_night with fadeIn',
-  'show character aya embarrassed center with fadeIn',
-  "aya Je vois... Alors ça veut dire que, Shintaro-kun, ta mémoire est incroyable, c'est ça ?<br> La chance...<br> J'oublie toujours très rapidement tout ce que j'apprends...",
+scriptEn["chapter00-start"] = [
   "J'imagine que c'est normal qu'il n'y ait personne à une heure pareille.<br> Mais franchement,comment ça se fait que l'école soit si flippante la nuit?",
   "J'espère que rien de chelou ne va apparaitre...",
   "Raah...Sérieux !!",
@@ -69,7 +66,7 @@ script["chapter00-start"] = [
   }}
 ];
 // choice
-  script["chapter00-ayaWorst"] = [
+  scriptEn["chapter00-ayaWorst"] = [
     'show character aya shy center with fadeIn',
     "aya Ah !Heu...",
     "aya C'est tout ce dont tu te rappelles de moi ?",
@@ -78,7 +75,7 @@ script["chapter00-start"] = [
     "aya Oui, tu as raison, mais bon...<br>Ah ah ...",
     "jump chapter00-ayaContinue"
   ];
-  script["chapter00-ayaNbr"] = [
+  scriptEn["chapter00-ayaNbr"] = [
     'show character aya excited center with fadeIn',
     "aya Super, tu me reconnais donc ! J'ai cru passer pour une inconnue...",
     "Elle a commencé à m'applaudir... Je me sens gêné !",
@@ -89,7 +86,7 @@ script["chapter00-start"] = [
     'show character aya embarrassed center with fadeIn',
     "jump chapter00-ayaContinue"
   ];
-  script["chapter00-ayaGhost"] = [
+  scriptEn["chapter00-ayaGhost"] = [
     'show character aya shy center with fadeIn',
     "aya V-Vraiment ? M-Mais je suis la personne juste à côté de toi !!",
     "aya Je suis si discète que ça ?",
@@ -97,7 +94,7 @@ script["chapter00-start"] = [
     "jump chapter00-ayaContinue"
   ];
 // continue
-script["chapter00-ayaContinue"] = [
+scriptEn["chapter00-ayaContinue"] = [
   "s'ensuit après cette discussion un silence gênant...",
   "aya -- ...<br>Mais le plus important, qu'est-ce que tu fait là à une heure pareille ?",
   "aya Il fait déjà noir dehors !",
@@ -129,11 +126,11 @@ script["chapter00-ayaContinue"] = [
   "aya Hum? Euh... Désolée !",
   "shin Qu'est-ce qu'il y a ?<br>Dis moi clairement ce que tu veux.",
   "aya Oh... Hum... C'est que... <br>Est-ce que tu pourrais, juste un peu, m'aider à étudier...",
-  {'Conditional': {
+  /*{'Conditional': {
     'Condition': ()=> storage.fanservice,
     'True': 'v Étudier... Au sens propre ou au sens figuré ?<br>non non non non... Shintaro, retires ces analogies sexuelles de ta tête.',
     'False': 'shin hein ?'
-  }},
+  }},*/
   "aya Juste pour aujourd'hui ! Pas pour très longtemps !",
   "shin Tu veux dire maintenant ?!",
   'show character aya please center with fadeIn',
@@ -141,4 +138,4 @@ script["chapter00-ayaContinue"] = [
   "shin Me supplier ?<br>Urrm~ ! C'est bon, j'ai compris je veux bien t'aider à finir tes devoirs...<br>... Mais c'est juste pour aujourd'hui !",
   "end"
 ]
-//script["chapter00-start"]
+//scriptEn["chapter00-start"]

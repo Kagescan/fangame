@@ -1,34 +1,3 @@
-/* global monogatari */
-
-// Define the messages used in the game.
-monogatari.action ('message').messages ({
-	'Help': {
-		title: 'Help',
-		subtitle: 'Some useful Links',
-		body: `
-			<p><a href='https://developers.monogatari.io/documentation/'>Documentation</a> - Everything you need to know.</p>
-			<p><a href='https://monogatari.io/demo/'>Demo</a> - A simple Demo.</p>
-		`
-	}
-});
-
-/*/ Define the notifications used in the game
-monogatari.action ('notification').notifications ({
-	'Welcome': {
-		title: 'Welcome',
-		body: 'This is the Monogatari VN Engine',
-		icon: ''
-	}
-});*/
-
-// Define the Particles JS Configurations used in the game
-monogatari.action ('particles').particles ({
-
-});
-
-monogatari.assets ('gallery', {
-
-});
 
 // Define the music used in the game.
 monogatari.assets ('music', {
@@ -37,11 +6,6 @@ monogatari.assets ('music', {
 	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
 	'ltmIntro': 'ltmIntro.ogg',
 	'ltm8bit': 'ltm8bit.mp3'
-});
-
-// Define the voice files used in the game.
-monogatari.assets ('voices', {
-
 });
 
 // Define the sounds used in the game.
@@ -121,10 +85,36 @@ monogatari.characters ({
   }
 });
 
-script["Start"] = ["jump chapter01-start"];
+scriptFr["Start"] = ["jump chapter01-start"];
+scriptEn["Start"] = ["jump chapter01-start"];
 
-monogatari.script (script);
+monogatari.script ({
+	'English': scriptEn,
+	'Français': scriptFr
+});
+
 const { $_ready, $_ } = Monogatari;
 $_ready (() => {
 	monogatari.init('#monogatari');
 });
+
+/* Custom Commands */
+var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
+  new Promise ((resolve) => {
+			const e = document.createElement ('centered-dialog');
+			monogatari.element().find('[data-screen="game"]').append(e);
+			monogatari.element().find('[data-component="text-box"]').hide();
+			e.ready (() => {
+				e.style.left = "75%";
+				e.content ('wrapper').html (text);
+				e.classList.add(animIn);
+				setTimeout (function (){
+					e.classList.remove(animIn);
+					e.classList.add(animOut);
+					setTimeout(function(){
+						e.remove();
+						resolve();
+					}, 1000);
+				}, toWait);
+			});
+		});

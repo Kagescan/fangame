@@ -19,7 +19,7 @@ monogatari.settings({
 	'Version': '2.99.0',
 	'Label': 'Start',
 	'Slots': 10,
-	'MultiLanguage': false, // Change to true for a MultiLanguage GameScreen.
+	'MultiLanguage': true, // Change to true for a MultiLanguage GameScreen.
 	'MainScreenMusic': '01.22', // Music for the Main Menu.
 	'ShowMainScreen': true, // Turn main menu on/off; Default: true *
 	'Preload': preload, // Turn image preloading on/off, Default: true

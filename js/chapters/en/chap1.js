@@ -1,23 +1,6 @@
-var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
-  new Promise ((resolve) => {
-			const e = document.createElement ('centered-dialog');
-			monogatari.element().find('[data-screen="game"]').append(e);
-			monogatari.element().find('[data-component="text-box"]').hide();
-			e.ready (() => {
-				e.style.left = "75%";
-				e.content ('wrapper').html (text);
-				e.classList.add(animIn);
-				setTimeout (function (){
-					e.classList.remove(animIn);
-					e.classList.add(animOut);
-					setTimeout(function(){
-						e.remove();
-						resolve();
-					}, 1000);
-				}, toWait);
-			});
-		});
-script["chapter01-start"] = [
+
+scriptEn["chapter01-start"] = [
+	"centered WARNING : the english translation is not finished",
 	"show scene ShinDodo with fadeIn duration 3s",
 	"play music 02.08 with fade 3 loop",
 	"wait 2500",
@@ -41,7 +24,7 @@ script["chapter01-start"] = [
 	"Je devrais en profiter !",
 	"jump chapter01-shinOS"
 ];
-script["chapter01-shinOS"] = [
+scriptEn["chapter01-shinOS"] = [
 	"show background ShinOrdiEyes",
 	function(){
 		monogatari.skip(false);
@@ -54,7 +37,7 @@ script["chapter01-shinOS"] = [
 					kageBrowser.start(e,`
 						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a><br>
 			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>`<br>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a><br>`
 					);
 				})
 			});
@@ -74,7 +57,7 @@ script["chapter01-shinOS"] = [
 	"<span class='hide>Le pc est allumé</span>",
 	"jump chapter01-shinOS"
 ];
-script["chapter01-legs"] = [
+scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
 	"WHAT",
@@ -84,7 +67,7 @@ script["chapter01-legs"] = [
 	/* +1 achievement DOSSIERS_VOLÉS */
 	"jump chapter01-shinOS"
 ];
-script["chapter01-news"] = [
+scriptEn["chapter01-news"] = [
   function(){shinOSinstance.hide()},
 	"#1: <br>Aujourd’hui le 15 aôut pour le festival d’obon, les températures grimperont jusqu’à 35°",
 	"Prévoyez donc une activité moins importante ou même supprimée des services publics pour ce jour férié.",
@@ -94,14 +77,14 @@ script["chapter01-news"] = [
 	"shin Rien d'intéressant en ce moment...",
 	"jump chapter01-shinOS",
 ];
-script["chapter01-weebGame"] = [
+scriptEn["chapter01-weebGame"] = [
   function(){shinOSinstance.hide()},
 	"\"Le site est actuellement fermé. Il réouvrira une fois la programmation du nouveau forum finie.\"",
 	"shin Ah, le créateur de ce site fais encore une mise à jour... Il faudra que je repasse un autre jour !",
 	/* +1 achivement : Revenez plus tard*/
 	"jump chapter01-shinOS"
 ];
-script["chapter01-MAO"] = [
+scriptEn["chapter01-MAO"] = [
   function(){shinOSinstance.exit()},
 	"show scene shinPC with fadeIn",
 	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
@@ -155,7 +138,7 @@ script["chapter01-MAO"] = [
 	"shin Allez, marche !!",
 	"stop music 01.02 with fade 3",
 	"hide character ene",
-	"show background black",
+	"show background #000",
 	"play music ltm8bit with fade 7",
 	/*bruit de click*/
 	"centered rottotorrrorooro",
@@ -214,6 +197,7 @@ script["chapter01-MAO"] = [
 	"wait 3000",
 	"centered Merci d'avoir testé notre démo !",
 	"stop music ltm8bit with fade 3",
+	"show background #666 with fadeOut slow",
 	"wait 3000",
 	"end"
 ]

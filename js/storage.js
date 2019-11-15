@@ -5,7 +5,7 @@ monogatari.storage ({
 	player: {
 		name: ''
 	},
-  fanservice: true
+  fanservice: false
 });
 
-var script = {};
+var scriptFr = {}, scriptEn = {};
