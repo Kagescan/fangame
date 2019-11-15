@@ -34,7 +34,9 @@ monogatari.assets ('gallery', {
 monogatari.assets ('music', {
 	'01.02': "01.02.OsanpoBiyori.mp3",
 	'01.22': '01.22inAdaze.ogg',
-	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3'
+	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
+	'ltmIntro': 'ltmIntro.ogg',
+	'ltm8bit': 'ltm8bit.mp3'
 });
 
 // Define the voice files used in the game.
@@ -105,7 +107,8 @@ monogatari.characters ({
       superior: "superior.png",
       usingPC: "usingPC.png",
       warn: "warn.png",
-      yay: "yay.png"
+      yay: "yay.png",
+			quote: "quote.png"
     }
 	},
   'bruit' : {

@@ -9,6 +9,13 @@
 .hide {
 	display:none !important;
 }
+
+game-screen [data-image].centeredLeft {
+	margin: auto auto auto 10%;
+	max-width: 40%;
+	max-height: 40%;
+}
+
 /*
 	General Styling
  */
@@ -161,7 +168,16 @@ button:hover {
 
 /* Main Menu Styling */
 [data-screen="main"] {
-
+	background-image: url("../assets/gallery/background/menu2.jpg");
+}
+[data-component="main-menu"] {
+	align-self: initial;
+	-webkit-box-orient: initial;
+	-webkit-box-direction: initial;
+	-webkit-box-align: initial;
+	align-items: initial;
+	position: initial;
+	bottom: initial;
 }
 
 /* Main Menu Buttons Styling */
@@ -275,7 +291,9 @@ text-box [data-content="wrapper"] {
 [data-screen="game"] [data-character] {
 
 }
-
+[data-screen="game"] [data-character="ene"] {
+	max-height: 95%;
+}
 /* Other Images Styles */
 [data-screen="game"] [data-image] {
 

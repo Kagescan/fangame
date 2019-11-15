@@ -1,3 +1,22 @@
+var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
+  new Promise ((resolve) => {
+			const e = document.createElement ('centered-dialog');
+			monogatari.element().find('[data-screen="game"]').append(e);
+			monogatari.element().find('[data-component="text-box"]').hide();
+			e.ready (() => {
+				e.style.left = "75%";
+				e.content ('wrapper').html (text);
+				e.classList.add(animIn);
+				setTimeout (function (){
+					e.classList.remove(animIn);
+					e.classList.add(animOut);
+					setTimeout(function(){
+						e.remove();
+						resolve();
+					}, 1000);
+				}, toWait);
+			});
+		});
 script["chapter01-start"] = [
 	"show scene ShinDodo with fadeIn duration 3s",
 	"play music 02.08 with fade 3 loop",
@@ -33,9 +52,9 @@ script["chapter01-shinOS"] = [
 			shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
 				shinOSinstance.addWindow("web","fa-globe-americas", function(e){
 					kageBrowser.start(e,`
-						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>`
+						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a><br>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a><br>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a>`<br>
 					);
 				})
 			});
@@ -96,78 +115,105 @@ script["chapter01-MAO"] = [
 	"shin Aaaah ! Dieu merci ça n’a pas tout effacé.",
 	/*avec une tête comme celle du manga !*/
 	"shin Cette chanson est destinée au hall of fame de <span class='def'>niconico</span>. Je ne peux pas me permettre de perdre un tel futur succès.",
-	"jump chapter01-MAO-doSave"
-];
-script["chapter01-MAO-doSave"] = [
-	/*Afficher ShinOS. Il y a un bouton play, on peut écouter la musique de shintaro. Aussi un bouton sauvegarder...*/
-	function(){ //si le game engine possède sa propre fonction confirm, alors on l'utilise, sinon on prend celle du navigateur
-		if (confirm("sauvegarder ?"))
-			monogatari.run("jump chapter01-MAO-continue");
-	},
-	"Bon, je ne dois pas oublier de sauvegarder mon travail !!",
-	"jump chapter01-MAO-doSave"
-];
-
-script["chapter01-MAO-continue"] = [
 	"stop music 02.08 with fade 3",
 	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
 	"show image enePop.svg center",
 	"play sound pcError",
-	"wait 1500",
 	"shin huh oh",
 	"par pitié... Pas elle !!",
-	"play music 01.02 with volume 4",
-	"show character ene cool center with fadeIn",
+	"play music 01.02 with volume 15",
+	"show character ene cool center with fadeIn end-fadeOut",
 	"hide image enePop.svg with fadeOut",
 	"ene Allons allons maître !",
-	"show character ene superior center with fadeIn",
+	"show character ene superior center with fadeIn end-fadeOut",
 	"ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",
-	"show character ene usingPC center with fadeIn",
-	//"show scene MAO-clickClose",
-	/* avec une tête comme celle du manga , temblement d'écran */
-	"vibrate 1000",
-	"shin EH !! Non, arrête tes conneries !",
+	// hier -> remplacer par ce matin, si on a joué au jeu
+	"ene Déjà qu'hier vous n'aviez cessé de critiquer le nouvel animé sorti la semaine dernière !!",
+	"show character ene quote center with fadeIn end-fadeOut",
+	"ene «l'histoire ne respecte pas l'oeuvre originale»",
+	"ene «Le choix des doubleurs n'est pas du tout ce que j'avais imaginé»",
+	"show character ene oh center with fadeIn end-fadeOut",
+	"ene Dites donc, vous en faites, des choses !",
+	"shin ...",
+	"show character ene quote center with fadeIn end-fadeOut",
+	"ene Ah aussi !!<br>C'était quoi ça : «Il fut un temps où j'ai travailé dans l'animation. »",
+	"show character ene cool center with fadeIn end-fadeOut",
+	"ene Maître, vous ne seriez pas en train de mentir ?<br> HAHAHAHA",
+	"shin !!",
+	"Elle est si énervante !! Si seulement elle pourrait se taire !",
+	"ene par «Il fut un temps», vous parliez de votre <span class='rem'>vie antérieure</span>",
+	"ene parce que ça doit exactement deux ans, au mois près, que vous n'aviez pas bougé de votre PC !!",
 	"clear",
-	"show video shincola immersive with close",
 	"show character ene warn center with fadeIn",
-	"ene La souris ! sauvez la souris !",
+	"show video shincola immersive with close",
+	"ene EEEHHH !!",
+	"show scene shinPC with shake",
+	"show character ene warn center with shake",
+	"ene La souris ! Vite, sauvez au moins la souris !",
 	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
-	"shin Oh merde ! non non non non non Ne me laisse pas tomber comme ça !",
+	"shin Oh merde ! Allez, Shintaro, sauve au moins une vie !",
+	"shin Allez, marche !!",
 	"stop music 01.02 with fade 3",
-	/*bruit de click*/
+	"hide character ene",
 	"show background black",
+	"play music ltm8bit with fade 7",
+	/*bruit de click*/
 	"centered rottotorrrorooro",
 	"centered totoro",
 	"centered toto roto<span class='censored'>to</span>",
 	"show background shinPC with fadeIn",
 	"shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
-	"show character ene yay center with fadeIn",
+	"show character ene yay center with fadeIn end-fadeOut",
 	"ene Vous pouvez écrire Totoro !",
 	"shin ...",
 	"ene ??",
 	"shin ... huuuh",
-	"show character ene concerned center with fadeIn",
+	"show character ene concerned center with fadeIn end-fadeOut",
 	"ene ...",
 	"ene Maître ? Il suffit de tout racheter...",
 	"shin Tu as honte c’est ça ? Je pensais en racheter un de toute façon.",
-	"show character ene cool center with fadeIn",
+	"show character ene cool center with fadeIn end-fadeOut",
 	"ene C’est parfait alors ! Il y a plein de très bons nouveaux modèles vous savez !",
 	"Elle se vante maintenant. pff.",
 	"shin Prends celui qui sera livré le plus vite",
-	"show character ene yay concerned with fadeIn",
-	"ene C’est le festival d’Obon...personne ne livrera avant après demain",
+	"show character ene usingPC with fadeIn end-fadeOut",
+	"ene hmm, okay, voyons voir...",
+	"ene Ah ! Euh...",
+	"shin Qu'est-ce qu'il y a ?",
+	"show character ene concerned with fadeIn end-fadeOut",
+	"ene Nous sommes le 15 août aujourd'hui.<br>C’est le festival d’Obon...personne ne livrera avant après demain",
 	"...<br>non. Je...",
 	"shin Je vais vraiment mourir aujourd’hui",
-	"show character ene yay center with fadeIn",
+	"show character ene yay center with fadeIn end-fadeOut",
 	"ene Alors...<br>Allons en acheter un !",
 	"shin Pardon ?!",
-	"show character ene cool center with fadeIn",
+	"show character ene cool center with fadeIn end-fadeOut",
 	"ene Le nouveau centre commercial géant de Kashiwa est ouvert !!",
 	"ene On pourra aussi acheter ces supers tubes de crème solaire pour lutter contre la canicule !",
 	"La lumière du jour...Cela fait deux ans que je ne suis pas sorti...",
-	"je suis trop jeune pour mourir...",
+	"Après tout, ce ne sera que pour faire un petit achat",
+	"Je suis trop jeune pour mourir...",
 	"shin ... Allons y.",
 	"show scene black",
 	"centered Après tout, que pourrait-il m'arriver de mal si je sors seulement ce matin ?",
+	"clear",
+	"show background #666 with fadeIn",
+	"wait 1500",
+	"show image kagescan.svg centeredLeft with fadeIn",
+	()=> tempDialogs("La communauté française de Kagerou Project présente...", 2000),
+	()=> tempDialogs("Avec la participation des communautés anglophones et hispaniques", 2000),
+	"hide image kagescan.svg centeredLeft with fadeOut",
+	"show image logo.png centeredLeft with fadeIn",
+	()=> tempDialogs(`Le fangame Kagerou Project <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
+	()=> tempDialogs(`Programmation : ShinProg (LoganTann)`, 1000),
+	()=> tempDialogs(`Histoire : Furi, ShinProg, et autres contributeurs`, 1000),
+	()=> tempDialogs(`Graphismes :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>,\
+	<br>ShinProg <em style="font-size: 10px;"> (modèles 3D, clean des arts officiels)</em>,\
+	<br>Furi <em style="font-size: 10px;">(pont du yuukei quartet)</em>`, 4000),
+	"hide image logo.png centeredLeft with fadeOut slower",
+	"wait 3000",
+	"centered Merci d'avoir testé notre démo !",
+	"stop music ltm8bit with fade 3",
+	"wait 3000",
 	"end"
 ]
