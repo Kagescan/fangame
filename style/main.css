@@ -168,7 +168,7 @@ button:hover {
 
 /* Main Menu Styling */
 [data-screen="main"] {
-	background-image: url("../assets/gallery/background/menu2.jpg");
+	background-image: url("../assets/ui/menu2.jpg");
 }
 [data-component="main-menu"] {
 	align-self: initial;
@@ -289,10 +289,17 @@ text-box [data-content="wrapper"] {
 
 /* Character Images Styles */
 [data-screen="game"] [data-character] {
-
+	max-height: 100%;
+	transition: left .5s;
 }
 [data-screen="game"] [data-character="ene"] {
 	max-height: 95%;
+}
+[data-screen="game"] [data-character].leftMove {
+	left: 45%;
+}
+[data-screen="game"] [data-character].leftMove.center {
+	left: 0%; /*hack*/
 }
 /* Other Images Styles */
 [data-screen="game"] [data-image] {

@@ -2,9 +2,12 @@
 // Define the music used in the game.
 monogatari.assets ('music', {
 	'01.02': "01.02.OsanpoBiyori.mp3",
-	'01.22': '01.22inAdaze.ogg',
+	'01.03': '01.03.NEETstandingUnderTheBlazingSun.ogg',
+	'01.13': '01.13.ThatDayIWasInTheCity.ogg',
+	'01.22': '01.22.inAdaze.ogg',
+	'01.26': '01.26.OccasionallyRememberingTheOldDays.ogg',
+	'01.32': '01.32.BlurringSunset.ogg',
 	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
-	'ltmIntro': 'ltmIntro.ogg',
 	'ltm8bit': 'ltm8bit.mp3'
 });
 
@@ -32,7 +35,11 @@ monogatari.assets ('scenes', {
 	'ShinOrdi': 'ShinOrdi.jpg',
 	'ShinOrdiEyes': 'ShinOrdiEyes.jpg',
 	'ShinOrdiHands': 'ShinOrdiHands.jpg',
-	'shinPC': 'PC.png'
+	'shinPC': 'PC.png',
+	'classroomCorridor': 'classroomCorridor.jpg',
+	'classroomDesk': 'classroomDesk.jpg',
+	'classroomDoorClosed': 'classroomDoorClosed.jpg',
+	'classroomDoorOpened': 'classroomDoorOpened.jpg',
 });
 
 
@@ -85,7 +92,7 @@ monogatari.characters ({
   }
 });
 
-scriptFr["Start"] = ["jump chapter01-start"];
+scriptFr["Start"] = ["jump chapter00-start"];
 scriptEn["Start"] = ["jump chapter01-start"];
 
 monogatari.script ({
