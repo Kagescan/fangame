@@ -40,6 +40,7 @@ monogatari.assets ('scenes', {
 	'classroomDesk': 'classroomDesk.jpg',
 	'classroomDoorClosed': 'classroomDoorClosed.jpg',
 	'classroomDoorOpened': 'classroomDoorOpened.jpg',
+	'classroomWindow': 'classroomWindow.jpg',
 });
 
 
@@ -125,3 +126,4 @@ var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
 				}, toWait);
 			});
 		});
+var jump = (to) => monogatari.run(`jump ${to}`);

@@ -2,10 +2,7 @@
 
 // Persistent Storage Variable
 monogatari.storage ({
-	player: {
-		name: ''
-	},
-  fanservice: false
+	choices: [true, true, true] 
 });
 
 var scriptFr = {}, scriptEn = {};

@@ -16,6 +16,15 @@ game-screen [data-image].centeredLeft {
 	max-height: 40%;
 }
 
+.darkgreenBg{
+	background: darkgreen;
+}
+.cadetblueBg{
+	background: cadetblue;
+}
+.brownBg{
+	background: brown;
+}
 /*
 	General Styling
  */
@@ -304,6 +313,10 @@ text-box [data-content="wrapper"] {
 /* Other Images Styles */
 [data-screen="game"] [data-image] {
 
+}
+
+[disabled] {
+    text-decoration: line-through;
 }
 
 /**

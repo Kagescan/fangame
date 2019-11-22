@@ -1,0 +1,8 @@
+<svg width="125mm" height="80mm" version="1.1" viewBox="0 0 125 80" xmlns="http://www.w3.org/2000/svg">
+	<path d="m97.14 2.5492 18.992 32.895-37.984-1e-6z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" style="paint-order:markers stroke fill"/>
+	<path d="m38.743 72.482 39.31-21.167 12.662 2.4568z" fill="none" stroke="#000"/>
+	<path d="m7.1155 5.1382v30h40z" fill="none" stroke="#000"/>
+	<text x="23.519718" y="42.292141" fill="#000000" font-family="sans-serif" font-size="4px" letter-spacing="0px" stroke-width=".3" style="line-height:1.25;shape-padding:0;" xml:space="preserve"><tspan x="23.519718" y="42.292141" font-family="sans-serif" font-size="6.35px" stroke-width=".3">A</tspan></text>
+	<text x="94.613403" y="42.55941" fill="#000000" font-family="sans-serif" font-size="4px" letter-spacing="0px" stroke-width=".3" style="line-height:1.25;shape-padding:0;" xml:space="preserve"><tspan x="94.613403" y="42.55941" font-family="sans-serif" font-size="6.35px" stroke-width=".3">B</tspan></text>
+	<text x="72.162773" y="69.8209" fill="#000000" font-family="sans-serif" font-size="4px" letter-spacing="0px" stroke-width=".3" style="line-height:1.25;shape-padding:0;" xml:space="preserve"><tspan x="72.162773" y="69.8209" font-family="sans-serif" font-size="6.35px" stroke-width=".3">C</tspan></text>
+</svg>

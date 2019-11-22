@@ -139,27 +139,92 @@ scriptFr["chapter00-ayaContinue"] = [
   "wait 1000",
   "jump chapter00-working"
 ];
+
+
 scriptFr["chapter00-working"] = [
   "play music 01.13 with loop fade 1",
   "show scene classroomDesk with fadeIn",
-  /*Pourra peut être être remplacé par un jeu
-  du stryle résolution du théorème de pyth' et de Thalès*/
-  "shin Et donc là, ça deviens ça !",
+  "shin Sérieux ??",
+  "shin Tu n'arrive même pas à faire le théorème de Pythagore alors que t'était censé le faire l'année dernière ?!",
+  "aya .",/* remplacer par la réplique du manga chap 18*/
+  "shin Déjà, ça se fait sur un triange rectangle. Et la longeur de l'hypothénuse et la somme des carrés des deux autres côtés.",
   "aya Hu~um !",
-  "shin Et comme ça est égal à ça, ça deviens ça, non ?",
+  "jump chapter00-working-choice1"
+];
+scriptFr["chapter00-working-choice1"] = [
+  {'Choice':{ 'Dialog': 'shin Sur lequel des triangles le théorème marche ?',
+    'rect':{
+      'Text': 'triange 1',
+      'Do': 'jump chapter00-working-endChoice1'
+    },
+    'normal':{
+      'Text': 'triangle 2',
+      'Do': 'aya Eh bien... Celui là ?',
+      'onChosen': () => {monogatari.storage('choices')[0] = false},
+      'Clickable': () => monogatari.storage('choices')[0]
+    },
+    'uniform':{
+      'Text': 'triangle 3',
+      'Do': 'aya Eh bien... Celui là ?',
+      'onChosen': () => {monogatari.storage('choices')[1] = false},
+      'Clickable': () => monogatari.storage('choices')[1]
+    }
+  }},
+  "shin Non, c'est pas bon.<br>Si tu veux progresser, il faut bien m'écouter et y donner un peu du tiens!",
+  "jump chapter00-working-choice1"
+]
+scriptFr["chapter00-working-endChoice1"] = [
+  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true}, //reset
+  "aya Eh bien... Celui là ?",
+  "shin Oui, c'est bien !",
+  "shin Maintenant il te manque <span class='cadetblueBg'>AC</span>, mais tu connais <span class='darkgreenBg'>l'hypoténuse (BC)</span> et <span class='brownBg'>l'autre côté (AB)</span>.",
+  "shin Et comme <span class='brownBg'>AB²</span> est égal à <span class='darkgreenBg'>BC²</span> + <span class='cadetblueBg'>AC²</span>,",
+  "shin Tu peux échanger les valeurs, donc <span class='brownBg'>AB²</span> = <span class='darkgreenBg'>BC²</span> + <span class='cadetblueBg'>AC²</span> deviens <span class='cadetblueBg'>AC²</span> = <span class='brownBg'>AB²</span> - <span class='darkgreenBg'>BC²</span>, non ?",
   "aya Hum~... Hum?",
-  "shin Et si on échange ça...<br>Tu vois, ça fonctionne !<br>Tu peux répondre à ça, non ?",
+  "shin Et si on remet les bonnes valeurs...",
+  "shin Tu vois, ça fonctionne !<br>Tu peux répondre à l'autre exercice, non ?",
   "aya Hu--<br>Hein ? Je vois pas du tout où tu veux en venir !",
   "shin Raaah !<br>Combien de fois je vais devoir te l'expliquer avant que tu ne comprennes ?!",
   "aya Désolée...",
   "shin Fais un effort, tu veux ?<br>À ce rythme, on aura pas fini avant le matin!",
   "aya Hum... C'est vrai...",
-  "shin Sérieusement, c'est qui celle-là ?<br>Il y a une limite à la connerie, normalement !",
+  "Sérieusement, c'est qui celle-là ?<br>Il y a une limite à la connerie, normalement !",
   "aya ...<br>Mais je crois avoir compris pour ici...",
   "shin Ha ?",
-  "aya Ça deviens ça...<br> <br>puis ça,non?",
+  "jump chapter00-working-choice2"
+];
+scriptFr["chapter00-working-choice2"] = [
+  {'Choice':{ 'Dialog': 'Hypoténuse = BC <br>Côté 1 = AC<br>Côté 2 (celui qu\'on cherche)= AB, donc :',
+    'minus':{
+      'Text': 'BC² = AC² - AB² donc AB² = AC² - BC²',
+      'Do': 'aya Ça deviens ça...<br> <br>puis ça,non?',
+      'onChosen': () => {monogatari.storage('choices')[0] = false},
+      'Clickable': () => monogatari.storage('choices')[0]
+    },
+    'notSquare':{
+      'Text': 'BC = AC + AB donc AB = BC - AC',
+      'Do': 'aya Ça deviens ça...<br> <br>puis ça,non?',
+      'onChosen': () => {monogatari.storage('choices')[1] = false},
+      'Clickable': () => monogatari.storage('choices')[1]
+    },
+    'plus':{
+      'Text': 'BC² = AC² + AB² donc AB² = BC² - AC²',
+      'Do': 'jump chapter00-working-endChoice2'
+    }
+  }},
+  "shin Non, c'est pas bon.<br>Si tu veux progresser, il faut bien m'écouter et y donner un peu du tiens!",
+  "jump chapter00-working-choice2"
+]
+scriptFr["chapter00-working-endChoice2"] = [
+  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true }, //reset
+  "aya Ça deviens ça...<br>puis ça,non?",
   "shin Hum ? C'est pas trop mal !<br>C'est ça, c'est ce qu'il faut faire !",
   "aya Et donc ça deviens ça...<br>Et puis comme ça ?!",
+  {'Input': {
+      'Text': 'AB = √( 5² - 4² ) = √( 9 ) = ???',
+      'Validation': (input) => input=="3",
+      'Warning': 'Non ! Il faut calculer la racine carrée de 9...'
+  }},
   "shin C'est bon, tu as bon !<br>Tu vois que tu peux le faire quant tu t'y mets...",
   "aya Hihi !",
   "shin Pas la peine de rire autant... T'est vraiment glauque...",
@@ -205,10 +270,12 @@ scriptFr["chapter00-endWorking"] = [
   "shin Toi alors...",
   "hide character aya with fadeOut",
   "stop music 01.26 with fade 1",
-  "show background classroomWindow with fadeIn",
+  "show background classroomWindow with fadeOut",
   "wait 1000",
   "jump chapter00-leaveSchool"
 ];
+
+
 scriptFr["chapter00-leaveSchool"] = [
   "show scene oldBridge_night",
   "play music 01.32 with fade 1",
@@ -237,7 +304,7 @@ scriptFr["chapter00-leaveSchool"] = [
   "shin ...<br>Oui... À demain !",
   "hide character aya with fadeOut",
   "stop music 01.32 with fade 1",
-  "show background ltmNight with fadeOut",
+  "show background oldBridge_night with fadeOut",
   "wait 1000",
   "end"
 ];
