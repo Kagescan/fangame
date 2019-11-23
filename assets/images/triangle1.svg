@@ -15,6 +15,6 @@
 		</g>
 		<text fill="#000" font-family="sans-serif" font-size="4px" xml:space="preserve">
 			<tspan x="55" y="6" >BC² =   AB² + AC² </tspan>
-			<tspan x="55" y="11">AB² =   AC² - BC²</tspan>
+			<tspan x="55" y="11">AB² =   BC² - AC²</tspan>
 		</text>
 </svg>

@@ -299,16 +299,15 @@ text-box [data-content="wrapper"] {
 /* Character Images Styles */
 [data-screen="game"] [data-character] {
 	max-height: 100%;
-	transition: left .5s;
+}
+[data-screen="game"] [data-character], [data-screen="game"] [data-image]{
+	transition: right .5s;
 }
 [data-screen="game"] [data-character="ene"] {
 	max-height: 95%;
 }
-[data-screen="game"] [data-character].leftMove {
-	left: 45%;
-}
-[data-screen="game"] [data-character].leftMove.center {
-	left: 0%; /*hack*/
+[data-screen="game"] [data-character].rightMove, [data-screen="game"] [data-image].rightMove{
+	right: 50%;
 }
 /* Other Images Styles */
 [data-screen="game"] [data-image] {

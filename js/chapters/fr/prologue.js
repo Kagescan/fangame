@@ -38,7 +38,7 @@ scriptFr["chapter00-start"] = [
   "J'ai l'impression d'avoir déjà vu ce visage quelque part...",
   "show character aya excited with fadeIn end-fadeOut",
   "uk Ah j'en suis sûre, tu es bien Shintaro Kisaragi !",
-  "Mais que se passe-il ?! Je comprends plus rien !! C'est qui ?!",
+  "C'est qui, elle ?! Comment elle me connais ?",
   "uk Hé, tu ne me reconnais pas ?<br> Ayano Tateyama !",
   "show character aya embarrassed with fadeIn end-fadeOut",
   "uk Enfin,j'ai beau dire ça mais je crois bien que l'on a encore jamais parlé ensemble...",
@@ -106,12 +106,12 @@ scriptFr["chapter00-ayaContinue"] = [
   "aya Si je ne lui rend pas demain matin, le prof va encore m’engueuler...",
   "Qu'est-ce qu'elle a celle-là ? Elle est trop chiante...",
   "Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons.",
-  "show character aya question with leftMove",
+  ()=>{document.querySelector('[data-character="aya"]').className = "rightMove"},
   "Je dois me dépêcher de récupérer mon portefeuille et partir d'ici en l'ignorant.",
   "aya ... ?",
-  'show character aya shy at center',
+  ()=>{document.querySelector('[data-character="aya"]').className = "animated"},
+  'show character aya shy',
   "Elle m'empêche de passer ?",
-  'hide character aya',
   'show character aya please with fadeIn end-fadeOut',
   "aya Hé euh... Excuse moi !",
   "shin ... <br>Hum ?<br>Qu'est-ce qu'il y a ?",
@@ -145,26 +145,30 @@ scriptFr["chapter00-working"] = [
   "play music 01.13 with loop fade 1",
   "show scene classroomDesk with fadeIn",
   "shin Sérieux ??",
-  "shin Tu n'arrive même pas à faire le théorème de Pythagore alors que t'était censé le faire l'année dernière ?!",
+  "shin Tu n'arrive même pas à faire le théorème de Pythagore alors que t'était censé le maîtriser l'année dernière ?!",
+  "shin Comment veux-tu passer ton examen d'entrée au lycée si tu ne connais même pas les bases ?",
   "aya .",/* remplacer par la réplique du manga chap 18*/
+  "show image allTriangles.svg with fadeIn",
   "shin Déjà, ça se fait sur un triange rectangle. Et la longeur de l'hypothénuse et la somme des carrés des deux autres côtés.",
   "aya Hu~um !",
+  ()=>{document.querySelector('[data-image="allTriangles.svg"]').className = "rightMove"},
+  "shin Sur lequel des triangles le théorème s'applique ?",
   "jump chapter00-working-choice1"
 ];
 scriptFr["chapter00-working-choice1"] = [
-  {'Choice':{ 'Dialog': 'shin Sur lequel des triangles le théorème marche ?',
+  {'Choice':{
     'rect':{
-      'Text': 'triange 1',
+      'Text': 'sur le triange NUL',
       'Do': 'jump chapter00-working-endChoice1'
     },
     'normal':{
-      'Text': 'triangle 2',
+      'Text': 'sur le triangle DIE',
       'Do': 'aya Eh bien... Celui là ?',
       'onChosen': () => {monogatari.storage('choices')[0] = false},
       'Clickable': () => monogatari.storage('choices')[0]
     },
     'uniform':{
-      'Text': 'triangle 3',
+      'Text': 'sur le triangle RIP',
       'Do': 'aya Eh bien... Celui là ?',
       'onChosen': () => {monogatari.storage('choices')[1] = false},
       'Clickable': () => monogatari.storage('choices')[1]
@@ -174,15 +178,20 @@ scriptFr["chapter00-working-choice1"] = [
   "jump chapter00-working-choice1"
 ]
 scriptFr["chapter00-working-endChoice1"] = [
-  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true}, //reset
+  () => {
+    monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true;
+    document.querySelector('[data-image="allTriangles.svg"]').className = "animated";
+  },
   "aya Eh bien... Celui là ?",
   "shin Oui, c'est bien !",
-  "shin Maintenant il te manque <span class='cadetblueBg'>AC</span>, mais tu connais <span class='darkgreenBg'>l'hypoténuse (BC)</span> et <span class='brownBg'>l'autre côté (AB)</span>.",
-  "shin Et comme <span class='brownBg'>AB²</span> est égal à <span class='darkgreenBg'>BC²</span> + <span class='cadetblueBg'>AC²</span>,",
-  "shin Tu peux échanger les valeurs, donc <span class='brownBg'>AB²</span> = <span class='darkgreenBg'>BC²</span> + <span class='cadetblueBg'>AC²</span> deviens <span class='cadetblueBg'>AC²</span> = <span class='brownBg'>AB²</span> - <span class='darkgreenBg'>BC²</span>, non ?",
+  "shin Maintenant il te manque <span class='cadetblueBg'>NL</span>, mais tu connais <span class='darkgreenBg'>l'hypoténuse (UL)</span> et <span class='brownBg'>l'autre côté (UN)</span>.",
+  "shin Et comme <span class='brownBg'>UL²</span> est égal à <span class='darkgreenBg'>UN²</span> + <span class='cadetblueBg'>NL²</span>,",
+  "shin Tu peux échanger les valeurs, donc <span class='brownBg'>UL²</span> = <span class='darkgreenBg'>UN²</span> + <span class='cadetblueBg'>NL²</span> deviens <span class='cadetblueBg'>NL²</span> = <span class='brownBg'>UL²</span> - <span class='darkgreenBg'>UN²</span>, non ?",
   "aya Hum~... Hum?",
   "shin Et si on remet les bonnes valeurs...",
   "shin Tu vois, ça fonctionne !<br>Tu peux répondre à l'autre exercice, non ?",
+  "hide image allTriangles.svg with flipOutX",
+  "show image triangle0.svg with flipInX",
   "aya Hu--<br>Hein ? Je vois pas du tout où tu veux en venir !",
   "shin Raaah !<br>Combien de fois je vais devoir te l'expliquer avant que tu ne comprennes ?!",
   "aya Désolée...",
@@ -191,6 +200,7 @@ scriptFr["chapter00-working-endChoice1"] = [
   "Sérieusement, c'est qui celle-là ?<br>Il y a une limite à la connerie, normalement !",
   "aya ...<br>Mais je crois avoir compris pour ici...",
   "shin Ha ?",
+  ()=>{document.querySelector('[data-image="triangle0.svg"]').className = "rightMove"},
   "jump chapter00-working-choice2"
 ];
 scriptFr["chapter00-working-choice2"] = [
@@ -216,16 +226,23 @@ scriptFr["chapter00-working-choice2"] = [
   "jump chapter00-working-choice2"
 ]
 scriptFr["chapter00-working-endChoice2"] = [
-  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true }, //reset
+  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true; }, //reset
+  "show image triangle1.svg with fadeIn",
+  "hide image triangle0.svg with fadeOut",
   "aya Ça deviens ça...<br>puis ça,non?",
   "shin Hum ? C'est pas trop mal !<br>C'est ça, c'est ce qu'il faut faire !",
-  "aya Et donc ça deviens ça...<br>Et puis comme ça ?!",
+  "show image triangle2.svg with fadeIn faster",
+  "hide image triangle1.svg with fadeOut",
+  "aya Et donc ça devient ça...",
+  "aya Et puis on obtient ça ?!",
+  "wait 1000",
   {'Input': {
       'Text': 'AB = √( 5² - 4² ) = √( 9 ) = ???',
       'Validation': (input) => input=="3",
       'Warning': 'Non ! Il faut calculer la racine carrée de 9...'
   }},
   "shin C'est bon, tu as bon !<br>Tu vois que tu peux le faire quant tu t'y mets...",
+  "hide image triangle2.svg with flipOutX",
   "aya Hihi !",
   "shin Pas la peine de rire autant... T'est vraiment glauque...",
   "aya Hum ? Glauque ?",
@@ -238,7 +255,7 @@ scriptFr["chapter00-working-endChoice2"] = [
 ];
 scriptFr["chapter00-endWorking"] = [
   "play music 01.26",
-  "show scene classroomWindow with fadeIn",
+  "show scene classroomWindow with fadeIn loop",
   "show character aya smile at with fadeIn end-fadeOut",
   "aya Shintaro-kun, tu es vraiment intelligent. Tu étudie chez toi tout les jours ?",
   "shin Pas particulièrement. Je n'ai lu les manuels qu'une seule fois.",
