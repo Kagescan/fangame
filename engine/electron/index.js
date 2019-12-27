@@ -10,7 +10,7 @@
 /* global process */
 /* global __dirname */
 
-const { app, BrowserWindow } = require ('electron');
+const { app, BrowserWindow, Menu } = require ('electron');
 const path = require ('path');
 const url = require ('url');
 const { ipcMain } = require('electron');
@@ -87,7 +87,7 @@ function createWindow () {
 		}
 
 		if (resizable === false) {
-			win.setResizable (false);
+			win.resizable = false;
 		}
 
 		event.sender.send ('window-info-reply', {
@@ -102,16 +102,16 @@ function createWindow () {
 	ipcMain.on ('resize-request', (event, args) => {
 		const { width, height, fullscreen } = args;
 
-		const fullScreenCapable = !win.isFullScreen () && win.isFullScreenable ();
+		const fullScreenCapable = !win.isFullScreen () && win.fullScreenable;
 
-		win.setResizable (true);
+		win.resizable = true;
 		if (fullscreen && fullScreenCapable) {
 			win.setFullScreen(true);
 		} else if (fullscreen === false) {
 			win.setFullScreen (false);
 			win.setSize (width, height, true);
 		}
-		win.setResizable (false);
+		win.resizable = false;
 
 		event.sender.send ('resize-reply', {
 			fullscreen: fullscreen && fullScreenCapable,
@@ -123,6 +123,9 @@ function createWindow () {
 	ipcMain.on ('quit-request', (event, args) => {
 		win.destroy ();
 	});
+
+	// Disable application menu
+	Menu.setApplicationMenu (null);
 }
 
 // This method will be called when Electron has finished
