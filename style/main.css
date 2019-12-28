@@ -25,6 +25,7 @@ game-screen [data-image].centeredLeft {
 .brownBg{
 	background: brown;
 }
+
 /*
 	General Styling
  */
@@ -112,9 +113,9 @@ game-screen [data-image].centeredLeft {
 }
 #shinOsDesktop>div>span{
 	font-size: 10px;
-    text-align: center;
-    width: 100%;
-    margin-top: 10px;
+	text-align: center;
+	width: 100%;
+	margin-top: 10px;
 }
 #shinOsBottomBar {
 	height: 42px;
@@ -252,10 +253,12 @@ text-box [data-content="wrapper"] {
   background-color: var(--main-color);
   background-image: url("../assets/ui/bg_grid.png");
   min-height: 20vh;
-  max-height: 25vh;
-  padding: 1rem 0 0 0;
+  max-height: 40vh;
   border-top: white 1px solid;
   margin: -1px 0 0 0;
+}
+text-box [data-ui="face"] {
+	border: 1px dotted;
 }
 /* Character Name Style */
 #customCharacterName {
@@ -282,7 +285,14 @@ text-box [data-content="wrapper"] {
 [data-content="text"] {
 	margin: 0 auto;
 	max-width:1280px;
-    width: 90%;
+	width: 90%;
+}
+[data-content="text"] .animated {
+	display: block;
+	width: max-content;
+}
+[data-content="dialog"], [data-ui="say"] {
+	padding: 1rem;
 }
 @media only screen and (min-width: 601px) {
  [data-content="text"] { width:85%; }

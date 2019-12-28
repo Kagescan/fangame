@@ -65,7 +65,14 @@ monogatari.characters ({
 			shy: "shy.png"
     },
     expressions: { // Side images identifiers to show on dialogs when the character speaks with a colon and side image name, like e:Smiling
-      Smiling: "shadow.png"
+			clapclap: "F-clapclap.png",
+			gomen: "F-gomen.png",
+      heh: "F-heh.png",
+      hehe: "F-hehe.png",
+      huh: "F-huh.png",
+      huuh: "F-huuh.png",
+      oh: "F-oh.png",
+      ohFuckkk: "F-ohFuckkk.png"
     }
 	},
 	'ene' : {
