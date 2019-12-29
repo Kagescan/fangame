@@ -48,7 +48,24 @@ monogatari.assets ('scenes', {
 monogatari.characters ({
 	'shin' : {
 		name: 'Shintaro Kisaragi',
-		color: '#ff0000'
+		color: '#ff0000',
+		directory: 'shintaro',
+		expressions: {
+			normal: "F-normal.png",
+			angry1: "F-angry1.png",
+			angry2: "F-angry2.png",
+			angry3: "F-angry3.png",
+			blueSight: "F-blueSight.png",
+			blush: "F-blush.png",
+			dash: "F-dash.png",
+			facepalm: "F-facepalm.png",
+			oh: "F-oh.png",
+			scare1: "F-scare1.png",
+			scare2: "F-scare2.png",
+			scare3: "F-scare3.png",
+			scare4: "F-scare4.png",
+			scare5: "F-scare5.png"
+		}
 	},
 	'aya' : {
 		name: 'Ayano Tateyama',
@@ -56,13 +73,13 @@ monogatari.characters ({
     directory: 'ayano',
     sprites:{ // Images Identifier for the "Show" statement.
 			normal: "cool.png",
-			excited: "clapclap.png",
 			embarrassed: "embarrassed.png",
-			question: "what.png",
-			smile: "smile.png",
+			excited: "clapclap.png",
 			please: "please.png",
+			question: "what.png",
 			shadow: "shadow.png",
-			shy: "shy.png"
+			shy: "shy.png",
+			smile: "smile.png"
     },
     expressions: { // Side images identifiers to show on dialogs when the character speaks with a colon and side image name, like e:Smiling
 			clapclap: "F-clapclap.png",
