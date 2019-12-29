@@ -66,7 +66,7 @@ monogatari.settings({
 	// If this value is set to 0, no skipping will be allowed but if it's set
 	// to a higher number, skipping will be allowed and that value will be taken
 	// as the speed in milliseconds with which the game will skip through the script
-	'Skip': 100,
+	'Skip': 10,
 
 	// Define the directories where the assets are located. The root directory is
 	// the holder for the other asset specific directories, this directories are

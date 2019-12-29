@@ -258,7 +258,7 @@ text-box [data-content="wrapper"] {
   margin: -1px 0 0 0;
 }
 text-box [data-ui="face"] {
-	border: 1px dotted;
+	border: 1px dashed;
 }
 /* Character Name Style */
 #customCharacterName {
@@ -291,6 +291,11 @@ text-box [data-ui="face"] {
 	display: block;
 	width: max-content;
 }
+
+[data-content="text"] em {
+	color: darkorange;
+}
+
 [data-content="dialog"], [data-ui="say"] {
 	padding: 1rem;
 }
