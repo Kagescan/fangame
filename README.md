@@ -6,7 +6,7 @@ Retaining's Memories : A kagerou project fangame.
 
 Game Version : 2.99
 
-todo : 
+todo :
 
 * Make the chapter 1 playable
 
@@ -18,12 +18,14 @@ Online mode could temporary block the game when the game engine is preloading an
 
 This game uses html's and javascript's latest features and requires to be run on a popular and updated browser !
 
-Available :  
-* [Play Online in github](https://logantann.github.io/kagepro2/) : *unstable, no assets preloading*
-* Download the latest version (html, unstable) : click download zip button, and run index.html
+Available :
 
-> Unavailable now : stable version and native offline apps  
-> * Download stable version (zip, html) : download the game's source code and run it with your preferred browser 
+* Nightly :
+	* [Play Online in github](https://logantann.github.io/kagepro2/)
+	* Download the latest version (html) : click download zip button, and run index.html
+
+> Unavailable now : beta and stable version, native offline apps  
+> * Download stable version (zip, html) : download the game's source code and run it with your preferred browser
 > * Download stable version (zip, exe) : download the executable of the game for Windows (recommanded for better experience)
 > * Download stable version (zip, sh/bin) : download the executable of the game for Linux (recommanded for better experience)
 > * Play online in Kagescan (stable, with assets preloading) : don't download anything and play right now
@@ -34,13 +36,13 @@ Available :
 
 ### Known bugs
 
-* The version of the game engine is my edit and sprite transitions are unstable (might block the game) when we skip the text too faster.
+* No ?
 
 ### Project main page
 
 __No project page available for this version at the moment__
 
-versions : 
+versions :
 
 1. first version, written with python and pygame lib  
 2. second version, written with c++ and SFML. Version 2.1 : remake of the version 2.0. Never finished !  

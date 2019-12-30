@@ -57,7 +57,7 @@ monogatari.characters ({
 			angry3: "F-angry3.png",
 			blueSight: "F-blueSight.png",
 			blush: "F-blush.png",
-			dash: "F-dash.png",
+			dodge: "F-dodge.png",
 			facepalm: "F-facepalm.png",
 			oh: "F-oh.png",
 			scare1: "F-scare1.png",
@@ -127,7 +127,37 @@ monogatari.script ({
 
 const { $_ready, $_ } = Monogatari;
 $_ready (() => {
-	monogatari.init('#monogatari');
+	const gp = document.getElementById("gamePlugins");
+	const init = function(){
+		gp.innerHTML = ""
+		gp.className = "hide"
+		monogatari.init("#monogatari");
+	}
+
+	if (monogatari.Storage.adapter.storage.length>0) {
+		init();
+	} else {
+		function langageSelected(lg) {
+			document.getElementById("firstRunLgSelect").className = "hide";
+			document.getElementById("firstRunLgMsg").className = lg.substr(0,2).toLowerCase();
+			if (lg=="Español") {
+				lg="English";
+			}
+			monogatari.preference("Language", lg);
+			monogatari.localize();
+		}
+
+		document.getElementById("gamePlugins").classList.remove("hide");
+		// buttons event
+		for (const button of document.querySelectorAll("#firstRunLgSelect>button")) {
+			button.addEventListener("click", (e)=>{langageSelected(e.target.innerText)} );
+		}
+		document.querySelector("#backBtn").addEventListener("click", ()=>{
+			document.getElementById("firstRunLgSelect").classList.remove("hide");
+			document.getElementById("firstRunLgMsg").className = "hide";
+		});
+		document.querySelector("#startBtn").addEventListener("click", init);
+	}
 });
 
 /* Custom Commands */

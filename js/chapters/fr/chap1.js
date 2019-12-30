@@ -1,5 +1,6 @@
 
 scriptFr["chapter01-start"] = [
+	"centered <span class='big'>Chapitre 1</span><br><em>Artificial ENEmy (partie 1)</em>",
 	"show scene ShinDodo with fadeIn duration 3s",
 	"play music 02.08 with fade 3 loop",
 	"wait 2500",
@@ -8,7 +9,7 @@ scriptFr["chapter01-start"] = [
 	"Pff, sans doute toujours la même chose. Je n'avancerais pas si je ne fais que de me poser ce genre de questions.",
 	"...",
 	"show background ShinGotoPC with fadeIn",
-	"Quoi qu'il en soit, il faut que je finisse la <span class='rem'>composition de ma musique !</span>",
+	"Quoi qu'il en soit, il faut que je finisse la <span class='hrem' data-comment='Tu ne la finiras jamais...'>composition de ma musique !</span>",
 	"Reprenons le travail... à cause d'<span class='rem'>elle</span> je n'aurai jamais fini !",
 	"show background ShinGotoPC with fadeOut",
 	"play sound pcBooted",
@@ -53,7 +54,7 @@ scriptFr["chapter01-shinOS"] = [
 			});
 		}
 	},
-	"<span class='hide>Le pc est allumé</span>",
+	"<span class='hide'>Le pc est allumé</span>",
 	"jump chapter01-shinOS"
 ];
 scriptFr["chapter01-legs"] = [
@@ -123,7 +124,7 @@ scriptFr["chapter01-MAO"] = [
 	"ene Maître, vous ne seriez pas en train de mentir ?<br> HAHAHAHA",
 	"shin !!",
 	"Elle est si énervante !! Si seulement elle pourrait se taire !",
-	"ene par «Il fut un temps», vous parliez de votre <span class='rem'>vie antérieure</span>",
+	"ene par «Il fut un temps», vous parliez de votre <span class='hrem' data-comment=\"De toutes tes vies antérieures, tu ne l'as jamais été\">vie antérieure</span>",
 	"ene parce que ça doit exactement deux ans, au mois près, que vous n'aviez pas bougé de votre PC !!",
 	"clear",
 	"show character ene warn center with fadeIn",
@@ -142,7 +143,7 @@ scriptFr["chapter01-MAO"] = [
 	/*bruit de click*/
 	"centered rottotorrrorooro",
 	"centered totoro",
-	"centered toto roto<span class='censored'>to</span>",
+	"centered toto <span class='def'>roto**</span>",
 	"show background shinPC with fadeIn",
 	"shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
 	"show character ene yay center with fadeIn end-fadeOut",
@@ -188,15 +189,15 @@ scriptFr["chapter01-MAO"] = [
 	"show image logo.png centeredLeft with fadeIn",
 	()=> tempDialogs(`Le fangame Kagerou Project <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
 	()=> tempDialogs(`Programmation : ShinProg (LoganTann)`, 1000),
-	()=> tempDialogs(`Histoire : Furi, ShinProg, et autres contributeurs`, 1000),
+	()=> tempDialogs(`Histoire : Furi, ShinProg`, 1000),
 	()=> tempDialogs(`Graphismes :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>,\
 	<br>ShinProg <em style="font-size: 10px;"> (modèles 3D, clean des arts officiels)</em>,\
-	<br>Furi <em style="font-size: 10px;">(pont du yuukei quartet)</em>`, 4000),
+	<br>Furi <em style="font-size: 10px;">(fonds dessinés)</em>`, 4000),
 	"hide image logo.png centeredLeft with fadeOut slower",
 	"wait 3000",
 	"centered Merci d'avoir testé notre démo !",
 	"stop music ltm8bit with fade 3",
 	"show background #666 with fadeOut slow",
 	"wait 3000",
-	"end"
+	"jump gameEnd-start"
 ]
