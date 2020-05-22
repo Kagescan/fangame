@@ -126,38 +126,42 @@ monogatari.script ({
 });
 
 const { $_ready, $_ } = Monogatari;
-$_ready (() => {
+$_ready( function() {
+	// var Init
 	const gp = document.getElementById("gamePlugins");
+	// Local functions
 	const init = function(){
 		gp.innerHTML = ""
 		gp.className = "hide"
 		monogatari.init("#monogatari");
 	}
-
-	if (monogatari.Storage.adapter.storage.length>0) {
-		init();
-	} else {
-		function langageSelected(lg) {
-			document.getElementById("firstRunLgSelect").className = "hide";
-			document.getElementById("firstRunLgMsg").className = lg.substr(0,2).toLowerCase();
-			if (lg=="Español") {
-				lg="English";
-			}
-			monogatari.preference("Language", lg);
-			monogatari.localize();
+	const langageSelected = function(lg) {
+		document.getElementById("firstRunLgSelect").className = "hide";
+		document.getElementById("firstRunLgMsg").className = lg.substr(0,2).toLowerCase();
+		if (lg=="Español") {
+			lg="English";
 		}
+		monogatari.preference("Language", lg);
+		monogatari.localize();
+	}
 
+	// stuff
+	monogatari.Storage.contains ('Settings')
+	.then (init)   // if contains
+	.catch(() => { // else
 		document.getElementById("gamePlugins").classList.remove("hide");
 		// buttons event
 		for (const button of document.querySelectorAll("#firstRunLgSelect>button")) {
-			button.addEventListener("click", (e)=>{langageSelected(e.target.innerText)} );
+			button.addEventListener("click", (e)=>{
+				langageSelected(e.target.innerText)
+			} );
 		}
 		document.querySelector("#backBtn").addEventListener("click", ()=>{
 			document.getElementById("firstRunLgSelect").classList.remove("hide");
 			document.getElementById("firstRunLgMsg").className = "hide";
 		});
 		document.querySelector("#startBtn").addEventListener("click", init);
-	}
+	});
 });
 
 /* Custom Commands */
@@ -181,3 +185,5 @@ var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
 			});
 		});
 var jump = (to) => monogatari.run(`jump ${to}`);
+var doTrueReset = () => localStorage.clear();
+var doRestart = () => window.location.reload();

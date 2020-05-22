@@ -1,4 +1,7 @@
-// système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en aout. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
+// système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en avril. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
+// Minor storage that will be used in this script :
+let choices = [true, true], reverseChoices = [true, true];
+// script
 scriptFr["chapter00-start"] = [
 	"centered <span class='big'>Prologue</span><br><em>The Old Days</em>",
   "show scene classroomCorridor with fadeIn duration 3s",
@@ -44,19 +47,20 @@ scriptFr["chapter00-start"] = [
   "show character aya embarrassed with fadeIn end-fadeOut",
   "uk Enfin,j'ai beau dire ça mais je crois bien que l'on a encore jamais parlé ensemble...",
   "shin:normal Aya...no Tateyama... ?<br>... ...",
-  {'Choice':{ 'Dialog': 'shin:oh AH MAIS... ! T\'es...',
-    'Celle qui a eu la pire moyenne de la classe !!':{
-      'Text': 'Celle qui a eu la pire moyenne de la classe !!',
-      'Do': 'jump chapter00-ayaWorst'
-    },
-    'Celle qui es à côté de moi !!':{
-      'Text': 'Celle qui es à côté de moi !!',
-      'Do': 'jump chapter00-ayaNbr'
-    },
-    'Qui ?!':{
-      'Text': 'Qui ?!',
-      'Do': 'jump chapter00-ayaGhost'
-    }
+  { Choice: {
+			Dialog: 'shin:oh AH MAIS... ! T\'es...',
+	    c1: {
+	      Text: 'Celle qui a eu la pire moyenne de la classe !!',
+	      Do: 'jump chapter00-ayaWorst'
+	    },
+	    c2: {
+	      Text: 'Celle qui es à côté de moi !!',
+	      Do: 'jump chapter00-ayaNbr'
+	    },
+	    c3: {
+	      Text: 'Qui ?!',
+	      Do: 'jump chapter00-ayaGhost'
+	    }
   }}
 ];
 // choice
@@ -107,10 +111,22 @@ scriptFr["chapter00-ayaContinue"] = [
   "aya Si je ne lui rend pas demain matin, le prof va encore m’engueuler...",
   "shin:angry <em>Qu'est-ce qu'elle a celle-là ? Elle est trop chiante...</em>",
   "shin:angry <em>Elle est de toute manière en tort pour ne pas avoir fait son boulot. C'est pas mes oignons.</em>",
-  ()=>{document.querySelector('[data-character="aya"]').className = "rightMove"},
+	{ Function: {
+			Apply: function(){
+				document.querySelector('[data-character="aya"]').className = "rightMove";
+				return true;
+			},
+			Reverse: ()=>{document.querySelector('[data-character="aya"]').className = "animated"}
+	} },
   "Je dois me dépêcher de récupérer mon portefeuille et partir d'ici en l'ignorant.",
   "aya ... ?",
-  ()=>{document.querySelector('[data-character="aya"]').className = "animated"},
+	{ Function: {
+			Apply: function(){
+				document.querySelector('[data-character="aya"]').className = "animated";
+				return true;
+			},
+			Reverse: ()=>{document.querySelector('[data-character="aya"]').className = "rightMove"}
+	} },
   'show character aya shy',
   "shin:oh <em>Elle m'empêche de passer ?</em>",
   'show character aya please with fadeIn end-fadeOut',
@@ -155,38 +171,52 @@ scriptFr["chapter00-working"] = [
   "show image allTriangles.svg with fadeIn",
   "shin:oh Déjà, ça se fait sur un triange rectangle. Et la longeur de l'hypothénuse est la somme des carrés des deux autres côtés.",
   "aya:huh Hu~um !",
-  ()=>{document.querySelector('[data-image="allTriangles.svg"]').className = "rightMove"},
+	{ Function: {
+			Apply: ()=>{
+				document.querySelector('[data-image="allTriangles.svg"]').className = "rightMove";
+				return true;
+			},
+			Reverse: ()=>{document.querySelector('[data-image="allTriangles.svg"]').className = "animated"}
+	} },
   "shin:normal Sur lequel des triangles le théorème s'applique ?",
   "jump chapter00-working-choice1"
 ];
 scriptFr["chapter00-working-choice1"] = [
-  {'Choice':{
-    'rect':{
-      'Text': 'sur le triange NUL',
-      'Do': 'jump chapter00-working-endChoice1'
-    },
-    'normal':{
-      'Text': 'sur le triangle DIE',
-      'Do': 'aya:oh Eh bien... Celui là ?',
-      'onChosen': () => {monogatari.storage('choices')[0] = false},
-      'Clickable': () => monogatari.storage('choices')[0]
-    },
-    'uniform':{
-      'Text': 'sur le triangle RIP',
-      'Do': 'aya:oh Eh bien... Celui là ?',
-      'onChosen': () => {monogatari.storage('choices')[1] = false},
-      'Clickable': () => monogatari.storage('choices')[1]
-    }
-  }},
+  { Choice: {
+	    c1: {
+	      Text: 'sur le triange NUL',
+	      Do: 'jump chapter00-working-endChoice1'
+	    },
+	    c2: {
+	      Text: 'sur le triangle DIE',
+	      Do: 'aya:oh Eh bien... Celui là ?',
+	      onChosen: () => {choices[0] = false},
+	      Clickable: () => choices[0]
+	    },
+	    c3: {
+	      Text: 'sur le triangle RIP',
+	      Do: 'aya:oh Eh bien... Celui là ?',
+	      onChosen: () => {choices[1] = false},
+	      Clickable: () => choices[1]
+	    }
+  } },
   "shin:blueSight Non, c'est pas bon.<br>Si tu veux progresser, il faut bien m'écouter et y donner un peu du tiens!",
   "aya:heh je fais de mon mieux...",
   "jump chapter00-working-choice1"
 ]
 scriptFr["chapter00-working-endChoice1"] = [
-  () => {
-    monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true;
-    document.querySelector('[data-image="allTriangles.svg"]').className = "animated";
-  },
+	{ Function: {
+			Apply: ()=>{
+				reverseChoices = [].concat(choices); // ayano can't control the time ;)
+				choices.fill(true);
+	    	document.querySelector('[data-image="allTriangles.svg"]').className = "animated";
+				return true;
+			},
+			Reverse: ()=>{
+				choices = reverseChoices;
+				document.querySelector('[data-image="allTriangles.svg"]').className = "rightMove";
+			}
+	} },
   "aya:oh Eh bien... Celui là ?",
   "shin:oh Oui, c'est bien !",
   "shin:oh Maintenant il te manque <span class='darkgreenBg'>NL</span>, mais tu connais <span class='brownBg'>l'hypoténuse (UL)</span> et <span class='cadetblueBg'>l'autre côté (UN)</span>.",
@@ -206,33 +236,47 @@ scriptFr["chapter00-working-endChoice1"] = [
   "shin:angry1 <em>Sérieusement, c'est qui celle-là ?<br>Il y a une limite à la connerie, normalement !</em>",
   "aya:oh ...<br>Mais je crois avoir compris pour ici...",
   "shin:normal Ha ?",
-  ()=>{document.querySelector('[data-image="triangle0.svg"]').className = "rightMove"},
+	{ Function: {
+			Apply: ()=>{
+				document.querySelector('[data-image="triangle0.svg"]').className = "rightMove";
+				return true;
+			},
+			Reverse: ()=>{document.querySelector('[data-image="triangle0.svg"]').className = "animated"}
+	} },
   "jump chapter00-working-choice2"
 ];
 scriptFr["chapter00-working-choice2"] = [
-  {'Choice':{ 'Dialog': 'Hypoténuse = BC <br>Côté 1 = AC<br>Côté 2 (celui qu\'on cherche)= AB, donc :',
-    'minus':{
-      'Text': 'BC² = AC² - AB² donc AB² = AC² - BC²',
-      'Do': 'aya Ça deviens ça...<br> <br>puis ça,non?',
-      'onChosen': () => {monogatari.storage('choices')[0] = false},
-      'Clickable': () => monogatari.storage('choices')[0]
-    },
-    'notSquare':{
-      'Text': 'BC = AC + AB donc AB = BC - AC',
-      'Do': 'aya Ça deviens ça...<br> <br>puis ça,non?',
-      'onChosen': () => {monogatari.storage('choices')[1] = false},
-      'Clickable': () => monogatari.storage('choices')[1]
-    },
-    'plus':{
-      'Text': 'BC² = AC² + AB² donc AB² = BC² - AC²',
-      'Do': 'jump chapter00-working-endChoice2'
-    }
-  }},
+  { Choice: {
+			Dialog: 'Hypoténuse = BC <br>Côté 1 = AC<br>Côté 2 (celui qu\'on cherche)= AB, donc :',
+		  c1:{
+		    Text: 'BC² = AC² - AB² donc AB² = AC² - BC²',
+		    Do: 'aya Ça deviens ça...<br> <br>puis ça,non?',
+		    onChosen: () => {choices[0] = false},
+		    Clickable: () => choices[0]
+		  },
+		  c2:{
+		    Text: 'BC = AC + AB donc AB = BC - AC',
+		    Do: 'aya Ça deviens ça...<br> <br>puis ça,non?',
+		    onChosen: () => {choices[1] = false},
+		    Clickable: () => choices[1]
+		  },
+		  c3:{
+		    Text: 'BC² = AC² + AB² donc AB² = BC² - AC²',
+		    Do: 'jump chapter00-working-endChoice2'
+		  }
+  } },
   "shin:blueSight Non, c'est pas bon.<br>Si tu veux progresser, il faut bien m'écouter et y donner un peu du tiens!",
   "jump chapter00-working-choice2"
 ]
 scriptFr["chapter00-working-endChoice2"] = [
-  () => { monogatari.storage("choices")[0] = monogatari.storage("choices")[1] = true; }, //reset
+	{ Function: {
+			Apply: ()=>{
+				reverseChoices = [].concat(choices);
+				choices.fill(true);
+				return true;
+			},
+			Reverse: ()=>{ choices = reverseChoices; }
+	} },
   "show image triangle1.svg with fadeIn",
   "hide image triangle0.svg with fadeOut",
   "aya:oh Ça deviens ça...<br>puis ça,non?",
@@ -241,11 +285,11 @@ scriptFr["chapter00-working-endChoice2"] = [
   "hide image triangle1.svg with fadeOut",
   "aya:clapclap Et donc ça devient ça... Et puis on obtient ça ?!",
   "wait 1000",
-  {'Input': {
-      'Text': 'AB = √( 5² - 4² ) = √( 9 ) = ???',
-      'Validation': (input) => input=="3",
-      'Warning': 'Non ! Il faut calculer la racine carrée de 9...'
-  }},
+  { Input: {
+      Text: 'AB = √( 5² - 4² ) = √( 9 ) = ???',
+      Validation: (input) => input=="3",
+      Warning: 'Non ! Il faut calculer la racine carrée de 9...'
+  } },
   "shin:oh C'est bon, tu as bon !<br>Tu vois que tu peux le faire quant tu t'y mets...",
   "hide image triangle2.svg with flipOutX",
   "aya:hehe Hihi !",

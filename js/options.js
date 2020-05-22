@@ -120,6 +120,7 @@ monogatari.preferences ({
 });
 
 // change text box html structure
+
 monogatari.component('text-box').template (() => `
 	<div id='customCharacterName'>
 			<span data-ui="who" data-content="character-name"></span>

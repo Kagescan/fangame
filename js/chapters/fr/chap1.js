@@ -18,7 +18,6 @@ scriptFr["chapter01-start"] = [
 	"Ah mais...",
 	"J'ai été réveillé par la lumière du jour...<br>Mon PC a démarré rapidement et le seul son sorti des hauts parleurs a été celui du démarrage...",
 	"Ce qui veut dire...",
-	"vibrate 1000",
 	"Qu'<span class='rem'>Ene</span> n'est pas là pour le moment !!",
 	"show background ShinOrdiHands with fadeIn",
 	"Je devrais en profiter !",
@@ -26,40 +25,52 @@ scriptFr["chapter01-start"] = [
 ];
 scriptFr["chapter01-shinOS"] = [
 	"show background ShinOrdiEyes",
-	function(){
-		monogatari.skip(false);
-		if (shinOSinstance.started){
-			shinOSinstance.show();
-		} else {
-			shinOSinstance.run();
-			shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
-				shinOSinstance.addWindow("web","fa-globe-americas", function(e){
-					kageBrowser.start(e,`
-						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a><br>`
-					);
-				})
-			});
-			shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
-				monogatari.run("jump chapter01-MAO");
-			});
-			shinOSinstance.addApp("jambes", "fa-folder-open", function(){
-				monogatari.run({'Input': {
-			      'Text': 'Mot de passe de Shintaro ?<br><em style="font-size: 12px;">(entrez vide pour quitter)</em>',
-			      'Validation': (input) => (input == "4510471" || input.trim().length<=0),
-			      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
-			      'Warning': 'Mot de passe incorrect'
-			    }});
-			});
-		}
-	},
+	{ Function: {
+			Apply: function(){
+				monogatari.skip(false);
+				if (shinOSinstance.started){
+					shinOSinstance.show();
+				} else {
+					shinOSinstance.run();
+					shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
+						shinOSinstance.addWindow("web","fa-globe-americas", function(e){
+							kageBrowser.start(e,`
+								<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a><br>
+					      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a><br>
+					      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a><br>`
+							);
+						})
+					});
+					shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
+						monogatari.run("jump chapter01-MAO");
+					});
+					shinOSinstance.addApp("jambes", "fa-folder-open", function(){
+						monogatari.run({'Input': {
+					      'Text': 'Mot de passe de Shintaro ?<br><em style="font-size: 12px;">(entrez vide pour quitter)</em>',
+					      'Validation': (input) => (input == "4510471" || input.trim().length<=0),
+					      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
+					      'Warning': 'Mot de passe incorrect'
+					    }});
+					});
+				}
+			}
+	}},
 	"<span class='hide'>Le pc est allumé</span>",
 	"jump chapter01-shinOS"
 ];
 scriptFr["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
-  function(){shinOSinstance.hide()},
+	{ Function: {
+			Apply: ()=>{
+				// We should call that in an anonymous function, else, the "this" keyword won't work
+				shinOSinstance.hide();
+			},
+			Reverse: ()=>{
+				// dirty but it works...
+				monogatari.run("jump chapter01-shinOS");
+			}
+		}
+	},
 	"WHAT",
 	"shin KESKE ?!",
 	"Elle a supprimé tous mes fichiers privés ?!",
@@ -68,7 +79,10 @@ scriptFr["chapter01-legs"] = [
 	"jump chapter01-shinOS"
 ];
 scriptFr["chapter01-news"] = [
-  function(){shinOSinstance.hide()},
+	{ Function: {
+			Apply: ()=>{ shinOSinstance.hide(); },
+			Reverse: ()=>{ monogatari.run("jump chapter01-shinOS"); }
+	} },
 	"#1: <br>Aujourd’hui le 15 aôut pour le festival d’obon, les températures grimperont jusqu’à 35°",
 	"Prévoyez donc une activité moins importante ou même supprimée des services publics pour ce jour férié.",
 	"#2: <br>L’idole si populaire en ce moment commence sa carrière d’actrice ! Elle jouera dans un drama dont la sortie est prévue peu après celle de son album",
@@ -78,28 +92,43 @@ scriptFr["chapter01-news"] = [
 	"jump chapter01-shinOS",
 ];
 scriptFr["chapter01-weebGame"] = [
-  function(){shinOSinstance.hide()},
+	{ Function: {
+			Apply: ()=>{ shinOSinstance.hide(); },
+			Reverse: ()=>{ monogatari.run("jump chapter01-shinOS"); }
+	} },
 	"\"Le site est actuellement fermé. Il réouvrira une fois la programmation du nouveau forum finie.\"",
 	"shin Ah, le créateur de ce site fais encore une mise à jour... Il faudra que je repasse un autre jour !",
 	/* +1 achivement : Revenez plus tard*/
 	"jump chapter01-shinOS"
 ];
 scriptFr["chapter01-MAO"] = [
-  function(){shinOSinstance.exit()},
+	{ Function: {
+			Apply: ()=>{ shinOSinstance.exit(); },
+			Reverse: ()=>{ monogatari.run("jump chapter01-shinOS"); }
+	} },
 	"show scene shinPC with fadeIn",
-	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+	{ Function: {
+			Apply: ()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+			Reverse: ()=>{ document.getElementById("background").style.backgroundColor = "black"; }
+	} },
 	"play sound pcError",
 	"show image VocaloidStoppedWorking.svg center with flash",
 	"wait 4000",
 	"shin Oh non. Oh non non non non non pas encore ! C’est pas vrai !",
 	"shin Je n’ai pas besoin de boire, manger ou dormir pour vivre mais si l’ordinateur me lâche c’est fini. Je vais mourir, je vais-",
-	()=>{ document.getElementById("background").style.backgroundColor = "blue"; },
+	{ Function: {
+			Apply: ()=>{ document.getElementById("background").style.backgroundColor = "blue"; },
+			Reverse: ()=>{ document.getElementById("background").style.backgroundColor = "red"; }
+	} },
 	"hide image VocaloidStoppedWorking.svg with zoomOut",
 	"shin Aaaah ! Dieu merci ça n’a pas tout effacé.",
 	/*avec une tête comme celle du manga !*/
 	"shin Cette chanson est destinée au hall of fame de <span class='def'>niconico</span>. Je ne peux pas me permettre de perdre un tel futur succès.",
 	"stop music 02.08 with fade 3",
-	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+	{ Function: {
+			Apply: ()=>{ document.getElementById("background").style.backgroundColor = "red"; },
+			Reverse: ()=>{ document.getElementById("background").style.backgroundColor = "blue"; }
+	} },
 	"show image enePop.svg center",
 	"play sound pcError",
 	"shin huh oh",
@@ -133,7 +162,10 @@ scriptFr["chapter01-MAO"] = [
 	"show scene shinPC with shake",
 	"show character ene warn center with shake",
 	"ene La souris ! Vite, sauvez au moins la souris !",
-	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
+	{ Function: {
+			Apply: ()=>{ document.getElementById("background").style.backgroundColor = "black"; },
+			Reverse: ()=>{ document.getElementById("background").style.backgroundColor = "blue"; }
+	} },
 	"shin Oh merde ! Allez, Shintaro, sauve au moins une vie !",
 	"shin Allez, marche !!",
 	"stop music 01.02 with fade 3",
@@ -177,6 +209,9 @@ scriptFr["chapter01-MAO"] = [
 	"Je suis trop jeune pour mourir...",
 	"Ce sera bon si c'est juste pour un jour",
 	"Aujourd'hui sera la première et dernière fois que je sors",
+	"jump chapter01-letsGo"
+];
+scriptFr["chapter01-letsGo"] = [
 	"show scene black",
 	"centered ... Allons y.",
 	"clear",
@@ -190,9 +225,13 @@ scriptFr["chapter01-MAO"] = [
 	()=> tempDialogs(`Le fangame Kagerou Project <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
 	()=> tempDialogs(`Programmation : ShinProg (LoganTann)`, 1000),
 	()=> tempDialogs(`Histoire : Furi, ShinProg`, 1000),
-	()=> tempDialogs(`Graphismes :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>,\
-	<br>ShinProg <em style="font-size: 10px;"> (modèles 3D, clean des arts officiels)</em>,\
-	<br>Furi <em style="font-size: 10px;">(fonds dessinés)</em>`, 4000),
+	{ Function: {
+			Apply: ()=>tempDialogs(`Graphismes :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>,\
+					<br>ShinProg <em style="font-size: 10px;"> (modèles 3D, clean des arts officiels)</em>,\
+					<br>Furi <em style="font-size: 10px;">(fonds dessinés)</em>`, 4000)
+					.then(()=>monogatari.next()),
+			Reverse: ()=>monogatari.run("jump chapter01-letsGo")
+	} },
 	"hide image logo.png centeredLeft with fadeOut slower",
 	"wait 3000",
 	"centered Merci d'avoir testé notre démo !",
@@ -200,4 +239,4 @@ scriptFr["chapter01-MAO"] = [
 	"show background #666 with fadeOut slow",
 	"wait 3000",
 	"jump gameEnd-start"
-]
+];
