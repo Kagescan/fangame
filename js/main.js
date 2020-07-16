@@ -41,6 +41,7 @@ monogatari.assets ('scenes', {
 	'classroomDoorClosed': 'classroomDoorClosed.jpg',
 	'classroomDoorOpened': 'classroomDoorOpened.jpg',
 	'classroomWindow': 'classroomWindow.jpg',
+	'icon': 'icon.svg'
 });
 
 
@@ -172,6 +173,7 @@ var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
 			monogatari.element().find('[data-component="text-box"]').hide();
 			e.ready (() => {
 				e.style.left = "75%";
+				e.style.color = "black";
 				e.content ('wrapper').html (text);
 				e.classList.add(animIn);
 				setTimeout (function (){

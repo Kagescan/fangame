@@ -5,23 +5,23 @@ scriptEn["chapter01-start"] = [
 	"play music 02.08 with fade 3 loop",
 	"wait 2500",
 	"... ...",
-	"Hmmm ?<br> J'ai beaucoup transpiré... Quel genre de rêve ai-je fait cette nuit ?",
-	"Pff, sans doute toujours la même chose. Je n'avancerais pas si je ne fais que de me poser ce genre de questions.",
+	"Hmmm ?<br> I sweat a lot… What kind of dream did I have last night?",
+	"ugh..Probably the same as always. I won’t move forward if I keep asking myself questions like that.",
 	"...",
 	"show background ShinGotoPC with fadeIn",
-	"Quoi qu'il en soit, il faut que je finisse la <span class='rem'>composition de ma musique !</span>",
-	"Reprenons le travail... à cause d'<span class='rem'>elle</span> je n'aurai jamais fini !",
+	"Anyway, I should get on with that song I’m composing! ",
+	"Let’s get back to work... I’ll never finish at the hands of Her!",
 	"show background ShinGotoPC with fadeOut",
 	"play sound pcBooted",
 	"wait 1500",
 	"show scene ShinOrdi with fadeIn",
-	"Ah mais...",
-	"J'ai été réveillé par la lumière du jour...<br>Mon PC a démarré rapidement et le seul son sorti des hauts parleurs a été celui du démarrage...",
-	"Ce qui veut dire...",
+	"Uh..Wait…",
+	"I’ve been woken up by the morning sunlight...<br>The only thing that's come out of my computer speakers has been the sound of the start-up…",
+	"This can only mean that…",
 	"vibrate 1000",
-	"Qu'<span class='rem'>Ene</span> n'est pas là pour le moment !!",
+	"<span class='rem'>She</span>’s not around yet!",
 	"show background ShinOrdiHands with fadeIn",
-	"Je devrais en profiter !",
+	"I should take that opportunity!",
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-shinOS"] = [
@@ -32,55 +32,56 @@ scriptEn["chapter01-shinOS"] = [
 			shinOSinstance.show();
 		} else {
 			shinOSinstance.run();
-			shinOSinstance.addApp("Parcourir le web", "fa-globe-americas", function(){
+			shinOSinstance.addApp("Web Browser", "fa-globe-americas", function(){
 				shinOSinstance.addWindow("web","fa-globe-americas", function(e){
 					kageBrowser.start(e,`
-						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Forum Critiques-Anime</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">Informations</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">Mails</a><br>`
+						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Anime Reviewer's Forum</a><br>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">news</a><br>
+			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">E-Mails</a><br>`
 					);
 				})
 			});
 			shinOSinstance.addApp("vocaloid", "fa-guitar", function(){
 				monogatari.run("jump chapter01-MAO");
 			});
-			shinOSinstance.addApp("jambes", "fa-folder-open", function(){
+			shinOSinstance.addApp("Legs", "fa-folder-open", function(){
 				monogatari.run({'Input': {
-			      'Text': 'Mot de passe de Shintaro ?<br><em style="font-size: 12px;">(entrez vide pour quitter)</em>',
+			      'Text': 'Shintaro\'s Password?<br><em style="font-size: 12px;">(enter blank to exit)</em>',
 			      'Validation': (input) => (input == "4510471" || input.trim().length<=0),
 			      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
-			      'Warning': 'Mot de passe incorrect'
+			      'Warning': 'Incorrect Password'
 			    }});
 			});
 		}
 	},
-	"<span class='hide>Le pc est allumé</span>",
+	"<span class='hide>The PC is on.</span>",
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
 	"WHAT",
-	"shin KESKE ?!",
-	"Elle a supprimé tous mes fichiers privés ?!",
-	"...<br>AAhhh -- Je suis maudit...<br> J'espère au moins que les fichiers de ma musique n'ont pas subi le même sort !",
+	"shin HOW???",
+	"She deleted all my private files!?",
+	"...<br>AAhhh -- What is this curse...<br> I hope the same thing didn't happen to my composition files...",
 	/* +1 achievement DOSSIERS_VOLÉS */
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-news"] = [
   function(){shinOSinstance.hide()},
-	"#1: <br>Aujourd’hui le 15 aôut pour le festival d’obon, les températures grimperont jusqu’à 35°",
-	"Prévoyez donc une activité moins importante ou même supprimée des services publics pour ce jour férié.",
-	"#2: <br>L’idole si populaire en ce moment commence sa carrière d’actrice ! Elle jouera dans un drama dont la sortie est prévue peu après celle de son album",
+	"#1: <br>Today, August 15th, the temperature will rise up to 30°C for the Obon festival.",
+	"Try to limit your outdoor activity and stay hydrated on this national holiday.",
+	"#2: <br>The number one trending idol will soon debut as an actress! She will be acting in a drama coming out right after the release of her next album!",
 	/* +1 achivement mais pour plus tard (chap 1.2) : une famille connue ?*/
-	"#3: <br>Un ours apprend à danser !",
-	"shin Rien d'intéressant en ce moment...",
+	"#3: <br>A bear has been taught to dance!",
+	"shin Nothing interesting today…",
 	"jump chapter01-shinOS",
 ];
 scriptEn["chapter01-weebGame"] = [
   function(){shinOSinstance.hide()},
-	"\"Le site est actuellement fermé. Il réouvrira une fois la programmation du nouveau forum finie.\"",
-	"shin Ah, le créateur de ce site fais encore une mise à jour... Il faudra que je repasse un autre jour !",
+	"“This website is currently undergoing maintenance.”",
+	"shin The moderator is updating the forum again… I’ll have to come back later!",
+	"shin <i>Or... Did I get banned?</i>",
 	/* +1 achivement : Revenez plus tard*/
 	"jump chapter01-shinOS"
 ];
@@ -91,111 +92,112 @@ scriptEn["chapter01-MAO"] = [
 	"play sound pcError",
 	"show image VocaloidStoppedWorking.svg center with flash",
 	"wait 4000",
-	"shin Oh non. Oh non non non non non pas encore ! C’est pas vrai !",
-	"shin Je n’ai pas besoin de boire, manger ou dormir pour vivre mais si l’ordinateur me lâche c’est fini. Je vais mourir, je vais-",
+	"shin Oh no. Oh no no no not again! Please!",
+	"shin I don’t need to sleep, eat or drink to survive, but if the computer lets me down, it’s the end. I’m gonna die I’m gonna-",
 	()=>{ document.getElementById("background").style.backgroundColor = "blue"; },
 	"hide image VocaloidStoppedWorking.svg with zoomOut",
-	"shin Aaaah ! Dieu merci ça n’a pas tout effacé.",
+	"shin AAAh thank god it didn’t delete the work!",
 	/*avec une tête comme celle du manga !*/
-	"shin Cette chanson est destinée au hall of fame de <span class='def'>niconico</span>. Je ne peux pas me permettre de perdre un tel futur succès.",
+	"shin This song is fated to go up in the niconico hall of fame. I cannot allow myself to lose this future bop.",
 	"stop music 02.08 with fade 3",
 	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
 	"show image enePop.svg center",
 	"play sound pcError",
-	"shin huh oh",
-	"par pitié... Pas elle !!",
+	"shin Uh-oh…",
+	"Please! Not her...",
 	"play music 01.02 with volume 15",
 	"show character ene cool center with fadeIn end-fadeOut",
 	"hide image enePop.svg with fadeOut",
-	"ene Allons allons maître !",
+	"ene There, there, master!",
 	"show character ene superior center with fadeIn end-fadeOut",
-	"ene Encore en train de travailler sur cette chanson que vous ne finirez jamais ?<br>Passez à autre chose, vous savez bien que ça ne sert à rien !!",
+	"ene Still working on that song you don’t have the guts to finish? Move on...you know it’s useless.",
 	// hier -> remplacer par ce matin, si on a joué au jeu
-	"ene Déjà qu'hier vous n'aviez cessé de critiquer le nouvel animé sorti la semaine dernière !!",
+	"ene Yesterday again you wouldn’t stop criticizing that new anime released last week !!!",
 	"show character ene quote center with fadeIn end-fadeOut",
-	"ene «l'histoire ne respecte pas l'oeuvre originale»",
-	"ene «Le choix des doubleurs n'est pas du tout ce que j'avais imaginé»",
+	"ene “The plot is an offense to the original story!”",
+	"ene “The voice actors do not match at all what I had in mind”",
 	"show character ene oh center with fadeIn end-fadeOut",
-	"ene Dites donc, vous en faites, des choses !",
+	"ene And how experienced are you!",
 	"shin ...",
 	"show character ene quote center with fadeIn end-fadeOut",
-	"ene Ah aussi !!<br>C'était quoi ça : «Il fut un temps où j'ai travailé dans l'animation. »",
+	"ene Ah, also... What was this : “I used to work in the animation industry.”",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Maître, vous ne seriez pas en train de mentir ?<br> HAHAHAHA",
+	"ene cOuld iT be thAt you’re lyiNg???<br> HAHAHAHA",
 	"shin !!",
-	"Elle est si énervante !! Si seulement elle pourrait se taire !",
-	"ene par «Il fut un temps», vous parliez de votre <span class='rem'>vie antérieure</span>",
-	"ene parce que ça doit exactement deux ans, au mois près, que vous n'aviez pas bougé de votre PC !!",
+	"She’s such a pain. Why won’t she shut up!",
+	"ene Maybe ‘I used to’ refers to your past life",
+	"ene I guess it must...as you’ve been sitting in front of that PC for two years to the day!",
 	"clear",
 	"show character ene warn center with fadeIn",
 	"show video shincola immersive with close",
-	"ene EEEHHH !!",
+	"ene EEEEEEEk !!",
 	"show scene shinPC with shake",
 	"show character ene warn center with shake",
-	"ene La souris ! Vite, sauvez au moins la souris !",
+	"ene The mouse! Get the mouse!",
 	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
-	"shin Oh merde ! Allez, Shintaro, sauve au moins une vie !",
-	"shin Allez, marche !!",
+	"shin Oh crap! Come on Shintaro save one life at least!",
+	"shin Please! Work!!",
 	"stop music 01.02 with fade 3",
 	"hide character ene",
 	"show background #000",
-	"play music ltm8bit with fade 7",
+	"play music 8bit with fade 7",
 	/*bruit de click*/
 	"centered rottotorrrorooro",
 	"centered totoro",
 	"centered toto roto<span class='censored'>to</span>",
 	"show background shinPC with fadeIn",
-	"shin Seul le clic droit fonctionne !​ <br> et seulement trois lettres et la touche Entrée !<br> Aaah Je suis condamné !!!",
+	"shin Only the right click is working!​ <br> And three letters and enter! <br> AAAAh I’m doomed!",
 	"show character ene yay center with fadeIn end-fadeOut",
-	"ene Vous pouvez écrire Totoro !",
+	"ene You can type Totoro!",
 	"shin ...",
 	"ene ??",
-	"shin ... huuuh",
+	"shin uuuuuh…",
 	"show character ene concerned center with fadeIn end-fadeOut",
 	"ene ...",
-	"ene Maître ? Il suffit de tout racheter...",
-	"shin Tu as honte c’est ça ? Je pensais en racheter un de toute façon.",
+	"ene Master? You can just buy it all again…",
+	"shin Feeling guilty now? I was thinking about getting new equipment anyhow.",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene C’est parfait alors ! Il y a plein de très bons nouveaux modèles vous savez !",
-	"Elle se vante maintenant. pff.",
-	"shin Prends celui qui sera livré le plus vite",
+	"ene Oh that’s awesome! The new models are great you know",
+	"Urgh...such a braggart.",
+	"shin Just pick one that can be delivered as quickly as possible",
 	"show character ene usingPC with fadeIn end-fadeOut",
-	"ene hmm, okay, voyons voir...",
-	"ene Ah ! Euh...",
-	"shin Qu'est-ce qu'il y a ?",
+	"ene hmmm okay let’s see.",
+	"ene Eh! ...",
+	"shin What’s the matter now?",
 	"show character ene concerned with fadeIn end-fadeOut",
-	"ene Nous sommes le 15 août aujourd'hui.<br>C’est le festival d’Obon...personne ne livrera avant après demain",
-	"...<br>non. Je...",
-	"shin Je vais vraiment mourir aujourd’hui",
+	"ene It’s August 15th today...the Obon festival…<br> Nothing can be delivered within the two next days...",
+	"...<br>No. I...",
+	"shin <span class='shake animated'>I am really going to die today</span>.",
 	"show character ene yay center with fadeIn end-fadeOut",
-	"ene Alors...<br>Allons en acheter un !",
-	"shin Pardon ?!",
+	"ene Then... <br> Let’s just go out and get it!",
+	"shin Excuse me!?",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Le nouveau centre commercial géant de Kashiwa est ouvert !!",
-	"ene On pourra aussi acheter ces supers tubes de crème solaire pour lutter contre la canicule !",
-	"La lumière du jour...Cela fait deux ans que je ne suis pas sorti...",
-	"Après tout, ce ne sera que pour faire un petit achat",
-	"Je suis trop jeune pour mourir...",
-	"shin ... Allons y.",
+	"ene The new giant supermarket in Kashiwa is open today!",
+	"ene We could also buy one of these exceptional sunscreens to fight off the heatwave!",
+	"Daylight… It’s been two years since I have last been outside…",
+	"It will just be for a little shopping..",
+	"I am too young to die.",
+	"shin ... Let's go.",
 	"show scene black",
-	"centered Après tout, que pourrait-il m'arriver de mal si je sors seulement ce matin ?",
+	"centered After all, what could go wrong if I go out just this morning?",
 	"clear",
-	"show background #666 with fadeIn",
+	"show scene icon with fadeIn",
 	"wait 1500",
 	"show image kagescan.svg centeredLeft with fadeIn",
-	()=> tempDialogs("La communauté française de Kagerou Project présente...", 2000),
-	()=> tempDialogs("Avec la participation des communautés anglophones et hispaniques", 2000),
+	()=> tempDialogs("The french community presents you...", 2000),
+	()=> tempDialogs("With the help of fans from all over the world", 2000),
 	"hide image kagescan.svg centeredLeft with fadeOut",
 	"show image logo.png centeredLeft with fadeIn",
-	()=> tempDialogs(`Le fangame Kagerou Project <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
-	()=> tempDialogs(`Programmation : ShinProg (LoganTann)`, 1000),
-	()=> tempDialogs(`Histoire : Furi, ShinProg, et autres contributeurs`, 1000),
-	()=> tempDialogs(`Graphismes :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>,\
-	<br>ShinProg <em style="font-size: 10px;"> (modèles 3D, clean des arts officiels)</em>,\
-	<br>Furi <em style="font-size: 10px;">(pont du yuukei quartet)</em>`, 4000),
+	()=> tempDialogs(`The Kagerou Project Fangame <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
+	()=> tempDialogs(`Programming : ShinProg (LoganTann)`, 1000),
+	()=> tempDialogs(`Story : Furi, Yoomster, ShinProg, + contributors`, 1000),
+	()=> tempDialogs(`Graphics :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>\
+	<br>Furi <em style="font-size: 10px;">(Backgrounds)</em>\
+	<br>SandoSan <em style="font-size: 10px;"> (Pixel art : game logo)</em>\
+	<br>ShinProg <em style="font-size: 10px;"> (Drafting, cleaning, 3D)</em>`, 4000),
 	"hide image logo.png centeredLeft with fadeOut slower",
 	"wait 3000",
-	"centered Merci d'avoir testé notre démo !",
+	"centered <span style='color: black;'>Thanks for trying our demo !</span>",
 	"stop music ltm8bit with fade 3",
 	"show background #666 with fadeOut slow",
 	"wait 3000",

@@ -28,7 +28,7 @@ var shinOSinstance = {
 		`;
 		this.started = true;
 		this.show();
-		console.log("shinOs démarré");
+		// console.log("shinOs démarré");
 		/*this.allCallbacks = [];
 		document.getElementById("shinOsDesktop").addEventListener("click", function(c){
 			let e = c.target;
@@ -125,7 +125,7 @@ var kageBrowser = {
   },
   home(){
     console.log("home");
-    this.pageContent.innerHTML = `<p>Sites les plus visités</p> <div id='kageBrowserHighlights'> ${this.hi} </div>`;
+    this.pageContent.innerHTML = `<p>Top Sites</p> <div id='kageBrowserHighlights'> ${this.hi} </div>`;
     this.container.querySelectorAll("#kageBrowserHighlights a").forEach(function(a){
       a.addEventListener("click", function(event){
         event.preventDefault();
