@@ -91,7 +91,8 @@ visual-novel.hremMode .hrem:hover:after{
 }
 #shinOsWindows>div.active{
 	position:absolute;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	height: 100%;
 	background: white;
@@ -99,13 +100,6 @@ visual-novel.hremMode .hrem:hover:after{
 }
 #shinOsWindows>div{
 	display: none;
-}
-#shinOsWindows>div.active{
-	position:absolute;
-	width: 100%;
-	height: 100%;
-	background: white;
-	color: black;
 }
 #shinOsWindows .title{
 	display: flex;
@@ -188,6 +182,128 @@ visual-novel.hremMode .hrem:hover:after{
 #shinOsClock {
 	text-align: center;
 }
+#kageBrowserSearchbar {
+	display: flex;
+	padding: 0 5rem;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9fa;
+	border-bottom: 1px solid #e1e1e2;
+}
+#kageBrowserSearchbar input {
+	font-size: 1rem;
+	width: 70vh;
+	margin: 10px;
+	background: white;
+	border: 1px solid #bebebf;
+}
+#kageBrowserHomebtn {
+	height: min-content;
+	margin-right: 1rem;
+}
+
+#kageBrowserContainer {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+#kageBrowserPageContent {
+	flex-grow: 1;
+}
+#mailClient {
+	/*is inside #shinOsWindows>div.active*/
+	display: flex;
+	height: 100%;
+	background: #414852;
+	padding-top: 1rem;
+	text-align: left;
+}
+#mail_boxes {
+	color: white;
+	padding-top: 1rem;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+#exitMailer {
+	align-self: center;
+	background: #22252a;
+	padding: 1rem;
+	border-radius: 0.5rem;
+}
+#mail_boxes>div>div {
+	padding-left: 1rem;
+	padding-right: 5rem;
+	transition: background 0.2s;
+	cursor: pointer;
+}
+#mail_boxes>div>div:hover {
+	background: #2d3239;
+}
+#mail_boxes>div>div.active {
+	background: #22252a;
+}
+#mail_msgs {
+	background: #f8f8f8;
+	flex-grow: 1;
+	border-radius: 1rem 0 0rem 1rem;
+	padding: 1.5rem;
+	margin-bottom: 1rem;
+}
+
+#mail_msgs.list > div {
+	background: #dfefff;
+	padding: 0.2rem 1rem;
+	display: flex;
+	color: #899199;
+	border: 1px solid #bfd5ef;
+}
+#mail_msgs.list > div:hover {
+	box-shadow: 0px 0px 3px 0px #bfd5ef;
+	cursor: pointer;
+}
+#mail_msgs.list > div::before {
+	content: "☐";
+	margin-right: 1rem;
+	align-self: center;
+}
+
+#mail_msgs.list > div::after {
+	content: "☆";
+	margin-left: 1rem;
+}
+#mail_msgs.list > div > div {
+	flex-grow: 1;
+	color: black;
+	padding-bottom:1rem;
+}
+#mail_msgs.list .date {
+	font-size: 1.1rem;
+}
+#mail_msgs.list .target {
+	font-size: 1rem;
+	color: #333333;
+}
+
+#mail_msgs.preview {
+	background: #f8f8f8;
+	flex-grow: 1;
+	border-radius: 1rem 0 0rem 1rem;
+	padding: 0;
+	margin-bottom: 1rem;
+}
+#mail_msgs.preview>div:first-child {
+	background: #e6e6e6;
+	border-radius: 1rem 0 0rem 0rem;
+	border-bottom: 1px solid #bbb;
+}
+#mail_msgs.preview>div:first-child>button {
+	float: right;
+}
+#mail_msgs.preview>div {
+	padding: 1rem;
+}
+
 /* General Style */
 body {
 
