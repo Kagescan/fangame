@@ -1,6 +1,5 @@
 
 scriptEn["chapter01-start"] = [
-	"centered WARNING : the english translation is not finished",
 	"show scene ShinDodo with fadeIn duration 3s",
 	"play music 02.08 with fade 3 loop",
 	"wait 2500",
@@ -41,7 +40,7 @@ scriptEn["chapter01-shinOS"] = [
 					kageBrowser.start(e,`
 						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Anime Reviewer's Forum</a><br>
 			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">news</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">E-Mails</a><br>`
+			      <a href="#!" data-action="builtin" data-arg="mailClient">E-Mails</a><br>`
 					);
 				})
 			});
@@ -91,6 +90,13 @@ scriptEn["chapter01-weebGame"] = [
 	/* +1 achivement : Revenez plus tard*/
 	"jump chapter01-shinOS"
 ];
+scriptEn["chapter01-eneOrigins"] = [
+  function(){shinOSinstance.hide()},
+	"Ah oui... Ce mail. Je m'en souviens comme si c'était hier !!",
+	"ene tst",
+	"test",
+	"jump chapter01-shinOS"
+];
 scriptEn["chapter01-MAO"] = [
   function(){shinOSinstance.exit()},
 	"show scene shinPC with fadeIn",
@@ -138,7 +144,7 @@ scriptEn["chapter01-MAO"] = [
 	"show character ene quote center with fadeIn end-fadeOut",
 	"ene Ah, also... What was this : “I used to work in the animation industry.”",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Could it be, perhaps… That you’re lying?!<br> AHAHAHA!!! So lame!!!", // or thAt you’re lyiNg???
+	"ene Could it be, perhaps… thAt you’re lyiNg????!<br> AHAHAHA!!! So lame!!!",
 	"shin Gh–!!",
 	"I grit my teeth and try my best to ignore her. She’s such a pain. Why won’t she shut up?!",
 	"ene Maybe ‘I used to’ refers to your past life",
@@ -197,7 +203,7 @@ scriptEn["chapter01-MAO"] = [
 	"show character ene concerned with fadeIn end-fadeOut",
 	"ene It’s August 14th today… It’s the Obon festival…<br> Nothing can be delivered within the next two days.",
 	"shin …<br>No… There has to be something, anything?!",
-	"Nooope~!",
+	"ene Nooope~!",
 	"shin <span class='shake animated'>I am really going to die today</span>.",
 	"show character ene yay center with fadeIn end-fadeOut",
 	"ene Say, Master~ I have a great idea! Why don’t we just go out and get it?",
