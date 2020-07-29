@@ -60,18 +60,20 @@ scriptEn["chapter01-shinOS"] = [
 	"<span class='hide>The PC is on.</span>",
 	"jump chapter01-shinOS"
 ];
+
 scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
 	"clear",
 	"…?!",
-	"Instead of my glorious stash, an empty folder greets me."
+	"Instead of my glorious stash, an empty folder greets me.",
 	"shin HOW???",
 	"I found myself shouting without realizing. She deleted all my private files!?",
 	"...<br>AAhhh -- What is this curse...<br> I hope the same thing didn't happen to my composition files...",
 	/* +1 achievement DOSSIERS_VOLÉS */
 	"jump chapter01-shinOS"
 ];
+
 scriptEn["chapter01-news"] = [
   function(){shinOSinstance.hide()},
 	"#1: <br>Today, August 14th, the temperature will rise up to 30°C. Today is the second day of the Obon festival.",
@@ -91,11 +93,51 @@ scriptEn["chapter01-weebGame"] = [
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-eneOrigins"] = [
-  function(){shinOSinstance.hide()},
-	"Ah oui... Ce mail. Je m'en souviens comme si c'était hier !!",
-	"ene tst",
-	"test",
+	function(){shinOSinstance.showTextBox()},
+	"That’s where she came from.",
+	"It’s been a year now.",
+	"I was naive enough to click on every shady link I could find on the internet.",
+	"show scene black",
+  function(){
+		shinOSinstance.hideTextBox();
+		shinOSinstance.hide();
+	},
+	// ANIMATION ??
+	"What the...",
+	"A... girl? What sort of program is this? No app other than my email seems to be running though…",
+	"…",
+	"Wait.",
+	"What if this was one of those top secret programs ?",
+	"What if this cute girl needs my help to save a mysterious world I don’t even know about yet because",
+	"this is the- pilot episode of an amazing shōnen series and I’m the hero and–",
+	"ene -N-nice to meet you... ",
+	"She looks so...human. This is so high-tech.",
+	{'Choice':{ 'Dialog': 'Maybe she has voice recognition? I should try talking to her.',
+    'Ask her what she is':{
+      'Text': 'Ask her what she is',
+      'Do': 'jump chapter00-ayaWorst'
+    },
+    'Ask her for a mission':{
+      'Text': 'Ask her for a mission',
+      'Do': 'shin I-I’ll do whatever you want ! Um… Give me  whatever mission or quest you have ! '
+    },
+    'Offer my help':{
+      'Text': 'Offer my help',
+      'Do': 'shin Do you... need any help ?'
+    }
+  }},
+	"ene Haha! What’s with that? (she smiles) I don’t need much, but...",
+	"ene From today onward, please treat me well, <span class='rem'>Master</span>...",
+	"Looking back, I’m still not sure which part of this makes me cringe most.",
+	"I was such an idiot then… ",
+	// transition
+	"Since that day, Ene has occupied my computer daily and disturbs me non-stop. ",
+	"She seems to be asleep right now, though. Or would the better term be offline?",
+	"Despite knowing her for a year now, I hardly actually know anything about her.",
 	"jump chapter01-shinOS"
+];
+scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
+
 ];
 scriptEn["chapter01-MAO"] = [
   function(){shinOSinstance.exit()},
@@ -161,7 +203,7 @@ scriptEn["chapter01-MAO"] = [
 	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
 	"shin Oh crap!!!",
 	"I grab a wad of tissues and my mouse and desperately press them together.",
-	"<span class='rem'>Come on, Shintaro, save one life at least!</span>"
+	"<span class='rem'>Come on, Shintaro, save one life at least!</span>",
 	"shin Please! Work!!",
 	"[...]",
 	"ene Uwa, only the right click is working. Try your keyboard…?",

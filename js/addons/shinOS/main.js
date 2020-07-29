@@ -1,5 +1,5 @@
 /* Shintaro OS. Part of the Retaining's memories fangame
- * Copyright (c) 2017-2019 ShinProg / Kagescan
+ * Copyright (c) 2017-2020 ShinProg / Kagescan
 */
 
 // OPERATING SYSTEM CODE / API ---------------------------------------------- //
@@ -15,7 +15,7 @@ var shinOSinstance = {
 		<div id='shinOsBottomBar'>
 			<div id='shinOsStartMenu'>Shintaro</div>
 			<div id='shinOsAppsNav'></div>
-			<div id='shinOsClock'>8:30<br>08/15/20XX</div>
+			<div id='shinOsClock'>8:30<br>08/14/20XX</div>
 		</div>
 		`;
 		this.started = true;
@@ -47,22 +47,37 @@ var shinOSinstance = {
 		});
 	},
 	addWindow(title, icon, callback){
-		let win = document.createElement("div"), taskIcon = document.createElement("div");
-		win.innerHTML = `<div class='title'>  <a href='#'><i class="fas fa-times-circle"></i></a>  <span>${title}</span>  <i class="fas ${icon}"></i></div>    <div class='content'></div>`;
-		win.firstElementChild.firstElementChild.addEventListener('click', ()=>{ shinOSinstance.closeWindow(title); });
+		let taskIcon = document.createElement("div");
+		let win = document.createElement("div");
+		let winTitle = document.createElement("div");
+		let winContent = document.createElement("div");
+		let winSkipSection = document.createElement("div");
+
+		winTitle.classList.add("title");
+		winTitle.innerHTML = `
+			<a href='#'><i class="fas fa-times-circle"></i></a>
+			<span>${title}</span>  <i class="fas ${icon}"></i>`;
+		winTitle.firstElementChild.addEventListener('click', ()=>{ shinOSinstance.closeWindow(title); });
+		winSkipSection.classList.add("skipSection");
+		winSkipSection.addEventListener("click", () => {monogatari.run("next");} );
+		winContent.classList.add("content");
+		win.append(winTitle, winSkipSection, winContent);
+		win.classList.add("active", "animated", "zoomIn", "faster");
+
 		taskIcon.innerHTML = `<i class="fas ${icon}"></i>`;
 		taskIcon.classList.add("active");
 		taskIcon.dataset.title = win.dataset.title = title;
 		taskIcon.addEventListener('click', ()=>{ console.log("icône cliquée") });
-		win.classList.add("active", "animated", "zoomIn", "faster");
 		taskIcon.classList.add("active", "animated", "flipInX", "faster");
+
 		setTimeout(()=>{
 			win.classList.remove("animated", "zoomIn", "faster");
 			taskIcon.classList.remove("animated", "flipInX", "faster");
 		}, 800);
 		document.getElementById("shinOsWindows").appendChild(win);
 		document.getElementById("shinOsAppsNav").appendChild(taskIcon);
-    callback(win.lastElementChild);
+    callback(winContent);
+    //callback(win.lastElementChild);
 	},
 	closeWindow(title){
 		let win = document.querySelector(`#shinOsWindows div[data-title=${title}]`);
@@ -84,6 +99,24 @@ var shinOSinstance = {
 		//newIcon.dataset.i = index;
 		desktopIcons.appendChild(newIcon);
 		newIcon.onclick = callback;
+	},
+	showTextBox() {
+		// !! will work only on the active windows, but since the OS still don't
+		//    handle multiples windows, that's not a problem...
+		this.blurredWin = document.querySelector("#shinOsWindows .active");
+		this.skipSection = document.querySelector("#shinOsWindows .skipSection");
+		this.textboxComponent = document.querySelector(`text-box`);
+		this.showTextBoxEnabled = true;
+		this.blurredWin.style.filter = "blur(4px)";
+		this.skipSection.style.display = "block";
+		this.textboxComponent.style.zIndex = 12;
+		// IDEA: maybe making a transition for the blur + brightness effect
+	},
+	hideTextBox() {
+		this.blurredWin.style.removeProperty("filter");
+		this.skipSection.style.removeProperty("display");
+		this.textboxComponent.style.zIndex = 10;
+		this.showTextBoxEnabled = false;
 	}
 }
 
@@ -216,14 +249,18 @@ var kageBrowser = {
 	},
 	mailList: {
 		"Shintaro's mail box": [
-				{title: "mail inside main mailbox", target: "", date: "", content: ""},
-				{title: "mail 2", target: "", date: "", content: ""},
-				{title: "mail 3", target: "", date: "", content: ""}
+				{ title: "School’s Obon Festival cancelled due to extreme temperatures",
+				  target: "From &lt;  club@Kxxx_School.ed.jp&gt;", date: "2 hours ago",
+					content: ""
+				},
+				{title: "Amezon.co.jp delivery tracking",
+				 target: "From &lt;noreply@amezon.co.jp&gt;", date: "6 hours ago",
+				 content: ""}
 		],
 		"Spams": [
 				{ title: "Test",
 				  target: "From &lt;unknown&gt;", date: "1 year ago",
-				  content: `<button id="mail_attm">Message.doc</button>
+				  content: `<button id="mail_attm">目を覚ます.doc</button>
 						Important message from XX.`,
 					onMounted: () => {
 						document.getElementById("mail_attm").addEventListener (
@@ -235,11 +272,17 @@ var kageBrowser = {
 		"Drafts": [
 		],
 		"Sent": [
-				{title: "a mail sent", target: "", date: "", content: ""}
+				/*{title: "a mail sent", target: "", date: "", content: ""}*/
 		],
 		"Deleted": [
-				{title: "a mail deleted", target: "", date: "", content: ""},
-				{title: "and another...", target: "", date: "", content: ""}
+				{title: "Getting ready for the apocalypse !",
+				 target: "From &lt;dailyNews.C-n3ws.jp&gt;", date: "1 day ago",
+				 content: ""
+			  },
+				{title: "New rules from the KxxxPro anime discord",
+				 target: "From &lt;noreply.discord.com &gt;", date: "2 days ago",
+				 content: "The medusae boss"
+			 }
 		],
 	}
 }

@@ -122,6 +122,13 @@ visual-novel.hremMode .hrem:hover:after{
 #shinOsWindows .title a:hover{
 	background-color: red;
 }
+#shinOsWindows .skipSection {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	display: none;
+	background: rgba(0,0,0,0.4);
+}
 #shinOsDesktop {
 	display: flex;
 	flex-direction: column;

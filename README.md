@@ -24,6 +24,9 @@ Available :
 	* [Play Online in github](https://logantann.github.io/kagepro2/)
 	* Download the latest version (html) : click download zip button, and run index.html
 
+<details>
+<summary>Unavailable now : beta and stable version, native offline apps  </summary>
+
 > Unavailable now : beta and stable version, native offline apps  
 > * Download stable version (zip, html) : download the game's source code and run it with your preferred browser
 > * Download stable version (zip, exe) : download the executable of the game for Windows (recommanded for better experience)
@@ -32,6 +35,7 @@ Available :
 > * Setup executable (exe) : if you wish to install the game inside your windows PC rather than your usb stick
 > * Setup for Android (APK) : run inside a real android app
 
+</details>
 
 
 ### Known bugs
@@ -46,7 +50,7 @@ versions :
 
 1. first version, written with python and pygame lib  
 2. second version, written with c++ and SFML. Version 2.1 : remake of the version 2.0. Never finished !  
-3. third version, written with JS and html dom. I hope it will be the last !
+3. third version, written with JS and html dom, using [Monogatari](). I hope it will be the last !
 
 ### Contributing
 Please contact me before : <kagescan@legtux.org>
