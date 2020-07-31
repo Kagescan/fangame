@@ -258,7 +258,14 @@ var kageBrowser = {
 				},
 				{title: "Amezon.co.jp delivery tracking",
 				 target: "From &lt;noreply@amezon.co.jp&gt;", date: "6 hours ago",
-				 content: ""}
+				 content: "",
+				 onMounted: function () {
+				 	simpleReactionToMailFromShin(
+						"I got a new VOCALOID2 voicebank a few months ago, even though I still haven’t finished a song.",
+						"It’s not like I have anything else to do anyway. I should work on that soon."
+					);
+				 }
+			 }
 		],
 		"Spams": [
 				{ title: "Test",
@@ -288,4 +295,19 @@ var kageBrowser = {
 			 }
 		],
 	}
+}
+function simpleReactionToMailFromShin(...lines) {
+	// helper for performMonogatariACE; but is it really needed ?
+	let code = [
+		shinOSinstance.showTextBox
+	];
+	for (var line of lines) {
+		code.push(line);
+	}
+	code.push(shinOSinstance.hideTextBox);
+	performMonogatariACE(code);
+}
+function performMonogatariACE(code = [""]) {
+	monogatari.script()["ACE"] = code;
+	monogatari.run("jump ACE");
 }
