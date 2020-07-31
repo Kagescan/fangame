@@ -94,28 +94,46 @@ scriptEn["chapter01-weebGame"] = [
 ];
 scriptEn["chapter01-eneOrigins"] = [
 	function(){shinOSinstance.showTextBox()},
+	"show scene #171b21",
+	"stop music 02.08 with fade 3 loop",
+	"play music 01.13 with fade 3 loop",
 	"That’s where she came from.",
 	"It’s been a year now.",
-	"I was naive enough to click on every shady link I could find on the internet.",
-	"show scene black",
-  function(){
+	function(){
 		shinOSinstance.hideTextBox();
 		shinOSinstance.hide();
 	},
-	// ANIMATION ??
+	"show scene flashback with flash",
+	// todo : hide image after 800 ms in a secure way
+	"I was naive enough to click on every shady link I could find on the internet.",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.filter = "grayscale(100%)";
+	},
+	"show scene shinPC with fadeIn",
+	"show image enePop.svg center",
+	"wait 500",
 	"What the...",
+	"hide image enePop.svg",
+	"show character ene neutral with fadeIn end-fadeOut", // closed eyes then neutral after ...
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	// more sprites tba (news one)
+	"…",
 	"A... girl? What sort of program is this? No app other than my email seems to be running though…",
 	"…",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
 	"Wait.",
 	"What if this was one of those top secret programs ?",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
 	"What if this cute girl needs my help to save a mysterious world I don’t even know about yet because",
 	"this is the- pilot episode of an amazing shōnen series and I’m the hero and–",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
 	"ene -N-nice to meet you... ",
 	"She looks so...human. This is so high-tech.",
 	{'Choice':{ 'Dialog': 'Maybe she has voice recognition? I should try talking to her.',
     'Ask her what she is':{
       'Text': 'Ask her what she is',
-      'Do': 'jump chapter00-ayaWorst'
+      'Do': 'jump chapter01-eneOriginsAskWhoIsShe'
     },
     'Ask her for a mission':{
       'Text': 'Ask her for a mission',
@@ -126,18 +144,55 @@ scriptEn["chapter01-eneOrigins"] = [
       'Do': 'shin Do you... need any help ?'
     }
   }},
-	"ene Haha! What’s with that? (she smiles) I don’t need much, but...",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut", (she smiles)
+	"ene Haha! What’s with that? I don’t need much, but...",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
 	"ene From today onward, please treat me well, <span class='rem'>Master</span>...",
-	"Looking back, I’m still not sure which part of this makes me cringe most.",
-	"I was such an idiot then… ",
-	// transition
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.removeProperty("filter");
+	},
+	"show scene #171b21",
+	"centered Looking back, I’m still not sure which part of this makes me cringe most.",
+	"centered I was such an idiot then… ",
+	function () {
+		shinOSinstance.show();
+		shinOSinstance.showTextBox();
+	},
 	"Since that day, Ene has occupied my computer daily and disturbs me non-stop. ",
 	"She seems to be asleep right now, though. Or would the better term be offline?",
 	"Despite knowing her for a year now, I hardly actually know anything about her.",
+	function () {
+		shinOSinstance.hideTextBox();
+	},
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
-
+	"shin Hey, um...what are you ?",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene Hmmm…",
+	"The girl stares at me for a moment.",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene I don’t really know myself but...",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene From today onward, please treat me well, Master...",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.removeProperty("filter");
+	},
+	"show scene #171b21",
+	"centered She was shy at the beginning, but in no time she gained confidence and started constantly pestering me about everything.",
+	function () {
+		shinOSinstance.show();
+		shinOSinstance.showTextBox();
+	},
+	"Now she surveys most of my isolated life and constantly ruins my privacy, and yet still doesn’t want to tell me about her past.",
+	"At least I now know her name,",
+	"<span class='rem'>Ene</span>.",
+	function () {
+		shinOSinstance.hideTextBox();
+	},
+	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-MAO"] = [
   function(){shinOSinstance.exit()},

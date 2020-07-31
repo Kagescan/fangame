@@ -23,11 +23,13 @@ var shinOSinstance = {
 	},
 	show(){
 		let cl = this.container.classList;
-		cl.remove("hide");
-		cl.add("animated", "fadeInUp", "faster");
-		setTimeout(()=>{
-			cl.remove("animated", "fadeInUp", "faster");
-		}, 800);
+		if (cl.contains("hide")) {
+			cl.remove("hide");
+			cl.add("animated", "fadeInUp", "faster");
+			setTimeout(()=>{
+				cl.remove("animated", "fadeInUp", "faster");
+			}, 800);
+		}
 	},
 	hide(finished = function(){}){
 		let cl = this.container.classList;
@@ -109,12 +111,13 @@ var shinOSinstance = {
 		this.showTextBoxEnabled = true;
 		this.blurredWin.style.filter = "blur(4px)";
 		this.skipSection.style.display = "block";
+		this.skipSection.style.background = "rgba(0,0,0,0.4)";
 		this.textboxComponent.style.zIndex = 12;
-		// IDEA: maybe making a transition for the blur + brightness effect
 	},
 	hideTextBox() {
 		this.blurredWin.style.removeProperty("filter");
 		this.skipSection.style.removeProperty("display");
+		this.skipSection.style.removeProperty("background");
 		this.textboxComponent.style.zIndex = 10;
 		this.showTextBoxEnabled = false;
 	}

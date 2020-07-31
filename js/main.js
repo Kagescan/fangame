@@ -41,6 +41,7 @@ monogatari.assets ('scenes', {
 	'classroomDoorClosed': 'classroomDoorClosed.jpg',
 	'classroomDoorOpened': 'classroomDoorOpened.jpg',
 	'classroomWindow': 'classroomWindow.jpg',
+	'flashback': 'flashback-min.svg',
 	'icon': 'icon.svg'
 });
 
@@ -105,6 +106,7 @@ monogatari.characters ({
       usingPC: "usingPC.png",
       warn: "warn.png",
       yay: "yay.png",
+      neutral: "neutral.png",
 			quote: "quote.png"
     }
 	},

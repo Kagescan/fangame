@@ -97,6 +97,7 @@ visual-novel.hremMode .hrem:hover:after{
 	height: 100%;
 	background: white;
 	color: black;
+	transition: filter 0.3s ease-out;
 }
 #shinOsWindows>div{
 	display: none;
@@ -127,7 +128,8 @@ visual-novel.hremMode .hrem:hover:after{
 	height: 100%;
 	width: 100%;
 	display: none;
-	background: rgba(0,0,0,0.4);
+	background: rgba(0,0,0,0);
+	transition: background .3s ease-out;
 }
 #shinOsDesktop {
 	display: flex;
@@ -390,6 +392,10 @@ button:hover {
 
 #background{
 	transition: background-color 1s;
+}
+
+div[data-content="visuals"] {
+		transition: filter .5s ease-out;
 }
 
 /* Choice Buttons style */
