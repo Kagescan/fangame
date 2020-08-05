@@ -97,7 +97,7 @@ visual-novel.hremMode .hrem:hover:after{
 	height: 100%;
 	background: white;
 	color: black;
-	transition: filter 0.3s ease-out;
+	transition: filter 0.3s linear;
 }
 #shinOsWindows>div{
 	display: none;
@@ -129,7 +129,7 @@ visual-novel.hremMode .hrem:hover:after{
 	width: 100%;
 	display: none;
 	background: rgba(0,0,0,0);
-	transition: background .3s ease-out;
+	transition: background .3s linear;
 }
 #shinOsDesktop {
 	display: flex;
@@ -215,6 +215,9 @@ visual-novel.hremMode .hrem:hover:after{
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	overflow-y: auto;
+	/*there is a small display bug where the mail is too long
+	but this is the best fix I can do yet*/
 }
 #kageBrowserPageContent {
 	flex-grow: 1;
@@ -224,7 +227,7 @@ visual-novel.hremMode .hrem:hover:after{
 	display: flex;
 	height: 100%;
 	background: #414852;
-	padding-top: 1rem;
+	padding: 1rem 0;
 	text-align: left;
 }
 #mail_boxes {
@@ -257,7 +260,6 @@ visual-novel.hremMode .hrem:hover:after{
 	flex-grow: 1;
 	border-radius: 1rem 0 0rem 1rem;
 	padding: 1.5rem;
-	margin-bottom: 1rem;
 }
 
 #mail_msgs.list > div {
@@ -299,7 +301,8 @@ visual-novel.hremMode .hrem:hover:after{
 	flex-grow: 1;
 	border-radius: 1rem 0 0rem 1rem;
 	padding: 0;
-	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
 }
 #mail_msgs.preview>div:first-child {
 	background: #e6e6e6;
@@ -308,6 +311,9 @@ visual-novel.hremMode .hrem:hover:after{
 }
 #mail_msgs.preview>div:first-child>button {
 	float: right;
+}
+#mail_msgs.preview>div:last-child {
+	overflow-y: auto;
 }
 #mail_msgs.preview>div {
 	padding: 1rem;
@@ -395,7 +401,7 @@ button:hover {
 }
 
 div[data-content="visuals"] {
-		transition: filter .5s ease-out;
+		transition: filter .5s linear;
 }
 
 /* Choice Buttons style */
@@ -439,12 +445,13 @@ text-box [data-ui="face"] {
   z-index: 11;
 }
 [data-ui="who"] {
-  padding: 2px 3px 0 3px;
+  padding: 0px 3px 0 3px;
   margin: initial;
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
   background-size: contain;
   height: 30px;
+  font-size: 20px;
 }
 [data-ui="who"]:empty {
 	display:none;
@@ -468,6 +475,8 @@ text-box [data-ui="face"] {
 
 [data-content="dialog"], [data-ui="say"] {
 	padding: 1rem;
+	overflow-y: auto;
+	height: 100%;
 }
 @media only screen and (min-width: 601px) {
  [data-content="text"] { width:85%; }

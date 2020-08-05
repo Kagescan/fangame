@@ -61,6 +61,8 @@ scriptEn["chapter01-shinOS"] = [
 	"jump chapter01-shinOS"
 ];
 
+// TODO: Use reversible functions
+
 scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},

@@ -2,6 +2,8 @@
  * Copyright (c) 2017-2020 ShinProg / Kagescan
 */
 
+// todo (low priority) : convert all this code into JS modules
+
 // OPERATING SYSTEM CODE / API ---------------------------------------------- //
 var shinOSinstance = {
 	run(){
@@ -251,14 +253,92 @@ var kageBrowser = {
 		}
 	},
 	mailList: {
+		// TODO: add read/undread states
 		"Shintaro's mail box": [
-				{ title: "School’s Obon Festival cancelled due to extreme temperatures",
-				  target: "From &lt;  club@Kxxx_School.ed.jp&gt;", date: "2 hours ago",
-					content: ""
+				{title: "School’s Obon Festival cancelled due to extreme temperatures",
+				 target: "From &lt;studentcouncil@Kxxx_School.ed.jp&gt;", date: "2 hours ago",
+				 content: `<p>Hello,<br>
+					Due to extreme temperatures, the School’s Obon Festival is
+					unfortunately cancelled this year.</p>
+					<p>Respectfully yours,<br>
+					Kashiwa High School Student Council</p>`,
+ 				 onMounted: function () {
+ 				 	simpleReactionToMailFromShin(
+ 						"I wouldn’t have gone anyway. Why am I still getting emails from school anyway…?"
+ 					);
+ 				 }
 				},
 				{title: "Amezon.co.jp delivery tracking",
-				 target: "From &lt;noreply@amezon.co.jp&gt;", date: "6 hours ago",
-				 content: "",
+				 target: "From &lt;noreply@amezon.co.jp&gt;", date: "7 months ago",
+				 content: `
+					 <div style="background: linear-gradient(180deg, rgba(0,0,0,0) calc(50% - 1px), rgba(192,192,192,1) calc(50%), rgba(0,0,0,0) calc(50% + 1px));display: flex;align-items: center;">
+					   <span style="background: #f8f8f8;font-weight: bold; font-size: 1.4em;">AMEZON</span>
+					   <em style="margin-left: 20%;background: #f8f8f8;padding: 0 1rem;color: #AAA;">Confirmation of your order</em>
+					 </div>
+					 <h3 style="color: orange">Hello Shintaro,</h3>
+					 <p>Thank you for your order on the Amezon marketplace.<br>
+					   Your estimated delivery date is shown below. You can track the status
+					   of your order or modify it in "Your Orders" on Amezon.co.jp
+					 </p>
+					 <div style="display: flex;border-top: 2px solid black;background: #DDD;align-items: center;justify-content: space-around;color: #555;">
+					   <div>
+					     <p>Shipping :<br><b style="color: green">February 14th, 20XX</b></p>
+					     <p>Your shipping method : <br><b style="color: #000;">Fast</b></p>
+					     <p style="background: orange;text-align: center;border-radius: 4px;border: 2px solid #264b99;color: #000;cursor: pointer;">Order details</p>
+					   </div>
+					   <div>
+					     <span>Your order will be shipped to :</span>
+					     <p style="color: #000;">
+					       Shintaro Kisaragi<br>
+					       7X, imperial Way <br>
+					       277-XXXX Kashiwa-shi, JAPAN
+					     </p>
+					   </div>
+					 </div>
+					 <p></p>
+					 <h3 style="color: orange;border-bottom: 2px solid #AAA;">Order details</h3>
+					 <p style="font-size: 1.1rem;">Command No <span style="color: #33a8ff;">554-0258415-1142332</span><br>
+					   <span style="color: #aaa;">order placed on 14 February 20XX</span>
+					 </p>
+					 <table style="width: 100%;border: none;">
+					   <thead style="">
+					     <tr>
+					       <th></th>
+					       <th>Info</th>
+					       <th>Price</th>
+					     </tr>
+					   </thead>
+					   <tbody style="">
+					     <tr>
+					       <td style="text-align: center;"><img alt="vocaloid 4, thumb" src="assets/images/vocaloidBox.jpg"></td>
+					       <td>VOCALOID 4 - HATSUNE MIKU<br>
+					         <em>Secondhand buy</em>
+					       </td>
+					       <td>USD 110.00</td>
+					     </tr>
+					     <tr>
+					       <td style="text-align: center;"><img alt="Vocaloid for dummies, thumb" src="assets/images/vocaForDummies.jpg"></td>
+					       <td>VOCALOID - FOR DUMMIES<br><em>Sold by For Dummies</em></td>
+					       <td>USD 25.00</td>
+					     </tr>
+					     <tr>
+					       <td colspan="2" style="text-align: right;">Sub-total : <br>
+					         Postage and packing : <br><b>Total amount : </b>
+					       </td>
+					       <td>USD 135.00
+					         <br>USD 5.00<br><b>USD 140.00</b><br>
+					       </td>
+					     </tr>
+					   </tbody>
+					 </table>
+					 <p>If you use a mobile device, you can receive notifications on
+					   the delivery of your package and track it from our mobile application amezon
+					 </p>
+					 <p>We hope to see you soon!<br>
+					   <b style="font-size: 2rem;">AMEZON JAPAN</b>
+					 </p>
+					 <p><br></p>
+					 `,
 				 onMounted: function () {
 				 	simpleReactionToMailFromShin(
 						"I got a new VOCALOID2 voicebank a few months ago, even though I still haven’t finished a song.",
@@ -285,13 +365,24 @@ var kageBrowser = {
 				/*{title: "a mail sent", target: "", date: "", content: ""}*/
 		],
 		"Deleted": [
-				{title: "Getting ready for the apocalypse !",
-				 target: "From &lt;dailyNews.C-n3ws.jp&gt;", date: "1 day ago",
-				 content: ""
+				{title: "Getting ready for the 2020 apocalypse !",
+				 target: "From &lt;dailyNews@C-n3ws.jp&gt;", date: "1 day ago",
+				 content: "",
+				 onMounted: function () {
+				 	simpleReactionToMailFromShin(
+						"News nowadays aren’t what they used to be. I wish they were still this interesting."
+					);
+				 }
 			  },
 				{title: "New rules from the KxxxPro anime discord",
-				 target: "From &lt;noreply.discord.com &gt;", date: "2 days ago",
-				 content: "The medusae boss"
+				 target: "From &lt;noreply@discord.com &gt;", date: "2 days ago",
+				 content: "The medusae boss",
+				 onMounted: function () {
+				 	simpleReactionToMailFromShin(
+						"That makes me think…",
+						"I’m pretty sure there are discord servers about that multimedia series I’ve gotten into, I’ll check later. "
+					);
+				 }
 			 }
 		],
 	}
