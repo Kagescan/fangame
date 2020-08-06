@@ -6,6 +6,7 @@ monogatari.assets ('music', {
 	'01.13': '01.13.ThatDayIWasInTheCity.ogg',
 	'01.22': '01.22.inAdaze.ogg',
 	'01.26': '01.26.OccasionallyRememberingTheOldDays.ogg',
+	'01.31': '01.31.koyasudo.mp3',
 	'01.32': '01.32.BlurringSunset.ogg',
 	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
 	'ltm8bit': 'ltm8bit.mp3'
@@ -41,6 +42,14 @@ monogatari.assets ('scenes', {
 	'classroomDoorClosed': 'classroomDoorClosed.jpg',
 	'classroomDoorOpened': 'classroomDoorOpened.jpg',
 	'classroomWindow': 'classroomWindow.jpg',
+	'street': 'street1.png',
+	'street2': 'street2.png',
+	'street3': 'street3.png',
+	'street4': 'street4.png',
+	'metro1': 'metro1.png',
+	'metro2': 'metro2.png',
+	'metro3': 'metro3.png',
+	'storeoutside': 'storeoutside.png',
 	'icon': 'icon.svg'
 });
 
