@@ -319,6 +319,37 @@ visual-novel.hremMode .hrem:hover:after{
 	padding: 1rem;
 }
 
+#mail_attm {
+	border: 1px solid #CCC;
+	cursor: pointer;
+	color: #333;
+	border-radius: 3px;
+	display: inline-grid;
+	grid-template: "logo title" "logo size";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr 1fr;
+	align-items: center;
+	padding-right: 34px;
+	transition: background 0.3s;
+}
+#mail_attm:hover {
+	background: #F1F1F1;
+}
+#mail_attm>.logo {
+	grid-area: logo;
+	margin: 10px;
+}
+#mail_attm>.ttl {
+	grid-area: title;
+	font-size: 14px;
+	align-self: end;
+}
+#mail_attm>.size {
+	grid-area: size;
+	font-size: 11px;
+	padding-bottom: 6px;
+}
+
 /* General Style */
 body {
 

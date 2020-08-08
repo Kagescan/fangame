@@ -1,6 +1,4 @@
-// système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en avril. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
-// Minor storage that will be used in this script :
-let choices = [true, true], reverseChoices = [true, true];
+
 // script
 scriptFr["chapter00-start"] = [
 	"centered <span class='big'>Prologue</span><br><em>The Old Days</em>",
@@ -83,7 +81,7 @@ scriptFr["chapter00-start"] = [
     "aya Is that all you remember ?",
     "shin:normal Am I wrong ?",
     'show character aya embarrassed fadeIn end-fadeOut',
-    "aya Oui, tu as raison, mais bon...<br>Ah ah ...", //////
+    "aya No you're not but... <br>Ah ah ...",
     "jump chapter00-ayaContinue"
   ];
   scriptFr["chapter00-ayaNbr"] = [
@@ -182,7 +180,7 @@ scriptFr["chapter00-working"] = [
   "play music 01.13 with loop fade 1",
   "show scene classroomDesk with fadeIn",
 	"The classroom looks a lot less sinister with the lights back on… It’s still odd with just the two of us in it, though.",
-	"Ayano shows me the prepwork, still laid out on her desk."
+	"Ayano shows me the prepwork, still laid out on her desk.",
   "shin:angry3 … Is this for real ?",
   "shin:normal This is just the Pythagoras’ theorem; you’re telling me that you can’t even apply it properly now? We were taught this last year !",
   "shin:angry2 How are you expecting to pass the high school entrance exam without even knowing the basics ?",

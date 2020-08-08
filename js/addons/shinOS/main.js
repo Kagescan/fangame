@@ -350,8 +350,13 @@ var kageBrowser = {
 		"Spams": [
 				{ title: "Test",
 				  target: "From &lt;unknown&gt;", date: "1 year ago",
-				  content: `<button id="mail_attm">目を覚ます.doc</button>
-						Important message from XX.`,
+				  content: `
+						<div id="mail_attm">
+							<img src="assets/images/docIcon.png" class="logo">
+							<div class="ttl">目を覚ます.doc</div>
+							<div class="size">2Mb</div>
+						</div>
+						<p>Important message from XX.</p>`,
 					onMounted: () => {
 						document.getElementById("mail_attm").addEventListener (
 							"click", () => { monogatari.run("jump chapter01-eneOrigins"); }
@@ -376,7 +381,9 @@ var kageBrowser = {
 			  },
 				{title: "New rules from the KxxxPro anime discord",
 				 target: "From &lt;noreply@discord.com &gt;", date: "2 days ago",
-				 content: "The medusae boss",
+				 content: `<p>Hi, the medusae boss here. Just to let you know that our rules have changed.
+				 <br> Please check them out in the #rules channel !</p>
+				 <p style="font-size: 1.1rem;">You are seeing this mail because you follow one of our social networks, or our website. <a href="#!" style="color: #7bb6ef;">Click here to unsubscribe</a>.</p>`,
 				 onMounted: function () {
 				 	simpleReactionToMailFromShin(
 						"That makes me think…",
