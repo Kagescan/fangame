@@ -50,6 +50,7 @@ monogatari.assets ('scenes', {
 	'metro2': 'metro2.png',
 	'metro3': 'metro3.png',
 	'storeoutside': 'storeoutside.png',
+	'flashback': 'flashback-min.svg',
 	'icon': 'icon.svg'
 });
 
@@ -114,6 +115,7 @@ monogatari.characters ({
       usingPC: "usingPC.png",
       warn: "warn.png",
       yay: "yay.png",
+      neutral: "neutral.png",
 			quote: "quote.png"
     }
 	},

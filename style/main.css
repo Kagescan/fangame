@@ -91,21 +91,16 @@ visual-novel.hremMode .hrem:hover:after{
 }
 #shinOsWindows>div.active{
 	position:absolute;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	height: 100%;
 	background: white;
 	color: black;
+	transition: filter 0.3s linear;
 }
 #shinOsWindows>div{
 	display: none;
-}
-#shinOsWindows>div.active{
-	position:absolute;
-	width: 100%;
-	height: 100%;
-	background: white;
-	color: black;
 }
 #shinOsWindows .title{
 	display: flex;
@@ -127,6 +122,14 @@ visual-novel.hremMode .hrem:hover:after{
 }
 #shinOsWindows .title a:hover{
 	background-color: red;
+}
+#shinOsWindows .skipSection {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	display: none;
+	background: rgba(0,0,0,0);
+	transition: background .3s linear;
 }
 #shinOsDesktop {
 	display: flex;
@@ -188,6 +191,165 @@ visual-novel.hremMode .hrem:hover:after{
 #shinOsClock {
 	text-align: center;
 }
+#kageBrowserSearchbar {
+	display: flex;
+	padding: 0 5rem;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9fa;
+	border-bottom: 1px solid #e1e1e2;
+}
+#kageBrowserSearchbar input {
+	font-size: 1rem;
+	width: 70vh;
+	margin: 10px;
+	background: white;
+	border: 1px solid #bebebf;
+}
+#kageBrowserHomebtn {
+	height: min-content;
+	margin-right: 1rem;
+}
+
+#kageBrowserContainer {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow-y: auto;
+	/*there is a small display bug where the mail is too long
+	but this is the best fix I can do yet*/
+}
+#kageBrowserPageContent {
+	flex-grow: 1;
+}
+#mailClient {
+	/*is inside #shinOsWindows>div.active*/
+	display: flex;
+	height: 100%;
+	background: #414852;
+	padding: 1rem 0;
+	text-align: left;
+}
+#mail_boxes {
+	color: white;
+	padding-top: 1rem;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+#exitMailer {
+	align-self: center;
+	background: #22252a;
+	padding: 1rem;
+	border-radius: 0.5rem;
+}
+#mail_boxes>div>div {
+	padding-left: 1rem;
+	padding-right: 5rem;
+	transition: background 0.2s;
+	cursor: pointer;
+}
+#mail_boxes>div>div:hover {
+	background: #2d3239;
+}
+#mail_boxes>div>div.active {
+	background: #22252a;
+}
+#mail_msgs {
+	background: #f8f8f8;
+	flex-grow: 1;
+	border-radius: 1rem 0 0rem 1rem;
+	padding: 1.5rem;
+}
+
+#mail_msgs.list > div {
+	background: #dfefff;
+	padding: 0.2rem 1rem;
+	display: flex;
+	color: #899199;
+	border: 1px solid #bfd5ef;
+}
+#mail_msgs.list > div:hover {
+	box-shadow: 0px 0px 3px 0px #bfd5ef;
+	cursor: pointer;
+}
+#mail_msgs.list > div::before {
+	content: "☐";
+	margin-right: 1rem;
+	align-self: center;
+}
+
+#mail_msgs.list > div::after {
+	content: "☆";
+	margin-left: 1rem;
+}
+#mail_msgs.list > div > div {
+	flex-grow: 1;
+	color: black;
+	padding-bottom:1rem;
+}
+#mail_msgs.list .date {
+	font-size: 1.1rem;
+}
+#mail_msgs.list .target {
+	font-size: 1rem;
+	color: #333333;
+}
+
+#mail_msgs.preview {
+	background: #f8f8f8;
+	flex-grow: 1;
+	border-radius: 1rem 0 0rem 1rem;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+}
+#mail_msgs.preview>div:first-child {
+	background: #e6e6e6;
+	border-radius: 1rem 0 0rem 0rem;
+	border-bottom: 1px solid #bbb;
+}
+#mail_msgs.preview>div:first-child>button {
+	float: right;
+}
+#mail_msgs.preview>div:last-child {
+	overflow-y: auto;
+}
+#mail_msgs.preview>div {
+	padding: 1rem;
+}
+
+#mail_attm {
+	border: 1px solid #CCC;
+	cursor: pointer;
+	color: #333;
+	border-radius: 3px;
+	display: inline-grid;
+	grid-template: "logo title" "logo size";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr 1fr;
+	align-items: center;
+	padding-right: 34px;
+	transition: background 0.3s;
+}
+#mail_attm:hover {
+	background: #F1F1F1;
+}
+#mail_attm>.logo {
+	grid-area: logo;
+	margin: 10px;
+}
+#mail_attm>.ttl {
+	grid-area: title;
+	font-size: 14px;
+	align-self: end;
+}
+#mail_attm>.size {
+	grid-area: size;
+	font-size: 11px;
+	padding-bottom: 6px;
+}
+
 /* General Style */
 body {
 
@@ -269,6 +431,10 @@ button:hover {
 	transition: background-color 1s;
 }
 
+div[data-content="visuals"] {
+		transition: filter .5s linear;
+}
+
 /* Choice Buttons style */
 [data-component="choice-container"] button {
 
@@ -310,12 +476,13 @@ text-box [data-ui="face"] {
   z-index: 11;
 }
 [data-ui="who"] {
-  padding: 2px 3px 0 3px;
+  padding: 0px 3px 0 3px;
   margin: initial;
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
   background-size: contain;
   height: 30px;
+  font-size: 20px;
 }
 [data-ui="who"]:empty {
 	display:none;
@@ -339,6 +506,8 @@ text-box [data-ui="face"] {
 
 [data-content="dialog"], [data-ui="say"] {
 	padding: 1rem;
+	overflow-y: auto;
+	height: 100%;
 }
 @media only screen and (min-width: 601px) {
  [data-content="text"] { width:85%; }

@@ -1,27 +1,30 @@
 
 scriptEn["chapter01-start"] = [
-	"centered WARNING : the english translation is not finished",
 	"show scene ShinDodo with fadeIn duration 3s",
 	"play music 02.08 with fade 3 loop",
 	"wait 2500",
-	"... ...",
-	"Hmmm ?<br> I sweat a lot… What kind of dream did I have last night?",
-	"ugh..Probably the same as always. I won’t move forward if I keep asking myself questions like that.",
+	"… …",
+	// [Ding! sound effect] !!
+	"I sweat a lot…",
+	"I feel like I just had a dream… What was it about?",
+	"ugh… It probably doesn’t matter anyway. I won’t move forward if I keep asking myself questions like that.",
 	"...",
 	"show background ShinGotoPC with fadeIn",
-	"Anyway, I should get on with that song I’m composing! ",
-	"Let’s get back to work... I’ll never finish at the hands of Her!",
+	"Anyway, I should get to work.",
+	"That song isn’t going to compose itself.",
 	"show background ShinGotoPC with fadeOut",
 	"play sound pcBooted",
 	"wait 1500",
 	"show scene ShinOrdi with fadeIn",
-	"Uh..Wait…",
-	"I’ve been woken up by the morning sunlight...<br>The only thing that's come out of my computer speakers has been the sound of the start-up…",
+	"I’ve hardly gotten any work done thanks to her–",
+	// [another ding! sound effect]
+	"Uh… Wait a second…",
+	"Instead of a blaring alarm, the morning sun woke me up today<br>In fact, the only thing that's come out of my computer speakers has been the sound of the start-up…",
 	"This can only mean that…",
 	"vibrate 1000",
 	"<span class='rem'>She</span>’s not around yet!",
 	"show background ShinOrdiHands with fadeIn",
-	"I should take that opportunity!",
+	"I should take advantage of this!",
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-shinOS"] = [
@@ -37,7 +40,7 @@ scriptEn["chapter01-shinOS"] = [
 					kageBrowser.start(e,`
 						<a href="#!" data-action="monogatari" data-arg="jump chapter01-weebGame">Anime Reviewer's Forum</a><br>
 			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-news">news</a><br>
-			      <a href="#!" data-action="monogatari" data-arg="jump chapter01-mails">E-Mails</a><br>`
+			      <a href="#!" data-action="builtin" data-arg="mailClient">E-Mails</a><br>`
 					);
 				})
 			});
@@ -57,32 +60,140 @@ scriptEn["chapter01-shinOS"] = [
 	"<span class='hide>The PC is on.</span>",
 	"jump chapter01-shinOS"
 ];
+
+// TODO: Use reversible functions
+
 scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
-	"WHAT",
+	"clear",
+	"…?!",
+	"Instead of my glorious stash, an empty folder greets me.",
 	"shin HOW???",
-	"She deleted all my private files!?",
+	"I found myself shouting without realizing. She deleted all my private files!?",
 	"...<br>AAhhh -- What is this curse...<br> I hope the same thing didn't happen to my composition files...",
 	/* +1 achievement DOSSIERS_VOLÉS */
 	"jump chapter01-shinOS"
 ];
+
 scriptEn["chapter01-news"] = [
   function(){shinOSinstance.hide()},
-	"#1: <br>Today, August 15th, the temperature will rise up to 30°C for the Obon festival.",
+	"#1: <br>Today, August 14th, the temperature will rise up to 30°C. Today is the second day of the Obon festival.",
 	"Try to limit your outdoor activity and stay hydrated on this national holiday.",
 	"#2: <br>The number one trending idol will soon debut as an actress! She will be acting in a drama coming out right after the release of her next album!",
 	/* +1 achivement mais pour plus tard (chap 1.2) : une famille connue ?*/
-	"#3: <br>A bear has been taught to dance!",
-	"shin Nothing interesting today…",
+	"#3: <br>A bear has been taught how to dance!",
+	"shin So nothing interesting today, as usual…",
 	"jump chapter01-shinOS",
 ];
 scriptEn["chapter01-weebGame"] = [
   function(){shinOSinstance.hide()},
-	"“This website is currently undergoing maintenance.”",
-	"shin The moderator is updating the forum again… I’ll have to come back later!",
+	"“This website is currently undergoing maintenance.” Huh.",
+	"shin The moderator is updating the forum again… <span class='rem'>I’ll have to come back later</span>, I guess.",
 	"shin <i>Or... Did I get banned?</i>",
 	/* +1 achivement : Revenez plus tard*/
+	"jump chapter01-shinOS"
+];
+scriptEn["chapter01-eneOrigins"] = [
+	function(){shinOSinstance.showTextBox()},
+	"show scene #171b21",
+	"stop music 02.08 with fade 3 loop",
+	"play music 01.13 with fade 3 loop",
+	"That’s where she came from.",
+	"It’s been a year now.",
+	function(){
+		shinOSinstance.hideTextBox();
+		shinOSinstance.hide();
+	},
+	"show scene flashback with flash",
+	// todo : hide image after 800 ms in a secure way
+	"I was naive enough to click on every shady link I could find on the internet.",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.filter = "grayscale(100%)";
+	},
+	"show scene shinPC with fadeIn",
+	"show image enePop.svg center",
+	"wait 500",
+	"What the...",
+	"hide image enePop.svg",
+	"show character ene neutral with fadeIn end-fadeOut", // closed eyes then neutral after ...
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	// more sprites tba (news one)
+	"…",
+	"A... girl? What sort of program is this? No app other than my email seems to be running though…",
+	"…",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"Wait.",
+	"What if this was one of those top secret programs ?",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"What if this cute girl needs my help to save a mysterious world I don’t even know about yet because",
+	"this is the- pilot episode of an amazing shōnen series and I’m the hero and–",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene -N-nice to meet you... ",
+	"She looks so...human. This is so high-tech.",
+	{'Choice':{ 'Dialog': 'Maybe she has voice recognition? I should try talking to her.',
+    'Ask her what she is':{
+      'Text': 'Ask her what she is',
+      'Do': 'jump chapter01-eneOriginsAskWhoIsShe'
+    },
+    'Ask her for a mission':{
+      'Text': 'Ask her for a mission',
+      'Do': 'shin I-I’ll do whatever you want ! Um… Give me  whatever mission or quest you have ! '
+    },
+    'Offer my help':{
+      'Text': 'Offer my help',
+      'Do': 'shin Do you... need any help ?'
+    }
+  }},
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut", (she smiles)
+	"ene Haha! What’s with that? I don’t need much, but...",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene From today onward, please treat me well, <span class='rem'>Master</span>...",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.removeProperty("filter");
+	},
+	"show scene #171b21",
+	"centered Looking back, I’m still not sure which part of this makes me cringe most.",
+	"centered I was such an idiot then… ",
+	function () {
+		shinOSinstance.show();
+		shinOSinstance.showTextBox();
+	},
+	"Since that day, Ene has occupied my computer daily and disturbs me non-stop. ",
+	"She seems to be asleep right now, though. Or would the better term be offline?",
+	"Despite knowing her for a year now, I hardly actually know anything about her.",
+	function () {
+		shinOSinstance.hideTextBox();
+	},
+	"jump chapter01-shinOS"
+];
+scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
+	"shin Hey, um...what are you ?",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene Hmmm…",
+	"The girl stares at me for a moment.",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene I don’t really know myself but...",
+	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"ene From today onward, please treat me well, Master...",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.removeProperty("filter");
+	},
+	"show scene #171b21",
+	"centered She was shy at the beginning, but in no time she gained confidence and started constantly pestering me about everything.",
+	function () {
+		shinOSinstance.show();
+		shinOSinstance.showTextBox();
+	},
+	"Now she surveys most of my isolated life and constantly ruins my privacy, and yet still doesn’t want to tell me about her past.",
+	"At least I now know her name,",
+	"<span class='rem'>Ene</span>.",
+	function () {
+		shinOSinstance.hideTextBox();
+	},
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-MAO"] = [
@@ -92,94 +203,121 @@ scriptEn["chapter01-MAO"] = [
 	"play sound pcError",
 	"show image VocaloidStoppedWorking.svg center with flash",
 	"wait 4000",
-	"shin Oh no. Oh no no no not again! Please!",
-	"shin I don’t need to sleep, eat or drink to survive, but if the computer lets me down, it’s the end. I’m gonna die I’m gonna-",
+	"shin Oh no. Oh no, no, no! Not again! Please!",
+	"I don’t even dare click my mouse–I can’t do anything but beg at my computer screen!",
+	"shin I don’t need to sleep, eat or drink to survive, but if  my computer goes down, I go with it!",
+	"shin I’m gonna die, I’m gonna–!",
 	()=>{ document.getElementById("background").style.backgroundColor = "blue"; },
 	"hide image VocaloidStoppedWorking.svg with zoomOut",
-	"shin AAAh thank god it didn’t delete the work!",
+	"shin Aaah!!",
+	"I quickly check over everything.",
+	"shin Thank goodness nothing got deleted.",
 	/*avec une tête comme celle du manga !*/
-	"shin This song is fated to go up in the niconico hall of fame. I cannot allow myself to lose this future bop.",
+	"shin This song is fated to go up in the niconico hall of fame, after all. I cannot allow myself to lose this future bop.",
 	"stop music 02.08 with fade 3",
 	()=>{ document.getElementById("background").style.backgroundColor = "red"; },
 	"show image enePop.svg center",
 	"play sound pcError",
 	"shin Uh-oh…",
-	"Please! Not her...",
+	"Please! This moment of quiet was so great ! Please, not <span class='rem'>her</span>…!",
+	"Of course, no one listens to my please, and especially not the source of my agony...",
 	"play music 01.02 with volume 15",
 	"show character ene cool center with fadeIn end-fadeOut",
 	"hide image enePop.svg with fadeOut",
 	"ene There, there, master!",
 	"show character ene superior center with fadeIn end-fadeOut",
-	"ene Still working on that song you don’t have the guts to finish? Move on...you know it’s useless.",
-	// hier -> remplacer par ce matin, si on a joué au jeu
-	"ene Yesterday again you wouldn’t stop criticizing that new anime released last week !!!",
+	"ene Still working on that song you don’t have the guts to finish?",
+	"<span class='rem'>Ene…</span>",
+	"This cheeky… cyber girl? That’s what she calls herself, but she’s worse than a computer virus, in my opinion.",
+	"Despite that she calls me “Master”, which was NOT my idea, she has been giving me nothing but grief since she appeared in my computer a year ago.",
+	"No matter what I do, I can’t seem to get rid of her, so I just have to deal with her every day like this while she torments me.",
+	"ene Move on already...You know it’s useless.",
+	// hier -> remplacer par ce matin, si on a joué au jeu (pas encore fait)
+	"ene Yesterday, instead of working on your song, you went on those anime forums again and wouldn’t stop criticizing that new anime released last week !!!",
 	"show character ene quote center with fadeIn end-fadeOut",
 	"ene “The plot is an offense to the original story!”",
-	"ene “The voice actors do not match at all what I had in mind”",
+	"ene “The voice actors do not match at all to what I had in mind”",
 	"show character ene oh center with fadeIn end-fadeOut",
-	"ene And how experienced are you!",
+	"ene And how experienced are <span class='rem'>you</span>, huh, Master?",
 	"shin ...",
 	"show character ene quote center with fadeIn end-fadeOut",
 	"ene Ah, also... What was this : “I used to work in the animation industry.”",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene cOuld iT be thAt you’re lyiNg???<br> HAHAHAHA",
-	"shin !!",
-	"She’s such a pain. Why won’t she shut up!",
+	"ene Could it be, perhaps… thAt you’re lyiNg????!<br> AHAHAHA!!! So lame!!!",
+	"shin Gh–!!",
+	"I grit my teeth and try my best to ignore her. She’s such a pain. Why won’t she shut up?!",
 	"ene Maybe ‘I used to’ refers to your past life",
 	"ene I guess it must...as you’ve been sitting in front of that PC for two years to the day!",
+	"Aaaagh, she’s so annoying–!!!",
+	"shin SHUT UP!",
 	"clear",
 	"show character ene warn center with fadeIn",
 	"show video shincola immersive with close",
-	"ene EEEEEEEk !!",
+	"ene EEEEEEEK!!!!",
 	"show scene shinPC with shake",
 	"show character ene warn center with shake",
-	"ene The mouse! Get the mouse!",
+	"ene UWAAAAAAH!!! Master, the mouse! Get the mouse!",
 	()=>{ document.getElementById("background").style.backgroundColor = "black"; },
-	"shin Oh crap! Come on Shintaro save one life at least!",
+	"shin Oh crap!!!",
+	"I grab a wad of tissues and my mouse and desperately press them together.",
+	"<span class='rem'>Come on, Shintaro, save one life at least!</span>",
 	"shin Please! Work!!",
+	"[...]",
+	"ene Uwa, only the right click is working. Try your keyboard…?",
 	"stop music 01.02 with fade 3",
 	"hide character ene",
 	"show background #000",
 	"play music 8bit with fade 7",
+	"My fingers tap desperately, but…",
 	/*bruit de click*/
 	"centered rottotorrrorooro",
 	"centered totoro",
 	"centered toto roto<span class='censored'>to</span>",
 	"show background shinPC with fadeIn",
-	"shin Only the right click is working!​ <br> And three letters and enter! <br> AAAAh I’m doomed!",
+	"shin Only three letters, huh? Aah, I’m doomed...!",
 	"show character ene yay center with fadeIn end-fadeOut",
-	"ene You can type Totoro!",
+	"ene Master~ At least there’s this?<br> You can type Totoro!",
 	"shin ...",
-	"ene ??",
+	"ene ..................",
 	"shin uuuuuh…",
+	"shin It’s over, it’s all over...",
 	"show character ene concerned center with fadeIn end-fadeOut",
 	"ene ...",
-	"ene Master? You can just buy it all again…",
-	"shin Feeling guilty now? I was thinking about getting new equipment anyhow.",
+	"ene Master?",
+	"I look up from my void of despair and at Ene. Is she… sorry?",
+	"ene You can just buy new ones, right?",
+	"shin What, are you feeling guilty now?",
+	"ene Hrm…",
+	"shin … Whatever, I guess. I was thinking about getting new equipment anyway.",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Oh that’s awesome! The new models are great you know",
-	"Urgh...such a braggart.",
-	"shin Just pick one that can be delivered as quickly as possible",
+	"ene Oh that’s awesome! The new models are great you know!",
+	"shin Urgh… You cheered up quickly, haven’t you? ",
+	"shin Just pick some models that can be delivered as quickly as possible",
 	"show character ene usingPC with fadeIn end-fadeOut",
-	"ene hmmm okay let’s see.",
-	"ene Eh! ...",
+	"ene Hmmm~ Okay, let’s see!",
+	"ene … … … … … … <br>Eh!",
 	"shin What’s the matter now?",
+	"ene It’s impossible.",
+	"shin … What do you mean, it’s impossible?",
 	"show character ene concerned with fadeIn end-fadeOut",
-	"ene It’s August 15th today...the Obon festival…<br> Nothing can be delivered within the two next days...",
-	"...<br>No. I...",
+	"ene It’s August 14th today… It’s the Obon festival…<br> Nothing can be delivered within the next two days.",
+	"shin …<br>No… There has to be something, anything?!",
+	"ene Nooope~!",
 	"shin <span class='shake animated'>I am really going to die today</span>.",
 	"show character ene yay center with fadeIn end-fadeOut",
-	"ene Then... <br> Let’s just go out and get it!",
-	"shin Excuse me!?",
+	"ene Say, Master~ I have a great idea! Why don’t we just go out and get it?",
+	"shin -... Hah? Excuse me?",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene The new giant supermarket in Kashiwa is open today!",
-	"ene We could also buy one of these exceptional sunscreens to fight off the heatwave!",
-	"Daylight… It’s been two years since I have last been outside…",
-	"It will just be for a little shopping..",
+	"ene Even though it’s the holiday, the new giant mall structure in Kashiwa is open today! I’m sure they have top-notch models for you!",
+	"ene We could also buy sunscreen to fight off the heatwave! Though I wouldn’t be needing that, hehe!",
+	"Daylight… It’s been two years since I have last been outside, so the thought of going outside just seems impossible…",
+	"But being unable to use my computer for two whole days… That sounds like hell itself.",
+	"It will just be for a little shopping…",
 	"I am too young to die.",
-	"shin ... Let's go.",
+	"shin Let's go.",
 	"show scene black",
 	"centered After all, what could go wrong if I go out just this morning?",
+	"centered Today, and just today! After today, I will never go out again!",
 	"clear",
 	"show scene icon with fadeIn",
 	"wait 1500",

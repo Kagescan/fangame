@@ -1,6 +1,5 @@
 // système scolaire japonais : 13-16 ans collège. 16-18 lycée et la rentrée est en avril. Donc le suicide d'ayano c'est 4 mois après l'entrée au lycée de Shintaro; il a 16 ans.
-// Minor storage that will be used in this script :
-let choices = [true, true], reverseChoices = [true, true];
+
 // script
 scriptFr["chapter00-start"] = [
 	"centered <span class='big'>Prologue</span><br><em>The Old Days</em>",
