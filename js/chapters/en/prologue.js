@@ -1,6 +1,6 @@
 
 // script
-scriptFr["chapter00-start"] = [
+scriptEn["chapter00-start"] = [
 	"centered <span class='big'>Prologue</span><br><em>The Old Days</em>",
   "show scene classroomCorridor with fadeIn duration 3s",
   "shin:normal <em>I guess it’s normal that nobody’s here at such a late hour...<br> But damn, how come the school is so scary at night?</em>",
@@ -39,7 +39,7 @@ scriptFr["chapter00-start"] = [
   "bruit <em class='animated wobble'>[Door opening sound]</em>",
   "show character aya please with fadeIn end-fadeOut",
   "-AAAAaah !!! !!<br>-EEEEeeeeek !!",
-  "shin:scare5 FOrgiVe mE, fOrGive mE !!!<br>L-Laissez moi la vie sau~auve !!",
+  "shin:scare5 FOrgiVe mE, fOrGive mE !!!<br>Please, have mercy!!",
   "show character aya question with fadeIn end-fadeOut",
   "I found myself pleading without even thinking, my eyes shut tight in fear… But a few seconds later, I realized that I wasn’t killed already by a school ghost… ",
   "Suddenly, I heard a familiar voice.",
@@ -74,7 +74,7 @@ scriptFr["chapter00-start"] = [
 ];
 
 // choice
-  scriptFr["chapter00-ayaWorst"] = [
+  scriptEn["chapter00-ayaWorst"] = [
     'show character aya shy with fadeIn end-fadeOut',
     // aya =  Ayano
     "aya Ah, um.. ",
@@ -84,7 +84,7 @@ scriptFr["chapter00-start"] = [
     "aya No you're not but... <br>Ah ah ...",
     "jump chapter00-ayaContinue"
   ];
-  scriptFr["chapter00-ayaNbr"] = [
+  scriptEn["chapter00-ayaNbr"] = [
     "show character aya excited with fadeIn end-fadeOut",
     "aya Ah, so you do remember ! I was afraid I’d be a stranger to you..",
     "shin:blush <em>She’s clapping to congratulate me ??? Awkward-</em>",
@@ -96,7 +96,7 @@ scriptFr["chapter00-start"] = [
     "show character aya embarrassed with fadeIn end-fadeOut",
     "jump chapter00-ayaContinue"
   ];
-  scriptFr["chapter00-ayaGhost"] = [
+  scriptEn["chapter00-ayaGhost"] = [
     "show character aya shy with fadeIn end-fadeOut",
     "aya R-really ? I’m your classmate ! In fact, I sit right next to you !!",
     "aya Am I that invisible ?",
@@ -104,7 +104,7 @@ scriptFr["chapter00-start"] = [
     "jump chapter00-ayaContinue"
   ];
 // continue
-scriptFr["chapter00-ayaContinue"] = [
+scriptEn["chapter00-ayaContinue"] = [
   "...","...",
   "shin:normal <em>Ouch, well this is awkward…<br>I don’t even know what to say now…</em>",
   "shin:normal <em>Thankfully, Ayano decides to break the silence herself.</em>",
@@ -176,7 +176,7 @@ scriptFr["chapter00-ayaContinue"] = [
 ];
 
 
-scriptFr["chapter00-working"] = [
+scriptEn["chapter00-working"] = [
   "play music 01.13 with loop fade 1",
   "show scene classroomDesk with fadeIn",
 	"The classroom looks a lot less sinister with the lights back on… It’s still odd with just the two of us in it, though.",
@@ -204,7 +204,7 @@ scriptFr["chapter00-working"] = [
   "shin:normal So tell me, on which of these triangles would you apply it to?",
   "jump chapter00-working-choice1"
 ];
-scriptFr["chapter00-working-choice1"] = [
+scriptEn["chapter00-working-choice1"] = [
   { Choice: {
 	    c1: {
 	      Text: 'on the NUL triangle',
@@ -227,7 +227,7 @@ scriptFr["chapter00-working-choice1"] = [
   "aya:heh I’m trying…",
   "jump chapter00-working-choice1"
 ]
-scriptFr["chapter00-working-endChoice1"] = [
+scriptEn["chapter00-working-endChoice1"] = [
 	{ Function: {
 			Apply: ()=>{
 				reverseChoices = [].concat(choices); // ayano can't control the time ;)
@@ -270,7 +270,7 @@ scriptFr["chapter00-working-endChoice1"] = [
 	} },
   "jump chapter00-working-choice2"
 ];
-scriptFr["chapter00-working-choice2"] = [
+scriptEn["chapter00-working-choice2"] = [
   { Choice: {
 			Dialog: 'Hypotenuse = BC <br>Side one = AC<br>side two (we’re looking for its length)= AB, so :',
 		  c1:{
@@ -286,14 +286,14 @@ scriptFr["chapter00-working-choice2"] = [
 		    Clickable: () => choices[1]
 		  },
 		  c3:{
-		    Text: 'BC² = AC² + AB² donc AB² = BC² - AC²',
+		    Text: 'BC² = AC² + AB² so AB² = BC² - AC²',
 		    Do: 'jump chapter00-working-endChoice2'
 		  }
   } },
   "shin:blueSight Nope. Come on I just told you!",
   "jump chapter00-working-choice2"
 ]
-scriptFr["chapter00-working-endChoice2"] = [
+scriptEn["chapter00-working-endChoice2"] = [
 	{ Function: {
 			Apply: ()=>{
 				reverseChoices = [].concat(choices);
@@ -328,7 +328,7 @@ scriptFr["chapter00-working-endChoice2"] = [
   "wait 1000",
   "jump chapter00-endWorking"
 ];
-scriptFr["chapter00-endWorking"] = [
+scriptEn["chapter00-endWorking"] = [
   "play music 01.26",
   "show scene classroomWindow with fadeIn loop",
   "show character aya smile at with fadeIn end-fadeOut",
@@ -376,7 +376,7 @@ scriptFr["chapter00-endWorking"] = [
 ];
 
 
-scriptFr["chapter00-leaveSchool"] = [
+scriptEn["chapter00-leaveSchool"] = [
   "show scene oldBridge_night",
   "play music 01.32 with fade 1",
   "show character aya shy with fadeIn",

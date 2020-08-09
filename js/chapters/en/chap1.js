@@ -167,6 +167,8 @@ scriptEn["chapter01-eneOrigins"] = [
 	function () {
 		shinOSinstance.hideTextBox();
 	},
+	"play music 02.08 with fade 3 loop",
+	"stop music 01.13 with fade 3 loop",
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
@@ -194,6 +196,8 @@ scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
 	function () {
 		shinOSinstance.hideTextBox();
 	},
+	"play music 02.08 with fade 3 loop",
+	"stop music 01.13 with fade 3 loop",
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-MAO"] = [
@@ -342,6 +346,12 @@ scriptEn["chapter01-MAO"] = [
 	"end"
 ]
 
+
+
+
+// additional part
+// Do not translate
+
 scriptEn["chapter01-street"] = [
   "play music 01.03 with fade 3 loop",
   "show scene street with fadeIn duration 2s",
@@ -468,7 +478,7 @@ scriptEn["chapter01-mall-angryene"] = [
 	"shin You wouldn't feel any of the rides!",
 	'ene Tch...<br>Master is so tactless!',
 	'ene Even I have places I want to go!',
-	'wait 3000s',
+	'wait 3000',
 	'...',
 	'She stopped talking, looking jaded. I don’t think I ever saw her mood change that quickly before, but oh well.',
 	'Why would I go to such an expensive location with loud, obnoxious music and yelling children everywhere ?',

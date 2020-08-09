@@ -130,7 +130,7 @@ monogatari.characters ({
 });
 
 scriptFr["Start"] = ["jump chapter00-start"];
-scriptEn["Start"] = ["jump chapter01-start"];
+scriptEn["Start"] = ["jump chapter00-start"];
 
 monogatari.script ({
 	'English': scriptEn,

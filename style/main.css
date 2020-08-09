@@ -500,9 +500,6 @@ text-box [data-ui="face"] {
 [data-content="text"] em {
 	color: darkorange;
 }
-[data-content="text"] em {
-	color: initial;
-}
 
 [data-content="dialog"], [data-ui="say"] {
 	padding: 1rem;
