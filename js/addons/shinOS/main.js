@@ -256,12 +256,12 @@ var kageBrowser = {
 		// TODO: add read/undread states
 		"Shintaro's mail box": [
 				{title: "School’s Obon Festival cancelled due to extreme temperatures",
-				 target: "From &lt;studentcouncil@Kxxx_School.ed.jp&gt;", date: "2 hours ago",
+				 target: "From &lt;studentcouncil@Mekakucity_School.ed.jp&gt;", date: "2 hours ago",
 				 content: `<p>Hello,<br>
 					Due to extreme temperatures, the School’s Obon Festival is
 					unfortunately cancelled this year.</p>
 					<p>Respectfully yours,<br>
-					Kashiwa High School Student Council</p>`,
+					Mekakucity High School Student Council</p>`,
  				 onMounted: function () {
  				 	simpleReactionToMailFromShin(
  						"I wouldn’t have gone anyway. Why am I still getting emails from school anyway…?"
@@ -291,7 +291,7 @@ var kageBrowser = {
 					     <p style="color: #000;">
 					       Shintaro Kisaragi<br>
 					       7X, imperial Way <br>
-					       277-XXXX Kashiwa-shi, JAPAN
+					       277-XXXX Mekakucity, JAPAN
 					     </p>
 					   </div>
 					 </div>

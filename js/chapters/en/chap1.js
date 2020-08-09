@@ -312,7 +312,7 @@ scriptEn["chapter01-MAO"] = [
 	"ene Say, Master~ I have a great idea! Why don’t we just go out and get it?",
 	"shin -... Hah? Excuse me?",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Even though it’s the holiday, the new giant mall structure in Kashiwa is open today! I’m sure they have top-notch models for you!",
+	"ene Even though it’s the holiday, the new giant mall structure in Mekakucity is open today! I’m sure they have top-notch models for you!",
 	"ene We could also buy sunscreen to fight off the heatwave! Though I wouldn’t be needing that, hehe!",
 	"Daylight… It’s been two years since I have last been outside, so the thought of going outside just seems impossible…",
 	"But being unable to use my computer for two whole days… That sounds like hell itself.",

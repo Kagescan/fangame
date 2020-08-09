@@ -203,7 +203,7 @@ scriptFr["chapter01-MAO"] = [
 	"ene Alors...<br>Allons en acheter un !",
 	"shin Pardon ?!",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"ene Le nouveau centre commercial géant de Kashiwa est ouvert !!",
+	"ene Le nouveau centre commercial géant de Mekakucity est ouvert !!",
 	"ene On pourra aussi acheter ces supers tubes de crème solaire pour lutter contre la canicule !",
 	"Devrais-je sortir acheter mon clavier<br>Ou mourir chez moi sans avoir d'ordi...?",
 	"Je suis trop jeune pour mourir...",

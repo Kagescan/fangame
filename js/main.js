@@ -136,7 +136,6 @@ monogatari.script ({
 	'English': scriptEn,
 	'Français': scriptFr
 });
-
 const { $_ready, $_ } = Monogatari;
 $_ready( function() {
 	// var Init
@@ -146,6 +145,11 @@ $_ready( function() {
 		gp.innerHTML = ""
 		gp.className = "hide"
 		monogatari.init("#monogatari");
+
+		// This will remove the "Back" button from the quick menu
+		monogatari.component ('quick-menu').removeButton ('Back');
+		// This will disable the left key listener to roll back
+		monogatari.unregisterListener ('back');
 	}
 	const langageSelected = function(lg) {
 		document.getElementById("firstRunLgSelect").className = "hide";
