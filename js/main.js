@@ -150,8 +150,6 @@ $_ready( function() {
 		monogatari.component ('quick-menu').removeButton ('Back');
 		// This will disable the left key listener to roll back
 		monogatari.unregisterListener ('back');
-		// This fixes a bug in Monogatari B10. Remove when the VN lib is updated.
-		duplicatedBtnQuickFix();
 	}
 	const langageSelected = function(lg) {
 		document.getElementById("firstRunLgSelect").className = "hide";
@@ -182,20 +180,6 @@ $_ready( function() {
 	});
 });
 
-function duplicatedBtnQuickFix() {
-	// quickfix for an issue in monogatari beta 10
-	// REMOVE that function if the VN lib is updated
-  const btnsMenu = document.querySelector("quick-menu");
-  const tmp = {};
-  for (const button of btnsMenu.children) {
-    const btnName = button.getAttribute("string");
-    if (tmp[btnName]) {
-      button.style.display= 'none';
-    } else {
-      tmp[btnName] = true;
-    }
-  }
-}
 
 /* Custom Commands */
 var tempDialogs = (text, toWait=1000, animIn="fadeIn", animOut="fadeOut") =>
