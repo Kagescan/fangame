@@ -14,7 +14,7 @@ scriptEn["chapter00-start"] = [
   "shin:scare4 ...<br>...<br>...",
   "shin:scare4 Ah...-Ah...<br>What was that ? The pipes  maybe...?",
   "shin:blueSight Ugh… Even if it’s just that, it’s nothing to be scared about…",
-  "shin:blueSight I shouldn’t just stop freaking myself out like this…! ",
+  "shin:blueSight I need to stop freaking myself out like this…! ",
   "show background classroomDoorClosed with fadeIn",
   "shin:dodge <em>I should just try to distract myself with something else… Aaagh,  why did I decide to go to school at nighttime? I don’t even like school!",
   "shin:angry3 <em>Speaking of school, though...</em>",

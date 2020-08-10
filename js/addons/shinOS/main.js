@@ -264,7 +264,7 @@ var kageBrowser = {
 					Mekakucity High School Student Council</p>`,
  				 onMounted: function () {
  				 	simpleReactionToMailFromShin(
- 						"I wouldn’t have gone anyway. Why am I still getting emails from school anyway…?"
+ 						"I wouldn’t have gone. Why am I still getting emails from school anyway…?"
  					);
  				 }
 				},
@@ -381,7 +381,7 @@ var kageBrowser = {
 			  },
 				{title: "New rules from the KxxxPro anime discord",
 				 target: "From &lt;noreply@discord.com &gt;", date: "2 days ago",
-				 content: `<p>Hi, the medusae boss here. Just to let you know that our rules have changed.
+				 content: `<p>Hi, medusa boss here. Just to let you know that our rules have changed.
 				 <br> Please check them out in the #rules channel !</p>
 				 <p style="font-size: 1.1rem;">You are seeing this mail because you follow one of our social networks, or our website. <a href="#!" style="color: #7bb6ef;">Click here to unsubscribe</a>.</p>`,
 				 onMounted: function () {
