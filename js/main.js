@@ -26,6 +26,7 @@ monogatari.assets ('videos', {
 // Define the images used in the game.
 monogatari.assets ('images', {
 	"allTriangles" : "allTriangles.svg",
+	"jersey" : "red jersey.png",
 });
 
 // Define the backgrounds for each scene.
