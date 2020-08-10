@@ -417,9 +417,17 @@ scriptEn["chapter01-metro"] = [
 	"shin Let’s take the subway. I don’t think my legs can walk this much.",
 	"ene You took the words right out of my mouth!",
 	"show scene metro1 with fadeIn duration 4s",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.filter = "grayscale(100%)";
+	},
 	'play music 01.13 loop',
 	'wait 3000',
 	"ene Eugh, Master, look at that guy!",
+	function() {
+		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
+		visualContainer.style.removeProperty("filter");
+	},
 	"By one of the turnstiles, there’s a young boy with a panicked expression on his face. <br>It seems like he doesn’t know how it works, as if he never saw any before.",
 	"ene He has such a hopeless expression on his face... Kind of reminds me of you, Master!",
 	"shin Oi!",
@@ -435,15 +443,15 @@ scriptEn["chapter01-metro"] = [
 	'wait 2000',
 	"This place is so crowded...Guess I should have gone by foot in the end.",
 	"The train is filled with a constant loud muttering, and a sweaty fog so thick I could pass out.",
-	//"show image jersey with fadeIn",
 	"Looking at the closet with all the clothes I used to wear before isolating was so painful that I just took the first items my hands reached for. ",
+		"show image jersey with fadeIn duration 4s",
 	"Ene did compliment me, that was a change, but now here I am wearing an autumnal red jersey, sweaty as hell..",
-	//"hide image jersey",
+	"hide image jersey with fadeOut",
 	"show scene metro3 with fadeIn duration 3s",
 	"As I look around I see the children she laughed at before.",
 	"At least I’m not the only one feeling uncomfortable here.",
 	"The boy is smiling and yet he looks anxious. His gaze keeps quickly alternating between the surroundings and the girl, who is on her phone totally ignoring him.",
-	'wait 2000',//desaturate the image there
+	'wait 2000',
 	"They’re still this way when I get off the train following Ene’s directions.",
 	//fadeout
 	'jump chapter01-mall-outside'
