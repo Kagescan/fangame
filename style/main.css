@@ -446,23 +446,37 @@ div[data-content="visuals"] {
 }
 
 /* Text Box styling */
-text-box {
+[data-component="text-box"] {
   background-color: transparent;
   min-height: initial;
   max-height: initial;
   overflow-y: initial;
+	display: flex !important;
+	flex-direction: column;
+}
+[data-component="text-box"][style="display: none;"]  {
+	/*overwrites the display: flex !important; just above*/
+	display: none !important; 
 }
 text-box [data-content="wrapper"] {
   overflow-y: auto;
   background-color: var(--main-color);
   background-image: url("../assets/ui/bg_grid.png");
-  min-height: 20vh;
-  max-height: 40vh;
+  height: 10em;
   border-top: white 1px solid;
   margin: -1px 0 0 0;
 }
+text-box[data-expression] [data-content="side-image"] {
+  width: 10em;
+  justify-content: center;
+}
+text-box [data-content="side-image"] {
+	width: 0;
+}
 text-box [data-ui="face"] {
 	border: 1px dashed;
+	position: relative;
+	width: 90%;
 }
 /* Character Name Style */
 #customCharacterName {
@@ -476,7 +490,7 @@ text-box [data-ui="face"] {
   z-index: 11;
 }
 [data-ui="who"] {
-  padding: 0px 3px 0 3px;
+  padding: 0px 3px 0 3px !important;
   margin: initial;
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
