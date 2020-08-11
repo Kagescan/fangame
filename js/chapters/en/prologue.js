@@ -406,6 +406,6 @@ scriptEn["chapter00-leaveSchool"] = [
   "hide character aya with fadeOut",
   "stop music 01.32 with fade 1",
   "show background oldBridge_night with fadeOut",
-  "wait 1000",
+  "wait 3000",
   "jump chapter01-start"
 ];

@@ -1,10 +1,10 @@
 
 scriptEn["chapter01-start"] = [
-	"show scene ShinDodo with fadeIn duration 3s",
+	"show scene ShinDodo with fadeIn duration 6s",
 	"play music 02.08 with fade 3 loop",
-	"wait 2500",
+	"wait 5000",
+	"play sound ding.ogg",
 	"… …",
-	// [Ding! sound effect] !!
 	"I sweat a lot…",
 	"I feel like I just had a dream… What was it about?",
 	"ugh… It probably doesn’t matter anyway. I won’t move forward if I keep asking myself questions like that.",
@@ -17,8 +17,8 @@ scriptEn["chapter01-start"] = [
 	"wait 1500",
 	"show scene ShinOrdi with fadeIn",
 	"I’ve hardly gotten any work done thanks to her–",
-	// [another ding! sound effect]
 	"Uh… Wait a second…",
+	"play sound ding.ogg",
 	"Instead of a blaring alarm, the morning sun woke me up today<br>In fact, the only thing that's come out of my computer speakers has been the sound of the start-up…",
 	"This can only mean that…",
 	"vibrate 1000",
@@ -224,10 +224,10 @@ scriptEn["chapter01-MAO"] = [
 	"play sound pcError",
 	"shin Uh-oh…",
 	"Please! This moment of quiet was so great ! Please, not <span class='rem'>her</span>…!",
+	"hide image enePop.svg with fadeOut",
 	"Of course, no one listens to my please, and especially not the source of my agony...",
 	"play music 01.02 with volume 15",
 	"show character ene cool center with fadeIn end-fadeOut",
-	"hide image enePop.svg with fadeOut",
 	"ene There, there, master!",
 	"show character ene superior center with fadeIn end-fadeOut",
 	"ene Still working on that song you don’t have the guts to finish?",
@@ -271,8 +271,8 @@ scriptEn["chapter01-MAO"] = [
 	"hide character ene",
 	"show background #000",
 	"play music ltm8bit with fade 7",
+	"play sound keyboardtyping.ogg",
 	"My fingers tap desperately, but…",
-	/*bruit de click*/
 	"centered rottotorrrorooro",
 	"centered totoro",
 	"centered toto roto<span class='censored'>to</span>",
