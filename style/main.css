@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Exo2;
+  src: url("../assets/fonts/Exo2.ttf");
+}
+
 /*
 	HELPERS
 */
@@ -352,7 +357,7 @@ visual-novel.hremMode .hrem:hover:after{
 
 /* General Style */
 body {
-
+	  font-family: Exo2, Open Sans, sans-serif;
 }
 
 /* Simple Button styles*/
@@ -456,18 +461,20 @@ div[data-content="visuals"] {
 }
 [data-component="text-box"][style="display: none;"]  {
 	/*overwrites the display: flex !important; just above*/
-	display: none !important; 
+	display: none !important;
 }
 text-box [data-content="wrapper"] {
   overflow-y: auto;
   background-color: var(--main-color);
   background-image: url("../assets/ui/bg_grid.png");
-  height: 10em;
+  height: 6em;
   border-top: white 1px solid;
   margin: -1px 0 0 0;
+  justify-content: space-evenly;
+  background-position: bottom left;
 }
 text-box[data-expression] [data-content="side-image"] {
-  width: 10em;
+  width: 6em;
   justify-content: center;
 }
 text-box [data-content="side-image"] {
@@ -490,7 +497,7 @@ text-box [data-ui="face"] {
   z-index: 11;
 }
 [data-ui="who"] {
-  padding: 0px 3px 0 3px !important;
+  padding: 2px 3px 0 3px !important;
   margin: initial;
   background-image: url("../assets/ui/charaBoxCenter.png");
   background-repeat: repeat-x;
@@ -502,7 +509,6 @@ text-box [data-ui="face"] {
 	display:none;
 }
 [data-content="text"] {
-	margin: 0 auto;
 	max-width:1280px;
 	width: 90%;
 }
@@ -564,7 +570,8 @@ text-box [data-ui="face"] {
 
 /* Quick Menu Style */
 [data-component="quick-menu"] {
-	/*background: url("../assets/ui/bg_grid.png") repeat;*/
+	background: rgba(0,0,0,0.8);
+	background-image: url("../assets/ui/bg_grid.png");
 }
 
 /* Quick Menu Buttons Style */
