@@ -105,15 +105,14 @@ monogatari.characters ({
 	},
 
 	'enef' : {//for enefront
-		name: 'blank',
+		name: 'enef',
 		color: '#aaaaaa',
-		directory: 'ene',
+		directory: 'enef',
 		sprites:{
 			lh1: "eneLH1.png",
 			lh2: "eneLH2.png",
 			lh3: "eneLH3.png",
-			lh4: "eneLH4.png",
-			rh3: "eneRH3.png"
+			lh4: "eneLH4.png"
 		}
 	},
 
@@ -162,12 +161,13 @@ monogatari.characters ({
 		}
 	},
 	'eneb' : {//for eneback
-		name: 'blank',
+		name: 'eneb',
 		color: '#aaaaaa',
-		directory: 'ene',
+		directory: 'eneb',
     sprites:{
 			rh1: "eneRH1.png",
 			rh2: "eneRH2.png",
+			rh3: "eneRH3.png",
 			rh4: "eneRH4.png",
 			back: "handsonback.png"
 		}
