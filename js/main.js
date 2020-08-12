@@ -116,7 +116,15 @@ monogatari.characters ({
       warn: "warn.png",
       yay: "yay.png",
       neutral: "neutral.png",
-			quote: "quote.png"
+			quote: "quote.png",
+			old0: "old0.png",
+			old1: "old1.png",
+			old2: "old2.png",
+			old3: "old3.png",
+			old4: "old4.png",
+			old5: "old5.png",
+			old6: "old6.png"
+
     }
 	},
   'bruit' : {

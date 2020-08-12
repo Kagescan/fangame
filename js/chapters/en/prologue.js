@@ -115,7 +115,7 @@ scriptEn["chapter00-ayaContinue"] = [
   "aya Er… Well… You see…",
   "aya My recent grades weren’t very good, so the teacher gave me extra work.",
 	"It’s just the first day of term, isn’t it? How in the world did she already get extra work…?",
-  "shin:normal That doesn’t explain why the lights were off. ?",
+  "shin:normal That doesn’t explain why the lights were off?",
   'show character aya smile with fadeIn end-fadeOut',
   "aya Ahaha, yeah…  Um...I fell asleep as I was working...<br>Without even finishing the prep… Ahaha~",
   "shin:normal Was it even worth staying after class, then ?",

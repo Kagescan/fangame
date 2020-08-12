@@ -1,9 +1,9 @@
 
 scriptEn["chapter01-start"] = [
 	"show scene ShinDodo with fadeIn duration 6s",
+	"play sound ding.ogg",
 	"play music 02.08 with fade 3 loop",
 	"wait 5000",
-	"play sound ding.ogg",
 	"… …",
 	"I sweat a lot…",
 	"I feel like I just had a dream… What was it about?",
@@ -117,21 +117,21 @@ scriptEn["chapter01-eneOrigins"] = [
 	"wait 500",
 	"What the...",
 	"hide image enePop.svg",
-	"show character ene neutral with fadeIn end-fadeOut", // closed eyes then neutral after ...
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
-	// more sprites tba (news one)
+	"show character ene old0 with fadeIn end-fadeOut",
+	"wait 1000",
+	"show character ene old1 with fadeIn end-fadeOut",
 	"…",
-	"A... girl? What sort of program is this? No app other than my email seems to be running though…",
+	"A... girl? What sort of program is this? <br>No app other than my email seems to be running though…",
 	"…",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old2 with fadeIn end-fadeOut",
 	"Wait.",
 	"What if this was one of those top secret programs ?",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
-	"What if this cute girl needs my help to save a mysterious world I don’t even know about yet because",
-	"this is the- pilot episode of an amazing shōnen series and I’m the hero and–",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old4 with fadeIn end-fadeOut",
+	"What if this cute girl needs my help to save a mysterious world I don’t even know about yet because, <br>this is the pilot episode of an amazing shōnen series and I’m the hero and–",
+	"show character ene old6 with fadeIn end-fadeOut",
 	"ene -N-nice to meet you... ",
 	"She looks so...human. This is so high-tech.",
+	"show character ene old4 with fadeIn end-fadeOut",
 	{'Choice':{ 'Dialog': 'Maybe she has voice recognition? I should try talking to her.',
     'Ask her what she is':{
       'Text': 'Ask her what she is',
@@ -146,9 +146,11 @@ scriptEn["chapter01-eneOrigins"] = [
       'Do': 'shin Do you... need any help ?'
     }
   }},
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut", (she smiles)
-	"ene Haha! What’s with that? I don’t need much, but...",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old5 with fadeIn end-fadeOut",
+	"ene Haha! What’s with that?",
+	"show character ene old4 with fadeIn end-fadeOut",
+	"ene I don’t need much, but...",
+	"show character ene old6 with fadeIn end-fadeOut",
 	"ene From today onward, please treat me well, <span class='rem'>Master</span>...",
 	function() {
 		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
@@ -173,12 +175,12 @@ scriptEn["chapter01-eneOrigins"] = [
 ];
 scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
 	"shin Hey, um...what are you ?",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old2 with fadeIn end-fadeOut",
 	"ene Hmmm…",
 	"The girl stares at me for a moment.",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old3 with fadeIn end-fadeOut",
 	"ene I don’t really know myself but...",
-	// "show character ene xxxxxxxxx with fadeIn end-fadeOut",
+	"show character ene old5 with fadeIn end-fadeOut",
 	"ene From today onward, please treat me well, Master...",
 	function() {
 		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
