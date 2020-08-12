@@ -124,8 +124,23 @@ monogatari.characters ({
 			old4: "old4.png",
 			old5: "old5.png",
 			old6: "old6.png"
-
-    }
+    },
+		expressions: {
+			normala: "NormalA.png",
+			normalb: "NormalB.png",
+			smilea: "SmilingA.png",
+			smileb: "SmilingB.png",
+			smilec: "SmilingC.png",
+			laugha: "LaughingA.png",
+			laughb: "LaughingB.png",
+			smuga: "SmugA.png",
+			smugb: "SmugB.png",
+			thinka: "ThinkingA.png",
+			thinkb: "ThinkingB.png",
+			guilty: "Guilty.png",
+			fright: "Frightened.png",
+			shocked: "Shocked.png",
+		}
 	},
   'bruit' : {
     name: 'bruit',
