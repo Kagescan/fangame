@@ -107,7 +107,7 @@ monogatari.settings({
 
 // Initial Settings
 monogatari.preferences ({
-	'Language': 'Français',
+	'Language': 'English',
 	'Volume': {
 		'Music': 1,
 		'Voice': 1,

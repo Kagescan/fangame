@@ -26,7 +26,6 @@ monogatari.assets ('videos', {
 // Define the images used in the game.
 monogatari.assets ('images', {
 	"allTriangles" : "allTriangles.svg",
-	"jersey" : "red jersey.png",
 });
 
 // Define the backgrounds for each scene.
@@ -132,10 +131,12 @@ monogatari.characters ({
 
 scriptFr["Start"] = ["jump chapter00-start"];
 scriptEn["Start"] = ["jump chapter00-start"];
+scriptEs["Start"] = ["jump chapter00-start"];
 
 monogatari.script ({
 	'English': scriptEn,
-	'Français': scriptFr
+	'Français': scriptFr,
+	'Español': scriptEs
 });
 const { $_ready, $_ } = Monogatari;
 $_ready( function() {
@@ -155,9 +156,7 @@ $_ready( function() {
 	const langageSelected = function(lg) {
 		document.getElementById("firstRunLgSelect").className = "hide";
 		document.getElementById("firstRunLgMsg").className = lg.substr(0,2).toLowerCase();
-		if (lg=="Español") {
-			lg="English";
-		}
+
 		monogatari.preference("Language", lg);
 		monogatari.localize();
 	}

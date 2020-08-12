@@ -1,6 +1,6 @@
-let script = scriptFr;
 
-script["yaki_WhyDoYouThink"] = [
+
+scriptFr["yaki_WhyDoYouThink"] = [
 	"centered <span class='big'>Bonus</span><br><em>Ces scènes apparaissent au cours du jeu</em>",
   "aya Hein ?",
   "aya C'est faux ?",
@@ -41,7 +41,7 @@ script["yaki_WhyDoYouThink"] = [
 	"jump yaki_ItsBeenAwhile"
 ]
 
-script["yaki_ItsBeenAwhile"] = [
+scriptFr["yaki_ItsBeenAwhile"] = [
 	"centered <em>Seconde scène</em>",
   "aya Ça fait longtemps, n'est-ce pas ?",
   "hm ?",

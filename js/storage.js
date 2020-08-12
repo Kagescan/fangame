@@ -5,7 +5,7 @@ monogatari.storage ({
 	choices: [true, true, true]
 });
 
-var scriptFr = {}, scriptEn = {};
+var scriptFr = {}, scriptEn = {}, scriptEs = {};
 
 // Minor storage used in the prologue
 // TODO : add to monogatari storage
