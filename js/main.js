@@ -103,27 +103,46 @@ monogatari.characters ({
       ohFuckkk: "F-ohFuckkk.png"
     }
 	},
+
+	'enef' : {//for enefront
+		name: 'blank',
+		color: '#aaaaaa',
+		directory: 'ene',
+		sprites:{
+			lh1: "eneLH1.png",
+			lh2: "eneLH2.png",
+			lh3: "eneLH3.png",
+			lh4: "eneLH4.png",
+			rh3: "eneRH3.png"
+		}
+	},
+
 	'ene' : {
 		name: 'Ene',
 		color: '#aaaaff',
 		directory: 'ene',
     sprites:{ // Images Identifier for the "Show" statement.
-      cool: "cool.png",
-      concerned: "concerned.png",
-      oh: "oh.png",
-      superior: "superior.png",
-      usingPC: "usingPC.png",
-      warn: "warn.png",
-      yay: "yay.png",
-      neutral: "neutral.png",
-			quote: "quote.png",
 			old0: "old0.png",
 			old1: "old1.png",
 			old2: "old2.png",
 			old3: "old3.png",
 			old4: "old4.png",
 			old5: "old5.png",
-			old6: "old6.png"
+			old6: "old6.png",
+			normala: "eneNormalA.png",
+			normalb: "eneNormalB.png",
+			smilea: "eneSmilingA.png",
+			smileb: "eneSmilingB.png",
+			smilec: "eneSmilingC.png",
+			laugha: "eneLaughingA.png",
+			laughb: "eneLaughingB.png",
+			smuga: "eneSmugA.png",
+			smugb: "eneSmugB.png",
+			thinka: "eneThinkingA.png",
+			thinkb: "eneThinkingB.png",
+			guilty: "eneGuilty.png",
+			fright: "eneFrightened.png",
+			shocked: "eneShocked.png"
     },
 		expressions: {
 			normala: "NormalA.png",
@@ -139,7 +158,18 @@ monogatari.characters ({
 			thinkb: "ThinkingB.png",
 			guilty: "Guilty.png",
 			fright: "Frightened.png",
-			shocked: "Shocked.png",
+			shocked: "Shocked.png"
+		}
+	},
+	'eneb' : {//for eneback
+		name: 'blank',
+		color: '#aaaaaa',
+		directory: 'ene',
+    sprites:{
+			rh1: "eneRH1.png",
+			rh2: "eneRH2.png",
+			rh4: "eneRH4.png",
+			back: "handsonback.png"
 		}
 	},
   'bruit' : {
