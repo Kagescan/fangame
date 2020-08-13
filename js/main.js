@@ -9,6 +9,7 @@ monogatari.assets ('music', {
 	'01.31': '01.31.koyasudo.mp3',
 	'01.32': '01.32.BlurringSunset.ogg',
 	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
+	'02.23': '02.23.MeNiYakitsukeru.mp3',
 	'ltm8bit': 'ltm8bit.mp3'
 });
 
