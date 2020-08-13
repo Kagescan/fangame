@@ -182,6 +182,74 @@ monogatari.characters ({
   }
 });
 
+const layerCharacters = {
+	// images declared in a character must have the same size
+	"ene": [
+		{ fallback: "normala" },
+		{ // left hand (player pov)
+			__defaultZindex: 2,
+			rh1: "assets/characters/eneb/eneRH1.png",
+			rh2: "assets/characters/eneb/eneRH2.png",
+			rh3: "assets/characters/eneb/eneRH3.png",
+			rh4: "assets/characters/eneb/eneRH4.png",
+		},
+		{ // right hand
+			__defaultZindex : 6,
+			// syntax : `identifier : ["path", z-index]` or `identifier : "path"`
+			lh1: "assets/characters/enef/eneLH1.png",
+			lh2: "assets/characters/enef/eneLH2.png",
+			lh3: "assets/characters/enef/eneLH3.png",
+			lh4: "assets/characters/enef/eneLH4.png"
+		}
+	],
+	"__storage": {}
+}
+
+monogatari.$ ('_layered', (character, ...layersArg) => {
+	let additionalClasses = "";
+	const storedLayers = layerCharacters[character];
+
+	if (storedLayers.length < layersArg.length) {
+		// if more arguments than layers ...
+		for (let i = storedLayers.length; i < layersArg.length; i++) {
+			additionalClasses += " " + layersArg[i];
+		}
+	}
+
+  monogatari.run(`show character ${character} ${storedLayers[0].fallback} with ${additionalClasses}`)
+	.then( function() {
+		const imgElement = document.querySelector(`[data-content="visuals"] img[data-character="${character}"]`);
+		const onLoadAction = function () {
+			// the image must be loaded in order to get naturalWidth/naturalHeight
+			const width = imgElement.naturalWidth;
+			const height = imgElement.naturalHeight;
+			let imagePlaceholder = [];
+
+			imgElement.removeEventListener("load", onLoadAction,false);
+			// create empty image because we will display sprites using background
+			imgElement.src = `data:image/svg+xml,<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"></svg>`;
+
+			for (let i = 1; i < storedLayers.length; i++) {
+				const thisExpr = layersArg[i-1];
+				let zIndex = storedLayers[i].__defaultZindex;
+
+				if (typeof storedLayers[i][thisExpr] !== "string") {
+					// not string
+					return 0;
+				}
+				const layerHref = storedLayers[i][thisExpr];
+
+				// since z-index is still not supported, we will stimulate by sorting array value
+				imagePlaceholder.push(`#${zIndex}#url("${layerHref}")`);
+			}
+			imagePlaceholder.sort();
+			imgElement.style.backgroundImage = imagePlaceholder.join().replace( /#\d+#/gi, '');
+		}
+		imgElement.addEventListener("load", onLoadAction, false);
+	} );
+});
+
+
 scriptFr["Start"] = ["jump chapter00-start"];
 scriptEn["Start"] = ["jump chapter00-start"];
 scriptEs["Start"] = ["jump chapter00-start"];
