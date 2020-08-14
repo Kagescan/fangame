@@ -238,7 +238,7 @@ scriptEn["chapter01-MAO"] = [
 	"show character enef lh4 center with fadeIn end-fadeOut",
 	"ene Still working on that song you don’t have the guts to finish?",
 	"<span class='rem'>Ene…</span>",
-	"… this cheeky… cyber girl? <br>That’s what she calls herself, but she’s worse than a computer virus, in my opinion.",
+	"This cheeky… cyber girl? <br>That’s what she calls herself, but she’s worse than a computer virus, in my opinion.",
 	"Despite that she calls me “Master”, which was NOT my idea, she has been giving me nothing but grief since she appeared in my computer a year ago.",
 	"No matter what I do, I can’t seem to get rid of her, so I just have to deal with her every day like this while she torments me.",
 	"show character ene laugha center with fadeIn end-fadeOut",
@@ -308,7 +308,7 @@ scriptEn["chapter01-MAO"] = [
 	"hide character eneb",
 	"hide character ene",
 	"show background #000",
-	"play music ltm8bit with fade 7",
+	"play music ltm8bit with loop fade 7",
 	"play sound keyboardtyping.ogg",
 	"My fingers tap desperately, but…",
 	"centered rottotorrrorooro",
@@ -409,28 +409,46 @@ scriptEn["chapter01-MAO"] = [
 	"centered After all, what could go wrong if I go out just this morning?",
 	"centered Today, and just today! After today, I will never go out again!",
 	"clear",
+	"jump chapter01-demoEnd"
+];
+
+scriptEn["chapter01-demoEnd"] = [
 	"show scene icon with fadeIn",
 	"wait 1500",
 	"show image kagescan.svg centeredLeft with fadeIn",
-	()=> tempDialogs("The french community presents you...", 2000),
+	()=> tempDialogs("The French community presents...", 2000),
 	()=> tempDialogs("With the help of fans from all over the world", 2000),
 	"hide image kagescan.svg centeredLeft with fadeOut",
 	"show image logo.png centeredLeft with fadeIn",
-	()=> tempDialogs(`The Kagerou Project Fangame <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
-	()=> tempDialogs(`Programming : ShinProg (LoganTann)`, 1000),
-	()=> tempDialogs(`Story : Furi, Yoomster, ShinProg, + contributors`, 1000),
-	()=> tempDialogs(`Graphics :<br>Maxence Porelli <em style="font-size: 10px;">(Sprites)</em>\
-	<br>Furi <em style="font-size: 10px;">(Backgrounds)</em>\
-	<br>SandoSan <em style="font-size: 10px;"> (Pixel art : game logo)</em>\
-	<br>ShinProg <em style="font-size: 10px;"> (Drafting, cleaning, 3D)</em>`, 4000),
-	"hide image logo.png centeredLeft with fadeOut slower",
-	"wait 3000",
-	"centered <span style='color: black;'>Thanks for trying our demo !</span>",
-	"stop music ltm8bit with fade 3",
-	"show background #666 with fadeOut slow",
-	"wait 3000",
-	"end"
-]
+	()=> tempDialogs(`A Kagerou Project Fangame <br><span style="font-size: 8px; color:#aaa;">demo ${monogatari.settings().Version}</span>`, 2000),
+	"hide image logo.png centeredLeft with fadeOut",
+	"centered <span style='color: black;'>Thank you for playing the demo of this kagerou project fangame!</span>",
+	"You should use the game save button now, unless you want to start over when the next part of the game comes out, to try out new things...",
+	"Please have a look at the game credits and trivia page if you can, and join the discord server to follow the game's progression or even contribute to the next parts!",
+	"If you wish, you can now have a quick look at the beginning of the next part we're currently working on. Note however that it is not finished at all and will probably be edited a lot before the full chapter comes out.",
+	"jump chapter01-demolinks",
+];
+scriptEn["chapter01-demolinks"] = [
+	"stop music ltm8bit with loop fade 3",
+	{"Choice":{
+		"discord":{
+			"Text": "Retaining's memories discord server",
+			"Do": ()=>{ window.open("https://discord.gg/QNqTVuR", "_blank"); },
+		},
+		"webpage" :{
+			"Text": "Game webpage",
+			"Do": ()=>{ window.open("https://logantann.github.io/demo/kagepro2/en/", "_blank"); },
+		},
+		"menu" :{
+			"Text": "Back to the game menu",
+			"Do": "end"
+		},
+		"next" :{
+			"Text": "Play an extra part (English only)",
+			"Do": "jump chapter01-street"
+}}},
+	"jump chapter01-demolinks",
+];
 
 
 
@@ -459,44 +477,49 @@ scriptEn["chapter01-street"] = [
 ];
 
 scriptEn["chapter01-walk"] = [
-		"shin Let’s go by foot… It’s not too far away, after all, and that way I don’t have to be around a lot of people…",
-		"ene That’s probably good for you, seeing how you haven’t moved at a~l~l in the last two years. Can your body even handle it?",
-		"shin Shut up! I’m sure even I can manage this distance...",
-		"ene If that’s what you say, Master!",
-		"show background street2 with fadeIn",
-		"shin Ugh, it’s probably for the best… It’s so hot out, though...",
-		"ene The weather report this morning said that we’re having one of the worst heat waves seen in years! <br>You should be careful of heat stroke!",
-		"shin Ugh, another worry to add onto the list…",
-		"ene Aaah~ I miss your computer’s fans already!",
-		"shin What? Do you really feel heat, or are you just messing around…?",
-		"ene I can imagine! Just by the sunlight I can tell that it’s hot! I don’t envy you at all, Master!",
-		"I groan and tug lightly at the collar of my shirt, which was already starting to get damp with sweat.",
-		"I’d make a fool of myself if I were to take off the red jersey I’m wearing.",
-		"Even though it’s the first time in two years people would see me, I didn’t give much thought to my choice of clothes for going outside. <br>Looking at all those items I used to wear at school in the closet brought back bitter memories. ",
-		"Surprisingly, Ene seemed genuine when she complimented my look. I guess she was still a bit ashamed of ruining my keyboard. ",
-		"show background street3 with fadeIn",
-		"Well she’s back to normal now.",
-		"wait 1000",
-		"ene Hey master, isn't that your sister? Momo-chan!",
-		"shin Huh?! Where?!",
-		"I duck behind a street pole without thinking. <br>Momo ...?!",
-		"She can’t see me here, outside for the first time in two years…! <br>She’d definitely make fun of me!",
-		"ene Look ! I’m pretty sure it’s her on that big screen!!",
-		"shin Eh ? Oh right…",
-		"Phew… This cyber girl is giving me a scare even outside...",
-		"shin The news told she’s making her TV debut today.",
-		"ene Oh that’s pretty cool!  Must be hard, being a teen idol.",
-		"shin Yeah, she comes home late sometimes, and that dumbass got herself back in summer classes again with her grades...",
-		"It’s green, better cross the road. I don’t wanna melt here.",
-		//if we get a crossfade effect later we can actually make the light go green
-		"show background street4 with fadeIn",
-		"ene You’re taking much more time than what the app planned Master...", //smirk
-		"ene We’re going left at the intersection after this park!",
-		"shin ...",
-		"Haha… Kids these Days… How can they keep running around in this heat…?!", //animate__rotateOutDownLeft, is it possible to add a blur effect to the background ?
-		"ene Goodness, Master! Stop spacing out! You’ll collapse from heatstroke! <br>Wake up! The store’s this way, we’re almost there!",
-		//fadeout one Ene's line
-		'jump chapter01-mall-outside'
+	"shin Let’s go by foot… It’s not too far away, after all, and that way I don’t have to be around a lot of people…",
+	"ene That’s probably good for you, seeing how you haven’t moved at a~l~l in the last two years. Can your body even handle it?",
+	"shin Shut up! I’m sure even I can manage this distance...",
+	"ene If that’s what you say, Master!",
+	"show background street2 with fadeIn",
+	"shin Ugh, it’s probably for the best… It’s so hot out, though...",
+	"ene The weather report this morning said that we’re having one of the worst heat waves seen in years! <br>You should be careful of heat stroke!",
+	"shin Ugh, another worry to add onto the list…",
+	"ene Aaah~ I miss your computer’s fans already!",
+	"shin What? Do you really feel heat, or are you just messing around…?",
+	"ene I can imagine! Just by the sunlight I can tell that it’s hot! I don’t envy you at all, Master!",
+	"I groan and tug lightly at the collar of my shirt, which was already starting to get damp with sweat.",
+	"I’d make a fool of myself if I were to take off the red jersey I’m wearing.",
+	"Even though it’s the first time in two years people would see me, I didn’t give much thought to my choice of clothes for going outside. <br>Looking at all those items I used to wear at school in the closet brought back bitter memories. ",
+	"Surprisingly, Ene seemed genuine when she complimented my look. I guess she was still a bit ashamed of ruining my keyboard. ",
+	"show background street3 with fadeIn",
+	"Well she’s back to normal now.",
+	"wait 1000",
+	"ene Hey master, isn't that your sister? Momo-chan!",
+	"shin Huh?! Where?!",
+	"I duck behind a street pole without thinking. <br>Momo ...?!",
+	"She can’t see me here, outside for the first time in two years…! <br>She’d definitely make fun of me!",
+	"ene Look ! I’m pretty sure it’s her on that big screen!!",
+	"shin Eh ? Oh right…",
+	"Phew… This cyber girl is giving me a scare even outside...",
+	"shin The news told she’s making her TV debut today.",
+	"ene Oh that’s pretty cool!  Must be hard, being a teen idol.",
+	"shin Yeah, she comes home late sometimes, and that dumbass got herself back in summer classes again with her grades...",
+	"It’s green, better cross the road. I don’t wanna melt here.",
+	//if we get a crossfade effect later we can actually make the light go green
+	"show background street4 with fadeIn end-fadeOut",
+	"ene You’re taking much more time than what the app planned Master...", //smirk
+	"ene We’re going left at the intersection after this park!",
+	"shin ...",
+	"Haha… Kids these Days… How can they keep running around in this heat…?!", //animate__rotateOutDownLeft, is it possible to add a blur effect to the background ?
+	"ene Goodness, Master! Stop spacing out! You’ll collapse from heatstroke! <br>Wake up! The store’s this way, we’re almost there!",
+	//fadeout one Ene's line
+	//'jump chapter01-mall-outside'
+	"show background #000",
+	"clear",
+	"wait 3000",
+	"This is the end, <br>Thank you for playing this little extra bit!",
+	"end"
 ];
 
 scriptEn["chapter01-metro"] = [
@@ -531,17 +554,22 @@ scriptEn["chapter01-metro"] = [
 	"This place is so crowded...Guess I should have gone by foot in the end.",
 	"The train is filled with a constant loud muttering, and a sweaty fog so thick I could pass out.",
 	"Looking at the closet with all the clothes I used to wear before isolating was so painful that I just took the first items my hands reached for. ",
-		"show image jersey with fadeIn duration 4s",
+	"show image redjersey.png with fadeIn duration 4s",
 	"Ene did compliment me, that was a change, but now here I am wearing an autumnal red jersey, sweaty as hell..",
 	"hide image jersey with fadeOut",
-	"show scene metro3 with fadeIn duration 3s",
+	"show scene metro3 with fadeIn duration 3s end-fadeOut",
 	"As I look around I see the children she laughed at before.",
 	"At least I’m not the only one feeling uncomfortable here.",
 	"The boy is smiling and yet he looks anxious. His gaze keeps quickly alternating between the surroundings and the girl, who is on her phone totally ignoring him.",
 	'wait 2000',
 	"They’re still this way when I get off the train following Ene’s directions.",
 	//fadeout
-	'jump chapter01-mall-outside'
+	//'jump chapter01-mall-outside'
+	"clear",
+	"show background #000",
+	"wait 3000",
+	"This is the end, <br>Thank you for playing this little extra bit!",
+	"end"
 ];
 
 scriptEn["chapter01-mall-outside"] = [
