@@ -9,6 +9,7 @@ monogatari.assets ('music', {
 	'01.31': '01.31.koyasudo.mp3',
 	'01.32': '01.32.BlurringSunset.ogg',
 	'02.08': '02.08.PaintedSentaiRakugakiRanger.mp3',
+	'02.23': '02.23.MeNiYakitsukeru.mp3',
 	'ltm8bit': 'ltm8bit.mp3'
 });
 
@@ -46,9 +47,9 @@ monogatari.assets ('scenes', {
 	'street2': 'street2.png',
 	'street3': 'street3.png',
 	'street4': 'street4.png',
-	'metro1': 'metro1.png',
-	'metro2': 'metro2.png',
-	'metro3': 'metro3.png',
+	'metro1': 'metro1.jpg',
+	'metro2': 'metro2.jpg',
+	'metro3': 'metro3.jpg',
 	'storeoutside': 'storeoutside.png',
 	'flashback': 'flashback-min.svg',
 	'icon': 'icon.svg'
