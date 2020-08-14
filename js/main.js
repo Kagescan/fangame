@@ -47,9 +47,9 @@ monogatari.assets ('scenes', {
 	'street2': 'street2.png',
 	'street3': 'street3.png',
 	'street4': 'street4.png',
-	'metro1': 'metro1.png',
-	'metro2': 'metro2.png',
-	'metro3': 'metro3.png',
+	'metro1': 'metro1.jpg',
+	'metro2': 'metro2.jpg',
+	'metro3': 'metro3.jpg',
 	'storeoutside': 'storeoutside.png',
 	'flashback': 'flashback-min.svg',
 	'icon': 'icon.svg'
