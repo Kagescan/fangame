@@ -11,7 +11,7 @@ scriptFr["chapter01-start"] = [
 	"...",
 	"show background ShinGotoPC with fadeIn",
 	"Il faut que je bosse un peu.",
-	"Personn ne finira cette chanson à ma place.",
+	"Personne ne finira cette chanson à ma place.",
 	"show background ShinGotoPC with fadeOut",
 	"play sound pcBooted",
 	"wait 1500",
@@ -49,10 +49,10 @@ scriptFr["chapter01-shinOS"] = [
 			});
 			shinOSinstance.addApp("Legs", "fa-folder-open", function(){
 				monogatari.run({'Input': {
-			      'Text': 'Shintaro\'s Password?<br><em style="font-size: 12px;">(enter blank to exit)</em>',
+			      'Text': 'Mot de passe de Shintaro<br><em style="font-size: 12px;">(appuyez sur entrée pour fermer)</em>',
 			      'Validation': (input) => (input == "4510471" || input.trim().length<=0),
 			      'Save': (input)=>{ monogatari.run((input=="4510471") ? "jump chapter01-legs" : "jump chapter01-shinOS"); },
-			      'Warning': 'Incorrect Password'
+			      'Warning': 'Mot de passe incorrect'
 			    }});
 			});
 		}

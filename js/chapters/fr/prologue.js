@@ -395,7 +395,7 @@ scriptFr["chapter00-leaveSchool"] = [
   "show character aya shy at with fadeIn end-fadeOut",
   "aya Hein ?<br> Non ce n'est rien...hehe",
   "show character aya normal at with fadeIn end-fadeOut",
-  "shin:dodge Okay… au revoir, alors.J'habite de ce côté, on doit se quitter ici.",
+  "shin:dodge Okay… au revoir, alors. J'habite de ce côté, on doit se quitter ici.",
   "show character aya please at with fadeIn end-fadeOut",
   "aya Ah..euh... !",
   "show character aya shadow at with fadeIn",
