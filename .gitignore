@@ -5,3 +5,4 @@ Monogatari/
 engine/core/old/
 engine/nginx/
 ignore/
+node_modules/

@@ -1,11 +1,18 @@
 {
 	"short_name": "Kagepro",
-	"name": "Retaining's Memories demo",
+	"name": "retaining_s_memories_demo",
 	"background_color": "#F7F7F7",
 	"theme_color": "#F7F7F7",
 	"orientation": "landscape",
 	"display": "fullscreen",
+	"main": "main.js",
 	"start_url": "index.html",
+	"scripts": {
+		"start": "electron ."
+	},
+	"dependencies": {
+		"electron": "^9.2.0"
+	},
 	"icons": [
 		{
 			"src": "assets/icons/icon_48x48.png",
