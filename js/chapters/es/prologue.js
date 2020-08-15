@@ -2,6 +2,7 @@
 scriptEs["chapter00-start"] = [
 	"centered <span class='big'>prólogo</span><br><em>The Old Days</em>",
   "show scene classroomCorridor with fadeIn duration 3s",
+	"play music 02.23 with loop fade 3",
   "shin:normal <em>Supongo que es normal que nadie esté aquí tan tarde...<br> Pero carajo, ¿cómo puede que la escuela sea tan aterradora en la noche?</em>",
   "shin:normal <em>ya he pasado tantas veces por estos pasillos antes... Pero en la noche, se ven tan diferentes y lúgubre...</em>",
   "shin:scare1 <em>Espero no encontrar nada siniestro...</em>",
@@ -38,6 +39,7 @@ scriptEs["chapter00-start"] = [
   "bruit <em class='animated wobble'>[Door opening sound]</em>",
   "show character aya please with fadeIn end-fadeOut",
   "¡¡¡¡¡ -AAAAaah !!!!!<br>¡¡ -EEEEeeeeek !!",
+  "stop music 02.23 with loop fade 3",
   "shin:scare5 Perdón, ¡¡¡perdón!!!<br>Por favor, ¡¡ten piedad de mí!!",
   "show character aya question with fadeIn end-fadeOut",
   "shin:scare4 <em>Me encontré rogando sin siquiera pensarlo, mis ojos deben estar llorosos por el miedo... Pero, unos segundos después, me di cuenta que no había sido asesinado por el fantasma de la escuela... </em>",
