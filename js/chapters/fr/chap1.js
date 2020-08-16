@@ -437,7 +437,7 @@ scriptFr["chapter01-demolinks"] = [
 		},
 		"webpage" :{
 			"Text": "Page web du jeu",
-			"Do": ()=>{ window.open("https://logantann.github.io/demo/kagepro2/en/", "_blank"); },
+			"Do": ()=>{ window.open("https://kagescan.legtux.org/fangame/", "_blank"); },
 		},
 		"menu" :{
 			"Text": "Menu du jeu",
