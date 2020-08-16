@@ -29,12 +29,12 @@ scriptFr["chapter00-start"] = [
   "shin:scare4 aAAh !?",
   "shin:scare4 <em>Ce cri de surprise est sorti de ma bouche sans que je puisse le retenir. </em>",
   "shin:scare1 <em>Je venais d'arriver devant ma classe, et je suis sûr d'avoir entendu un bruit bizarre en sortir…!</em>",
-  "shin:scare1 <em>S-Se pourrait-il que quelq'un d'autre soit là..? Aussi tard ?!</em>",
+  "shin:scare1 <em>S-Se pourrait-il que quelqu'un d'autre soit là..? Aussi tard ?!</em>",
   "shin:scare2 <em>Non…<br>Ce n'est pas possible... </em>",
   "shin:scare2 <em> Mais je suis sûr d'avoir entendu quelque chose…!</em>",
   "shin:scare4 <em>Personne ne peut être là, les lumières sont éteintes…</em>",
   "shin:scare3 <em>J'espère que je n'ai pas réveillé un fantôme ou quelque créature du même genre…</em>",
-  "shin:scare3 <em>ALors que je réfléchis à faire demi tour, soudain la porte-!</em>",
+  "shin:scare3 <em>Alors que je réfléchis à faire demi tour, soudain la porte-!</em>",
   "play sound door.ogg",
   "show background classroomDoorOpened",
   "show character aya shadow with rubberBand end-fadeOut",
@@ -79,7 +79,7 @@ scriptFr["chapter00-start"] = [
     'show character aya shy with fadeIn end-fadeOut',
     // aya =  Ayano
     "aya Ah, euh.. ",
-    "aya C'est tout dont tu te souviens ?",
+    "aya C'est tout ce dont tu te souviens ?",
     "shin:normal Me serais-je trompé ?",
     'show character aya embarrassed fadeIn end-fadeOut',
     "aya Non mais... <br>Ah ah ...",
@@ -133,7 +133,7 @@ scriptFr["chapter00-ayaContinue"] = [
 			Reverse: ()=>{document.querySelector('[data-character="aya"]').className = "animated"}
 	} },
   "shin:angry <em>Ignore la, récupère le porte-monnaie, et sors de cette école de tarés.</em>",
-  "aya ... ? euh, dis...",
+  "aya ... ? Euh, dis...",
 	{ Function: {
 			Apply: function(){
 				document.querySelector('[data-character="aya"]').className = "animated";
