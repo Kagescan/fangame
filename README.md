@@ -23,7 +23,6 @@ Available :
 * Nightly :
 	* [Play Online in github](https://logantann.github.io/kagepro2/)
 	* Download the latest version (html) : click download zip button, and run index.html
-
 <details>
 <summary>Unavailable now : beta and stable version, native offline apps  </summary>
 
@@ -37,20 +36,20 @@ Available :
 
 </details>
 
-
-### Known bugs
-
-* No ?
-
 ### Project main page
 
-__No project page available for this version at the moment__
+[Project page](https://kagescan.legtux.org/fangame/)  
+[Discord server](https://discord.gg/QNqTVuR)
+
+By joining our discord server, you can see our advancement, contribute or debate for new features/edits to do, check current issues or report some, and get notifications when an update is available.
 
 versions :
 
 1. first version, written with python and pygame lib  
 2. second version, written with c++ and SFML. Version 2.1 : remake of the version 2.0. Never finished !  
-3. third version, written with JS and html dom, using [Monogatari](). I hope it will be the last !
+3. third version, written with JS and html dom, using [Monogatari](https://github.com/Monogatari/Monogatari). I hope it will be the last !
 
 ### Contributing
-Please contact me before : <kagescan@legtux.org>
+
+Please join our [Discord server](https://discord.gg/QNqTVuR) in order to contribute to the project.  
+You're still free to add [issues](https://github.com/LoganTann/kagepro2/issues)
