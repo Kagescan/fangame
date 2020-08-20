@@ -7,8 +7,10 @@
 	"display": "fullscreen",
 	"main": "main.js",
 	"start_url": "index.html",
+	"version": "2.99.0",
 	"scripts": {
-		"start": "electron ."
+		"start": "electron .",
+		"createKagescanReleaseFile": "node ./js/addons/createKagescanReleaseFile.js"
 	},
 	"dependencies": {
 		"electron": "^9.2.0"
