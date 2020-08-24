@@ -47,7 +47,7 @@ function prettyDisplayPath(dir, file = "") {
   return noBackslashesPath;
 }
 
-function checksumFile(path) {
+function checksumFile(path, file_size) {
   /* Given the file [path], this will return an array that contains the file
    * path (pretty displayed) and the hash (sha1) of this file.
    */
@@ -59,14 +59,16 @@ function checksumFile(path) {
     stream.on('end', () => {
       const file_path = prettyDisplayPath(path);
       const file_hash = hash.digest('hex');
-      resolve( [file_path, file_hash] );
+      resolve( [file_path, file_hash, file_size] );
     });
   });
 }
 
 async function walkFiles(dir) {
-  /* Returns the hash of every file in this folder, recursively (as long as they
-   * aren't ignored). Muliple dimentions in this arrays
+  /* Loops over all files inside folders/subfolders as long as their names don't
+   * matches the ignore patterns, and return an array that contains their path
+   * (unix like displayed), their hash and their size (in bytes)
+   * Final array will have multiples dimentions (a dimention for a subfolder)
   */
   const promise_list = [];
   const files = fs.readdirSync(dir);
@@ -80,10 +82,11 @@ async function walkFiles(dir) {
     }
     // once file don't match with ignore patterns :
     const joined_path = path.join(dir, file);
-    if (fs.statSync(joined_path).isDirectory()) {
+    const itemStats = fs.statSync(joined_path);
+    if (itemStats.isDirectory()) {
       promise_list.push( walkFiles(joined_path) );
     } else {
-      promise_list.push( checksumFile(joined_path) );
+      promise_list.push( checksumFile(joined_path, itemStats["size"]) );
     }
   });
   return Promise.all(promise_list);
@@ -92,7 +95,7 @@ async function walkFiles(dir) {
 
 async function normalizeWalkFiles(dir = "./") {
   /* Calls walkFiles(dir), flats the array to be like this pattern :
-   * [[location, Hash], [location, Hash], [location, Hash], ... ]
+   * [[location, Hash, Size], [location, Hash, Size], [location, Hash, Size], ... ]
   */
 
   /* Internal simple synchronous & recursive function*/
@@ -129,7 +132,7 @@ function main() {
   const outputObject = {
     "version":require(`${process.cwd()}/package.json`).version,
     "releaseDate": getDate(),
-    "downloadZipLink": "https://github.com/LoganTann/kagepro2/archive/releases.zip"
+    "downloadZipLink": "https://github.com/LoganTann/kagepro2/archive/production.zip"
   };
   console.log(outputObject, "\n");
   rl.question(
