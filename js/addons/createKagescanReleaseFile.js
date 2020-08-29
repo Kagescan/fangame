@@ -12,26 +12,32 @@
 // /!\ shoud be updated to .gitignore
 const ignore = [
   // OF COURSE NOT :
-  /.git/g,
-  /node_modules/g,
+  /.git/,
+  /node_modules/,
   // dev files
-  /Monogatari\//g,
-  /engine\/core\/old/g,
-  /build/g,
+  /Monogatari\//,
+  /engine\/core\/old/,
+  /build/,
+  /.map/,
   // Unused ressources for the release
-  /engine\/debug/g,
-  /engine\/electron/g,
-  /engine\/error/g,
-  /engine\/nginx/g,
-  /scripts-oldVersion/g,
+  /engine\/debug/,
+  /engine\/electron/,
+  /engine\/error/,
+  /engine\/nginx/,
+  /scripts-oldVersion/,
+  // Files that might overwrite the launcher's one
+  /^main.js/,
+  /^package(\-lock)?.json/,
+  /^readme.md/i,
+  /^license/i,
 
   // Unused files for the release
-  /\.htaccess/g,
-  /\.zip/g,
-  /\.xcf/g,
-  /\.pmm/g,
-  /KagescanReleaseFile\.json/g,
-  /ignore/g
+  /\.htaccess/,
+  /\.zip/,
+  /\.xcf/,
+  /\.pmm/,
+  /KagescanReleaseFile\.json/,
+  /ignore/
 ];
 const path = require('path');
 const fs = require('fs');
