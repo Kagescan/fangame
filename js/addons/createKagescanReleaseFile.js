@@ -4,6 +4,8 @@
  *         step 2. Edit manually the file if needed.
  *         step 3. Deploy in the API
  * edit parts where there is a /!\
+ * Ensure to run this command with a terminal that supports emojis (Windows
+ * Terminal...)
 */
 
 
@@ -51,11 +53,24 @@ function checksumFile(path, file_size) {
   /* Given the file [path], this will return an array that contains the file
    * path (pretty displayed) and the hash (sha1) of this file.
    */
+  const text_file_regex = /license|\.txt|\.html|\.css|\.js|\.svg|\.md|\.htaccess/i;
+  const isFile = path.match(text_file_regex);
+
   return new Promise((resolve, reject) => {
     const hash = crypto.createHash('sha1');
     const stream = fs.createReadStream(path);
     stream.on('error', err => reject(err));
-    stream.on('data', chunk => hash.update(chunk));
+    stream.on('data', chunk => {
+      if (isFile) {
+        const text_chunk = chunk.toString();
+        hash.update(text_chunk.replace(/\r\n/g, "\n"));
+        // The remote file haves LF line endings. If the developer builds the
+        // release file using windows, he -really- might have CRLF line endings.
+        // So we need to remove CR if needed.
+      } else {
+        hash.update(chunk);
+      }
+    });
     stream.on('end', () => {
       const file_path = prettyDisplayPath(path);
       const file_hash = hash.digest('hex');
