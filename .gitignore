@@ -6,3 +6,10 @@ engine/core/old/
 engine/nginx/
 ignore/
 node_modules/
+
+*.pmm
+ignore.*
+*.xcf
+
+*.zip
+KagescanReleaseFile.json
