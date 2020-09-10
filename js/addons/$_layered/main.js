@@ -179,4 +179,5 @@ monogatari.$ ('_layered', async function(character, ...arguments) {
   } else {
     console.error("generated background image don't have valid values : ", generatedBackgroundImage);
   }
+  return "next";
 });
