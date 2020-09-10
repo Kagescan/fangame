@@ -213,7 +213,9 @@ $_ready( function() {
 	// stuff
 	monogatari.Storage.contains ('Settings')
 	.then (init)   // if contains
-	.catch(() => { // else
+	.catch((e) => { // else
+		console.log(e);
+		//
 		document.getElementById("gamePlugins").classList.remove("hide");
 		// buttons event
 		for (const button of document.querySelectorAll("#firstRunLgSelect>button")) {

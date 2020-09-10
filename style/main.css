@@ -481,7 +481,6 @@ text-box [data-content="side-image"] {
 	width: 0;
 }
 text-box [data-ui="face"] {
-	border: 1px dashed;
 	position: relative;
 	width: 90%;
 }
