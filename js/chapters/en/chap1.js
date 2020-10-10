@@ -139,11 +139,11 @@ scriptEn["chapter01-eneOrigins"] = [
     },
     'Ask her for a mission':{
       'Text': 'Ask her for a mission',
-      'Do': 'shin I-I’ll do whatever you want ! Um… Give me  whatever mission or quest you have ! '
+      'Do': 'shin I-I’ll do whatever you want! Um… Give me  whatever mission or quest you have! '
     },
     'Offer my help':{
       'Text': 'Offer my help',
-      'Do': 'shin Do you... need any help ?'
+      'Do': 'shin Do you... need any help?'
     }
   }},
 	"show character ene old5 with fadeIn end-fadeOut",
@@ -174,7 +174,7 @@ scriptEn["chapter01-eneOrigins"] = [
 	"jump chapter01-shinOS"
 ];
 scriptEn["chapter01-eneOriginsAskWhoIsShe"] = [
-	"shin Hey, um...what are you ?",
+	"shin Hey, um...what are you?",
 	"show character ene old2 with fadeIn end-fadeOut",
 	"ene Hmmm…",
 	"The girl stares at me for a moment.",
@@ -241,7 +241,7 @@ scriptEn["chapter01-MAO"] = [
 	"ene Move on already...You know it’s useless.",
 	// hier -> remplacer par ce matin, si on a joué au jeu (pas encore fait)
 	"$ _layered ene rh3 smileb lh1 with center fadeIn end-fadeOut",
-	"ene Yesterday, instead of working on your song, you went on those anime forums again and wouldn’t stop criticizing that new anime released last week !!!",
+	"ene Yesterday, instead of working on your song, you went on those anime forums again and wouldn’t stop criticizing that new anime released last week!!!",
 	"$ _layered ene - thinka - with center fadeIn end-fadeOut",
 	"ene “The plot is an offense to the original story!”",
 	"$ _layered ene - thinkb lh4 with center fadeIn end-fadeOut",
@@ -431,7 +431,7 @@ scriptEn["chapter01-street"] = [
   "play music 01.03 with fade 3 loop",
   "show scene street with fadeIn duration 2s",
   "Somehow, it feels strange...",
-	"Is it because I haven’t gone outside in so long or is the heat getting to my head ?",
+	"Is it because I haven’t gone outside in so long or is the heat getting to my head?",
   "The city’s changed so much since the last time I walked these streets...",
 	"shin Hey Ene, what's the way to the store?",
 	"ene There are several routes available, but they all have the same ETA! <br>Why don’t you choose one yourself, Master?",
@@ -529,7 +529,7 @@ scriptEn["chapter01-metro"] = [
 	"Ene did compliment me, that was a change, but now here I am wearing an autumnal red jersey, sweaty as hell..",
 	"hide image jersey with fadeOut",
 	"show scene metro3 with fadeIn duration 3s end-fadeOut",
-	"As I look around I see the children she laughed at before.",
+	"As I look around I recognise the children she laughed at before.",
 	"At least I’m not the only one feeling uncomfortable here.",
 	"The boy is smiling and yet he looks anxious. His gaze keeps quickly alternating between the surroundings and the girl, who is on her phone totally ignoring him.",
 	'wait 2000',

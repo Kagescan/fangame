@@ -291,7 +291,7 @@ var kageBrowser = {
 					     <p style="color: #000;">
 					       Shintaro Kisaragi<br>
 					       7X, imperial Way <br>
-					       277-XXXX Mekakucity, JAPAN
+					       277-XXXX Kashiwa, JAPAN
 					     </p>
 					   </div>
 					 </div>
