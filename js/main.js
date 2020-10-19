@@ -151,20 +151,20 @@ monogatari.characters ({
       // Because if it fails, _layered will run "show character <characterName> <default>"
     },
 		expressions: {
-			normala: "NormalA.png",
-			normalb: "NormalB.png",
-			smilea: "SmilingA.png",
-			smileb: "SmilingB.png",
-			smilec: "SmilingC.png",
-			laugha: "LaughingA.png",
-			laughb: "LaughingB.png",
-			smuga: "SmugA.png",
-			smugb: "SmugB.png",
-			thinka: "ThinkingA.png",
-			thinkb: "ThinkingB.png",
-			guilty: "Guilty.png",
-			fright: "Frightened.png",
-			shocked: "Shocked.png"
+			normala: "F-NormalA.png",
+			normalb: "F-NormalB.png",
+			smilea: "F-SmilingA.png",
+			smileb: "F-SmilingB.png",
+			smilec: "F-SmilingC.png",
+			laugha: "F-LaughingA.png",
+			laughb: "F-LaughingB.png",
+			smuga: "F-SmugA.png",
+			smugb: "F-SmugB.png",
+			thinka: "F-ThinkingA.png",
+			thinkb: "F-ThinkingB.png",
+			guilty: "F-Guilty.png",
+			fright: "F-Frightened.png",
+			shocked: "F-Shocked.png"
 		}
 	},
 

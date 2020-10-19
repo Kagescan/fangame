@@ -434,7 +434,7 @@ scriptEn["chapter01-street"] = [
 	"Is it because I haven’t gone outside in so long or is the heat getting to my head?",
   "The city’s changed so much since the last time I walked these streets...",
 	"shin Hey Ene, what's the way to the store?",
-	"ene There are several routes available, but they all have the same ETA! <br>Why don’t you choose one yourself, Master?",
+	"ene:smilec There are several routes available, but they all have the same ETA! <br>Why don’t you choose one yourself, Master?",
 	  {"Choice":{
 			"walk":{
 				"Text": "Let's go by foot.",
@@ -449,16 +449,16 @@ scriptEn["chapter01-street"] = [
 
 scriptEn["chapter01-walk"] = [
 	"shin Let’s go by foot… It’s not too far away, after all, and that way I don’t have to be around a lot of people…",
-	"ene That’s probably good for you, seeing how you haven’t moved at a~l~l in the last two years. Can your body even handle it?",
+	"ene:smuga That’s probably good for you, seeing how you haven’t moved at a~l~l in the last two years. Can your body even handle it?",
 	"shin Shut up! I’m sure even I can manage this distance...",
-	"ene If that’s what you say, Master!",
+	"ene:smuga If that’s what you say, Master!",
 	"show background street2 with fadeIn",
 	"shin Ugh, it’s probably for the best… It’s so hot out, though...",
-	"ene The weather report this morning said that we’re having one of the worst heat waves seen in years! <br>You should be careful of heat stroke!",
+	"ene:normalb The weather report this morning said that we’re having one of the worst heat waves seen in years! <br>You should be careful of heat stroke!",
 	"shin Ugh, another worry to add onto the list…",
-	"ene Aaah~ I miss your computer’s fans already!",
+	"ene:smilec Aaah~ I miss your computer’s fans already!",
 	"shin What? Do you really feel heat, or are you just messing around…?",
-	"ene I can imagine! Just by the sunlight I can tell that it’s hot! I don’t envy you at all, Master!",
+	"ene:smilea I can imagine! Just by the sunlight I can tell that it’s hot! I don’t envy you at all, Master!",
 	"I groan and tug lightly at the collar of my shirt, which was already starting to get damp with sweat.",
 	"I’d make a fool of myself if I were to take off the red jersey I’m wearing.",
 	"Even though it’s the first time in two years people would see me, I didn’t give much thought to my choice of clothes for going outside. <br>Looking at all those items I used to wear at school in the closet brought back bitter memories. ",
@@ -466,24 +466,24 @@ scriptEn["chapter01-walk"] = [
 	"show background street3 with fadeIn",
 	"Well she’s back to normal now.",
 	"wait 1000",
-	"ene Hey master, isn't that your sister? Momo-chan!",
+	"ene:normalb Hey master, isn't that your sister? Momo-chan!",
 	"shin Huh?! Where?!",
 	"I duck behind a street pole without thinking. <br>Momo ...?!",
 	"She can’t see me here, outside for the first time in two years…! <br>She’d definitely make fun of me!",
-	"ene Look ! I’m pretty sure it’s her on that big screen!!",
+	"ene:smilec Look ! I’m pretty sure it’s her on that big screen!!",
 	"shin Eh ? Oh right…",
 	"Phew… This cyber girl is giving me a scare even outside...",
 	"shin The news told she’s making her TV debut today.",
-	"ene Oh that’s pretty cool!  Must be hard, being a teen idol.",
+	"ene:smilea Oh that’s pretty cool!  Must be hard, being a teen idol.",
 	"shin Yeah, she comes home late sometimes, and that dumbass got herself back in summer classes again with her grades...",
 	"It’s green, better cross the road. I don’t wanna melt here.",
 	//if we get a crossfade effect later we can actually make the light go green
 	"show background street4 with fadeIn end-fadeOut",
-	"ene You’re taking much more time than what the app planned Master...", //smirk
-	"ene We’re going left at the intersection after this park!",
+	"ene:smugb You’re taking much more time than what the app planned Master...", //smirk
+	"ene:smileb We’re going left at the intersection after this park!",
 	"shin ...",
 	"Haha… Kids these Days… How can they keep running around in this heat…?!", //animate__rotateOutDownLeft, is it possible to add a blur effect to the background ?
-	"ene Goodness, Master! Stop spacing out! You’ll collapse from heatstroke! <br>Wake up! The store’s this way, we’re almost there!",
+	"ene:shock Goodness, Master! Stop spacing out! You’ll collapse from heatstroke! <br>Wake up! The store’s this way, we’re almost there!",
 	//fadeout one Ene's line
 	//'jump chapter01-mall-outside'
 	"show background #000",
@@ -496,7 +496,7 @@ scriptEn["chapter01-walk"] = [
 scriptEn["chapter01-metro"] = [
 		'stop music 01.03 with fade 5',
 	"shin Let’s take the subway. I don’t think my legs can walk this much.",
-	"ene You took the words right out of my mouth!",
+	"ene:laugha You took the words right out of my mouth!",
 	"show scene metro1 with fadeIn duration 4s",
 	function() {
 		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
@@ -504,13 +504,13 @@ scriptEn["chapter01-metro"] = [
 	},
 	'play music 01.13 loop',
 	'wait 3000',
-	"ene Eugh, Master, look at that guy!",
+	"ene:smuga Eugh, Master, look at that guy!",
 	function() {
 		let visualContainer = document.querySelector(`div[data-content="visuals"]`);
 		visualContainer.style.removeProperty("filter");
 	},
 	"By one of the turnstiles, there’s a young boy with a panicked expression on his face. <br>It seems like he doesn’t know how it works, as if he never saw any before.",
-	"ene He has such a hopeless expression on his face... Kind of reminds me of you, Master!",
+	"ene:laughb He has such a hopeless expression on his face... Kind of reminds me of you, Master!",
 	"shin Oi!",
 	"I bite my tongue and look at the boy, whose panic is clearing growing. Maybe he’s not from around here…?",
 	'show scene metro2 with fadeIn',
@@ -546,14 +546,14 @@ scriptEn["chapter01-metro"] = [
 scriptEn["chapter01-mall-outside"] = [
 	'show scene storeoutside with fadeIn duration 3s',
 	'wait 3200',
-	'ene Huah~ ! We’re here! <br>It looks even bigger than in the photos!',
-	'ene According to its website’s homepage, this building has the most high-tech security system of the whole prefecture! Can you imagine ?',
-	'ene And there are nine floors!',
-	'ene Oh, and look at that! <br>On the roof!!',
-	'ene That’s the amusement park!!',
+	'ene:smilec Huah~ ! We’re here! <br>It looks even bigger than in the photos!',
+	'ene:smilea According to its website’s homepage, this building has the most high-tech security system of the whole prefecture! Can you imagine ?',
+	'ene:smileb And there are nine floors!',
+	'ene:shock Oh, and look at that! <br>On the roof!!',
+	'ene:smilec That’s the amusement park!!',
 	'Ah… That famous amusement park…',
-	'ene I WANNA GO!!',
-	'ene Master, let’s go, let’s go, lets go!',
+	'ene:smilec I WANNA GO!!',
+	'ene:laugha Master, let’s go, let’s go, lets go!',
 	//shakey text effect woohoo
 	'shin Gah, shut up ! No way in hell am I going to a place like that!',
 	'shin Would it even be fun for you?',
@@ -571,8 +571,8 @@ scriptEn["chapter01-mall-outside"] = [
 
 scriptEn["chapter01-mall-angryene"] = [
 	"shin You wouldn't feel any of the rides!",
-	'ene Tch...<br>Master is so tactless!',
-	'ene Even I have places I want to go!',
+	'ene:guilty Tch...<br>Master is so tactless!',
+	'ene:thinka Even I have places I want to go!',
 	'wait 3000',
 	'...',
 	'She stopped talking, looking jaded. I don’t think I ever saw her mood change that quickly before, but oh well.',
@@ -586,11 +586,11 @@ scriptEn["chapter01-mall-angryene"] = [
 
 scriptEn["chapter01-mall-enethere"] = [
 	'shin Would you feel any of the rides?',
-	'ene I...<br>...',
-	'ene You would.',
-	'ene and I’d laugh at your deformed, scared face.',//le smirk
+	'ene:thinkb I...<br>...',
+	'ene:smuga You would.',
+	'ene:smugb and I’d laugh at your deformed, scared face.',//le smirk
 	'shin Gh… Stop messing around. <br>This wouldn’t scare me, but I’m not going. There’d be too many people.',
-	'ene ...<br>Fine then.',
+	'ene:thinka ...<br>Fine then.',
 	'She stopped talking, looking jaded. I don’t think I ever saw her mood change that quickly before, but oh well.',
 	'Why would I go to such an expensive location with loud, obnoxious music and yelling children everywhere ?',
 	'She knows I wouldn’t. It’s probably just a joke to her.',
