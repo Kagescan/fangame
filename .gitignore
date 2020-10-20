@@ -14,6 +14,6 @@ ignore.*
 *.zip
 KagescanReleaseFile.json
 
-main.js
+/main.js
 package-lock.json
 package.json

@@ -61,8 +61,6 @@ scriptEn["chapter01-shinOS"] = [
 	"jump chapter01-shinOS"
 ];
 
-// TODO: Use reversible functions
-
 scriptEn["chapter01-legs"] = [
 	/*show scene emptyLegs",*/
   function(){shinOSinstance.hide()},
@@ -397,10 +395,10 @@ scriptEn["chapter01-demoEnd"] = [
 	"You should use the game save button now, unless you want to start over when the next part of the game comes out, to try out new things...",
 	"Please have a look at the game credits and trivia page if you can, and join the discord server to follow the game's progression or even contribute to the next parts!",
 	"If you wish, you can now have a quick look at the beginning of the next part we're currently working on. Note however that it is not finished at all and will probably be edited a lot before the full chapter comes out.",
+	"stop music ltm8bit with loop fade 3",
 	"jump chapter01-demolinks",
 ];
 scriptEn["chapter01-demolinks"] = [
-	"stop music ltm8bit with loop fade 3",
 	{"Choice":{
 		"discord":{
 			"Text": "Retaining's memories discord server",
@@ -417,7 +415,11 @@ scriptEn["chapter01-demolinks"] = [
 		"next" :{
 			"Text": "Play an extra part (English only)",
 			"Do": "jump chapter01-street"
-}}},
+		}
+	}},
+	// make some dialogs seems to fix a crash
+	"Please have a look at the game credits and trivia page if you can, and join the discord server to follow the game's progression or even contribute to the next parts!",
+	"If you wish, you can now have a quick look at the beginning of the next part we're currently working on. Note however that it is not finished at all and will probably be edited a lot before the full chapter comes out.",
 	"jump chapter01-demolinks",
 ];
 

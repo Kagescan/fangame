@@ -451,6 +451,23 @@ div[data-content="visuals"] {
 }
 
 /* Text Box styling */
+
+@media screen and (min-height: 800px){
+  /*
+    fix the textbox screen to be too small on full HD screens (1080p)
+    i'm not able to try in 4K resolution.
+  */
+	game-screen {
+		font-size: 1.6em; /* +60% larger */
+	}
+	text-box [data-content="text"] {
+		font-size: 0.75em; /* +20% larger (bc 1.6*0.75 = 1.2)*/
+	}
+	quick-menu button span {
+		font-size: 1.3rem;
+	}
+}
+
 [data-component="text-box"] {
   background-color: transparent;
   min-height: initial;

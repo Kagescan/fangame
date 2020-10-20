@@ -411,10 +411,11 @@ scriptEs["chapter01-MAO"] = [
 ]
 
 
+
 // additional part
 // Do not translate
 
-scriptEn["chapter01-demoEnd"] = [
+scriptEs["chapter01-demoEnd"] = [
 	"show scene icon with fadeIn",
 	"wait 1500",
 	"show image kagescan.svg centeredLeft with fadeIn",
@@ -430,7 +431,7 @@ scriptEn["chapter01-demoEnd"] = [
 	"If you wish, you can now have a quick look at the beginning of the next part we're currently working on. Note however that it is not finished at all and will probably be edited a lot before the full chapter comes out.",
 	"jump chapter01-demolinks",
 ];
-scriptEn["chapter01-demolinks"] = [
+scriptEs["chapter01-demolinks"] = [
 	"stop music ltm8bit with loop fade 3",
 	{"Choice":{
 		"discord":{
@@ -451,8 +452,7 @@ scriptEn["chapter01-demolinks"] = [
 }}},
 	"jump chapter01-demolinks",
 ];
-
-scriptEn["chapter01-street"] = [
+scriptEs["chapter01-street"] = [
   "play music 01.03 with fade 3 loop",
   "show scene street with fadeIn duration 2s",
   "Somehow, it feels strange...",
@@ -472,7 +472,7 @@ scriptEn["chapter01-street"] = [
 	}}
 ];
 
-scriptEn["chapter01-walk"] = [
+scriptEs["chapter01-walk"] = [
 	"shin Let’s go by foot… It’s not too far away, after all, and that way I don’t have to be around a lot of people…",
 	"ene That’s probably good for you, seeing how you haven’t moved at a~l~l in the last two years. Can your body even handle it?",
 	"shin Shut up! I’m sure even I can manage this distance...",
@@ -518,7 +518,7 @@ scriptEn["chapter01-walk"] = [
 	"end"
 ];
 
-scriptEn["chapter01-metro"] = [
+scriptEs["chapter01-metro"] = [
 		'stop music 01.03 with fade 5',
 	"shin Let’s take the subway. I don’t think my legs can walk this much.",
 	"ene You took the words right out of my mouth!",
@@ -568,7 +568,7 @@ scriptEn["chapter01-metro"] = [
 	"end"
 ];
 
-scriptEn["chapter01-mall-outside"] = [
+scriptEs["chapter01-mall-outside"] = [
 	'show scene storeoutside with fadeIn duration 3s',
 	'wait 3200',
 	'ene Huah~ ! We’re here! <br>It looks even bigger than in the photos!',
@@ -594,7 +594,7 @@ scriptEn["chapter01-mall-outside"] = [
 		}}
 ];
 
-scriptEn["chapter01-mall-angryene"] = [
+scriptEs["chapter01-mall-angryene"] = [
 	"shin You wouldn't feel any of the rides!",
 	'ene Tch...<br>Master is so tactless!',
 	'ene Even I have places I want to go!',
@@ -609,7 +609,7 @@ scriptEn["chapter01-mall-angryene"] = [
 	"end"
 ];
 
-scriptEn["chapter01-mall-enethere"] = [
+scriptEs["chapter01-mall-enethere"] = [
 	'shin Would you feel any of the rides?',
 	'ene I...<br>...',
 	'ene You would.',
