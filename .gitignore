@@ -13,3 +13,7 @@ ignore.*
 
 *.zip
 KagescanReleaseFile.json
+
+main.js
+package-lock.json
+package.json
