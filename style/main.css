@@ -397,9 +397,17 @@ button:hover {
 
 /* Main Menu Buttons Styling */
 [data-screen="main"] button {
-
+	display: flex;
+	align-items: center;
+	width: 9em;
+	padding: 0 0.5em;
 }
-
+[data-screen="main"] button svg {
+	width: 1em !important;
+}
+[data-screen="main"] button [data-string] {
+	padding-left: 1em;
+}
 /**
  * ===========================
  * Save and Load Menus Styling
