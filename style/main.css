@@ -584,6 +584,10 @@ text-box [data-ui="face"] {
     text-decoration: line-through;
 }
 
+[data-toAfter]:after {
+  content: attr(data-toAfter);
+}
+
 /**
  * ===========================
  * Quick Menu Styling

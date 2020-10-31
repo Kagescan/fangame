@@ -175,7 +175,20 @@ monogatari.characters ({
   'uk' : {
     name: '???',
     color: '#aaaaaa'
-  }
+  },
+
+	'salesgirl' : {
+		name: 'Store Assistant',
+		color: '#ffd4d4',
+		directory: 'salesgirl',
+    sprites: {
+			ah: 'salesgirl1.png',
+			talk: 'salesgirl2.png',
+			smilea: 'salesgirl3.png',
+			smileb: 'salesgirl4.png'
+		}
+	}
+
 });
 
 scriptFr["Start"] = ["jump chapter00-start"];
