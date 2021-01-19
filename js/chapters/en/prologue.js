@@ -167,7 +167,7 @@ scriptEn["chapter00-ayaContinue"] = [
   'show character aya excited with fadeIn end-fadeOut',
   "aya W-Wait, really ?!",
   "shin:dodge Do you have ears? I just said that I’ll help you.",
-  "shin:dodge Hurry up and show me what you’re working on, so we can get this over with",
+  "shin:dodge Hurry up and show me what you’re working on so we can get this over with",
   "aya O-okay!",
   "hide character aya with fadeOut",
   "stop music 01.03 with fade 1",
@@ -282,7 +282,7 @@ scriptEn["chapter00-working-choice2"] = [
 		  },
 		  c2:{
 		    Text: 'BC = AC + AB so AB = BC - AC',
-		    Do: 'ayaIs that it ?',
+		    Do: 'aya Is that it ?',
 		    onChosen: () => {choices[1] = false},
 		    Clickable: () => choices[1]
 		  },
@@ -293,7 +293,8 @@ scriptEn["chapter00-working-choice2"] = [
   } },
   "shin:blueSight Nope. Come on I just told you!",
   "jump chapter00-working-choice2"
-]
+];
+
 scriptEn["chapter00-working-endChoice2"] = [
 	{ Function: {
 			Apply: ()=>{
